@@ -55,6 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+    'placeholder' => 'https://via.placeholder.com/',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +162,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
+        LaraIzitoast\LaraIzitoastServiceProvider::class,
 
         /*
          * Package Service Providers...
