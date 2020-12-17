@@ -14,7 +14,7 @@
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('app.users.index') }}" class="btn-shadow btn btn-danger">
+                    <a href="{{ route('backend.users.index') }}" class="btn-shadow btn btn-danger">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-arrow-circle-left fa-w-20"></i>
                         </span>
@@ -29,7 +29,7 @@
         <div class="col-12">
             <!-- form start -->
             <form role="form" id="userFrom" method="POST"
-                  action="{{ isset($user) ? route('app.users.update',$user->id) : route('app.users.store') }}"
+                  action="{{ isset($user) ? route('backend.users.update',$user->id) : route('backend.users.store') }}"
                   enctype="multipart/form-data">
                 @csrf
                 @if (isset($user))
