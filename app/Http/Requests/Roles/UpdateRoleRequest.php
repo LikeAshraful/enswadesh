@@ -14,7 +14,7 @@ class UpdateRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        Gate::authorize('app.roles.edit');
+        Gate::authorize('backend.roles.edit');
         return true;
     }
 

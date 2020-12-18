@@ -14,7 +14,7 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        Gate::authorize('app.profile.password');
+        Gate::authorize('backend.profile.password');
         return true;
     }
 
