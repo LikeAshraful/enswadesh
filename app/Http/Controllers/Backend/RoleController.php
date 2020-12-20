@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Roles\StoreRoleRequest;
+use App\Http\Requests\Roles\UpdateRoleRequest;
 use App\Models\Role;
 use App\Models\Module;
 use Illuminate\Http\Request;
@@ -41,9 +43,8 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        Gate::authorize('backend.roles.create');
         Role::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
@@ -83,9 +84,8 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        Gate::authorize('backend.roles.edit');
         $role->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
