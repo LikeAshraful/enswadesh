@@ -14,7 +14,7 @@ class UpdateGeneralSettingsRequest extends FormRequest
      */
     public function authorize()
     {
-        Gate::authorize('app.settings.update');
+        Gate::authorize('backend.settings.update');
         return true;
     }
 

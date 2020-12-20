@@ -2,6 +2,12 @@
 
 @section('title','Users')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+@endpush
+
 @section('content')
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -107,3 +113,18 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        // Dropify
+        $('.dropify').dropify();
+        // Select2
+        $('.select').each(function () {
+                $(this).select2();
+            });
+        });
+    </script>
+@endpush

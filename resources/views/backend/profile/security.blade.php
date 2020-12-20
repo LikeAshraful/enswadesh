@@ -21,7 +21,7 @@
                 <div class="card-header">UPDATE PASSWORD</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('app.profile.password.update') }}" >
+                    <form method="POST" action="{{ route('backend.profile.password.update') }}" >
                         @csrf
 
                         <div class="form-group row">

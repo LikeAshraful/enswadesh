@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!-- form start -->
-            <form id="settingsFrom" autocomplete="off" role="form" method="POST" action="{{ route('app.settings.update') }}">
+            <form id="settingsFrom" autocomplete="off" role="form" method="POST" action="{{ route('backend.settings.update') }}">
                 @csrf
                 @method('PATCH')
                 <!-- general form elements -->

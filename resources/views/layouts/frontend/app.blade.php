@@ -54,7 +54,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     @role('admin')
-                                        <a class="dropdown-item" href="{{ route('app.dashboard') }}">
+                                        <a class="dropdown-item" href="{{ route('backend.dashboard') }}">
                                             {{ __('Dashboard') }}
                                         </a>
                                     @endrole
