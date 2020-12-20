@@ -38,6 +38,20 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function registerMediaCollections() : void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile()
+            ->useFallbackUrl(config('app.placeholder').'160.png')
+            ->useFallbackPath(config('app.placeholder').'160.png')
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->width(160)
+                    ->height(160);
+            });
+    }
 
     public function role()
     {

@@ -46,11 +46,11 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create([
-            'role_id' => $request->role,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'status' => $request->filled('status'),
+            'role_id'   => $request->role,
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'status'    => $request->filled('status'),
         ]);
         // upload images
         if ($request->hasFile('avatar')) {
@@ -94,11 +94,11 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update([
-            'role_id' => $request->role,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => isset($request->password) ? Hash::make($request->password) : $user->password,
-            'status' => $request->filled('status'),
+            'role_id'   => $request->role,
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => isset($request->password) ? Hash::make($request->password) : $user->password,
+            'status'    => $request->filled('status'),
         ]);
         // upload images
         if ($request->hasFile('avatar')) {

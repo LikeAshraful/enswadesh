@@ -53,7 +53,8 @@
                                                 <div class="widget-content-left mr-3">
                                                     <div class="widget-content-left">
                                                         <img width="40" class="rounded-circle"
-                                                             src="{{ config('app.placeholder').'160.png' }}" alt="User Avatar">
+                                                             src="{{ $user->getFirstMediaUrl('avatar') != null ? $user->getFirstMediaUrl('avatar','thumb') : config('app.placeholder').'160.png' }}" 
+                                                             alt="User Avatar">
                                                     </div>
                                                 </div>
                                                 <div class="widget-content-left flex2">
