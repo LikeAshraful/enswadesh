@@ -7,6 +7,9 @@ use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Role;
+use Storage;
+use Image;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -45,6 +48,13 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        //Image
+        if ($image = $request->file('image')) {
+            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/uploads/users' . $filename);
+            Image::make($image)->resize(600, 400)->save($location);
+        }
+
         $user = User::create([
             'role_id'   => $request->role,
             'name'      => $request->name,
