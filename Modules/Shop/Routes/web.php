@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,10 +11,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('shop')->group(function () {
+    Route::get('/', 'Backend\ShopController@index');
+    Route::resource('menus', 'Backend\AppMenuController');
 });
-
-Auth::routes();
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
