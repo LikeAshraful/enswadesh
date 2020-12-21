@@ -7,9 +7,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <title>@yield('title') | {{ setting('site_title', 'Enswadesh') }}</title>
+
+    <link rel="icon"  href="{{ setting('site_favicon') != null ? Storage::disk('public')->url(setting('site_favicon')) : '' }}"/>
     <!-- Styles -->
     <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @stack('css')
 </head>
 <body>
@@ -26,9 +29,9 @@
     </div>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('js/backend.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/script.js') }}"></script>
+<!-- <script src="{{ asset('js/backend.js') }}"></script> -->
+<!-- <script src="{{ asset('js/script.js') }}"></script> -->
 @stack('js')
 @include('vendor.lara-izitoast.toast')
 </body>

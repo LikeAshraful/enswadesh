@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!-- form start -->
-            <form id="settingsFrom" method="POST" action="{{ route('app.settings.socialite.update') }}">
+            <form id="settingsFrom" method="POST" action="{{ route('backend.settings.socialite.update') }}">
                 @csrf
                 @method('PATCH')
                 <!-- general form elements -->

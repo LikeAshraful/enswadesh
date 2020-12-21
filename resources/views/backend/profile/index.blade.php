@@ -2,6 +2,11 @@
 
 @section('title','Profile')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+@endpush
+
 @section('content')
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -14,7 +19,7 @@
             </div>
         </div>
     </div>
-    <form method="POST" action="{{ route('app.profile.update') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('backend.profile.update') }}" enctype="multipart/form-data">
         @csrf
         <div class="row justify-content-center">
 
@@ -93,3 +98,12 @@
         </div>
     </form>
 @endsection
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Dropify
+            $('.dropify').dropify();
+        });
+    </script>
+@endpush

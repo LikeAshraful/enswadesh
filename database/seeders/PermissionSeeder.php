@@ -22,6 +22,18 @@ class PermissionSeeder extends Seeder
             'name' => 'Access Dashboard',
             'slug' => 'backend.dashboard',
         ]);
+        // Settings
+        $moduleAppSettings = Module::updateOrCreate(['name' => 'Settings']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSettings->id,
+            'name' => 'Access Settings',
+            'slug' => 'backend.settings.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSettings->id,
+            'name' => 'Update Settings',
+            'slug' => 'backend.settings.update',
+        ]);
 
         // Role management
         $moduleAppRole = Module::updateOrCreate(['name' => 'Role Management']);
@@ -44,6 +56,19 @@ class PermissionSeeder extends Seeder
             'module_id' => $moduleAppRole->id,
             'name' => 'Delete Role',
             'slug' => 'backend.roles.destroy',
+        ]);
+
+        // Profile
+        $moduleAppProfile = Module::updateOrCreate(['name' => 'Profile']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProfile->id,
+            'name' => 'Update Profile',
+            'slug' => 'backend.profile.update',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProfile->id,
+            'name' => 'Update Password',
+            'slug' => 'backend.profile.password',
         ]);
 
         // User management

@@ -52,10 +52,7 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
             'status'    => $request->filled('status'),
         ]);
-        // upload images
-        if ($request->hasFile('avatar')) {
-            $user->addMedia($request->avatar)->toMediaCollection('avatar');
-        }
+        
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('backend.users.index');
     }
@@ -68,7 +65,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('backend.users.show',compact('user'));
     }
 
     /**
@@ -100,10 +97,7 @@ class UserController extends Controller
             'password'  => isset($request->password) ? Hash::make($request->password) : $user->password,
             'status'    => $request->filled('status'),
         ]);
-        // upload images
-        if ($request->hasFile('avatar')) {
-            $user->addMedia($request->avatar)->toMediaCollection('avatar');
-        }
+        
         notify()->success('User Successfully Updated.', 'Updated');
         return redirect()->route('backend.users.index');
     }

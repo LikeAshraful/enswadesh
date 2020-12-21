@@ -2,6 +2,18 @@
 
 @section('title','Users')
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
+    <style>
+        .dropify-wrapper .dropify-message p {
+            font-size:initial;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="app-page-title">
         <div class="page-title-wrapper">
@@ -81,7 +93,7 @@
 
                                 <x-forms.dropify label="Avatar (Only Image are allowed)"
                                                  name="avatar"
-                                                 value="{{ isset($user) ? $user->getFirstMediaUrl('avatar','thumb') : ''  }}"/>
+                                                 value=""/>
 
                                 <x-forms.checkbox label="Status"
                                                   name="status"
@@ -107,3 +119,18 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('js/dropify.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+        // Dropify
+        $('.dropify').dropify();
+        // Select2
+        $('.select').each(function () {
+                $(this).select2();
+            });
+        });
+    </script>
+@endpush
