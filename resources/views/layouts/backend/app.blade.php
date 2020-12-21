@@ -12,7 +12,7 @@
     <link rel="icon"  href="{{ setting('site_favicon') != null ? Storage::disk('public')->url(setting('site_favicon')) : '' }}"/>
     <!-- Styles -->
     <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @stack('css')
 </head>
 <body>

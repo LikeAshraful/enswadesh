@@ -60,7 +60,7 @@
                             <div class="btn-group">
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                    class="p-0 btn">
-                                    <img width="42" class="rounded-circle" src="{{ Auth::user()->getFirstMediaUrl('avatar') != null ? Auth::user()->getFirstMediaUrl('avatar') : config('app.placeholder').'160' }}"
+                                    <img width="42" class="rounded-circle" src="{{ config('app.placeholder').'160' }}"
                                          alt="">
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>

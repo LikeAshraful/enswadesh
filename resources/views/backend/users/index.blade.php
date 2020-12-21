@@ -3,7 +3,7 @@
 @section('title','Users')
 
 @push('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
 @endpush
 
 @section('content')
@@ -53,7 +53,7 @@
                                                 <div class="widget-content-left mr-3">
                                                     <div class="widget-content-left">
                                                         <img width="40" class="rounded-circle"
-                                                             src="{{ $user->getFirstMediaUrl('avatar') != null ? $user->getFirstMediaUrl('avatar','thumb') : config('app.placeholder').'160.png' }}" 
+                                                             src="{{ config('backend.placeholder').'160.png' }}" 
                                                              alt="User Avatar">
                                                     </div>
                                                 </div>
@@ -111,8 +111,8 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Datatable

@@ -39,10 +39,7 @@ class ProfileController extends Controller
             'name' => $request->name,
             'email' => $request->email,
         ]);
-        // upload images
-        if ($request->hasFile('avatar')) {
-            $user->addMedia($request->avatar)->toMediaCollection('avatar');
-        }
+        
         // return with success msg
         notify()->success('Profile Successfully Updated.', 'Updated');
         return redirect()->back();
