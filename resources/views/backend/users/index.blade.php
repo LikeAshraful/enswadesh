@@ -32,7 +32,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatable" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatableUser" class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -53,7 +53,7 @@
                                                 <div class="widget-content-left mr-3">
                                                     <div class="widget-content-left">
                                                         <img width="40" class="rounded-circle"
-                                                             src="{{ config('app.placeholder').'160' }}" 
+                                                             src="{{ config('app.placeholder').'160' }}"
                                                              alt="User Avatar">
                                                     </div>
                                                 </div>
@@ -116,7 +116,7 @@
     <script>
         $(document).ready(function() {
             // Datatable
-            $("#datatable").DataTable();
+            $("#datatableUser").DataTable();
         });
     </script>
 @endpush

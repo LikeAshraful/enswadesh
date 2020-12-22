@@ -35,24 +35,49 @@
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
                 <li>
-                    <a href="{{ route('backend.dashboard') }}" class="mm-active">
+                    <a href="{{ route('backend.dashboard') }}"  class="{{ Route::is('backend.dashboard') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-rocket"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="app-sidebar__heading">User Management</li>
                 <li>
-                    <a href="{{ route('backend.users.index') }}" class="{{ Request::is('banckend/roles*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.users.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-users"></i>
-                        Users
+                        Property
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.users.index')}}" class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('backend.roles.index') }}" class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Roles
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="app-sidebar__heading">Role Management</li>
+
+                <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="{{ route('backend.roles.index') }}" class="{{ Request::is('banckend/users*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
-                        Roles
+                        Property
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('menus.index')}}" class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                App Menus
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="app-sidebar__heading">Widgets</li>
