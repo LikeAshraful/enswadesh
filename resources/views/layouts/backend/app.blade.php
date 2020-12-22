@@ -29,9 +29,9 @@
     </div>
 </div>
 <!-- Scripts -->
+<script src="{{ asset('js/backend.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-<!-- <script src="{{ asset('js/main.js') }}"></script> -->
-<!-- <script src="{{ asset('js/script.js') }}"></script> -->
+<script src="{{ asset('js/script.js') }}"></script>
 @stack('js')
 @include('vendor.lara-izitoast.toast')
 </body>

@@ -30,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
             'role'      => ['required'],
-            'image'    => ['required','image'],
+            'image'     => 'required|mimes:jpeg,jpg,png|max:500',
         ];
     }
 }

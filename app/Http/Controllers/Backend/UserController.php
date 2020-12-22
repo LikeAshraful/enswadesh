@@ -7,12 +7,13 @@ use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Role;
-use Storage;
-use Image;
-use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
+use Image;
+use Storage;
+use Intervention\Image\ImageManager;
 
 class UserController extends Controller
 {
@@ -51,7 +52,7 @@ class UserController extends Controller
         //Image
         if ($image = $request->file('image')) {
             $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/users' . $filename);
+            $location = public_path('/uploads/users/' . $filename);
             Image::make($image)->resize(600, 400)->save($location);
         }
 
@@ -60,6 +61,7 @@ class UserController extends Controller
             'name'      => $request->name,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
+            'image'     => $filename,
             'status'    => $request->filled('status'),
         ]);
         
