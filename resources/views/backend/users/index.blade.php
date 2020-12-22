@@ -32,7 +32,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatable" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatableUser" class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -117,7 +117,7 @@
     <script>
         $(document).ready(function() {
             // Datatable
-            $("#datatable").DataTable();
+            $("#datatableUser").DataTable();
         });
     </script>
 @endpush
