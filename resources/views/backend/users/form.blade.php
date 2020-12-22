@@ -71,6 +71,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="main-card mb-3 card">
+
+                    
                         <div class="card-body">
                             <h5 class="card-title">Select Role and Status</h5>
 
@@ -81,21 +83,13 @@
                                 @endforeach
                             </x-forms.select>
 
-                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="" />
-
-                            <!-- <div class="form-group">
-                                <label for="menu_icon">Menu Icon</label>
-                                <input type="file" id="image" name="image" class="form-control"
-                                    placeholder="Image">
-                            </div> -->
+                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
 
                             <x-forms.checkbox label="Status" name="status" class="custom-switch"
                                 :value="$user->status ?? null" />
 
-
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
                                 on-click="resetForm('userFrom')" />
-
 
                             @isset($user)
                             <x-forms.button type="submit" label="Update" icon-class="fas fa-arrow-circle-up" />
