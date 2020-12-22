@@ -1,5 +1,4 @@
 @extends('layouts.backend.app')
-
 @section('title','Users')
 
 @push('css')
@@ -13,7 +12,6 @@
 }
 </style>
 @endpush
-
 @section('content')
 <div class="app-page-title">
     <div class="page-title-wrapper">
@@ -39,7 +37,6 @@
 
 <div class="row">
     <div class="col-12">
-        <!-- form start -->
         <form role="form" id="userFrom" method="POST"
             action="{{ isset($user) ? route('backend.users.update',$user->id) : route('backend.users.store') }}"
             enctype="multipart/form-data" file="true">
@@ -52,31 +49,19 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             <h5 class="card-title">User Info</h5>
-                                <!-- <div class="form-group">
-                                    <input id="name" type="name" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ $user->name ?? old('name') }}" autofocus>
-
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div> -->
                             <x-forms.textbox label="Name" name="name" value="{{ $user->name ?? ''  }}"
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
 
-                            <x-forms.textbox type="email" label="Email" name="email"
+                            <x-forms.textbox type="email" name="email"
                                 value="{{ $user->email ?? ''  }}" />
 
-                            <x-forms.textbox type="password" label="Password" name="password" placeholder="******" />
+                            <x-forms.textbox type="password" name="password" placeholder="******" />
 
-                            <x-forms.textbox type="password" label="Confirm Password" name="password_confirmation"
+                            <x-forms.textbox type="password" name="password_confirmation"
                                 placeholder="******" />
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
                 <div class="col-md-4">
                     <div class="main-card mb-3 card">
@@ -107,9 +92,7 @@
                             <x-forms.button type="submit" label="Create" icon-class="fas fa-plus-circle" />
                             @endisset
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
         </form>

@@ -51,7 +51,7 @@ class Button extends Component
      * @param $iconClass
      * @param null $onClick
      */
-    public function __construct($type = 'button', $label, $class = 'btn-primary', $iconClass, $onClick = null)
+    public function __construct($type = 'text', $label = '', $class = 'btn-primary', $iconClass = null, $onClick = null)
     {
         $this->type = $type;
         $this->label = $label;
