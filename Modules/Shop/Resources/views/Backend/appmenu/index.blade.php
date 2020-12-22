@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.backend.app')
 
 @section('content')
 <div class="container">
@@ -26,12 +26,17 @@
                         <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shop/menus/' . $menu->menu_icon)}}" width="50" height="50" alt="">
                     </td>
                     <td>
-                        <a href="{{ route('menus.edit', $menu->id) }}">Edit</a> |
-                        {!! Form::open(['method' => 'DELETE','route' => ['menus.destroy', $menu->id],'style'=>'display:inline', 'class'=>'delete_form']) !!}
-                        <button class="admin-actionbtn delete-btn" type="submit">
-                            Delete
+                        <a href="{{ route('menus.edit', $menu->id) }}"><i class="fas fa-edit"></i></a> |
+                        <button type="submit" class="delete-btn-style"
+                                onclick="deleteData({{ $menu->id }})">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
-                        {!! Form::close() !!}
+                        <form id="delete-form-{{ $menu->id }}"
+                                action="{{ route('menus.destroy',$menu->id) }}" method="POST"
+                                style="display: none;">
+                            @csrf()
+                            @method('DELETE')
+                        </form>
 
                     </td>
                 </tr>
@@ -40,11 +45,4 @@
         </table>
     </div>
 </div>
-<style>
-    button.admin-actionbtn {
-        border: none;
-        background: none;
-        color: darkcyan;
-    }
-</style>
 @endsection
