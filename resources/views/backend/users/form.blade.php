@@ -52,7 +52,16 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             <h5 class="card-title">User Info</h5>
+                                <!-- <div class="form-group">
+                                    <input id="name" type="name" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" value="{{ $user->name ?? old('name') }}" autofocus>
 
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div> -->
                             <x-forms.textbox label="Name" name="name" value="{{ $user->name ?? ''  }}"
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
@@ -72,7 +81,7 @@
                 <div class="col-md-4">
                     <div class="main-card mb-3 card">
 
-                    
+
                         <div class="card-body">
                             <h5 class="card-title">Select Role and Status</h5>
 
@@ -83,7 +92,8 @@
                                 @endforeach
                             </x-forms.select>
 
-                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
+                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
+                                value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
 
                             <x-forms.checkbox label="Status" name="status" class="custom-switch"
                                 :value="$user->status ?? null" />
