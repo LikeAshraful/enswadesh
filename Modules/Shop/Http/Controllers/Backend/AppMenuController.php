@@ -39,7 +39,7 @@ class AppMenuController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        // dd(public_path());
         request()->validate([
             'menu_name' => 'required',
             'menu_description' => 'required',

@@ -53,7 +53,7 @@
                                                 <div class="widget-content-left mr-3">
                                                     <div class="widget-content-left">
                                                         <img width="40" class="rounded-circle"
-                                                             src="{{ config('backend.placeholder').'160.png' }}" 
+                                                             src="{{ config('app.placeholder').'160' }}" 
                                                              alt="User Avatar">
                                                     </div>
                                                 </div>
