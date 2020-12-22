@@ -52,9 +52,10 @@
                                             <div class="widget-content-wrapper">
                                                 <div class="widget-content-left mr-3">
                                                     <div class="widget-content-left">
-                                                        <img width="40" class="rounded-circle"
-                                                             src="{{ config('app.placeholder').'160' }}"
-                                                             alt="User Avatar">
+                                                        <img class="img-fluid img-thumbnail"
+                                                             src="{{ asset('uploads/users/'.$user->image) }}"
+                                                             width="50" height="50" alt="" 
+                                                             alt="{{ $user->name}}">
                                                     </div>
                                                 </div>
                                                 <div class="widget-content-left flex2">

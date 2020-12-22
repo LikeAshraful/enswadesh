@@ -30,9 +30,9 @@
                     <div class="form-row">
                         <div class="col-6 mx-auto">
                             <div class="position-relative form-group">
-                                <label for="avatar">Avatar (Only Image are allowed) </label>
-                                <input type="file" name="avatar" id="avatar"
-                                    class="dropify @error('avatar') is-invalid @enderror" data-default-file="">
+                                
+                                <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{ asset('uploads/users/'. Auth::user()->image) }}" />
+                                
                                 @error('avatar')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -61,7 +61,7 @@ class UserController extends Controller
             'name'      => $request->name,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
-            'image'     => $filename,
+            'image'     => isset($filename) ? $filename : '',
             'status'    => $request->filled('status'),
         ]);
         
@@ -102,11 +102,20 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if ($image = $request->file('image')) {
+            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/uploads/users/' . $filename);
+            Image::make($image)->resize(600, 400)->save($location);
+            $oldFilenamec = $user->image;
+            $user->image = $image;
+            Storage::delete('/uploads/users/' . $oldFilenamec);
+        }
         $user->update([
             'role_id'   => $request->role,
             'name'      => $request->name,
             'email'     => $request->email,
             'password'  => isset($request->password) ? Hash::make($request->password) : $user->password,
+            'image'     => isset($filename) ? $filename : $user->image,
             'status'    => $request->filled('status'),
         ]);
         
