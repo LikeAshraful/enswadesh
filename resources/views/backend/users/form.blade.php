@@ -65,8 +65,6 @@
                 </div>
                 <div class="col-md-4">
                     <div class="main-card mb-3 card">
-
-
                         <div class="card-body">
                             <h5 class="card-title">Select Role and Status</h5>
 
