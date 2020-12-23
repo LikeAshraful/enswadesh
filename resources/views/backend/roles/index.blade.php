@@ -56,15 +56,14 @@
                                 </td>
                                 <td class="text-center">{{ $role->created_at->diffForHumans() }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href="{{ route('backend.roles.edit',$role->id) }}"><i
+                                    <a class="fa-edit-style" href="{{ route('backend.roles.edit',$role->id) }}"><i
                                             class="fas fa-edit"></i>
-                                        <span>Edit</span>
-                                    </a>
+                                    </a> 
                                     @if ($role->deletable == true)
-                                        <button type="button" class="btn btn-danger btn-sm"
+                                        <span> | </span>
+                                        <button type="button" class="delete-btn-style"
                                                 onclick="deleteData({{ $role->id }})">
                                             <i class="fas fa-trash-alt"></i>
-                                            <span>Delete</span>
                                         </button>
                                         <form id="delete-form-{{ $role->id }}"
                                               action="{{ route('backend.roles.destroy',$role->id) }}" method="POST"
