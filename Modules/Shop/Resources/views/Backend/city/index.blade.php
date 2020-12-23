@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','App Menus')
+@section('title','City')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -14,15 +14,15 @@
                     <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('App Menus') }}</div>
+                <div>{{ __('Cities') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('backend.menus.create') }}" class="btn-shadow btn btn-info">
+                    <a href="{{ route('backend.cities.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
-                        {{ __('Create Menus') }}
+                        {{ __('Create City') }}
                     </a>
                 </div>
             </div>
@@ -32,7 +32,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatableMenu" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatablecity" class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
                             <th scope="col">#</th>
@@ -44,23 +44,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($appmenus as $key => $menu)
+                            @foreach($cities as $key => $city)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $menu->menu_name }}</td>
-                                <td>{{ $menu->menu_slug }}</td>
-                                <td>{{ $menu->menu_description }}</td>
+                                <td>{{ $city->city_name }}</td>
+                                <td>{{ $city->city_slug }}</td>
+                                <td>{{ $city->city_description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shop/menus/' . $menu->menu_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shop/city/' . $city->city_icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.menus.edit', $menu->id) }}"><i class="fas fa-edit"></i></a> |
+                                    <a class="fa-edit-style" href="{{ route('backend.cities.edit', $city->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"
-                                            onclick="deleteData({{ $menu->id }})">
+                                            onclick="deleteData({{ $city->id }})">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                    <form id="delete-form-{{ $menu->id }}"
-                                            action="{{ route('backend.menus.destroy',$menu->id) }}" method="POST"
+                                    <form id="delete-form-{{ $city->id }}"
+                                            action="{{ route('backend.cities.destroy',$city->id) }}" method="POST"
                                             style="display: none;">
                                         @csrf()
                                         @method('DELETE')

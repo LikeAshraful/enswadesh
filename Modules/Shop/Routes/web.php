@@ -11,7 +11,13 @@
 |
 */
 
-Route::prefix('shop')->group(function () {
-    Route::get('/', 'Backend\ShopController@index');
-    Route::resource('menus', 'Backend\AppMenuController');
-});
+// Route::prefix('shop')->group(function () {
+//     Route::group(['middleware' => ['web']], function () {
+//         Route::get('/', 'Backend\ShopController@index');
+//         Route::resource('menus', 'Backend\AppMenuController');
+//         Route::resource('cities', 'Backend\CityController');
+//     });
+// });
+
+Route::resource('menus', 'Backend\AppMenuController');
+Route::resource('cities', 'Backend\CityController');
