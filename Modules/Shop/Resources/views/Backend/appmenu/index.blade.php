@@ -54,7 +54,7 @@
                                     <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shop/menus/' . $menu->menu_icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
-                                    <a href="{{ route('menus.edit', $menu->id) }}"><i class="fas fa-edit"></i></a> |
+                                    <a class="fa-edit-style" href="{{ route('menus.edit', $menu->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $menu->id }})">
                                         <i class="fas fa-trash-alt"></i>

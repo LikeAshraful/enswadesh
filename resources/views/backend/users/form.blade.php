@@ -54,7 +54,7 @@
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
 
-                            <x-forms.textbox type="email' name="email"
+                            <x-forms.textbox type="email" name="email"
                                 value="{{ $user->email ?? ''  }}" />
 
                             <x-forms.textbox type="password" name="password" placeholder="******" />
@@ -66,8 +66,6 @@
                 </div>
                 <div class="col-md-4">
                     <div class="main-card mb-3 card">
-
-
                         <div class="card-body">
                             <h5 class="card-title">Select Role and Status</h5>
 
