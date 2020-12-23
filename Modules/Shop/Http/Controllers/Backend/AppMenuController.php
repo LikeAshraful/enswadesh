@@ -29,7 +29,7 @@ class AppMenuController extends Controller
      */
     public function create()
     {
-        return view('shop::Backend.appmenu.create');
+        return view('shop::Backend.appmenu.form');
     }
 
     /**
@@ -39,7 +39,6 @@ class AppMenuController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(public_path());
         request()->validate([
             'menu_name' => 'required',
             'menu_description' => 'required',
@@ -59,9 +58,8 @@ class AppMenuController extends Controller
                 'menu_slug' => $slug
             ]);
 
-        //toastr()->success('Blog created successfully');
-        return redirect()->route('menus.index')
-            ->with('success', 'Menu created successfully.');
+        notify()->success('App Menu Successfully Added.', 'Added');
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -81,8 +79,8 @@ class AppMenuController extends Controller
      */
     public function edit($id)
     {
-        $appmenu = AppMenu::find($id);
-        return view('shop::Backend.appmenu.edit', compact('appmenu'));
+        $menu = AppMenu::find($id);
+        return view('shop::Backend.appmenu.form', compact('menu'));
     }
 
     /**
@@ -117,7 +115,7 @@ class AppMenuController extends Controller
                 'menu_icon' => $menu_icon
             ]);
 
-        //Toastr::success('Child category successfully updated:)', 'Success');
+        notify()->success('App Menu Successfully Updated.', 'Updated');
         return redirect()->route('menus.index');
     }
 
@@ -132,8 +130,6 @@ class AppMenuController extends Controller
         $oldFilename = $data->menu_icon;
         Storage::delete('/uploads/shop/menus/' . $oldFilename);
         $data->delete();
-
-        //Toastr::error('Main category successfully deleted:)', 'Deleted');
         return redirect()->route('menus.index');
     }
 }

@@ -9,3 +9,29 @@ button.delete-btn-style:hover {
     color: red;
     background: transparent;
 }
+
+a.fa-edit-style {
+    border: none;
+    color: #16aaff;
+    background: transparent;
+}
+
+a.fa-edit-style:hover {
+    border: none;
+    color: #16aaff;
+    background: transparent;
+}
+
+a.fa-eye-style {
+    border: none;
+    color: #226d04;
+    background: transparent;
+}
+
+a.fa-eye-style:hover {
+    border: none;
+    color: #226d04;
+    background: transparent;
+}
+
+
