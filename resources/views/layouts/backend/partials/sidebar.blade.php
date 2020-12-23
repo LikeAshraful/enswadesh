@@ -62,6 +62,28 @@
                         </li>
                     </ul>
                 </li>
+                <li class="app-sidebar__heading">Shop Product</li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
+                        <i class="metismenu-icon pe-7s-diamond"></i>
+                        Property
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.main_category.index')}}" class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Main Category
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('menus.index')}}" class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Sub Category
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="app-sidebar__heading">Shop Locations</li>
                 <li>

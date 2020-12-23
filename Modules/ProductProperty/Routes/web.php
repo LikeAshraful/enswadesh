@@ -11,6 +11,4 @@
 |
 */
 
-Route::prefix('productproperty')->group(function() {
-    Route::get('/', 'ProductPropertyController@index');
-});
+Route::resource('main_category', 'Backend\MainCategoryController');
