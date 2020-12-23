@@ -54,7 +54,7 @@
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
 
-                            <x-forms.textbox type="email' name="email"
+                            <x-forms.textbox type="email" name="email"
                                 value="{{ $user->email ?? ''  }}" />
 
                             <x-forms.textbox type="password" name="password" placeholder="******" />
