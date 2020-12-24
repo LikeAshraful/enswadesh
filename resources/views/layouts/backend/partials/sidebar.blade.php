@@ -68,15 +68,18 @@
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') ? 'mm-active' : '' }} || Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
                         <li>
+<<<<<<< HEAD
                             <a href="{{route('backend.menus.index')}}"
                                 class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
+=======
+>>>>>>> 7758cb7a96d80f05c14c550c55557b38b5f3a613
                             <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 App Menus
@@ -86,6 +89,12 @@
                             <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Cities
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Areas
                             </a>
                         </li>
                     </ul>
@@ -106,8 +115,13 @@
                             </a>
                         </li>
                         <li>
+<<<<<<< HEAD
                             <a href="{{route('backend.sub_category.index')}}"
                                 class="{{ Route::is('backend.sub_category.index*') ? 'mm-active' : '' }}">
+=======
+                            <a href="#"
+                                class="">
+>>>>>>> 7758cb7a96d80f05c14c550c55557b38b5f3a613
                                 <i class="metismenu-icon"></i>
                                 Sub Category
                             </a>
