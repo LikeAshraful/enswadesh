@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','App Menus Create')
+@section('title','App City Create')
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
@@ -19,11 +19,11 @@
                 <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($menu) ? 'Edit' : 'Create New') . ' Menu') }}</div>
+            <div>{{ __((isset($city) ? 'Edit' : 'Create New') . ' City') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.menus.index') }}" class="btn-shadow btn btn-info">
+                <a href="{{ route('backend.cities.index') }}" class="btn-shadow btn btn-info">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -39,37 +39,35 @@
             <div class="main-card mb-3 card">
                 <div class="card-head"></div>
                 <div class="card-body">
-                    <form action="{{ isset($menu) ? route('backend.menus.update',$menu->id) : route('backend.menus.store') }}" method="POST" enctype="multipart/form-data" file="true">
+                    <form action="{{ isset($city) ? route('backend.cities.update',$city->id) : route('backend.cities.store') }}" method="POST" enctype="multipart/form-data" file="true">
                         @csrf
-                        @if (isset($menu))
+                        @if (isset($city))
                         @method('PUT')
                         @endif
                         <div class="form-group">
-                        <label for="menu_name">Menu Name</label>
-                        <input type="text" id="menu_name" name="menu_name" class="form-control @error('menu_name') is-invalid @enderror" value="{{ isset($menu) ? $menu->menu_name : '' }}"  placeholder="Menu name">
-                        @error('menu_name')
+                        <label for="city_name">City Name</label>
+                        <input type="text" id="city_name" name="city_name" class="form-control @error('city_name') is-invalid @enderror" value="{{ isset($city) ? $city->city_name : '' }}"  placeholder="City name">
+                        @error('city_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                         </div>
                         <div class="form-group">
-                        <label for="menu_description">Menu Description</label>
-                        <input type="text" id="menu_description" name="menu_description" class="form-control" value="{{ isset($menu) ? $menu->menu_description : '' }}" placeholder="Menu Description">
+                        <label for="city_description">City Description</label>
+                        <input type="text" id="city_description" name="city_description" class="form-control" value="{{ isset($city) ? $city->city_description : '' }}" placeholder="City Description">
                         </div>
                         <div class="form-group">
-                        <label for='menu_icon'>Menu Icon</label>
-                        <input id="menu_icon" type="file" class="form-control @error('menu_icon') is-invalid @enderror dropify"
-                            name="menu_icon" value="{{ isset($menu) ? asset('/uploads/shop/menus/'.$menu->menu_icon) : '' }}" autofocus>
-
-                        @error('menu_icon')
+                        <label for='city_icon'>City Icon</label>
+                        <input id="city_icon" type="file" class="dropify" name="city_icon" value="{{ isset($city) ? asset('/uploads/shop/city/'.$city->city_icon) : '' }}" autofocus>
+                        @error('city_icon')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                         </div>
                         <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
-                        @isset($menu)
+                        @isset($city)
                         <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
                         @else
                         <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
