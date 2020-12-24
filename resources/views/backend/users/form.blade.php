@@ -49,8 +49,7 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             <h5 class="card-title">User Info</h5>
-
-                            <x-forms.textbox name="name" value="{{ $user->name ?? ''  }}"
+                            <x-forms.textbox label="Name" name="name" value="{{ $user->name ?? ''  }}"
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
 
@@ -76,7 +75,8 @@
                                 @endforeach
                             </x-forms.select>
 
-                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
+                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
+                                value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
 
                             <x-forms.checkbox label="Status" name="status" class="custom-switch"
                                 :value="$user->status ?? null" />

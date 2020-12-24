@@ -1,0 +1,13 @@
+{
+    "name": "ProductProperty",
+    "alias": "productproperty",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ProductProperty\\Providers\\ProductPropertyServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
