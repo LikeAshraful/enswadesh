@@ -6,6 +6,10 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ProductProperty\Entities\MainCategory;
+use Illuminate\Support\Str;
+use Image;
+use Storage;
+use Intervention\Image\ImageManager;
 
 class MainCategoryController extends Controller
 {
@@ -25,7 +29,7 @@ class MainCategoryController extends Controller
      */
     public function create()
     {
-        return view('productproperty::create');
+        return view('productproperty::Backend.mainCategory.form');
     }
 
     /**
@@ -35,7 +39,24 @@ class MainCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Image
+        if ($image = $request->file('icon')) {
+            
+            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/uploads/products/categoriesicon/' . $filename);
+            Image::make($image)->resize(250, 250)->save($location);
+        }
+
+        $slug = Str::of($request->main_category_name)->slug('_');
+
+        MainCategory::create($request->except('icon', 'main_category_slug') +
+            [
+                'icon'                  => $filename,
+                'main_category_slug'    => $slug
+            ]);
+        
+        notify()->success('Product Category Successfully Added.', 'Added');
+        return redirect()->route('backend.main_category.index');
     }
 
     /**
@@ -53,9 +74,9 @@ class MainCategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(MainCategory $mainCategory)
     {
-        return view('productproperty::edit');
+        return view('productproperty::Backend.mainCategory.form',compact('mainCategory'));
     }
 
     /**
@@ -66,7 +87,32 @@ class MainCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = MainCategory::find($id);
+        $icon = $data->icon;
+        if (!empty($request->main_category_name)) {
+            $slug = Str::of($request->main_category_name)->slug('_');
+        } else {
+            $slug = $data->main_category_name;
+        }
+
+        if ($image = $request->file('icon')) {
+            $icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $locationc = public_path('/uploads/products/categoriesicon/' . $icon);
+            Image::make($image)->resize(250, 250)->save($locationc);
+            $oldFilenamec = $data->icon;
+            $data->icon = $icon;
+            Storage::delete('/uploads/products/categoriesicon/' . $oldFilenamec);
+        }
+
+        // Product category update
+        $data = $data->update($request->except('icon', 'main_category_slug') +
+            [
+                'icon'                  => $icon,
+                'main_category_slug'    => $slug
+            ]);
+
+        notify()->success('Product Category Successfully Updated.', 'Updated');
+        return redirect()->route('backend.main_category.index');
     }
 
     /**
@@ -74,8 +120,10 @@ class MainCategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(MainCategory $mainCategory)
     {
-        //
+        $mainCategory->delete();
+        notify()->success("Product Category Successfully Deleted", "Deleted");
+        return back();
     }
 }

@@ -14,11 +14,6 @@ class SubCategory extends Model
         'sub_category_name',
         'sub_category_slug'
     ];
-
-    public function SubWithMainCateory()
-    {
-        return $this->belongsTo(MainCategory::class);
-    }
     
     protected static function newFactory()
     {

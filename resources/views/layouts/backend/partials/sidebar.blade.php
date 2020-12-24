@@ -75,7 +75,7 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('menus.index')}}"
+                            <a href="{{route('backend.menus.index')}}"
                                 class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
                             <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
@@ -100,14 +100,14 @@
                     <ul>
                         <li>
                             <a href="{{route('backend.main_category.index')}}"
-                                class="{{ Route::is('ackend.main_category.index*') ? 'mm-active' : '' }}">
+                                class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Main Category
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('menus.index')}}"
-                                class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
+                            <a href="{{route('backend.sub_category.index')}}"
+                                class="{{ Route::is('backend.sub_category.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Sub Category
                             </a>

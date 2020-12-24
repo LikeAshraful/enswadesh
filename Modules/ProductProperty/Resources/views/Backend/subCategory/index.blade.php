@@ -14,11 +14,11 @@
                     <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('Product Category') }}</div>
+                <div>{{ __('Product SubCategory') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('backend.main_category.create') }}" class="btn-shadow btn btn-info">
+                    <a href="{{ route('backend.sub_category.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
@@ -38,27 +38,24 @@
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Slug</th>
-                            <th scope="col">Icon</th>
                             <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($mainCategories as $key => $category)
+                            @foreach($subCategories as $key => $category)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $category->main_category_name }}</td>
-                                <td>{{ $category->main_category_slug }}</td>
+                                <td>{{ $category->sub_category_name }}</td>
+                                <td>{{ $category->sub_category_slug }}</td>
+                                
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/products/categoriesicon/'.$category->icon)}}" width="50" height="50" alt="">
-                                </td>
-                                <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.main_category.edit', $category->id) }}"><i class="fas fa-edit"></i></a> |
+                                    <a class="fa-edit-style" href="{{ route('backend.sub_category.edit', $category->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $category->id }})">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                     <form id="delete-form-{{ $category->id }}"
-                                            action="{{ route('backend.main_category.destroy',$category->id) }}" method="POST"
+                                            action="{{ route('backend.sub_category.destroy',$category->id) }}" method="POST"
                                             style="display: none;">
                                         @csrf()
                                         @method('DELETE')
