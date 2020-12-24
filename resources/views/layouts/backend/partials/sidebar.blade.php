@@ -75,11 +75,8 @@
                     </a>
                     <ul>
                         <li>
-<<<<<<< HEAD
                             <a href="{{route('backend.menus.index')}}"
                                 class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
-=======
->>>>>>> 7758cb7a96d80f05c14c550c55557b38b5f3a613
                             <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 App Menus
@@ -115,13 +112,8 @@
                             </a>
                         </li>
                         <li>
-<<<<<<< HEAD
                             <a href="{{route('backend.sub_category.index')}}"
                                 class="{{ Route::is('backend.sub_category.index*') ? 'mm-active' : '' }}">
-=======
-                            <a href="#"
-                                class="">
->>>>>>> 7758cb7a96d80f05c14c550c55557b38b5f3a613
                                 <i class="metismenu-icon"></i>
                                 Sub Category
                             </a>
