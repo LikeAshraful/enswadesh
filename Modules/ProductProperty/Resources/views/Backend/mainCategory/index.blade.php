@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','App Menus')
+@section('title','Shop Category')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
