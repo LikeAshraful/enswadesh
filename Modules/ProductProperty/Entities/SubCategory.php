@@ -14,7 +14,10 @@ class SubCategory extends Model
         'sub_category_name',
         'sub_category_slug'
     ];
-    
+    public function subWithMainCategory()
+    {
+        return $this->belongsTo(MainCategory::class,'main_category_id','id');
+    }
     protected static function newFactory()
     {
         return \Modules\ProductProperty\Database\factories\SubCategoryFactory::new();

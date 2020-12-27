@@ -54,23 +54,10 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <Label for='sub_category_slug'>Category Slug</Label>
-                        <input id="sub_category_slug" type="sub_category_slug"
-                            class="form-control @error('sub_category_slug') is-invalid @enderror"
-                            name="main_category_slug"
-                            value="{{ $subCategory->sub_category_slug ?? old('sub_category_slug') }}" autofocus>
-
-                        @error('sub_category_slug')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
                     <h5 class="card-title">Select Main Category</h5>
 
-                    <x-forms.select label="Select Main Category" name="main_category_id" class="select js-example-basic-single">
+                    <x-forms.select label="Select Main Category" name="main_category_id"
+                        class="select js-example-basic-single">
                         @foreach($mainCategories as $key=>$mainCategory)
                         <x-forms.select-item :value="$mainCategory->id" :label="$mainCategory->main_category_name"
                             :selected="$mainCategory->id ?? null" />

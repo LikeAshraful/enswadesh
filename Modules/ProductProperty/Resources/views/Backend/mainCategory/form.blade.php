@@ -62,20 +62,6 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <Label for='main_category_slug'>Category Slug</Label>
-                        <input id="main_category_slug" type="main_category_slug"
-                            class="form-control @error('main_category_slug') is-invalid @enderror"
-                            name="main_category_slug"
-                            value="{{ $mainCategory->main_category_slug ?? old('main_category_slug') }}" autofocus>
-
-                        @error('main_category_slug')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
                         <label for='icon'>Category Icon</label>
 
                         <input type="file" id="icon" name="icon" class="dropify"
