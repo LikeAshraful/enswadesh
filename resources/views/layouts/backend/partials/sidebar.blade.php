@@ -35,52 +35,98 @@
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
                 <li>
-                    <a href="{{ route('backend.dashboard') }}" class="mm-active">
+                    <a href="{{ route('backend.dashboard') }}"
+                        class="{{ Route::is('backend.dashboard') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-rocket"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="app-sidebar__heading">User Management</li>
                 <li>
-                    <a href="{{ route('backend.users.index') }}" class="{{ Request::is('banckend/roles*') ? 'mm-active' : '' }}">
+                    <a href="#"
+                        class="{{ Route::is('backend.users.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-users"></i>
-                        Users
+                        Property
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.users.index')}}"
+                                class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('backend.roles.index') }}"
+                                class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Roles
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="app-sidebar__heading">Role Management</li>
+                <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="{{ route('backend.roles.index') }}" class="{{ Request::is('banckend/users*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
-                        Roles
+                        Property
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.menus.index')}}"
+                                class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
+                            <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                App Menus
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Cities
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Areas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.marketplaces.index')}}" class="{{ Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Market Place
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="app-sidebar__heading">Shop Product</li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
+                    <i class="pe pe-7s-chat pe-1x pull-left pe-border"></i>
+                        Property
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.main_category.index')}}"
+                                class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Main Category
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.sub_category.index')}}"
+                                class="{{ Route::is('backend.sub_category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Sub Category
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li class="app-sidebar__heading">Widgets</li>
-                <li>
-                    <a href="">
-                        <i class="metismenu-icon pe-7s-display2"></i>
-                        Dashboard Boxes
-                    </a>
-                </li>
-                <li class="app-sidebar__heading">Forms</li>
-                <li>
-                    <a href="">
-                        <i class="metismenu-icon pe-7s-mouse">
-                        </i>Forms Controls
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="metismenu-icon pe-7s-eyedropper">
-                        </i>Forms Layouts
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="metismenu-icon pe-7s-pendrive">
-                        </i>Forms Validation
-                    </a>
-                </li>
                 <li class="app-sidebar__heading">Charts</li>
                 <li>
                     <a href="">
@@ -88,16 +134,7 @@
                         </i>ChartJS
                     </a>
                 </li>
-                <li class="app-sidebar__heading">PRO Version</li>
-                <li>
-                    <a href="https://dashboardpack.com/theme-details/architectui-dashboard-html-pro/" target="_blank">
-                        <i class="metismenu-icon pe-7s-graph2">
-                        </i>
-                        Upgrade to PRO
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
 </div>
-

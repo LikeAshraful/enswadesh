@@ -10,9 +10,19 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Repositories\UserRepository;
+
+use Image;
+use Storage;
+use Intervention\Image\ImageManager;
 
 class UserController extends Controller
 {
+    protected $users;
+    public function __construct(UserRepository $users)
+    {
+        $this->users=$users;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +31,7 @@ class UserController extends Controller
     public function index()
     {
         Gate::authorize('backend.users.index');
-        $users = User::all();
+        $users = $this->users->all();
         return view('backend.users.index',compact('users'));
     }
 
@@ -45,11 +55,19 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        //Image
+        if ($image = $request->file('image')) {
+            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/uploads/users/' . $filename);
+            Image::make($image)->resize(600, 400)->save($location);
+        }
+
         $user = User::create([
             'role_id'   => $request->role,
             'name'      => $request->name,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
+            'image'     => isset($filename) ? $filename : '',
             'status'    => $request->filled('status'),
         ]);
         
@@ -63,9 +81,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $users)
     {
-        return view('backend.users.show',compact('user'));
+        return view('backend.users.show',compact('users'));
     }
 
     /**
@@ -74,10 +92,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         Gate::authorize('backend.users.edit');
         $roles = Role::all();
+        $user = $this->users->get($id);
         return view('backend.users.form', compact('roles','user'));
     }
 
@@ -90,11 +109,20 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if ($image = $request->file('image')) {
+            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/uploads/users/' . $filename);
+            Image::make($image)->resize(600, 400)->save($location);
+            $oldFilenamec = $user->image;
+            $user->image = $image;
+            Storage::delete('/uploads/users/' . $oldFilenamec);
+        }
         $user->update([
             'role_id'   => $request->role,
             'name'      => $request->name,
             'email'     => $request->email,
             'password'  => isset($request->password) ? Hash::make($request->password) : $user->password,
+            'image'     => isset($filename) ? $filename : $user->image,
             'status'    => $request->filled('status'),
         ]);
         

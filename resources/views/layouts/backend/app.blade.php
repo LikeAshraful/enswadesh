@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     @stack('css')
 </head>
 <body>
@@ -29,9 +30,9 @@
     </div>
 </div>
 <!-- Scripts -->
+<script src="{{ asset('js/backend.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-<!-- <script src="{{ asset('js/backend.js') }}"></script> -->
-<!-- <script src="{{ asset('js/script.js') }}"></script> -->
+<script src="{{ asset('js/script.js') }}"></script>
 @stack('js')
 @include('vendor.lara-izitoast.toast')
 </body>

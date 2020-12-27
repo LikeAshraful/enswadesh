@@ -65,7 +65,7 @@ class Textbox extends Component
      * @param null $value
      * @param null $fieldAttributes
      */
-    public function __construct($type = 'text', $label, $name, $placeholder = null, $class = null, $value= null, $fieldAttributes = null)
+    public function __construct($type =  null, $label = null, $name = null, $placeholder = null, $class = null, $value= null, $fieldAttributes = null)
     {
         $this->type = $type;
         $this->label = $label;
