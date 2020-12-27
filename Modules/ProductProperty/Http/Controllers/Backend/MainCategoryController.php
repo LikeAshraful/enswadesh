@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ProductProperty\Entities\MainCategory;
+use Modules\ProductProperty\Entities\SubCategory;
 use Illuminate\Support\Str;
 use Image;
 use Storage;
@@ -20,6 +21,7 @@ class MainCategoryController extends Controller
     public function index()
     {
         $mainCategories = MainCategory::all();
+        // dd($mainCategories->get(1)->mainWithSubCategories());
         return view('productproperty::Backend.mainCategory.index',compact('mainCategories'));
     }
 
@@ -122,8 +124,17 @@ class MainCategoryController extends Controller
      */
     public function destroy(MainCategory $mainCategory)
     {
-        $mainCategory->delete();
-        notify()->success("Product Category Successfully Deleted", "Deleted");
+        // $sub_category = SubCategory::where('main_category_id',$mainCategory->id)->get();
+        // dd($sub_category);
+        if($mainCategory->mainWithSubCategories != null)
+        {
+            notify()->warning("This category have sub categories, to delete you need to delete sub categories", "Warning");
+        }
+        else{
+
+            $mainCategory->delete();
+            notify()->success("Product Category Successfully Deleted", "Deleted");
+        }
         return back();
     }
 }

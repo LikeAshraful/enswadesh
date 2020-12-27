@@ -105,7 +105,7 @@
                 <li class="app-sidebar__heading">Shop Product</li>
                 <li>
                     <a href="#" class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
-                        <i class="metismenu-icon pe-7s-diamond"></i>
+                    <i class="pe pe-7s-chat pe-1x pull-left pe-border"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>

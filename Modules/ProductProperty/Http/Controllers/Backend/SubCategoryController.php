@@ -38,7 +38,6 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->main_category_id);
         $slug = Str::of($request->sub_category_name)->slug('_');
 
         SubCategory::create($request->except('main_category_id ','sub_category_slug') +
@@ -80,7 +79,6 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $data = SubCategory::find($id);
         if (!empty($request->sub_category_name)) {
             $slug = Str::of($request->sub_category_name)->slug('_');
