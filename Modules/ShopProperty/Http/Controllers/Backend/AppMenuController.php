@@ -39,7 +39,7 @@ class AppMenuController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'menu_name' => 'required',
             'menu_description' => 'required',
             'menu_icon' => 'required|mimes:jpeg,jpg,png|max:500',

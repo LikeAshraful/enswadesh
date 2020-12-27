@@ -16,8 +16,18 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $adminRole = Role::where('slug','admin')->first();
+        // Create super admin
+        $superRole = Role::where('slug','super_admin')->first();
+        User::updateOrCreate([
+            'role_id' => $superRole->id,
+            'name' => 'Super Admin',
+            'email' => 'super@gmail.com',
+            'password' => Hash::make('12345678'),
+            'status' => true
+        ]);
+
         // Create admin
+        $adminRole = Role::where('slug','admin')->first();
         User::updateOrCreate([
             'role_id' => $adminRole->id,
             'name' => 'Admin',

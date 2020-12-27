@@ -14,4 +14,4 @@
 Route::resource('menus', 'Backend\AppMenuController');
 Route::resource('cities', 'Backend\CityController');
 Route::resource('areas', 'Backend\AreaController');
-
+Route::resource('marketplaces', 'Backend\MarketPlaceController');
