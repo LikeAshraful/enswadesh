@@ -66,7 +66,8 @@
                         <div class="form-group">
                             <label for='menu_icon'>Menu Icon</label>
                             <input id="menu_icon" type="file"
-                                class="form-control @error('menu_icon') is-invalid @enderror dropify" name="menu_icon"
+                                class="dropify" name="menu_icon" data-default-file="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'. $menu->menu_icon): '' }}"
+                                data-height="220"
                                 value="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'.$menu->menu_icon) : '' }}"
                                 autofocus>
 

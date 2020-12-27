@@ -68,7 +68,7 @@
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') ? 'mm-active' : '' }} || Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -92,6 +92,12 @@
                             <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Areas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.marketplaces.index')}}" class="{{ Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Market Place
                             </a>
                         </li>
                     </ul>
