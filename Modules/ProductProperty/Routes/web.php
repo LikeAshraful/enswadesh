@@ -12,3 +12,4 @@
 */
 
 Route::resource('main_category', 'Backend\MainCategoryController');
+Route::resource('sub_category', 'Backend\SubCategoryController');
