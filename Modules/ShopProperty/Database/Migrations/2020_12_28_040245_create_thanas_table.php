@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarketPlacesTable extends Migration
+class CreateThanasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateMarketPlacesTable extends Migration
      */
     public function up()
     {
-        Schema::create('market_places', function (Blueprint $table) {
+        Schema::create('thanas', function (Blueprint $table) {
             $table->id();
             $table->integer('area_id')->nullable();
-            $table->string('market_name')->nullable();
-            $table->string('marketplace_address')->nullable();
-            $table->string('marketplace_description')->nullable();
-            $table->string('marketplace_slug')->nullable();
-            $table->text('marketplace_icon')->nullable();
+            $table->string('thana_name')->nullable();
+            $table->text('thana_description')->nullable();
+            $table->string('thana_slug')->nullable();
+            $table->string('thana_icon')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateMarketPlacesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('market_places');
+        Schema::dropIfExists('thanas');
     }
 }
