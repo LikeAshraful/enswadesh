@@ -14,16 +14,19 @@ class UserRepository implements CommonInterface {
 
     public function all()
     {
+        //Return User Model
         return User::get();
     }
 
     public function allRole()
     {
+        //Return Role Model
         return Role::get();
     }
 
     public function get($id)
     {
+        //Return User Model
         return User::find($id);
     }
 
@@ -35,6 +38,7 @@ class UserRepository implements CommonInterface {
             Image::make($image)->resize(600, 400)->save($location);
         }
 
+        //Return User Model
         return User::create([
             'role_id'   => $data['role'],
             'name'      => $data['name'],
@@ -60,6 +64,7 @@ class UserRepository implements CommonInterface {
                 Storage::delete('/uploads/users/' . $oldFilenamec);
             }
         }
+        //Return User Model
         return $user->update([
             'role_id'   => $data['role'],
             'name'      => $data['name'],
@@ -72,6 +77,7 @@ class UserRepository implements CommonInterface {
 
     public function delete($id)
     {
+        //Return User Model
         $user = User::find($id);
         $oldFilename = $user->image;
         Storage::delete('/uploads/users/' . $oldFilename);
