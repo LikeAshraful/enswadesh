@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
-use App\Models\User;
-use App\Models\Role;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepository;
-
-use Image;
-use Storage;
-use Intervention\Image\ImageManager;
 
 class UserController extends Controller
 {
     protected $users;
-    public function __construct(UserRepository $users)
+    protected $roles;
+    public function __construct(UserRepository $users, UserRepository $roles)
     {
         $this->users=$users;
+        $this->roles=$roles;
+
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +27,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        //Define user authorize gate
         Gate::authorize('backend.users.index');
+
+        //Access UserRepository all function
         $users = $this->users->all();
         return view('backend.users.index',compact('users'));
     }
@@ -42,8 +42,12 @@ class UserController extends Controller
      */
     public function create()
     {
+        //Define user authorize gate
         Gate::authorize('backend.users.create');
-        $roles = Role::all();
+
+        //Access UserRepository allRole function
+        $roles = $this->roles->allRole();
+
         return view('backend.users.form', compact('roles'));
     }
 
@@ -55,23 +59,11 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //Image
-        if ($image = $request->file('image')) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/users/' . $filename);
-            Image::make($image)->resize(600, 400)->save($location);
-        }
+        //Access UserRepository store function
+        $users = $this->users->store($request->all());
 
-        $user = User::create([
-            'role_id'   => $request->role,
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'image'     => isset($filename) ? $filename : '',
-            'status'    => $request->filled('status'),
-        ]);
-        
         notify()->success('User Successfully Added.', 'Added');
+
         return redirect()->route('backend.users.index');
     }
 
@@ -94,9 +86,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        //Define user authorize gate
         Gate::authorize('backend.users.edit');
-        $roles = Role::all();
+
+        //Access UserRepository allRole and get function
+        $roles = $this->roles->allRole();
         $user = $this->users->get($id);
+
         return view('backend.users.form', compact('roles','user'));
     }
 
@@ -107,26 +103,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update($id, UpdateUserRequest $request)
     {
-        if ($image = $request->file('image')) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/users/' . $filename);
-            Image::make($image)->resize(600, 400)->save($location);
-            $oldFilenamec = $user->image;
-            $user->image = $image;
-            Storage::delete('/uploads/users/' . $oldFilenamec);
-        }
-        $user->update([
-            'role_id'   => $request->role,
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => isset($request->password) ? Hash::make($request->password) : $user->password,
-            'image'     => isset($filename) ? $filename : $user->image,
-            'status'    => $request->filled('status'),
-        ]);
-        
+        //Access UserRepository update function
+        $users = $this->users->update($id,$request->all());
+
         notify()->success('User Successfully Updated.', 'Updated');
+
         return redirect()->route('backend.users.index');
     }
 
@@ -136,10 +119,14 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        //Define user authorize gate
         Gate::authorize('backend.users.destroy');
-        $user->delete();
+
+        //Access UserRepository delete function
+        $users = $this->users->delete($id);
+
         notify()->success("User Successfully Deleted", "Deleted");
         return back();
     }
