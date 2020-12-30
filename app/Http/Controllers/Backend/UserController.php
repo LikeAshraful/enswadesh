@@ -7,14 +7,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Users\StoreUserRequest;
+use App\Repositories\Interface\UserInterface;
 use App\Http\Requests\Users\UpdateUserRequest;
-use App\Repositories\Interface\CommonInterface;
 
 class UserController extends Controller
 {
     protected $users;
     
-    public function __construct(CommonInterface $users)
+    public function __construct(UserInterface $users)
     {
         $this->users=$users;
 
@@ -72,9 +72,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $users)
+    public function show($id)
     {
-        return view('backend.users.show',compact('users'));
+        //Access UserRepository store function
+        $user = $this->users->get($id);
+
+        return view('backend.users.show',compact('user'));
     }
 
     /**

@@ -2,7 +2,7 @@
   
 namespace App\Repositories\Interface;
 
-interface CommonInterface{
+interface UserInterface{
     public function all();
 
     public function get($id);

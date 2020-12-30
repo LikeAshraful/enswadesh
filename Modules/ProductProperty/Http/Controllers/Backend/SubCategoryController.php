@@ -17,6 +17,8 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
+        //Authorize user
+        Gate::authorize('backend.sub_category.index');
         $subCategories = SubCategory::all();
         return view('productproperty::Backend.subCategory.index',compact('subCategories'));
     }
@@ -27,6 +29,8 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
+        //Authorize user
+        Gate::authorize('backend.sub_category.index');
         $mainCategories = MainCategory::all();
         return view('productproperty::Backend.subCategory.form',compact('mainCategories'));
     }
@@ -67,6 +71,8 @@ class SubCategoryController extends Controller
      */
     public function edit(SubCategory $subCategory)
     {
+        //Authorize user
+        Gate::authorize('backend.sub_category.index');
         $mainCategories = MainCategory::all();
         return view('productproperty::Backend.subCategory.form',compact('mainCategories','subCategory'));
     }
@@ -103,6 +109,8 @@ class SubCategoryController extends Controller
      */
     public function destroy(SubCategory $subCategory)
     {
+        //Authorize user
+        Gate::authorize('backend.sub_category.index');
         $subCategory->delete();
         notify()->success("Product Sub Category Successfully Deleted", "Deleted");
         return back();

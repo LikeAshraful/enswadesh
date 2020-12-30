@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Gate;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Roles\StoreRoleRequest;
-use App\Http\Requests\Roles\UpdateRoleRequest;
 use App\Models\Role;
 use App\Models\Module;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Roles\StoreRoleRequest;
+use App\Http\Requests\Roles\UpdateRoleRequest;
+use App\Repositories\Interface\RoleInterface;
 
 class RoleController extends Controller
 {
+    protected $roles;
+    
+    public function __construct(RoleInterface $roles)
+    {
+        $this->roles=$roles;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +28,12 @@ class RoleController extends Controller
      */
     public function index()
     {
+        //Define Role authorize gate
         Gate::authorize('backend.roles.index');
-        $roles = Role::all();
+
+        //Access RoleRepository allRole function
+        $roles = $this->roles->all();
+
         return view('backend.roles.index',compact('roles'));
     }
 
@@ -32,8 +44,12 @@ class RoleController extends Controller
      */
     public function create()
     {
+        //Define Role authorize gate
         Gate::authorize('backend.roles.create');
-        $modules = Module::all();
+
+        //Access RoleRepository allModules function
+        $modules = $this->roles->allModules();
+
         return view('backend.roles.form',compact('modules'));
     }
 
@@ -45,11 +61,11 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        Role::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ])->permissions()->sync($request->input('permissions', []));
+        //Access RoleRepository store function
+        $role = $this->roles->store($request->all());
+ 
         notify()->success('Role Successfully Added.', 'Added');
+
         return redirect()->route('backend.roles.index');
     }
 
@@ -70,10 +86,17 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
+        //Define Role authorize gate
         Gate::authorize('backend.roles.edit');
-        $modules = Module::all();
+
+        //Access RoleRepository get function
+        $role = $this->roles->get($id);
+
+        //Access RoleRepository allModules function
+        $modules = $this->roles->allModules();
+
         return view('backend.roles.form',compact('role','modules'));
     }
 
@@ -84,13 +107,11 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update($id, UpdateRoleRequest $request)
     {
-        $role->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ]);
-        $role->permissions()->sync($request->input('permissions', []));
+        //Access RoleRepository update function
+        $role = $this->roles->update($id,$request->all());
+
         notify()->success('Role Successfully Updated.', 'Updated');
         return redirect()->route('backend.roles.index');
     }
@@ -101,15 +122,15 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
+        //Define Role authorize gate
         Gate::authorize('backend.roles.destroy');
-        if ($role->deletable) {
-            $role->delete();
-            notify()->success("Role Successfully Deleted", "Deleted");
-        } else {
-            notify()->error("You can\'t delete system role.", "Error");
-        }
+
+        //Access RoleRepository update function
+        $role = $this->roles->delete($id);
+        
+        notify()->success("Role Successfully Deleted", "Deleted");
         return back();
     }
 }
