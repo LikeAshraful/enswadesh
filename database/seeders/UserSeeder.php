@@ -19,31 +19,34 @@ class UserSeeder extends Seeder
         // Create super admin
         $superRole = Role::where('slug','super_admin')->first();
         User::updateOrCreate([
-            'role_id' => $superRole->id,
-            'name' => 'Super Admin',
-            'email' => 'super@gmail.com',
-            'password' => Hash::make('12345678'),
-            'status' => true
+            'role_id'   => $superRole->id,
+            'name'      => 'Super Admin',
+            'email'     => 'super@gmail.com',
+            'image'     => 'user.png',
+            'password'  => Hash::make('12345678'),
+            'status'    => true
         ]);
 
         // Create admin
         $adminRole = Role::where('slug','admin')->first();
         User::updateOrCreate([
-            'role_id' => $adminRole->id,
-            'name' => 'Admin',
-            'email' => 'admin@mail.com',
-            'password' => Hash::make('12345678'),
-            'status' => true
+            'role_id'   => $adminRole->id,
+            'name'      => 'Admin',
+            'email'     => 'admin@mail.com',
+            'image'     => 'user.png',
+            'password'  => Hash::make('12345678'),
+            'status'    => true
         ]);
 
         // Create user
         $userRole = Role::where('slug','user')->first();
         User::updateOrCreate([
-            'role_id' => $userRole->id,
-            'name' => 'Jone Doe',
-            'email' => 'user@mail.com',
-            'password' => Hash::make('12345678'),
-            'status' => true
+            'role_id'   => $userRole->id,
+            'name'      => 'Jone Doe',
+            'email'     => 'user@mail.com',
+            'image'     =>'user.png',
+            'password'  => Hash::make('12345678'),
+            'status'    => true
         ]);
     }
 }
