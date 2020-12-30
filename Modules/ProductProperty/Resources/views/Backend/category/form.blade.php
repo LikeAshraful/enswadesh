@@ -20,11 +20,11 @@
                 <i class="pe-7s-check icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ isset($mainCategories) ? 'Edit' : 'Create New' }} Category</div>
+            <div>{{ isset($category) ? 'Edit' : 'Create New' }} Category</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.main_category.index') }}" class="btn-shadow btn btn-danger">
+                <a href="{{ route('backend.category.index') }}" class="btn-shadow btn btn-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -38,8 +38,8 @@
     <div class="col-12">
         <div class="main-card mb-3 card">
             <!-- form start -->
-            <form id="mainCategoryFrom" role="form" method="POST"
-                action="{{ isset($mainCategory) ? route('backend.main_category.update',$mainCategory->id) : route('backend.main_category.store') }}"
+            <form id="categoryFrom" role="form" method="POST"
+                action="{{ isset($category) ? route('backend.main_category.update',$mainCategory->id) : route('backend.main_category.store') }}"
                 enctype="multipart/form-data" file="true">
                 @csrf
                 @if (isset($mainCategory))

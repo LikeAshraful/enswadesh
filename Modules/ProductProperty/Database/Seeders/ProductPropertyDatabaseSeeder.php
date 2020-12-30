@@ -4,8 +4,9 @@ namespace Modules\ProductProperty\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\ProductProperty\Entities\MainCategory;
+use Modules\ProductProperty\Entities\Category;
 use Modules\ProductProperty\Entities\SubCategory;
+use Modules\ProductProperty\Entities\MainCategory;
 
 class ProductPropertyDatabaseSeeder extends Seeder
 {
@@ -17,36 +18,30 @@ class ProductPropertyDatabaseSeeder extends Seeder
     public function run()
     {
         // Category
-        $mainCategoryProduct = MainCategory::updateOrCreate(['main_category_name' => 'Electronic','main_category_slug' =>  'electronic']);
-        SubCategory::updateOrCreate([
-            'main_category_id'  => $mainCategoryProduct->id,
-            'sub_category_name' => 'Laptop',
-            'sub_category_slug' => 'laptop',
-        ]);
+        $category = Category::updateOrCreate([
+            'parent_id'     => 0,
+            'name'          => 'Electronic'
+            ]);
 
-        SubCategory::updateOrCreate([
-            'main_category_id'  => $mainCategoryProduct->id,
-            'sub_category_name' => 'Desktop',
-            'sub_category_slug' => 'desktop',
-        ]);
+        $category_one = Category::updateOrCreate([
+            'parent_id'     => $category->id,
+            'name'          => 'Laptop',
+            ]);
 
-        $mainCategoryProduct = MainCategory::updateOrCreate(['main_category_name' => 'Shoes','main_category_slug' =>  'shoes']);
-        SubCategory::updateOrCreate([
-            'main_category_id'  => $mainCategoryProduct->id,
-            'sub_category_name' => 'Flat Sandals',
-            'sub_category_slug' => 'flat',
-        ]);
-        SubCategory::updateOrCreate([
-            'main_category_id'  => $mainCategoryProduct->id,
-            'sub_category_name' => 'Heels',
-            'sub_category_slug' => 'heels',
-        ]);
-        SubCategory::updateOrCreate([
-            'main_category_id'  => $mainCategoryProduct->id,
-            'sub_category_name' => 'Flat Shoes',
-            'sub_category_slug' => 'flat',
-        ]);
+        $category_two = Category::updateOrCreate([
+            'parent_id'     => $category_one->id,
+            'name'          => 'Asus'
+            ]);
 
+        $category_three = Category::updateOrCreate([
+            'parent_id'     => $category_two->id,
+            'name'          => 'X556U',
+            ]);
+        $category_four = Category::updateOrCreate([
+            'parent_id'     => $category_two->id,
+            'name'          => '554Xu',
+            ]);
+            
         Model::unguard();
 
         // $this->call(MainCategory::class);
