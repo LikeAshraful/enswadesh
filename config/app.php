@@ -170,6 +170,7 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         /*
          * Application Service Providers...
          */
