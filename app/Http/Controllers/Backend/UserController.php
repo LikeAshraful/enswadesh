@@ -7,17 +7,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Users\StoreUserRequest;
+use App\Repositories\Interface\UserInterface;
 use App\Http\Requests\Users\UpdateUserRequest;
-use App\Repositories\UserRepository;
 
 class UserController extends Controller
 {
     protected $users;
-    protected $roles;
-    public function __construct(UserRepository $users, UserRepository $roles)
+    
+    public function __construct(UserInterface $users)
     {
         $this->users=$users;
-        $this->roles=$roles;
 
     }
     /**
@@ -30,7 +29,7 @@ class UserController extends Controller
         //Define user authorize gate
         Gate::authorize('backend.users.index');
 
-        //Access UserRepository all function
+        //Access UserRepository delete function
         $users = $this->users->all();
         return view('backend.users.index',compact('users'));
     }
@@ -46,7 +45,7 @@ class UserController extends Controller
         Gate::authorize('backend.users.create');
 
         //Access UserRepository allRole function
-        $roles = $this->roles->allRole();
+        $roles = $this->users->allRole();
 
         return view('backend.users.form', compact('roles'));
     }
@@ -73,9 +72,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $users)
+    public function show($id)
     {
-        return view('backend.users.show',compact('users'));
+        //Access UserRepository store function
+        $user = $this->users->get($id);
+
+        return view('backend.users.show',compact('user'));
     }
 
     /**
@@ -90,7 +92,7 @@ class UserController extends Controller
         Gate::authorize('backend.users.edit');
 
         //Access UserRepository allRole and get function
-        $roles = $this->roles->allRole();
+        $roles = $this->users->allRole();
         $user = $this->users->get($id);
 
         return view('backend.users.form', compact('roles','user'));

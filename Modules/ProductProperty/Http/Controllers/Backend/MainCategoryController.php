@@ -2,15 +2,16 @@
 
 namespace Modules\ProductProperty\Http\Controllers\Backend;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Modules\ProductProperty\Entities\MainCategory;
-use Modules\ProductProperty\Entities\SubCategory;
-use Illuminate\Support\Str;
 use Image;
 use Storage;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
 use Intervention\Image\ImageManager;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\ProductProperty\Entities\SubCategory;
+use Modules\ProductProperty\Entities\MainCategory;
 
 class MainCategoryController extends Controller
 {
@@ -20,6 +21,7 @@ class MainCategoryController extends Controller
      */
     public function index()
     {
+        Gate::authorize('backend.main_category.index');
         $mainCategories = MainCategory::all();
         // dd($mainCategories->get(1)->mainWithSubCategories());
         return view('productproperty::Backend.mainCategory.index',compact('mainCategories'));
@@ -31,6 +33,7 @@ class MainCategoryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('backend.main_category.create');
         return view('productproperty::Backend.mainCategory.form');
     }
 
@@ -78,6 +81,7 @@ class MainCategoryController extends Controller
      */
     public function edit(MainCategory $mainCategory)
     {
+        Gate::authorize('backend.main_category.edit');
         return view('productproperty::Backend.mainCategory.form',compact('mainCategory'));
     }
 
@@ -125,7 +129,7 @@ class MainCategoryController extends Controller
     public function destroy(MainCategory $mainCategory)
     {
         // $sub_category = SubCategory::where('main_category_id',$mainCategory->id)->get();
-        // dd($sub_category);
+        Gate::authorize('backend.main_category.destroy');
         if($mainCategory->mainWithSubCategories != null)
         {
             notify()->warning("This category have sub categories, to delete you need to delete sub categories", "Warning");
