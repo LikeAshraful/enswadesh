@@ -1,12 +1,13 @@
 <?php
 
-namespace Modules\ShopProperty\Http\Controllers;
+namespace Modules\ShopProperty\Http\Controllers\API;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\ShopProperty\Entities\Thana;
+use Illuminate\Contracts\Support\Renderable;
 
-class ShopPropertyController extends Controller
+class ApiThanaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class ShopPropertyController extends Controller
      */
     public function index()
     {
-        return view('shopproperty::index');
+        $status = 200;
+        $thanas = Thana::with('areaOfthana')->get();
+        return response()->json($thanas, $status);
     }
 
     /**
