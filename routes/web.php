@@ -15,6 +15,15 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:cache');
+    return "All cache is cleared";
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

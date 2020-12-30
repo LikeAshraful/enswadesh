@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Market Place')
+@section('title','Thana')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -14,15 +14,15 @@
                     <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('Market Place') }}</div>
+                <div>{{ __('Thana') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('backend.marketplaces.create') }}" class="btn-shadow btn btn-info">
+                    <a href="{{ route('backend.thanas.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
-                        {{ __('Create Area') }}
+                        {{ __('Create Thana') }}
                     </a>
                 </div>
             </div>
@@ -32,13 +32,12 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatableMarketPlace" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatableThana" class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
                             <th scope="col">#</th>
                             <th scope="col">Area</th>
-                            <th scope="col">Market Name</th>
-                            <th scope="col">Address</th>
+                            <th scope="col">Thana</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Description</th>
                             <th scope="col">Icon</th>
@@ -46,25 +45,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($marketplaces as $key => $marketplace)
+                            @foreach($thanas as $key => $thana)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $marketplace->thanaOfMarketPlace ? $marketplace->thanaOfMarketPlace->thana_name : 'Not Found' }}</td>
-                                <td>{{ $marketplace->market_name }}</td>
-                                <td>{{ $marketplace->marketplace_address }}</td>
-                                <td>{{ $marketplace->marketplace_slug }}</td>
-                                <td>{{ $marketplace->marketplace_description }}</td>
+                                <td>{{ $thana->areaOfthana ? $thana->areaOfthana->area_name : 'Not Found' }}</td>
+                                <td>{{ $thana->thana_name }}</td>
+                                <td>{{ $thana->thana_slug }}</td>
+                                <td>{{ $thana->thana_description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/marketplace/' . $marketplace->marketplace_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/thana/' . $thana->thana_icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.marketplaces.edit', $marketplace->id) }}"><i class="fas fa-edit"></i></a> |
+                                    <a class="fa-edit-style" href="{{ route('backend.thanas.edit', $thana->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"
-                                            onclick="deleteData({{ $marketplace->id }})">
+                                            onclick="deleteData({{ $thana->id }})">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                    <form id="delete-form-{{ $marketplace->id }}"
-                                            action="{{ route('backend.marketplaces.destroy',$marketplace->id) }}" method="POST"
+                                    <form id="delete-form-{{ $thana->id }}"
+                                            action="{{ route('backend.thanas.destroy',$thana->id) }}" method="POST"
                                             style="display: none;">
                                         @csrf()
                                         @method('DELETE')
@@ -86,7 +84,7 @@
     <script>
         $(document).ready(function() {
             // Datatable
-            $("#datatableMarketPlace").DataTable();
+            $("#datatableThana").DataTable();
         });
     </script>
 @endpush
