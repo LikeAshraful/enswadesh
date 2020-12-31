@@ -20,7 +20,7 @@ class MarketPlaceController extends Controller
      */
     public function index()
     {
-        $marketplaces = MarketPlace::with('areaOfMarketPlace')->get();
+        $marketplaces = MarketPlace::with('thanaOfMarketPlace')->get();
         return view('shopproperty::Backend.marketplace.index',  compact('marketplaces'));
     }
 

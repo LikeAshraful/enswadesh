@@ -42,7 +42,7 @@ class AppMenuController extends Controller
         $request->validate([
             'menu_name' => 'required',
             'menu_description' => 'required',
-            'menu_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'menu_icon' => 'required|mimes:jpeg,jpg,png|max:30',
         ]);
 
         if ($menu_icon = $request->file('menu_icon')) {
@@ -91,6 +91,7 @@ class AppMenuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request->file('menu_icon'));
         $data = AppMenu::find($id);
         $menu_icon = $data->menu_icon;
         if (!empty($request->menu_name)) {

@@ -14,4 +14,6 @@
 Route::resource('menus', 'Backend\AppMenuController');
 Route::resource('cities', 'Backend\CityController');
 Route::resource('areas', 'Backend\AreaController');
+Route::resource('thanas', 'Backend\ThanaController');
 Route::resource('marketplaces', 'Backend\MarketPlaceController');
+Route::resource('floors', 'Backend\FloorController');

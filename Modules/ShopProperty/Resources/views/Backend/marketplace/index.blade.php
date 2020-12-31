@@ -49,7 +49,7 @@
                             @foreach($marketplaces as $key => $marketplace)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $marketplace->areaOfMarketPlace ? $marketplace->areaOfMarketPlace->area_name : 'Not Found' }}</td>
+                                <td>{{ $marketplace->thanaOfMarketPlace ? $marketplace->thanaOfMarketPlace->thana_name : 'Not Found' }}</td>
                                 <td>{{ $marketplace->market_name }}</td>
                                 <td>{{ $marketplace->marketplace_address }}</td>
                                 <td>{{ $marketplace->marketplace_slug }}</td>

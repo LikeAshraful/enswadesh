@@ -7,9 +7,11 @@ interface UserInterface{
 
     public function get($id);
 
-    // public function store(array $data);
+    public function allRole();
 
-    // public function update($id, array $data);
+    public function store(array $data);
 
-    // public function delete($id);
+    public function update($id, array $data);
+
+    public function delete($id);
 }

@@ -94,5 +94,51 @@ class PermissionSeeder extends Seeder
             'slug' => 'backend.users.destroy',
         ]);
 
+        // Product Property management(Main Category)
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Access Main Category',
+            'slug' => 'backend.main_category.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Create Main Category',
+            'slug' => 'backend.main_categoryrs.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Edit Main Category',
+            'slug' => 'backend.main_category.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Delete Main Category',
+            'slug' => 'backend.main_category.destroy',
+        ]);
+
+        // Product Property management(Sub Category)
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Access Main Category',
+            'slug' => 'backend.sub_category.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Create Main Category',
+            'slug' => 'backend.sub_category.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Edit Main Category',
+            'slug' => 'backend.main_category.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Delete Main Category',
+            'slug' => 'backend.sub_category.destroy',
+        ]);
+
     }
 }

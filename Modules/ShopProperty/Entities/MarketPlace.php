@@ -10,10 +10,10 @@ class MarketPlace extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['area_id', 'market_name', 'marketplace_address', 'marketplace_description', 'marketplace_slug',  'marketplace_icon',];
+    protected $fillable = ['thana_id', 'market_name', 'marketplace_address', 'marketplace_description', 'marketplace_slug',  'marketplace_icon',];
 
-    public function areaOfMarketPlace() {
-        return $this->belongsTo(Area::class, 'area_id', 'id');
+    public function thanaOfMarketPlace() {
+        return $this->belongsTo(Thana::class, 'thana_id', 'id');
     }
 
 

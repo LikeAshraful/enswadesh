@@ -68,15 +68,13 @@
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.marketplaces.index*') || Route::is('backend.thanas.index*') || Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('backend.menus.index')}}"
-                                class="{{ Route::is('menus.index*') ? 'mm-active' : '' }}">
                             <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 App Menus
@@ -95,9 +93,21 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{route('backend.thanas.index')}}" class="{{ Route::is('backend.thanas.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Thana
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{route('backend.marketplaces.index')}}" class="{{ Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Market Place
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.floors.index')}}" class="{{ Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Floor
                             </a>
                         </li>
                     </ul>
@@ -105,7 +115,7 @@
                 <li class="app-sidebar__heading">Shop Product</li>
                 <li>
                     <a href="#" class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
-                    <i class="pe pe-7s-chat pe-1x pull-left pe-border"></i>
+                    <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
