@@ -20,6 +20,11 @@ class CreateMarketPlacesTable extends Migration
             $table->string('marketplace_address')->nullable();
             $table->string('marketplace_description')->nullable();
             $table->string('marketplace_slug')->nullable();
+            $table->string('meta_title_market')->nullable();
+            $table->text('meta_keywords_market')->nullable();
+            $table->text('meta_description_market')->nullable();
+            $table->string('meta_og_image_market')->nullable();
+            $table->string('meta_og_url_market')->nullable();
             $table->text('marketplace_icon')->nullable();
             $table->timestamps();
         });

@@ -104,7 +104,7 @@
       ),
       'api' => 
       array (
-        'driver' => 'token',
+        'driver' => 'passport',
         'provider' => 'users',
         'hash' => false,
       ),
@@ -992,6 +992,24 @@
     'remote_sites_path' => '',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
+  ),
+  'passport' => 
+  array (
+    'private_key' => NULL,
+    'public_key' => NULL,
+    'client_uuids' => false,
+    'personal_access_client' => 
+    array (
+      'id' => NULL,
+      'secret' => NULL,
+    ),
+    'storage' => 
+    array (
+      'database' => 
+      array (
+        'connection' => 'mysql',
+      ),
+    ),
   ),
   'trustedproxy' => 
   array (
