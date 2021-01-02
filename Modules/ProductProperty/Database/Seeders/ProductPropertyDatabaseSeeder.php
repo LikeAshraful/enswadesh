@@ -4,6 +4,7 @@ namespace Modules\ProductProperty\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\ProductProperty\Entities\Brand;
 use Modules\ProductProperty\Entities\Category;
 use Modules\ProductProperty\Entities\SubCategory;
 use Modules\ProductProperty\Entities\MainCategory;
@@ -17,6 +18,22 @@ class ProductPropertyDatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //Brand
+        $brand = Brand::updateOrCreate([
+            'name'          => 'Asus',
+            'slug'          => 'asus',
+            'description'   => 'This is description part',
+            'icon'          => '1.jpg'
+        ]);
+        $brand = Brand::updateOrCreate([
+            'name'          => 'Dell',
+            'slug'          => 'dell',
+            'description'   => 'This is description part',
+            'icon'          => '1.jpg'
+        ]);
+
+
+        
         // Category
         $category = Category::updateOrCreate([
             'parent_id'     => 0,

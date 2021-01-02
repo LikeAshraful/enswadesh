@@ -55,7 +55,6 @@
                             <th class="text-center">#</th>
                             <th>Name</th>
                             <th class="text-center">Email</th>
-                            <th class="text-center">Last Login At</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -86,7 +85,6 @@
                                     </div>
                                 </td>
                                 <td class="text-center">{{ $user->email }}</td>
-                                <td class="text-center">{{ $user->last_login_at }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-info btn-sm" href="{{ route('backend.users.show',$user->id) }}"><i
                                             class="fas fa-eye"></i>

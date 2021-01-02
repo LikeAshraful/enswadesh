@@ -121,41 +121,41 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $level = Category::where('id', $request->parent_id)->first();
-        
+
         if($level->level == 3){
             notify()->warning('Product Category level will be less then or equle 3.', 'Added');
             return back();
         }else{
             $category = Category::find($id);
-        $icon = $category->icon;
+            $icon = $category->icon;
 
-        if (!empty($request->name)) {
-            $slug = Str::of($request->name)->slug('_');
-        } else {
-            $slug = $category->slug;
-        }
+            if (!empty($request->name)) {
+                $slug = Str::of($request->name)->slug('_');
+            } else {
+                $slug = $category->slug;
+            }
 
-        if ($image = $request->file('icon')) {
-            $icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/products/categoriesicon/' . $icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilename = $category->icon;
-            $category->icon = $icon;
-            Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
-        }
+            if ($image = $request->file('icon')) {
+                $icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+                $locationc = public_path('/uploads/products/categoriesicon/' . $icon);
+                Image::make($image)->resize(600, 400)->save($locationc);
+                $oldFilename = $category->icon;
+                $category->icon = $icon;
+                Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
+            }
 
-        $category->update($request->except(
-                'icon',
-                'description', 
-                'slug'
-            )+[
-                'icon'              => $icon,
-                'description'       => $request->description,
-                'slug'              => $slug
-            ]);
+            $category->update($request->except(
+                    'icon',
+                    'description', 
+                    'slug'
+                )+[
+                    'icon'              => $icon,
+                    'description'       => $request->description,
+                    'slug'              => $slug
+                ]);
 
-        notify()->success('Product Category Successfully Updated.', 'Updated');
-        return redirect()->route('backend.category.index');
+            notify()->success('Product Category Successfully Updated.', 'Updated');
+            return redirect()->route('backend.category.index');
         }
 
         

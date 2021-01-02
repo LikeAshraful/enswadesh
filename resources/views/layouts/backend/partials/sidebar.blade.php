@@ -127,6 +127,13 @@
                                     Category
                             </a>
                         </li>
+                        <li>
+                            <a href="{{route('backend.brand.index')}}"
+                                class="{{ Route::is('backend.brand.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Brand
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

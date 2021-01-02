@@ -11,7 +11,5 @@
 |
 */
 
-Route::resource('main_category', 'Backend\MainCategoryController');
-Route::resource('sub_category', 'Backend\SubCategoryController');
-
 Route::resource('category', 'Backend\CategoryController');
+Route::resource('brand', 'Backend\BrandController');
