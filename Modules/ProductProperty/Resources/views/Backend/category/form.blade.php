@@ -47,15 +47,22 @@
                 @endif
                 <div class="card-body">
                     <h5 class="card-title">Manage Product Category</h5>
-
-                    <x-forms.select label="Select Main Category" name="parent_id" class="select js-example-basic-single">
-                        <option value="0">--This will be main category--</option>
-                            @foreach($categories as $key=>$cate)
-                            <x-forms.select-item :value="$cate->id" :label="$cate->name"
-                                :selected="$category->subcategory->id ?? null" />
+                    @if(isset($category))
+                        <select name="parent_id" id="parent_id" class="form-control select js-example-basic-single">
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}" {{ $category->parent_id == $cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
                             @endforeach
-                    </x-forms.select>
+                        </select>
+                        @else
+                        <select name="parent_id" id="parent_id" class="form-control select js-example-basic-single">
+                        <option value="0">--This will be main category--</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                        @endisset
 
+                
                     <div class="form-group">
                         <Label for='name'>Category Name</Label>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"

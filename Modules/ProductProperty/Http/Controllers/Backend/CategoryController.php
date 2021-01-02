@@ -19,7 +19,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        // DD($categories[1]->subcategory);
+        // dd($categories[1]->subcategory);
         return view('productproperty::Backend.category.index',compact('categories'));
     }
 
@@ -107,8 +107,9 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category=Category::find($id);
+        $categories = Category::all();
 
-        return view('productproperty::Backend.category.form',compact('category'));
+        return view('productproperty::Backend.category.form',compact('category','categories'));
     }
 
     /**
@@ -119,7 +120,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
+        $level = Category::where('id', $request->parent_id)->first();
+        
+        if($level->level == 3){
+            notify()->warning('Product Category level will be less then or equle 3.', 'Added');
+            return back();
+        }else{
+            $category = Category::find($id);
         $icon = $category->icon;
 
         if (!empty($request->name)) {
@@ -149,6 +156,9 @@ class CategoryController extends Controller
 
         notify()->success('Product Category Successfully Updated.', 'Updated');
         return redirect()->route('backend.category.index');
+        }
+
+        
     }
 
     /**
