@@ -37,7 +37,8 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Created by</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -47,22 +48,8 @@
                             <th scope="row">{{ ++$key }}</th>
                             <td>
                                 {{ $category->name }}
-
-                                @if(count($category->subcategory))
-
-                                @php
-                                    $subcategories = $category->subcategory
-                                @endphp
-
-                                @foreach($subcategories as $subcategory)
-                                <ul>
-                                    <li>{{$subcategory->name}}</li>
-                                </ul>
-                                @endforeach
-
-                                @endif
-
                             </td>
+                            <td>{{ $category->createdBy ? $category->createdBy->name : 'Not found' }}</td>
                             <td>
                                 <a class="fa-edit-style" href="{{ route('backend.category.edit', $category->id) }}"><i
                                         class="fas fa-edit"></i></a> |
