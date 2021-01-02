@@ -19,9 +19,10 @@ use App\Http\Controllers\API\ApiAuthController;
 //     return $request->user();
 // });
 
-// Route::get('/api-login', function(){
-//     return 'api rerurn';
-// });
-
 Route::post('/api-login', [ApiAuthController::class, 'login']);
 Route::post('/api-register', [ApiAuthController::class, 'register']);
+
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('/api-users', [ApiAuthController::class, 'dusers']);
+});

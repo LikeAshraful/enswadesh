@@ -32,6 +32,11 @@ class CreateShopsTable extends Migration
             $table->string('shop_type')->nullable();
             $table->integer('shop_status')->nullable();
             $table->text('shop_description')->nullable();
+            $table->string('meta_title_shop')->nullable();
+            $table->text('meta_keywords_shop')->nullable();
+            $table->text('meta_description_shop')->nullable();
+            $table->string('meta_og_image_shop')->nullable();
+            $table->string('meta_og_url_shop')->nullable();
             $table->timestamps();
         });
     }
