@@ -20,11 +20,11 @@
                 <i class="pe-7s-check icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ isset($mainCategories) ? 'Edit' : 'Create New' }} Category</div>
+            <div>{{ isset($category) ? 'Edit' : 'Create New' }} Category</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.main_category.index') }}" class="btn-shadow btn btn-danger">
+                <a href="{{ route('backend.category.index') }}" class="btn-shadow btn btn-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -38,24 +38,41 @@
     <div class="col-12">
         <div class="main-card mb-3 card">
             <!-- form start -->
-            <form id="mainCategoryFrom" role="form" method="POST"
-                action="{{ isset($mainCategory) ? route('backend.main_category.update',$mainCategory->id) : route('backend.main_category.store') }}"
+            <form id="categoryFrom" role="form" method="POST"
+                action="{{ isset($category) ? route('backend.category.update',$category->id) : route('backend.category.store') }}"
                 enctype="multipart/form-data" file="true">
                 @csrf
-                @if (isset($mainCategory))
+                @if (isset($category))
                 @method('PUT')
                 @endif
                 <div class="card-body">
                     <h5 class="card-title">Manage Product Category</h5>
 
-                    <div class="form-group">
-                        <Label for='main_category_name'>Category Name</Label>
-                        <input id="main_category_name" type="main_category_name"
-                            class="form-control @error('main_category_name') is-invalid @enderror"
-                            name="main_category_name"
-                            value="{{ $mainCategory->main_category_name ?? old('main_category_name') }}" autofocus>
+                    <x-forms.select label="Select Main Category" name="parent_id" class="select js-example-basic-single">
+                        <option value="0">--This will be main category--</option>
+                            @foreach($categories as $key=>$cate)
+                            <x-forms.select-item :value="$cate->id" :label="$cate->name"
+                                :selected="$category->subcategory->id ?? null" />
+                            @endforeach
+                    </x-forms.select>
 
-                        @error('main_category_name')
+                    <div class="form-group">
+                        <Label for='name'>Category Name</Label>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                            name="name" value="{{ $category->name ?? old('name') }}" autofocus>
+
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <Label for='description'>Description</Label>
+                        <input id="description" type="text" class="form-control @error('name') is-invalid @enderror"
+                            name="description" value="{{ $category->description ?? old('description') }}" autofocus>
+
+                        @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -65,9 +82,9 @@
                         <label for='icon'>Category Icon</label>
 
                         <input type="file" id="icon" name="icon" class="dropify"
-                            data-default-file="{{ isset($mainCategory) ? asset('/uploads/products/categoriesicon/'. $mainCategory->icon): '' }}"
+                            data-default-file="{{ isset($category) ? asset('/uploads/products/categoriesicon/'. $category->icon): '' }}"
                             data-height="220"
-                            value="{{ isset($mainCategory) ? asset('/uploads/products/categoriesicon/'. $mainCategory->icon): '' }}" />
+                            value="{{ isset($category) ? asset('/uploads/products/categoriesicon/'. $category->icon): '' }}" />
 
                         @error('icon')
                         <span class="invalid-feedback" role="alert">
@@ -76,13 +93,13 @@
                         @enderror
                     </div>
 
-                    <button type="button" class="btn btn-danger" onClick="resetForm('mainCategoryFrom')">
+                    <button type="button" class="btn btn-danger" onClick="resetForm('categoryFrom')">
                         <i class="fas fa-redo"></i>
                         <span>Reset</span>
                     </button>
 
                     <button type="submit" class="btn btn-primary">
-                        @isset($mainCategory)
+                        @isset($category)
                         <i class="fas fa-arrow-circle-up"></i>
                         <span>Update</span>
                         @else
