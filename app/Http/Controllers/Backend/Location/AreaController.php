@@ -20,7 +20,7 @@ class AreaController extends Controller
     public function index()
     {
         $areas = Area::with('cityOfArea')->get();
-        return view('backend.loaction.area.index',  compact('areas'));
+        return view('backend.location.area.index',  compact('areas'));
     }
 
     /**
@@ -30,7 +30,7 @@ class AreaController extends Controller
     public function create()
     {
         $cities = City::all();
-        return view('backend.loaction.area.form', compact('cities'));
+        return view('backend.location.area.form', compact('cities'));
     }
 
     /**
@@ -43,7 +43,7 @@ class AreaController extends Controller
         $request->validate([
             'area_name' => 'required',
             'area_description' => 'required',
-            'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            //'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
         if ($area_icon = $request->file('area_icon')) {
@@ -82,7 +82,7 @@ class AreaController extends Controller
     {
         $cities = City::all();
         $area = area::find($id);
-        return view('backend.loaction.area.form', compact('area', 'cities'));
+        return view('backend.location.area.form', compact('area', 'cities'));
     }
 
     /**

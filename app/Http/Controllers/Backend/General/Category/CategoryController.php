@@ -41,10 +41,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $level = Category::where('id', $request->parent_id)->first();
 
-        if($level->level == 3){
+        // dd($level);
+        if($level ? $level->level == 3 : 0){
             notify()->warning('Product Category level will be less then or equle 3.', 'Added');
             return back();
         }else{
@@ -66,8 +66,6 @@ class CategoryController extends Controller
                 $parent_id=0;
             }
 
-
-
             Category::create($request->except(
                     'icon',
                     'description',
@@ -75,11 +73,12 @@ class CategoryController extends Controller
                     'parent_id',
                     'level'
                 )+[
-                    'icon'              => $filename,
+                    // 'icon'              => $filename ? $filename : "Null",
+                    'icon'              => isset($filename) ? $filename : '',
                     'description'       => $request->description,
                     'slug'              => $slug,
                     'parent_id'         => $parent_id,
-                    'level'             => $level->level+1
+                    'level'             => $level ? $level->level+1 : 1
 
                 ]);
 
