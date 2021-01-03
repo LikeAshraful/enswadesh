@@ -43,14 +43,14 @@ class CategoryController extends Controller
     {
         // dd($request->all());
         $level = Category::where('id', $request->parent_id)->first();
-    
+
         if($level->level == 3){
             notify()->warning('Product Category level will be less then or equle 3.', 'Added');
             return back();
         }else{
              //Image
             if ($image = $request->file('icon')) {
-                
+
                 $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
                 $location = public_path('/uploads/products/categoriesicon/' . $filename);
                 Image::make($image)->resize(250, 250)->save($location);
@@ -66,11 +66,11 @@ class CategoryController extends Controller
                 $parent_id=0;
             }
 
-            
+
 
             Category::create($request->except(
                     'icon',
-                    'description', 
+                    'description',
                     'slug',
                     'parent_id',
                     'level'
@@ -80,9 +80,9 @@ class CategoryController extends Controller
                     'slug'              => $slug,
                     'parent_id'         => $parent_id,
                     'level'             => $level->level+1
-                    
+
                 ]);
-            
+
             notify()->success('Product Category Successfully Added.', 'Added');
             return redirect()->route('backend.category.index');
         }
@@ -106,9 +106,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::all();
         $category=Category::find($id);
-
-        return view('productproperty::Backend.category.form',compact('category'));
+        return view('productproperty::Backend.category.form',compact('category', 'categories'));
     }
 
     /**
@@ -139,7 +139,7 @@ class CategoryController extends Controller
 
         $category->update($request->except(
                 'icon',
-                'description', 
+                'description',
                 'slug'
             )+[
                 'icon'              => $icon,

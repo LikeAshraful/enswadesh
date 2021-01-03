@@ -17,3 +17,4 @@ Route::resource('areas', 'Backend\AreaController');
 Route::resource('thanas', 'Backend\ThanaController');
 Route::resource('marketplaces', 'Backend\MarketPlaceController');
 Route::resource('floors', 'Backend\FloorController');
+Route::resource('shops', 'Backend\ShopController');
