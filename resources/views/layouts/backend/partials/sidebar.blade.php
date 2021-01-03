@@ -142,6 +142,22 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Order Management
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.orders.index')}}"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Orders
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
         </div>
