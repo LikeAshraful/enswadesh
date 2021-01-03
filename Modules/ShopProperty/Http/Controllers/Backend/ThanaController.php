@@ -41,7 +41,7 @@ class ThanaController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'thana_name' => 'required',
             'thana_description' => 'required',
             'thana_icon' => 'required|mimes:jpeg,jpg,png|max:500',
