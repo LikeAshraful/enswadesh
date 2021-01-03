@@ -20,7 +20,7 @@ class AreaController extends Controller
     public function index()
     {
         $areas = Area::with('cityOfArea')->get();
-        return view('backend.loaction.area.index',  compact('areas'));
+        return view('backend.location.area.index',  compact('areas'));
     }
 
     /**
@@ -30,7 +30,7 @@ class AreaController extends Controller
     public function create()
     {
         $cities = City::all();
-        return view('backend.loaction.area.form', compact('cities'));
+        return view('backend.location.area.form', compact('cities'));
     }
 
     /**
@@ -82,7 +82,7 @@ class AreaController extends Controller
     {
         $cities = City::all();
         $area = area::find($id);
-        return view('backend.loaction.area.form', compact('area', 'cities'));
+        return view('backend.location.area.form', compact('area', 'cities'));
     }
 
     /**
