@@ -49,7 +49,7 @@
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
                                 <td>{{ $order->order_no }}</td>
-                                <td>{{ $order->customer->name }}</td>
+                                <td>{{ $order->customer ? $order->customer->name : 'Not Found' }}</td>
                                 <td>{{ $order->total_price }}</td>
                                 <td>
                                     @if ($order->order_status)
@@ -60,7 +60,7 @@
                                 </td>
                                 <td>{{ $order->created_at->format('d/m/y') }}</td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.orders.show', $order->id) }}"><i class="fas fa-eye"></i></a> 
+                                    <a class="fa-edit-style" href="{{ route('backend.orders.show', $order->id) }}"><i class="fas fa-eye"></i></a>
                                     <a class="fa-edit-style" href="{{ route('backend.orders.edit', $order->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $order->id }})">
