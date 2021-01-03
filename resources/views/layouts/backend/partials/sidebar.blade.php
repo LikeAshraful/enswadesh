@@ -68,7 +68,7 @@
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.marketplaces.index*') || Route::is('backend.thanas.index*') || Route::is('backend.floors.index*') || Route::is('backend.shops.index*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.markets.index*') || Route::is('backend.thanas.index*') || Route::is('backend.floors.index*') || Route::is('backend.shops.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -99,9 +99,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('backend.marketplaces.index')}}" class="{{ Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
+                            <a href="{{route('backend.markets.index')}}" class="{{ Route::is('backend.markets.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
-                                Market Place
+                                Market
                             </a>
                         </li>
                         <li>
