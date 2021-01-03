@@ -20,7 +20,7 @@ class ThanaController extends Controller
     public function index()
     {
         $thanas = Thana::with('areaOfthana')->get();
-        return view('backend.loacation.thana.index',  compact('thanas'));
+        return view('backend.location.thana.index',  compact('thanas'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ThanaController extends Controller
     public function create()
     {
         $areas = Area::all();
-        return view('backend.loacation.thana.form', compact('areas'));
+        return view('backend.location.thana.form', compact('areas'));
     }
 
     /**
@@ -82,7 +82,7 @@ class ThanaController extends Controller
     {
         $areas = Area::all();
         $thana = Thana::find($id);
-        return view('backend.loacation.thana.form', compact('thana', 'areas'));
+        return view('backend.location.thana.form', compact('thana', 'areas'));
     }
 
     /**
