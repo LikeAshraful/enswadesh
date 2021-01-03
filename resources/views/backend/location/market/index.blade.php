@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Shop')
+@section('title','Market')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -14,15 +14,15 @@
                     <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('Shop') }}</div>
+                <div>{{ __('Market') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('backend.shops.create') }}" class="btn-shadow btn btn-info">
+                    <a href="{{ route('backend.markets.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
-                        {{ __('Create') }}
+                        {{ __('Create Market') }}
                     </a>
                 </div>
             </div>
@@ -32,17 +32,13 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatableShop" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatableMarket" class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
                             <th scope="col">#</th>
-                            <th scope="col">City</th>
-                            <th scope="col">Area</th>
                             <th scope="col">Thana</th>
-                            <th scope="col">Market</th>
-                            <th scope="col">Floor</th>
-                            <th scope="col">Shop</th>
-                            <th scope="col">Shop No</th>
+                            <th scope="col">Market Name</th>
+                            <th scope="col">Address</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Description</th>
                             <th scope="col">Icon</th>
@@ -50,29 +46,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($shops as $key => $shop)
+                            @foreach($markets as $key => $market)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $shop->cityOfShop ? $shop->cityOfShop->city_name : 'Not Found' }}</td>
-                                <td>{{ $shop->areaOfShop ? $shop->areaOfShop->area_name : 'Not Found' }}</td>
-                                <td>{{ $shop->thanaOfshop ? $shop->thanaOfshop->thana_name : 'Not Found' }}</td>
-                                <td>{{ $shop->marketOfShop ? $shop->marketOfShop->market_name : 'Not Found' }}</td>
-                                <td>{{ $shop->floorOfShop ? $shop->floorOfShop->floor_note : 'Not Found' }}</td>
-                                <td>{{ $shop->shop_name }}</td>
-                                <td>{{ $shop->shop_no }}</td>
-                                <td>{{ $shop->shop_slug }}</td>
-                                <td>{{ $shop->shop_description }}</td>
+                                <td>{{ $market->thanaOfMarket ? $market->thanaOfMarket->thana_name : 'Not Found' }}</td>
+                                <td>{{ $market->market_name }}</td>
+                                <td>{{ $market->market_address }}</td>
+                                <td>{{ $market->market_slug }}</td>
+                                <td>{{ $market->market_description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/shop/' . $shop->shop_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/market/' . $market->market_icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> |
+                                    <a class="fa-edit-style" href="{{ route('backend.markets.edit', $market->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"
-                                            onclick="deleteData({{ $shop->id }})">
+                                            onclick="deleteData({{ $market->id }})">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                    <form id="delete-form-{{ $shop->id }}"
-                                            action="{{ route('backend.shops.destroy',$shop->id) }}" method="POST"
+                                    <form id="delete-form-{{ $market->id }}"
+                                            action="{{ route('backend.markets.destroy',$market->id) }}" method="POST"
                                             style="display: none;">
                                         @csrf()
                                         @method('DELETE')
@@ -94,7 +86,7 @@
     <script>
         $(document).ready(function() {
             // Datatable
-            $("#datatableShop").DataTable();
+            $("#datatableMarket").DataTable();
         });
     </script>
 @endpush

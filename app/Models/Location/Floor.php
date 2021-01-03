@@ -10,7 +10,7 @@ class Floor extends Model
     use HasFactory;
     protected $fillable = ['market_id', 'floor_no', 'floor_note'];
 
-    public function marketPlaceOfFloor() {
-        return $this->belongsTo(MarketPlace::class, 'market_id', 'id');
+    public function marketOfFloor() {
+        return $this->belongsTo(Market::class, 'market_id', 'id');
     }
 }
