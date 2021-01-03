@@ -13,48 +13,48 @@ use App\Http\Controllers\Backend\Location\FloorController;
 use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
+use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\General\Brand\BrandController;
 
+    //Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    //Role
+    Route::resource('roles', RoleController::class);
+    //User
+    Route::resource('users', UserController::class);
+    //Profile
+    Route::get('profile/', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+    // Security
+    Route::get('profile/security', [ProfileController::class, 'changePassword'])->name('profile.password.change');
+    Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    // Settings
+    Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+        Route::get('general', [SettingController::class, 'index'])->name('index');
+        Route::patch('general', [SettingController::class, 'update'])->name('update');
 
-//Dashboard
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('appearance', [SettingController::class, 'appearance'])->name('appearance.index');
+        Route::patch('appearance', [SettingController::class, 'updateAppearance'])->name('appearance.update');
 
-//Role
-Route::resource('roles', RoleController::class);
+        Route::get('mail', [SettingController::class, 'mail'])->name('mail.index');
+        Route::patch('mail', [SettingController::class, 'updateMailSettings'])->name('mail.update');
 
-//User
-Route::resource('users', UserController::class);
+        Route::get('socialite', [SettingController::class, 'socialite'])->name('socialite.index');
+        Route::patch('socialite', [SettingController::class, 'updateSocialiteSettings'])->name('socialite.update');
 
-//Profile
-Route::get('profile/', [ProfileController::class, 'index'])->name('profile.index');
-Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+    });
 
-// Security
-Route::get('profile/security', [ProfileController::class, 'changePassword'])->name('profile.password.change');
-Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
-
-// Settings
-Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
-    Route::get('general', [SettingController::class, 'index'])->name('index');
-    Route::patch('general', [SettingController::class, 'update'])->name('update');
-
-    Route::get('appearance', [SettingController::class, 'appearance'])->name('appearance.index');
-    Route::patch('appearance', [SettingController::class, 'updateAppearance'])->name('appearance.update');
-
-    Route::get('mail', [SettingController::class, 'mail'])->name('mail.index');
-    Route::patch('mail', [SettingController::class, 'updateMailSettings'])->name('mail.update');
-
-    Route::get('socialite', [SettingController::class, 'socialite'])->name('socialite.index');
-    Route::patch('socialite', [SettingController::class, 'updateSocialiteSettings'])->name('socialite.update');
-
-});
-
-
-// Loacation Related
+    // Loacation Related
     Route::resource('menus', AppMenuController::class);
     Route::resource('cities', CityController::class);
     Route::resource('areas', AreaController::class);
     Route::resource('thanas', ThanaController::class);
     Route::resource('markets', MarketController::class);
     Route::resource('floors', FloorController::class);
-// Shop Related
+    // Shop Related
     Route::resource('shops', ShopController::class);
+    //Category
+    Route::resource('category', CategoryController::class);
+    //Brand
+    Route::resource('brand', BrandController::class);
+    
