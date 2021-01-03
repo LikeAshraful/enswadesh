@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\Location;
+namespace App\Http\Controllers\API\General\Menu;
 
-use App\Models\Shop\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Models\General\Menu\AppMenu;
 use Illuminate\Contracts\Support\Renderable;
 
-class ApiShopController extends Controller
+class ApiAppMenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ApiShopController extends Controller
     public function index()
     {
         $status = 200;
-        $shops = Shop::all();
-        return response()->json($shops, $status);
+        $appmenus = AppMenu::all();
+        return response()->json($appmenus, $status);
     }
 
     /**
