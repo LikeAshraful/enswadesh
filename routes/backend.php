@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\Location\MarketController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
+use App\Http\Controllers\Backend\Order\OrdersController;
 
     //Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -57,4 +58,6 @@ use App\Http\Controllers\Backend\General\Brand\BrandController;
     Route::resource('category', CategoryController::class);
     //Brand
     Route::resource('brand', BrandController::class);
+    //Order
+    Route::resource('orders', OrdersController::class);
     
