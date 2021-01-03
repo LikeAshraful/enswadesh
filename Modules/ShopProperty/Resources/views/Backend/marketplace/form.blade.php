@@ -63,23 +63,23 @@
                         @enderror
                         </div>
                         <div class="form-group">
-                        <label for="area_id">Area</label>
+                        <label for="thana_id">thana</label>
                         @if(isset($marketplace))
-                        <select name="area_id" id="area_id" class="form-control">
+                        <select name="thana_id" id="thana_id" class="form-control">
                             <option value="">Select One</option>
-                            @foreach($areas as $area)
-                                <option value="{{ $area->id }}" {{ $marketplace->area_id == $area->id ? 'selected' : ''}}>{{ $area->area_name }}</option>
+                            @foreach($thanas as $thana)
+                                <option value="{{ $thana->id }}" {{ $marketplace->thana_id == $thana->id ? 'selected' : ''}}>{{ $thana->thana_name }}</option>
                             @endforeach
                         </select>
                         @else
-                        <select name="area_id" id="area_id" class="form-control">
+                        <select name="thana_id" id="thana_id" class="form-control">
                             <option value="">Select One</option>
-                            @foreach($areas as $area)
-                                <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                            @foreach($thanas as $thana)
+                                <option value="{{ $thana->id }}">{{ $thana->thana_name }}</option>
                             @endforeach
                         </select>
                         @endisset
-                        @error('area_id')
+                        @error('thana_id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
