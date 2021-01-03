@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateShopsTable extends Migration
 {
@@ -19,7 +19,7 @@ class CreateShopsTable extends Migration
             $table->integer('city_id')->nullable();
             $table->integer('area_id')->nullable();
             $table->integer('thana_id')->nullable();
-            $table->integer('market_place_id')->nullable();
+            $table->integer('market_id')->nullable();
             $table->integer('floor_id')->nullable();
             $table->string('shop_no')->nullable();
             $table->string('shop_name')->nullable();
