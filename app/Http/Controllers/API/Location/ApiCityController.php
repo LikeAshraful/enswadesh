@@ -1,12 +1,13 @@
 <?php
 
-namespace Modules\ProductProperty\Http\Controllers;
+namespace App\Http\Controllers\API\Location;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use App\Models\Location\City;
 use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Support\Renderable;
 
-class ProductPropertyController extends Controller
+class ApiCityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class ProductPropertyController extends Controller
      */
     public function index()
     {
-        return view('productproperty::index');
+        $status = 200;
+        $cities = City::all();
+        return response()->json($cities, $status);
     }
 
     /**
@@ -23,7 +26,7 @@ class ProductPropertyController extends Controller
      */
     public function create()
     {
-        return view('productproperty::create');
+        return view('shopproperty::create');
     }
 
     /**
@@ -43,7 +46,7 @@ class ProductPropertyController extends Controller
      */
     public function show($id)
     {
-        return view('productproperty::show');
+        return view('shopproperty::show');
     }
 
     /**
@@ -53,7 +56,7 @@ class ProductPropertyController extends Controller
      */
     public function edit($id)
     {
-        return view('productproperty::edit');
+        return view('shopproperty::edit');
     }
 
     /**
