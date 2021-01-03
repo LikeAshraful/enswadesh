@@ -1016,10 +1016,6 @@
     'proxies' => NULL,
     'headers' => 94,
   ),
-  'productproperty' => 
-  array (
-    'name' => 'ProductProperty',
-  ),
   'shopproperty' => 
   array (
     'name' => 'ShopProperty',

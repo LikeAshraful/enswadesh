@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\ProductProperty\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\General\Brand;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\ProductProperty\Entities\Brand;
+use App\Models\General\Brand\Brand;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Support\Renderable;
@@ -19,7 +19,7 @@ class BrandController extends Controller
     public function index()
     {
         $brands = Brand::all();
-        return view('productproperty::Backend.brand.index',compact('brands'));
+        return view('backend.general.brand.index',compact('brands'));
     }
 
     /**
@@ -28,7 +28,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('productproperty::Backend.brand.form');
+        return view('backend.general.brand.form');
     }
 
     /**
@@ -81,7 +81,7 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brand=Brand::find($id);
-        return view('productproperty::Backend.brand.form',compact('brand'));
+        return view('backend.general.brand.form',compact('brand'));
     }
 
     /**

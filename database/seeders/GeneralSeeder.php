@@ -1,13 +1,12 @@
 <?php
 
-namespace Modules\ProductProperty\Database\Seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use Modules\ProductProperty\Entities\Brand;
-use Modules\ProductProperty\Entities\Category;
+use App\Models\General\Brand\Brand;
+use App\Models\General\Category\Category;
 
-class ProductPropertyDatabaseSeeder extends Seeder
+class GeneralSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +15,8 @@ class ProductPropertyDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //Brand
-        $brand = Brand::updateOrCreate([
+         //Brand
+         $brand = Brand::updateOrCreate([
             'name'          => 'Asus',
             'slug'          => 'asus',
             'description'   => 'This is description part',
@@ -96,9 +95,5 @@ class ProductPropertyDatabaseSeeder extends Seeder
             'icon'          => '1.jpg',
             'description'   => 'This is description part'
             ]);
-            
-        Model::unguard();
-
-        // $this->call(MainCategory::class);
     }
 }

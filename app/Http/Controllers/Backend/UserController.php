@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Repositories\Interface\UserInterface;
 use App\Http\Requests\Users\UpdateUserRequest;

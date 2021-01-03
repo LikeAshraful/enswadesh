@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\ProductProperty\Entities;
+namespace App\Models\General\Brand;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +33,4 @@ class Brand extends Model
         return $this->belongsTo(User::class,'created_by','id');
     }
     
-    protected static function newFactory()
-    {
-        return \Modules\ProductProperty\Database\factories\BrandFactory::new();
-    }
 }

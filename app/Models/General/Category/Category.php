@@ -1,11 +1,10 @@
 <?php
 
-namespace Modules\ProductProperty\Entities;
+namespace App\Models\General\Category;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use Modules\ProductProperty\Entities\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
@@ -39,8 +38,4 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id','id');
     }
 
-    protected static function newFactory()
-    {
-        return \Modules\ProductProperty\Database\factories\CategoryFactory::new();
-    }
 }

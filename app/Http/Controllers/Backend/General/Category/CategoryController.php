@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\ProductProperty\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\General\Category;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use App\Models\General\Category\Category;
 use Illuminate\Contracts\Support\Renderable;
-use Modules\ProductProperty\Entities\Category;
 
 class CategoryController extends Controller
 {
@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         // dd($categories[1]->subcategory);
-        return view('productproperty::Backend.category.index',compact('categories'));
+        return view('backend.general.category.index',compact('categories'));
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('productproperty::Backend.category.form',compact('categories'));
+        return view('backend.general.category.form',compact('categories'));
 
     }
 
@@ -109,7 +109,7 @@ class CategoryController extends Controller
         $categories = Category::all();
         $category=Category::find($id);
 
-        return view('productproperty::Backend.category.form',compact('category','categories'));
+        return view('backend.general.category.form',compact('category','categories'));
     }
 
     /**
