@@ -1,11 +1,18 @@
 <?php
 
-use App\Http\Controllers\Backend\DashboardController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Shop\ShopController;
+use App\Http\Controllers\Backend\Location\AreaController;
+use App\Http\Controllers\Backend\Location\CityController;
+use App\Http\Controllers\Backend\Location\FloorController;
+use App\Http\Controllers\Backend\Location\ThanaController;
+use App\Http\Controllers\Backend\Location\MarketController;
+use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 
 
 //Dashboard
@@ -42,19 +49,12 @@ Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
 });
 
 
-// Loacation and Shop Related
+// Loacation Related
     Route::resource('menus', AppMenuController::class);
     Route::resource('cities', CityController::class);
-    Route::resource('areas', 'Backend\AreaController');
-    Route::resource('thanas', 'Backend\ThanaController');
-    Route::resource('marketplaces', 'Backend\MarketPlaceController');
-    Route::resource('floors', 'Backend\FloorController');
-    Route::resource('shops', 'Backend\ShopController');
-
-    Route::resource('menus', 'Backend\AppMenuController');
-    Route::resource('cities', 'Backend\CityController');
-    Route::resource('areas', 'Backend\AreaController');
-    Route::resource('thanas', 'Backend\ThanaController');
-    Route::resource('marketplaces', 'Backend\MarketPlaceController');
-    Route::resource('floors', 'Backend\FloorController');
-    Route::resource('shops', 'Backend\ShopController');
+    Route::resource('areas', AreaController::class);
+    Route::resource('thanas', ThanaController::class);
+    Route::resource('markets', MarketController::class);
+    Route::resource('floors', FloorController::class);
+// Shop Related
+    Route::resource('shops', ShopController::class);
