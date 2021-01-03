@@ -65,7 +65,7 @@
                         @else
                         <select name="area_id" id="area_id" class="form-control">
                             <option value="">Select One</option>
-                            @foreach($area as $area)
+                            @foreach($areas as $area)
                                 <option value="{{ $area->id }}">{{ $area->area_name }}</option>
                             @endforeach
                         </select>

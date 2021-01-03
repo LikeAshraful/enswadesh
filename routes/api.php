@@ -3,6 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiAuthController;
+use App\Http\Controllers\API\Shop\ApiShopController;
+use App\Http\Controllers\API\Location\ApiAreaController;
+use App\Http\Controllers\API\Location\ApiCityController;
+use App\Http\Controllers\API\Location\ApiFloorController;
+use App\Http\Controllers\API\Location\ApiThanaController;
+use App\Http\Controllers\API\Location\ApiMarketController;
+use App\Http\Controllers\API\General\Menu\ApiAppMenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +28,17 @@ use App\Http\Controllers\API\ApiAuthController;
 
 Route::post('/api-login', [ApiAuthController::class, 'login']);
 Route::post('/api-register', [ApiAuthController::class, 'register']);
+
+// location and shop api
+Route::get('/api-menus', [ApiAppMenuController::class, 'index']);
+Route::get('/api-cities', [ApiCityController::class, 'index']);
+Route::get('/api-areas', [ApiAreaController::class, 'index']);
+Route::get('/api-thanas', [ApiThanaController::class, 'index']);
+Route::get('/api-markets', [ApiMarketController::class, 'index']);
+Route::get('/api-floors', [ApiFloorController::class, 'index']);
+Route::get('/api-shops', [ApiAppMenuController::class, 'index']);
+Route::get('/api-menus', [ApiShopController::class, 'index']);
+
 
 
 Route::group(['middleware' => 'auth:api'], function () {
