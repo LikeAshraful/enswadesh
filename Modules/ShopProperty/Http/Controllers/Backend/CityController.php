@@ -39,7 +39,7 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'city_name' => 'required',
             'city_description' => 'required',
             'city_icon' => 'required|mimes:jpeg,jpg,png|max:500',

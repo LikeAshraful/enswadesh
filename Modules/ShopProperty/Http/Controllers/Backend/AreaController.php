@@ -41,7 +41,7 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'area_name' => 'required',
             'area_description' => 'required',
             'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',

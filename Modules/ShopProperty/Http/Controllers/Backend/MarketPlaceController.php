@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Intervention\Image\ImageManager;
-use Modules\ShopProperty\Entities\Area;
+use Modules\ShopProperty\Entities\Thana;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\ShopProperty\Entities\MarketPlace;
 
@@ -30,8 +30,8 @@ class MarketPlaceController extends Controller
      */
     public function create()
     {
-        $areas = Area::all();
-        return view('shopproperty::Backend.marketplace.form', compact('areas'));
+        $thanas = Thana::all();
+        return view('shopproperty::Backend.marketplace.form', compact('thanas'));
     }
 
     /**
@@ -41,7 +41,7 @@ class MarketPlaceController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'market_name' => 'required',
             'marketplace_address' => 'required',
             'marketplace_description' => 'required',
@@ -82,9 +82,9 @@ class MarketPlaceController extends Controller
      */
     public function edit($id)
     {
-        $areas = Area::all();
+        $thanas = Thana::all();
         $marketplace = MarketPlace::find($id);
-        return view('shopproperty::Backend.marketplace.form', compact('marketplace', 'areas'));
+        return view('shopproperty::Backend.marketplace.form', compact('marketplace', 'thanas'));
     }
 
     /**

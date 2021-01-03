@@ -37,7 +37,7 @@ class FloorController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'floor_no' => 'required',
             'floor_note' => 'required'
         ]);
