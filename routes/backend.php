@@ -40,3 +40,21 @@ Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
     Route::patch('socialite', [SettingController::class, 'updateSocialiteSettings'])->name('socialite.update');
 
 });
+
+
+// Loacation and Shop Related
+    Route::resource('menus', AppMenuController::class);
+    Route::resource('cities', CityController::class);
+    Route::resource('areas', 'Backend\AreaController');
+    Route::resource('thanas', 'Backend\ThanaController');
+    Route::resource('marketplaces', 'Backend\MarketPlaceController');
+    Route::resource('floors', 'Backend\FloorController');
+    Route::resource('shops', 'Backend\ShopController');
+
+    Route::resource('menus', 'Backend\AppMenuController');
+    Route::resource('cities', 'Backend\CityController');
+    Route::resource('areas', 'Backend\AreaController');
+    Route::resource('thanas', 'Backend\ThanaController');
+    Route::resource('marketplaces', 'Backend\MarketPlaceController');
+    Route::resource('floors', 'Backend\FloorController');
+    Route::resource('shops', 'Backend\ShopController');
