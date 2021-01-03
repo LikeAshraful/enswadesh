@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingSeeder::class);
         $this->call(ShopPropertyDatabaseSeeder::class);
         $this->call(GeneralSeeder::class);
+        $this->call(OrderPropertySeeder::class);
     }
 }
