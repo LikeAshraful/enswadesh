@@ -6,8 +6,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\ProductProperty\Entities\Brand;
 use Modules\ProductProperty\Entities\Category;
-use Modules\ProductProperty\Entities\SubCategory;
-use Modules\ProductProperty\Entities\MainCategory;
 
 class ProductPropertyDatabaseSeeder extends Seeder
 {
