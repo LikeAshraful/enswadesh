@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','Market Place Create')
+@section('title','Market Create')
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
@@ -19,7 +19,7 @@
                 <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($shop) ? 'Edit' : 'Create New') . ' Market Place') }}</div>
+            <div>{{ __((isset($shop) ? 'Edit' : 'Create New') . ' Market') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
@@ -45,7 +45,7 @@
                 <div class="card-body">
                         {{-- <div class="form-group">
                         <label for="market_name">Market Name</label>
-                        <input type="text" id="market_name" name="market_name" class="form-control @error('market_name') is-invalid @enderror" value="{{ isset($shop) ? $shop->market_name : '' }}"  placeholder="Market name">
+                        <input type="text" id="market_name" name="market_name" class="form-control @error('market_name') is-invalid @enderror" value="{{ isset($shop) ? $shop->market_name : '' }}" holder="Market name">
                         @error('market_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                         <label for="shop_address">Market Address</label>
-                        <input type="text" id="shop_address" name="shop_address" class="form-control @error('shop_address') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_address : '' }}"  placeholder="Market Address">
+                        <input type="text" id="shop_address" name="shop_address" class="form-control @error('shop_address') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_address : '' }}" holder="Market Address">
                         @error('shop_address')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -131,57 +131,57 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="market_place_id">Market</label>
+                            <label for="market_id">Market</label>
                             @if(isset($shop))
-                            <select name="market_place_id" id="market_place_id" class="form-control">
+                            <select name="market_id" id="market_id" class="form-control">
                                 <option value="">Select One</option>
-                                @foreach($marketplaces as $market)
-                                    <option value="{{ $marke->id }}" {{ $shop->market_place_id == $market->id ? 'selected' : ''}}>{{ $market->market_name }}</option>
+                                @foreach($markets as $market)
+                                    <option value="{{ $market->id }}" {{ $shop->market_id == $market->id ? 'selected' : ''}}>{{ $market->market_name }}</option>
                                 @endforeach
                             </select>
                             @else
-                            <select name="market_place_id" id="market_place_id" class="form-control">
+                            <select name="market_id" id="market_id" class="form-control">
                                 <option value="">Select One</option>
-                                @foreach($marketplaces as $market)
+                                @foreach($markets as $market)
                                     <option value="{{ $market->id }}">{{ $market->market_name }}</option>
                                 @endforeach
                             </select>
                             @endisset
-                            @error('market_place_id')
+                            @error('market_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="thana_id">Thana</label>
+                            <label for="floor_id">Floor</label>
                             @if(isset($shop))
-                            <select name="thana_id" id="thana_id" class="form-control">
+                            <select name="floor_id" id="floor_id" class="form-control">
                                 <option value="">Select One</option>
-                                @foreach($thanas as $thana)
-                                    <option value="{{ $thana->id }}" {{ $shop->thana_id == $thana->id ? 'selected' : ''}}>{{ $thana->thana_name }}</option>
+                                @foreach($floors as $floor)
+                                    <option value="{{ $floor->id }}" {{ $shop->floor_id == $floor->id ? 'selected' : ''}}>{{ $floor->floor_note }}</option>
                                 @endforeach
                             </select>
                             @else
-                            <select name="thana_id" id="thana_id" class="form-control">
+                            <select name="floor_id" id="floor_id" class="form-control">
                                 <option value="">Select One</option>
-                                @foreach($thanas as $thana)
-                                    <option value="{{ $thana->id }}">{{ $thana->thana_name }}</option>
+                                @foreach($floors as $floor)
+                                    <option value="{{ $floor->id }}">{{ $floor->floor_note }}</option>
                                 @endforeach
                             </select>
                             @endisset
-                            @error('thana_id')
+                            @error('floor_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
                         <div class="form-group">
-                        <label for="shop_description">Market Place Description</label>
-                        <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}" placeholder="Market Place Description">
+                        <label for="shop_description">Market Description</label>
+                        <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}"holder="Market Description">
                         </div>
                         <div class="form-group">
-                        <label for='shop_icon'>Market Place Icon</label>
+                        <label for='shop_icon'>Market Icon</label>
                         <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
                         @error('shop_icon')
                         <span class="invalid-feedback" role="alert">
@@ -197,7 +197,7 @@
                 <div class="card-body">
                         <div class="form-group">
                         <label for="market_name">Market Name</label>
-                        <input type="text" id="market_name" name="market_name" class="form-control @error('market_name') is-invalid @enderror" value="{{ isset($shop) ? $shop->market_name : '' }}"  placeholder="Market name">
+                        <input type="text" id="market_name" name="market_name" class="form-control @error('market_name') is-invalid @enderror" value="{{ isset($shop) ? $shop->market_name : '' }}" holder="Market name">
                         @error('market_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -206,7 +206,7 @@
                         </div>
                         <div class="form-group">
                         <label for="shop_address">Market Address</label>
-                        <input type="text" id="shop_address" name="shop_address" class="form-control @error('shop_address') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_address : '' }}"  placeholder="Market Address">
+                        <input type="text" id="shop_address" name="shop_address" class="form-control @error('shop_address') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_address : '' }}" holder="Market Address">
                         @error('shop_address')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -215,11 +215,11 @@
                         </div>
 
                         <div class="form-group">
-                        <label for="shop_description">Market Place Description</label>
-                        <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}" placeholder="Market Place Description">
+                        <label for="shop_description">Market Description</label>
+                        <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}"holder="Market Description">
                         </div>
                         <div class="form-group">
-                        <label for='shop_icon'>Market Place Icon</label>
+                        <label for='shop_icon'>Market Icon</label>
                         <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
                         @error('shop_icon')
                         <span class="invalid-feedback" role="alert">
