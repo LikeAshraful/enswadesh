@@ -84,7 +84,7 @@
                         <label for='area_icon'>area Icon</label>
                         <input type="file" id="area_icon" name="area_icon" class="dropify" data-default-file="{{ isset($area) ? asset('/uploads/shopproperty/area/'. $area->area_icon): '' }}" data-height="220" value="{{ isset($area) ? asset('/uploads/shopproperty/area/'. $area->area_icon): '' }}" />
                         @error('area_icon')
-                        <span class="invalid-feedback" role="alert">
+                        <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
