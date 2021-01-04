@@ -15,10 +15,10 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('city_name')->nullable();
-            $table->string('city_icon')->nullable();
-            $table->text('city_description')->nullable();
-            $table->string('city_slug')->nullable();
+            $table->string('city_name')          ->nullable();
+            $table->string('city_icon')          ->nullable();
+            $table->text('city_description')     ->nullable();
+            $table->string('city_slug')          ->nullable();
             $table->timestamps();
         });
     }

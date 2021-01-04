@@ -15,11 +15,11 @@ class CreateThanasTable extends Migration
     {
         Schema::create('thanas', function (Blueprint $table) {
             $table->id();
-            $table->integer('area_id')->nullable();
-            $table->string('thana_name')->nullable();
-            $table->text('thana_description')->nullable();
-            $table->string('thana_slug')->nullable();
-            $table->string('thana_icon')->nullable();
+            $table->integer('area_id')         ->nullable();
+            $table->string('thana_name')       ->nullable();
+            $table->text('thana_description')  ->nullable();
+            $table->string('thana_slug')       ->nullable();
+            $table->string('thana_icon')       ->nullable();
             $table->timestamps();
         });
     }

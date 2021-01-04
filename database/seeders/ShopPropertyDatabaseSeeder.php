@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Shop\Shop;
 use App\Models\Location\Area;
 use App\Models\Location\City;
+use App\Models\Shop\ShopType;
 use App\Models\Location\Floor;
 use App\Models\Location\Thana;
 use App\Models\Location\Market;
@@ -35,7 +36,9 @@ class ShopPropertyDatabaseSeeder extends Seeder
                         $floor = Floor::updateOrCreate(['market_id' => $market->id, 'floor_no' => '3','floor_note' => '3rd Floor']);
         // shop create seeder for database insert
         $user = Auth::user();
-        Shop::updateOrCreate(['shop_owner_id' => 1, 'city_id' => $city->id, 'area_id' => $area->id, 'thana_id' => $thana->id, 'market_id' => $market->id, 'floor_id' => $floor->id,'shop_no' => '23432','shop_name' => 'Rahat Cosmetics', 'shop_phone' => '016542645', 'shop_email' => 'shop@gmail.com', 'shop_fax' => '02454864', 'shop_slug' => 'rahat_cosmetics', 'shop_cover_image' => 'Image', 'shop_icon' => 'Icon', 'shop_type' => 'Gocery', 'shop_status' => 1, 'shop_description' => 'This shop is good']);
+        // shoptype create seeder for database insert
+        $shoptype = ShopType::updateOrCreate(['shop_type_name' => 'Grocery', 'shop_type_description' => 'Grocery Shop', 'shop_type_slug' => 'grocery']);
+        Shop::updateOrCreate(['shop_owner_id' => 1, 'city_id' => $city->id, 'area_id' => $area->id, 'thana_id' => $thana->id, 'market_id' => $market->id, 'floor_id' => $floor->id, 'shop_type_id' => $shoptype->id, 'shop_no' => '23432','shop_name' => 'Rahat Cosmetics', 'shop_phone' => '016542645', 'shop_email' => 'shop@gmail.com', 'shop_fax' => '02454864', 'shop_slug' => 'rahat_cosmetics', 'shop_cover_image' => 'Image', 'shop_icon' => 'Icon', 'shop_status' => 1, 'shop_description' => 'This shop is good']);
 
             $area = Area::updateOrCreate(['area_name' => 'Dhaka South', 'city_id' => $city->id, 'area_description' => 'Dhaka South','area_slug' => 'dhaka_south']);
                 $thana = Thana::updateOrCreate(['thana_name' => 'Tejgaon', 'area_id' => $area->id, 'thana_description' => 'Dhaka South Thana','thana_slug' => 'tejgaon']);
