@@ -210,6 +210,10 @@ a.fa-eye-style:hover {
 .invoice h2 {
     font-size: 1.2em;
 }
+.invoice h4 {
+    font-size: 1.5em;
+    line-height: 1.8em;
+}
 /* end css for invoice page */
 
 
