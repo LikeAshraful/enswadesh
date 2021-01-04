@@ -34,6 +34,10 @@ a.fa-eye-style:hover {
     background: transparent;
 }
 
+.image-display-error-message {
+    display: block;
+}
+
 /* css for invoice page */
 
 .invoice {

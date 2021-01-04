@@ -84,7 +84,7 @@
                         <label for='thana_icon'>Thana Icon</label>
                         <input type="file" id="thana_icon" name="thana_icon" class="dropify" data-default-file="{{ isset($thana) ? asset('/uploads/shopproperty/thana/'. $thana->thana_icon): '' }}" data-height="220" value="{{ isset($thana) ? asset('/uploads/shopproperty/thana/'. $thana->thana_icon): '' }}" />
                         @error('thana_icon')
-                        <span class="invalid-feedback" style="display: block" role="alert">
+                        <span class="invalid-feedback image-display-error-message" style="display: block" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
