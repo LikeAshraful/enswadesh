@@ -1,15 +1,10 @@
 <?php
 
 namespace App\Repositories;
-use Image;
-use Storage;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Module;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManager;
 use App\Repositories\Interface\RoleInterface;
 
 class RoleRepository implements RoleInterface {
