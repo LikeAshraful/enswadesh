@@ -93,7 +93,7 @@
                         <label for='market_icon'>Market  Icon</label>
                         <input type="file" id="market_icon" name="market_icon" class="dropify" data-default-file="{{ isset($market) ? asset('/uploads/shopproperty/market/'. $market->market_icon): '' }}" data-height="220" value="{{ isset($market) ? asset('/uploads/shopproperty/market/'. $market->market_icon): '' }}" />
                         @error('market_icon')
-                        <span class="invalid-feedback" role="alert">
+                        <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
