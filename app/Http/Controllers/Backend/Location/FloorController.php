@@ -20,7 +20,7 @@ class FloorController extends Controller
     public function index()
     {
         $floors = Floor::with('marketOfFloor')->get();
-        return view('backend.loacation.floor.index',  compact('floors'));
+        return view('backend.location.floor.index',  compact('floors'));
     }
 
     /**
@@ -30,7 +30,7 @@ class FloorController extends Controller
     public function create()
     {
         $markets = Market::all();
-        return view('backend.loacation.floor.form', compact('markets'));
+        return view('backend.location.floor.form', compact('markets'));
     }
 
     /**
@@ -70,7 +70,7 @@ class FloorController extends Controller
     {
         $markets = Market::all();
         $floor = Floor::find($id);
-        return view('backend.loacation.floor.form', compact('floor', 'markets'));
+        return view('backend.location.floor.form', compact('floor', 'markets'));
     }
 
     /**
