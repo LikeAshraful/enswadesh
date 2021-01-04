@@ -7,7 +7,6 @@ use Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
 use App\Models\General\Menu\AppMenu;
 
 class AppMenuController extends Controller

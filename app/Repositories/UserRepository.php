@@ -5,9 +5,7 @@ use Image;
 use Storage;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManager;
 use App\Repositories\Interface\UserInterface;
 
 class UserRepository implements UserInterface {

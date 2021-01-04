@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Role;
-use App\Models\Module;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -75,7 +72,7 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Request $request)
     {
 
     }
