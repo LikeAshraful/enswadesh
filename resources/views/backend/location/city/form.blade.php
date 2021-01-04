@@ -70,7 +70,7 @@
                                 data-height="220"
                                 value="{{ isset($city) ? asset('/uploads/shopproperty/city/'. $city->city_icon): '' }}" />
                             @error('city_icon')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback image-display-error-message" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror

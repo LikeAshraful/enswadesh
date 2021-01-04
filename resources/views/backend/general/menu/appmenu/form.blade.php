@@ -70,7 +70,7 @@
                         data-height="220"
                         value="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'.$menu->menu_icon) : '' }}">
                         @error('menu_icon')
-                        <span class="invalid-feedback" role="alert" style="display: block">
+                        <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror

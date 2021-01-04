@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Location\Area;
 use App\Models\Location\City;
+use App\Models\Shop\ShopType;
 use App\Models\Location\Floor;
 use App\Models\Location\Thana;
 use App\Models\Location\Market;
@@ -38,7 +39,8 @@ class ShopController extends Controller
         $thanas = Thana::all();
         $markets = Market::all();
         $floors = Floor::all();
-        return view('backend.shop.shop.form', compact('cities','areas','thanas','markets','floors'));
+        $shoptypes = ShopType::all();
+        return view('backend.shop.shop.form', compact('cities','areas','thanas','markets','floors', 'shoptypes'));
     }
 
     /**
@@ -49,8 +51,7 @@ class ShopController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'market_name' => 'required',
-            'shop_address' => 'required',
+            'shop_name' => 'required',
             'shop_description' => 'required',
             'shop_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
@@ -94,8 +95,9 @@ class ShopController extends Controller
         $thanas = Thana::all();
         $markets = Market::all();
         $floors = Floor::all();
+        $shoptypes = ShopType::all();
         $shop = Shop::find($id);
-        return view('backend.shop.shop.form', compact('cities','areas','thanas','markets','floors', 'shop'));
+        return view('backend.shop.shop.form', compact('cities','areas','thanas','markets','floors', 'shoptypes', 'shop'));
     }
 
     /**
