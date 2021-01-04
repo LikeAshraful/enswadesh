@@ -17,7 +17,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders = Order::paginate(15);
+        $orders = Order::all();
         return view('backend.order.index')->with('orders', $orders);
     }
 
@@ -75,7 +75,11 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order->order_status = $request->order_status;
+        $order->update();        
+        notify()->success('Order Status Successfully Updated.', 'Updated');
+        // return redirect()->route('backend.orders.index');
     }
 
     /**

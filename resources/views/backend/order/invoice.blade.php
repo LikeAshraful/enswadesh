@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Orders')
+@section('title','Order Invoice')
 
 @push('css')
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -36,14 +36,23 @@
                         </a>
                     </div>
                     <div class="col company-details">
-                        <h2 class="name">
-                            <a target="_blank" href="">
-                                {{ $order->billing_name }}
-                            </a>
-                        </h2>
-                        <div>{{ $order->billing_address }}</div>
-                        <div>{{ $order->billing_phone }}</div>
-                        <div>{{ $order->billing_email }}</div>
+                        <div class="row">
+                            <div class="col">
+                                <h4>ORDER STATUS:</h4>
+                            </div>
+                            <div class="col">
+                                <form action="">
+                                    @csrf
+                                    <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}">
+                                    <select class="custom-select custom-select-lg changeStatus">
+                                        <option value="0" {{ $order->order_status == 0 ? "selected" : "" }}>Pending</option>
+                                        <option value="1" {{ $order->order_status == 1 ? "selected" : "" }}>Processing</option>
+                                        <option value="2" {{ $order->order_status == 2 ? "selected" : "" }}>Delivery</option>
+                                        <option value="3" {{ $order->order_status == 3 ? "selected" : "" }}>Complete</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -131,6 +140,26 @@
             window.print();
             return true;
         }
+    });
+
+
+
+    $('select.changeStatus').change(function(){
+        var orderId = $('#order_id').val();
+
+        $.ajax({
+            type: 'PUT',
+            url: '/backend/orders/' + orderId,
+            data: {
+                _token:  $('input[name="_token"]').val(),
+                order_status: $('select.changeStatus').val()
+            },
+            success: function(data){
+                // alert('Sucessfully changed status');                
+                window.location.href = "{{ route('backend.orders.index') }}";                
+             }
+        });
+
     });
 </script>
 @endpush

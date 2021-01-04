@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\backend\General\Menu;
+namespace App\Http\Controllers\Backend\General\Menu;
 
 use Image;
 use Storage;

@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Area')
+@section('title','Orders')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -52,16 +52,20 @@
                                 <td>{{ $order->customer ? $order->customer->name : 'Not Found' }}</td>
                                 <td>{{ $order->total_price }}</td>
                                 <td>
-                                    @if ($order->order_status)
-                                    <div class="badge badge-success">Active</div>
-                                    @else
-                                    <div class="badge badge-danger">Inactive</div>
+                                    @if ($order->order_status == 0)
+                                    <div class="badge badge-danger">Pending</div>
+                                    @elseif ($order->order_status == 1)
+                                    <div class="badge badge-warning">Processing</div>
+                                    @elseif ($order->order_status == 2)
+                                    <div class="badge badge-primary">Delivery</div>
+                                    @elseif ($order->order_status == 3 )
+                                    <div class="badge badge-success">Complete</div>
                                     @endif
                                 </td>
                                 <td>{{ $order->created_at->format('d/m/y') }}</td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.orders.show', $order->id) }}"><i class="fas fa-eye"></i></a>
-                                    <a class="fa-edit-style" href="{{ route('backend.orders.edit', $order->id) }}"><i class="fas fa-edit"></i></a> |
+                                    <!-- <a class="fa-edit-style" href="{{ route('backend.orders.edit', $order->id) }}"><i class="fas fa-edit"></i></a> | -->
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $order->id }})">
                                         <i class="fas fa-trash-alt"></i>
