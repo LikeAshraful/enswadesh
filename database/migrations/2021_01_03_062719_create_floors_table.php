@@ -15,9 +15,9 @@ class CreateFloorsTable extends Migration
     {
         Schema::create('floors', function (Blueprint $table) {
             $table->id();
-            $table->integer('market_id')->nullable();
-            $table->integer('floor_no')->nullable();
-            $table->string('floor_note')->nullable();
+            $table->integer('market_id')  ->nullable();
+            $table->integer('floor_no')   ->nullable();
+            $table->string('floor_note')  ->nullable();
             $table->timestamps();
         });
     }

@@ -15,10 +15,10 @@ class CreateAppMenusTable extends Migration
     {
         Schema::create('app_menus', function (Blueprint $table) {
             $table->id();
-            $table->string('menu_name')->nullable();
-            $table->text('menu_description')->nullable();
-            $table->string('menu_slug')->nullable();
-            $table->string('menu_icon')->nullable();
+            $table->string('menu_name')          ->nullable();
+            $table->text('menu_description')     ->nullable();
+            $table->string('menu_slug')          ->nullable();
+            $table->string('menu_icon')          ->nullable();
             $table->timestamps();
         });
     }
