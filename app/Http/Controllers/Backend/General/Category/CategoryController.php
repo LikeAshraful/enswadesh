@@ -9,16 +9,25 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Models\General\Category\Category;
 use Illuminate\Contracts\Support\Renderable;
+use App\Repositories\Interface\CategoryInterface;
+
 
 class CategoryController extends Controller
 {
+    protected $categories;
+    
+    public function __construct(CategoryInterface $categories)
+    {
+        $this->categories=$categories;
+
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->categories->all();
         // dd($categories[1]->subcategory);
         return view('backend.general.category.index',compact('categories'));
     }
@@ -29,7 +38,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categories->all();
         return view('backend.general.category.form',compact('categories'));
 
     }
@@ -41,51 +50,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $level = Category::where('id', $request->parent_id)->first();
+        $category = $this->categories->store($request->all());
 
-        if($level->level == 3){
-            notify()->warning('Product Category level will be less then or equle 3.', 'Added');
-            return back();
-        }else{
-             //Image
-            if ($image = $request->file('icon')) {
-
-                $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-                $location = public_path('/uploads/products/categoriesicon/' . $filename);
-                Image::make($image)->resize(250, 250)->save($location);
-            }
-
-            $slug = Str::of($request->name)->slug('_');
-
-            $parent_id = $request->parent_id;
-
-            if($parent_id != null){
-                $parent_id = $request->parent_id;
-            }else{
-                $parent_id=0;
-            }
-
-
-
-            Category::create($request->except(
-                    'icon',
-                    'description',
-                    'slug',
-                    'parent_id',
-                    'level'
-                )+[
-                    'icon'              => $filename,
-                    'description'       => $request->description,
-                    'slug'              => $slug,
-                    'parent_id'         => $parent_id,
-                    'level'             => $level->level+1
-
-                ]);
-
-            notify()->success('Product Category Successfully Added.', 'Added');
-            return redirect()->route('backend.category.index');
-        }
+        return redirect()->route('backend.category.index');
+        
 
     }
 
@@ -106,9 +74,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::all();
-        $category=Category::find($id);
-
+        $categories     = $this->categories->all();
+        $category       = $this->categories->get($id);
+    
         return view('backend.general.category.form',compact('category','categories'));
     }
 
@@ -118,45 +86,10 @@ class CategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        $level = Category::where('id', $request->parent_id)->first();
-
-        if($level->level == 3){
-            notify()->warning('Product Category level will be less then or equle 3.', 'Added');
-            return back();
-        }else{
-            $category = Category::find($id);
-            $icon = $category->icon;
-
-            if (!empty($request->name)) {
-                $slug = Str::of($request->name)->slug('_');
-            } else {
-                $slug = $category->slug;
-            }
-
-            if ($image = $request->file('icon')) {
-                $icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-                $locationc = public_path('/uploads/products/categoriesicon/' . $icon);
-                Image::make($image)->resize(600, 400)->save($locationc);
-                $oldFilename = $category->icon;
-                $category->icon = $icon;
-                Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
-            }
-
-            $category->update($request->except(
-                    'icon',
-                    'description', 
-                    'slug'
-                )+[
-                    'icon'              => $icon,
-                    'description'       => $request->description,
-                    'slug'              => $slug
-                ]);
-
-            notify()->success('Product Category Successfully Updated.', 'Updated');
-            return redirect()->route('backend.category.index');
-        }
+        $category = $this->categories->update($id,$request->all());
+        return redirect()->route('backend.category.index');
     }
 
     /**
@@ -166,8 +99,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categories=Category::find($id);
+        // $categories = $this->categories->get($id);
+        // $sub_category = $categories->parent_id;
+        // dd($categories->parent_id);
 
+        // $category=Category::find($id);
+        // $categories=Category::where('id', $category->parent_id)->get();
+        // dd($categories->delete());
+
+        
         if($categories->parent_id != null)
         {
             notify()->warning("This category have sub categories, to delete you need to delete sub categories", "Warning");

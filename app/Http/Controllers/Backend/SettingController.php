@@ -8,9 +8,7 @@ use App\Http\Requests\Settings\UpdateAppearanceRequest;
 use App\Http\Requests\Settings\UpdateMailSettingsRequest;
 use App\Http\Requests\Settings\UpdateSocialiteSettingsRequest;
 use App\Models\Setting;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 

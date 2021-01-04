@@ -43,7 +43,7 @@ class AreaController extends Controller
         $request->validate([
             'area_name' => 'required',
             'area_description' => 'required',
-            'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            //'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
         if ($area_icon = $request->file('area_icon')) {
