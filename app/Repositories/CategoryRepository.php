@@ -4,7 +4,6 @@ namespace App\Repositories;
 use Image;
 use Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use App\Models\General\Category\Category;
 use App\Repositories\Interface\CategoryInterface;
 
