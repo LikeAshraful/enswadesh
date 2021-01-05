@@ -45,19 +45,19 @@
                         @method('PUT')
                         @endif
                         <div class="form-group">
-                        <label for="market_place_id">Market</label>
+                        <label for="market_id">Market</label>
                         @if(isset($floor))
-                        <select name="market_place_id" id="market_place_id" class="form-control">
+                        <select name="market_id" id="market_id" class="form-control">
                             <option value="">Select One</option>
-                            @foreach($marketplaces as $market)
-                                <option value="{{ $market->id }}" {{ $floor->market_place_id == $market->id ? 'selected' : ''}}>{{ $market->market_name }}</option>
+                            @foreach($markets as $market)
+                                <option value="{{ $market->id }}" {{ $floor->market_id == $market->id ? 'selected' : ''}}>{{ $market->marketname }}</option>
                             @endforeach
                         </select>
                         @else
-                        <select name="market_place_id" id="market_place_id" class="form-control">
+                        <select name="market_id" id="market_id" class="form-control">
                             <option value="">Select One</option>
-                            @foreach($marketplaces as $market)
-                                <option value="{{ $market->id }}">{{ $market->market_name }}</option>
+                            @foreach($markets as $market)
+                                <option value="{{ $market->id }}">{{ $market->marketname }}</option>
                             @endforeach
                         </select>
                         @endisset
@@ -69,7 +69,7 @@
                         </div>
                         <div class="form-group">
                         <label for="floor_no">Floor No</label>
-                        <input type="number" id="floor_no" name="floor_no" class="form-control @error('floor_no') is-invalid @enderror" value="{{ isset($floor) ? $floor->floor_no : '' }}"  placeholder="Floor no">
+                        <input type="number" id="floor_no" name="floor_no" class="form-control @error('floor_no') is-invalid @enderror" value="{{ isset($floor) ? $floor->floor_no : '' }}"  holder="Floor no">
                         @error('floor_no')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -78,7 +78,7 @@
                         </div>
                         <div class="form-group">
                         <label for="floor_note">Floor Note</label>
-                        <input type="text" id="floor_note" name="floor_note" class="form-control" value="{{ isset($floor) ? $floor->floor_note : '' }}" placeholder="floor Description">
+                        <input type="text" id="floor_note" name="floor_note" class="form-control" value="{{ isset($floor) ? $floor->floor_note : '' }}" holder="floor Description">
                         </div>
                         <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
                         @isset($floor)

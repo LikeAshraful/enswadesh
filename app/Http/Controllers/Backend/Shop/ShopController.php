@@ -50,27 +50,45 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $request->validate([
-            'shop_name' => 'required',
-            'shop_description' => 'required',
-            'shop_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'shop_name'           => 'required',
+            'shop_description'    => 'required',
+            'shop_logo'           => 'required|mimes:jpeg,jpg,png|max:500',
+            'shop_cover_image'    => 'required|mimes:jpeg,jpg,png|max:500',
+            'meta_og_image_shop'  => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        if ($shop_icon = $request->file('shop_icon')) {
-            $filename = rand(10, 100) . time() . '.' . $shop_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/shop/' . $filename);
-            Image::make($shop_icon)->resize(600, 400)->save($location);
+        // for shop logo
+        if ($shop_logo = $request->file('shop_logo')) {
+            $shopLogo = rand(10, 100) . time() . '.' . $shop_logo->getClientOriginalExtension();
+            $locationLogo = public_path('/uploads/shopproperty/shop/' . $shopLogo);
+            Image::make($shop_logo)->resize(600, 400)->save($locationLogo);
+        }
+        // for shop cover image
+        if ($shop_cover_image = $request->file('shop_cover_image')) {
+            $coverImage = rand(10, 100) . time() . '.' . $shop_cover_image->getClientOriginalExtension();
+            $locationCoverImage = public_path('/uploads/shopproperty/shop/' . $coverImage);
+            Image::make($shop_cover_image)->resize(600, 400)->save($locationCoverImage);
+        }
+        // for shop  meta image
+        if ($meta_og_image_shop = $request->file('meta_og_image_shop')) {
+            $metaImage = rand(10, 100) . time() . '.' . $meta_og_image_shop->getClientOriginalExtension();
+            $locationMetaImage = public_path('/uploads/shopproperty/shop/' . $metaImage);
+            Image::make($meta_og_image_shop)->resize(600, 400)->save($locationMetaImage);
         }
 
-        $slug = Str::of($request->market_name)->slug('_');
-        Shop::create($request->except('shop_icon', 'shop_slug') +
+        $slug = Str::of($request->shop_name)->slug('_');
+        Shop::create($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_slug') +
             [
-                'shop_icon' => $filename,
-                'shop_slug' => $slug
+                'shop_logo'           => $shopLogo,
+                'shop_cover_image'    => $coverImage,
+                'meta_og_image_shop'  => $metaImage,
+                'shop_slug'           => $slug
             ]);
 
         notify()->success('shop Successfully Added.', 'Added');
-        return redirect()->route('backend.shop.shops.index');
+        return redirect()->route('backend.shops.index');
     }
 
     /**
@@ -110,8 +128,8 @@ class ShopController extends Controller
     {
         $data = Shop::find($id);
         $shop_icon = $data->shop_icon;
-        if (!empty($request->market_name)) {
-            $slug = Str::of($request->market_name)->slug('_');
+        if (!empty($request->shop_name)) {
+            $slug = Str::of($request->shop_name)->slug('_');
         } else {
             $slug = $data->shop_slug;
         }
@@ -125,15 +143,35 @@ class ShopController extends Controller
             Storage::delete('/uploads/shopproperty/shop/' . $oldFilenamec);
         }
 
+        if ($image = $request->file('shop_icon')) {
+            $shop_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $locationc = public_path('/uploads/shopproperty/shop/' . $shop_icon);
+            Image::make($image)->resize(600, 400)->save($locationc);
+            $oldFilenamec = $data->shop_icon;
+            $data->shop_icon = $shop_icon;
+            Storage::delete('/uploads/shopproperty/shop/' . $oldFilenamec);
+        }
+
+        if ($image = $request->file('shop_icon')) {
+            $shop_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
+            $locationc = public_path('/uploads/shopproperty/shop/' . $shop_icon);
+            Image::make($image)->resize(600, 400)->save($locationc);
+            $oldFilenamec = $data->shop_icon;
+            $data->shop_icon = $shop_icon;
+            Storage::delete('/uploads/shopproperty/shop/' . $oldFilenamec);
+        }
+
         // shop info update
-        $data = $data->update($request->except('shop_slug', 'shop_icon') +
+        $data = $data->update($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_slug') +
             [
-                'shop_slug' => $slug,
-                'shop_icon' => $shop_icon
+                'shop_logo'           => $shopLogo,
+                'shop_cover_image'    => $coverImage,
+                'meta_og_image_shop'  => $metaImage,
+                'shop_slug'           => $slug
             ]);
 
         notify()->success('shop Successfully Updated.', 'Updated');
-        return redirect()->route('backend.shop.shops.index');
+        return redirect()->route('backend.shops.index');
     }
 
     /**
