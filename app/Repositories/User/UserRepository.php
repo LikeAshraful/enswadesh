@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\User;
 use Image;
 use Storage;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Repositories\Interface\UserInterface;
+use App\Repositories\Interface\User\UserInterface;
 
 class UserRepository implements UserInterface {
 

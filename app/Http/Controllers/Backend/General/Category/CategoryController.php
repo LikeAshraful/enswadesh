@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers\Backend\General\Category;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use App\Models\General\Category\Category;
-use Illuminate\Contracts\Support\Renderable;
-use App\Repositories\Interface\CategoryInterface;
+use App\Repositories\Interface\Category\CategoryInterface;
 
 
 class CategoryController extends Controller
@@ -27,8 +22,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        //Access CategoryInterface all function
         $categories = $this->categories->all();
         // dd($categories[1]->subcategory);
+
         return view('backend.general.category.index',compact('categories'));
     }
 
@@ -38,7 +35,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        //Access CategoryInterface all function
         $categories = $this->categories->all();
+
         return view('backend.general.category.form',compact('categories'));
 
     }
@@ -50,6 +49,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        //Access CategoryInterface store function
         $category = $this->categories->store($request->all());
 
         return redirect()->route('backend.category.index');
@@ -74,7 +74,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        //Access CategoryInterface all function
         $categories     = $this->categories->all();
+
+        //Access CategoryInterface get function
         $category       = $this->categories->get($id);
     
         return view('backend.general.category.form',compact('category','categories'));
@@ -88,7 +91,9 @@ class CategoryController extends Controller
      */
     public function update($id, Request $request)
     {
+        //Access CategoryInterface update function
         $category = $this->categories->update($id,$request->all());
+
         return redirect()->route('backend.category.index');
     }
 
@@ -99,25 +104,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        // $categories = $this->categories->get($id);
-        // $sub_category = $categories->parent_id;
-        // dd($categories->parent_id);
-
-        // $category=Category::find($id);
-        // $categories=Category::where('id', $category->parent_id)->get();
-        // dd($categories->delete());
-
+        //Access CategoryInterface delete function
+        $categories = $this->categories->delete($id);
         
-        if($categories->parent_id != null)
-        {
-            notify()->warning("This category have sub categories, to delete you need to delete sub categories", "Warning");
-        }
-        else{
-            $oldFilename = $categories->icon;
-            Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
-            $categories->delete();
-            notify()->success("Product Category Successfully Deleted", "Deleted");
-        }
         return back();
 
     }

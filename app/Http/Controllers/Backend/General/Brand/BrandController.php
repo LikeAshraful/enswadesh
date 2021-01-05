@@ -2,23 +2,28 @@
 
 namespace App\Http\Controllers\Backend\General\Brand;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Models\General\Brand\Brand;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Support\Renderable;
+use App\Repositories\Interface\Brand\BrandInterface;
 
 class BrandController extends Controller
 {
+    protected $brands;
+    
+    public function __construct(BrandInterface $brands)
+    {
+        $this->brands=$brands;
+
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $brands = Brand::all();
+        //Access BrandInterface all function
+        $brands = $this->brands->all();
+
         return view('backend.general.brand.index',compact('brands'));
     }
 
@@ -38,29 +43,12 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //Image
-        if ($image = $request->file('icon')) {
-                
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/products/brandicon/' . $filename);
-            Image::make($image)->resize(250, 250)->save($location);
-        }
+        //Access BrandInterface store function
+        $brand = $this->brands->store($request->all());
 
-        $slug = Str::of($request->name)->slug('_');
+        notify()->success('Product Brand Successfully Added.', 'Added');
 
-        Brand::create($request->except(
-            'icon',
-            'description', 
-            'slug'
-        )+[
-            'icon'              => $filename,
-            'description'       => $request->description,
-            'slug'              => $slug
-            
-        ]);
-    
-    notify()->success('Product Brand Successfully Added.', 'Added');
-    return redirect()->route('backend.brand.index');
+        return redirect()->route('backend.brand.index');
     }
 
     /**
@@ -80,7 +68,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $brand=Brand::find($id);
+        //Access BrandInterface get function
+        $brand = $this->brands->get($id);
+
         return view('backend.general.brand.form',compact('brand'));
     }
 
@@ -92,33 +82,11 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brand = Brand::find($id);
-        if (!empty($request->name)) {
-            $slug = Str::of($request->name)->slug('_');
-        } else {
-            $slug = $brand->slug;
-        }
-
-        if ($image = $request->file('icon')) {
-            $icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/products/brandicon/' . $icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilename = $brand->icon;
-            $brand->icon = $icon;
-            Storage::delete('/uploads/products/brandicon/' . $oldFilename);
-        }
-
-        $brand->update($request->except(
-                'icon',
-                'description', 
-                'slug'
-            )+[
-                'icon'              => $icon,
-                'description'       => $request->description,
-                'slug'              => $slug
-            ]);
+        //Access BrandInterface update function
+        $brands = $this->brands->update($id,$request->all());
 
         notify()->success('Product Brand Successfully Updated.', 'Updated');
+
         return redirect()->route('backend.brand.index');
     }
 
@@ -129,13 +97,11 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $brand=Brand::find($id);
+        //Access BrandInterface delete function
+        $brand = $this->brands->delete($id);
 
-        $oldFilename = $brand->icon;
-        Storage::delete('/uploads/products/brandicon/' . $oldFilename);
-        $brand->delete();
         notify()->success("Product Brand Successfully Deleted", "Deleted");
-        
+
         return back();
     }
 }

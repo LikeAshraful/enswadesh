@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Users\StoreUserRequest;
-use App\Repositories\Interface\UserInterface;
+use App\Repositories\Interface\User\UserInterface;
 use App\Http\Requests\Users\UpdateUserRequest;
 
 class UserController extends Controller
@@ -28,7 +28,7 @@ class UserController extends Controller
         //Define user authorize gate
         Gate::authorize('backend.users.index');
 
-        //Access UserRepository delete function
+        //Access UserInterface all function
         $users = $this->users->all();
         return view('backend.users.index',compact('users'));
     }
@@ -43,7 +43,7 @@ class UserController extends Controller
         //Define user authorize gate
         Gate::authorize('backend.users.create');
 
-        //Access UserRepository allRole function
+        //Access UserInterface allRole function
         $roles = $this->users->allRole();
 
         return view('backend.users.form', compact('roles'));
@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //Access UserRepository store function
+        //Access UserInterface store function
         $users = $this->users->store($request->all());
 
         notify()->success('User Successfully Added.', 'Added');
@@ -73,7 +73,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //Access UserRepository store function
+        //Access UserInterface store function
         $user = $this->users->get($id);
 
         return view('backend.users.show',compact('user'));
@@ -90,7 +90,7 @@ class UserController extends Controller
         //Define user authorize gate
         Gate::authorize('backend.users.edit');
 
-        //Access UserRepository allRole and get function
+        //Access UserInterface allRole and get function
         $roles = $this->users->allRole();
         $user = $this->users->get($id);
 
@@ -106,7 +106,7 @@ class UserController extends Controller
      */
     public function update($id, UpdateUserRequest $request)
     {
-        //Access UserRepository update function
+        //Access UserInterface update function
         $users = $this->users->update($id,$request->all());
 
         notify()->success('User Successfully Updated.', 'Updated');

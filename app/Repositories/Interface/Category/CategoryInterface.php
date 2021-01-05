@@ -1,6 +1,6 @@
 <?php
   
-namespace App\Repositories\Interface;
+namespace App\Repositories\Interface\Category;
 
 interface CategoryInterface{
     public function all();
