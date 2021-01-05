@@ -15,7 +15,7 @@ class Shop extends Model
     use HasFactory;
 
     protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_id', 'shop_no', 'shop_name',
-     'shop_phone', 'shop_email', 'shop_fax', 'shop_slug', 'shop_cover_image', 'shop_icon', 'shop_type', 'shop_description', 'meta_title_shop',
+     'shop_phone', 'shop_email', 'shop_fax', 'shop_slug', 'shop_cover_image', 'shop_icon', 'shop_type_id', 'shop_description', 'meta_title_shop',
       'meta_keywords_shop', 'meta_description_shop', 'meta_og_image_shop', 'meta_og_url_shop',];
 
     public function cityOfShop() {

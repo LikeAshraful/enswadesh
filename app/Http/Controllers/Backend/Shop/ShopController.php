@@ -127,50 +127,53 @@ class ShopController extends Controller
     public function update(Request $request, $id)
     {
         $data = Shop::find($id);
-        $shop_icon = $data->shop_icon;
+        $shop_logo          = $data->shop_logo;
+        $shop_cover_image   = $data->shop_cover_image;
+        $meta_og_image_shop = $data->meta_og_image_shop;
+
         if (!empty($request->shop_name)) {
             $slug = Str::of($request->shop_name)->slug('_');
         } else {
             $slug = $data->shop_slug;
         }
 
-        if ($image = $request->file('shop_icon')) {
-            $shop_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/shop/' . $shop_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->shop_icon;
-            $data->shop_icon = $shop_icon;
-            Storage::delete('/uploads/shopproperty/shop/' . $oldFilenamec);
+        if ($shopLogo = $request->file('shop_logo')) {
+            $shop_logo = rand(10, 100) . time() . '.' . $shopLogo->getClientOriginalExtension();
+            $locationLogo = public_path('/uploads/shopproperty/shop/' . $shop_logo);
+            Image::make($shopLogo)->resize(600, 400)->save($locationLogo);
+            $oldFileLogo = $data->shop_logo;
+            $data->shop_logo = $shop_logo;
+            Storage::delete('/uploads/shopproperty/shop/' . $oldFileLogo);
         }
 
-        if ($image = $request->file('shop_icon')) {
-            $shop_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/shop/' . $shop_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->shop_icon;
-            $data->shop_icon = $shop_icon;
-            Storage::delete('/uploads/shopproperty/shop/' . $oldFilenamec);
+        if ($coverImage = $request->file('shop_cover_image')) {
+            $shop_cover_image = rand(10, 100) . time() . '.' . $coverImage->getClientOriginalExtension();
+            $locationCoverImage = public_path('/uploads/shopproperty/shop/' . $shop_cover_image);
+            Image::make($coverImage)->resize(600, 400)->save($locationCoverImage);
+            $oldFileCoverImage = $data->shop_cover_image;
+            $data->shop_cover_image = $shop_cover_image;
+            Storage::delete('/uploads/shopproperty/shop/' . $oldFileCoverImage);
         }
 
-        if ($image = $request->file('shop_icon')) {
-            $shop_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/shop/' . $shop_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->shop_icon;
-            $data->shop_icon = $shop_icon;
-            Storage::delete('/uploads/shopproperty/shop/' . $oldFilenamec);
+        if ($metaImage = $request->file('meta_og_image_shop')) {
+            $meta_og_image_shop = rand(10, 100) . time() . '.' . $metaImage->getClientOriginalExtension();
+            $locationMetaImage = public_path('/uploads/shopproperty/shop/' . $meta_og_image_shop);
+            Image::make($metaImage)->resize(600, 400)->save($locationMetaImage);
+            $oldFileMetaImage = $data->meta_og_image_shop;
+            $data->meta_og_image_shop = $meta_og_image_shop;
+            Storage::delete('/uploads/shopproperty/shop/' . $oldFileMetaImage);
         }
 
         // shop info update
         $data = $data->update($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_slug') +
             [
-                'shop_logo'           => $shopLogo,
-                'shop_cover_image'    => $coverImage,
-                'meta_og_image_shop'  => $metaImage,
+                'shop_logo'           => $shop_logo,
+                'shop_cover_image'    => $shop_cover_image,
+                'meta_og_image_shop'  => $meta_og_image_shop,
                 'shop_slug'           => $slug
             ]);
 
-        notify()->success('shop Successfully Updated.', 'Updated');
+        notify()->success('Shop Successfully Updated.', 'Updated');
         return redirect()->route('backend.shops.index');
     }
 
