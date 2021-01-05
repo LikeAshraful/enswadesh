@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Category;
 use Image;
 use Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use App\Models\General\Category\Category;
-use App\Repositories\Interface\CategoryInterface;
+use App\Repositories\Interface\Category\CategoryInterface;
 
 class CategoryRepository implements CategoryInterface {
 
@@ -79,18 +78,20 @@ class CategoryRepository implements CategoryInterface {
                 $slug = $data['slug'];
             }
 
-            if ($image = $data['icon']) {
-                $icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-                $locationc = public_path('/uploads/products/categoriesicon/' . $icon);
-                Image::make($image)->resize(600, 400)->save($locationc);
-                $oldFilename = $category->icon;
-                $category->icon = $icon;
-                Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
+            if(isset($data['icon']) == true){
+                if (!empty($icon = $data['icon'])) {
+                    $filename = rand(10, 100) . time() . '.' . $icon->getClientOriginalExtension();
+                    $locationc = public_path('/uploads/products/categoriesicon/' . $filename);
+                    Image::make($icon)->resize(250, 250)->save($locationc);
+                    $oldFilenamec = $category->icon;
+                    $category->icon = $icon;
+                    Storage::delete('/uploads/products/categoriesicon/' . $oldFilenamec);
+                }
             }
         }
         $category = $category->update([
             'name'              => $data['name'],
-            'icon'              => isset($icon) ? $icon : '',
+            'icon'              => isset($filename) ? $filename : $icon,
             'description'       => $data['description'],
             'slug'              => $slug,
             'parent_id'         => $data['parent_id'],
@@ -103,10 +104,16 @@ class CategoryRepository implements CategoryInterface {
 
     public function delete($id)
     {
-        //Return User Model
-        $user = User::find($id);
-        $oldFilename = $user->image;
-        Storage::delete('/uploads/users/' . $oldFilename);
-        return $user->delete();
+        $categories=Category::find($id);
+        if($categories->parent_id != null)
+        {
+            notify()->warning("This category have sub categories, to delete you need to delete sub categories", "Warning");
+        }
+        else{
+            $oldFilename = $categories->icon;
+            Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
+            $categories->delete();
+            notify()->success("Product Category Successfully Deleted", "Deleted");
+        }
     }
 }

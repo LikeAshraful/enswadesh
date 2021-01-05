@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Roles\StoreRoleRequest;
 use App\Http\Requests\Roles\UpdateRoleRequest;
-use App\Repositories\Interface\RoleInterface;
+use App\Repositories\Interface\Role\RoleInterface;
 
 class RoleController extends Controller
 {

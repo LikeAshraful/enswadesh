@@ -1,13 +1,13 @@
 <?php
   
-namespace App\Repositories\Interface;
+namespace App\Repositories\Interface\Role;
 
-interface UserInterface{
+interface RoleInterface{
     public function all();
 
     public function get($id);
 
-    public function allRole();
+    public function allModules();
 
     public function store(array $data);
 

@@ -29,6 +29,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('deleted_by')       ->unsigned()->nullable();
 
             $table->unsignedInteger('parent_id')->default(0);
+
             $table->timestamps();
         });
     }

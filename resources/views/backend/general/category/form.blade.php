@@ -49,6 +49,7 @@
                     <h5 class="card-title">Manage Product Category</h5>
                     @if(isset($category))
                         <select name="parent_id" id="parent_id" class="form-control select js-example-basic-single">
+                        <option value="0">--This will be main category--</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}" {{ $category->parent_id == $cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
                             @endforeach
