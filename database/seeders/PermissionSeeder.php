@@ -98,22 +98,22 @@ class PermissionSeeder extends Seeder
         $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management']);
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,
-            'name' => 'Access Main Category',
+            'name' => 'Access Category',
             'slug' => 'backend.category.index',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,
-            'name' => 'Create Main Category',
+            'name' => 'Create Category',
             'slug' => 'backend.categoryrs.create',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,
-            'name' => 'Edit Main Category',
+            'name' => 'Edit Category',
             'slug' => 'backend.category.edit',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,
-            'name' => 'Delete Main Category',
+            'name' => 'Delete Category',
             'slug' => 'backend.category.destroy',
         ]);
 

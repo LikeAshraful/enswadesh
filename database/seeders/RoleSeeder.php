@@ -16,13 +16,13 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $admin_permissions = Permission::all();
-        Role::updateOrCreate(['name' => 'Super Admin', 'slug' => 'super_admin', 'deletable' => false])
+        Role::updateOrCreate(['name' => 'Admin', 'slug' => 'admin', 'deletable' => false])
             ->permissions()
             ->sync($admin_permissions->pluck('id'));
 
-        Role::updateOrCreate(['name' => 'Admin', 'slug' => 'admin', 'deletable' => false]);
-
-        Role::updateOrCreate(['name' => 'User', 'slug' => 'user', 'deletable' => false]);
+        Role::updateOrCreate(['name' => 'Shop Owner', 'slug' => 'shop_owner', 'deletable' => false]);
+        
+        Role::updateOrCreate(['name' => 'Customer', 'slug' => 'customer', 'deletable' => false]);
 
     }
 }

@@ -32,7 +32,7 @@ class UserRepository implements UserInterface {
         if($image = $data['image']) {
             $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('/uploads/users/' . $filename);
-            Image::make($image)->resize(600, 400)->save($location);
+            Image::make($image)->resize(400, 400)->save($location);
         }
 
         //Return User Model
@@ -55,7 +55,7 @@ class UserRepository implements UserInterface {
             if (!empty($image = $data['image'])) {
                 $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
                 $locationc = public_path('/uploads/users/' . $filename);
-                Image::make($image)->resize(600, 400)->save($locationc);
+                Image::make($image)->resize(400, 400)->save($locationc);
                 $oldFilenamec = $user->image;
                 $user->image = $image;
                 Storage::delete('/uploads/users/' . $oldFilenamec);

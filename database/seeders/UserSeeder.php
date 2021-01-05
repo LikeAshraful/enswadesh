@@ -17,36 +17,39 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Create super admin
-        $superRole = Role::where('slug','super_admin')->first();
+        $adminRole = Role::where('slug','admin')->first();
         User::updateOrCreate([
-            'role_id'   => $superRole->id,
-            'name'      => 'Super Admin',
-            'email'     => 'super@gmail.com',
-            'image'     => 'user.png',
-            'password'  => Hash::make('12345678'),
-            'status'    => true
+            'role_id'       => $adminRole->id,
+            'name'          => 'Admin',
+            'email'         => 'admin@gmail.com',
+            'image'         => 'user.png',
+            'password'      => Hash::make('12345678'),
+            'phone_number'  => '01744101010',
+            'status'        => true
         ]);
 
         // Create admin
-        $adminRole = Role::where('slug','admin')->first();
+        $shopOwnerRole = Role::where('slug','shop_owner')->first();
         User::updateOrCreate([
-            'role_id'   => $adminRole->id,
-            'name'      => 'Admin',
-            'email'     => 'admin@mail.com',
-            'image'     => 'user.png',
-            'password'  => Hash::make('12345678'),
-            'status'    => true
+            'role_id'       => $shopOwnerRole->id,
+            'name'          => 'Muhammad',
+            'email'         => 'admin@mail.com',
+            'image'         => 'user.png',
+            'password'      => Hash::make('12345678'),
+            'phone_number'  => '01744101011',
+            'status'        => true
         ]);
 
         // Create user
-        $userRole = Role::where('slug','user')->first();
+        $customerRole = Role::where('slug','customer')->first();
         User::updateOrCreate([
-            'role_id'   => $userRole->id,
-            'name'      => 'Jone Doe',
-            'email'     => 'user@mail.com',
-            'image'     =>'user.png',
-            'password'  => Hash::make('12345678'),
-            'status'    => true
+            'role_id'       => $customerRole->id,
+            'name'          => 'Jone Doe',
+            'email'         => 'user@mail.com',
+            'image'         =>'user.png',
+            'password'      => Hash::make('12345678'),
+            'phone_number'  => '01744101012',
+            'status'        => true
         ]);
     }
 }
