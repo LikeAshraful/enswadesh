@@ -33,61 +33,59 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="main-card mb-3 card">
-                <div class="card-head"></div>
-                <div class="card-body">
-                    <form action="{{ isset($floor) ? route('backend.floors.update',$floor->id) : route('backend.floors.store') }}" method="POST" enctype="multipart/form-data" file="true">
-                        @csrf
-                        @if (isset($floor))
-                        @method('PUT')
-                        @endif
-                        <div class="form-group">
-                        <label for="market_id">Market</label>
-                        @if(isset($floor))
-                        <select name="market_id" id="market_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($markets as $market)
-                                <option value="{{ $market->id }}" {{ $floor->market_id == $market->id ? 'selected' : ''}}>{{ $market->marketname }}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select name="market_id" id="market_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($markets as $market)
-                                <option value="{{ $market->id }}">{{ $market->marketname }}</option>
-                            @endforeach
-                        </select>
-                        @endisset
-                        @error('floor')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                        </div>
-                        <div class="form-group">
-                        <label for="floor_no">Floor No</label>
-                        <input type="number" id="floor_no" name="floor_no" class="form-control @error('floor_no') is-invalid @enderror" value="{{ isset($floor) ? $floor->floor_no : '' }}"  holder="Floor no">
-                        @error('floor_no')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                        </div>
-                        <div class="form-group">
-                        <label for="floor_note">Floor Note</label>
-                        <input type="text" id="floor_note" name="floor_note" class="form-control" value="{{ isset($floor) ? $floor->floor_note : '' }}" holder="floor Description">
-                        </div>
-                        <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
-                        @isset($floor)
-                        <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
-                        @else
-                        <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
-                        @endisset
-                    </form>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-head"></div>
+            <div class="card-body">
+                <form action="{{ isset($floor) ? route('backend.floors.update',$floor->id) : route('backend.floors.store') }}" method="POST" enctype="multipart/form-data" file="true">
+                    @csrf
+                    @if (isset($floor))
+                    @method('PUT')
+                    @endif
+                    <div class="form-group">
+                    <label for="market_id">Market</label>
+                    @if(isset($floor))
+                    <select name="market_id" id="market_id" class="form-control">
+                        <option value="">Select One</option>
+                        @foreach($markets as $market)
+                            <option value="{{ $market->id }}" {{ $floor->market_id == $market->id ? 'selected' : ''}}>{{ $market->marketname }}</option>
+                        @endforeach
+                    </select>
+                    @else
+                    <select name="market_id" id="market_id" class="form-control">
+                        <option value="">Select One</option>
+                        @foreach($markets as $market)
+                            <option value="{{ $market->id }}">{{ $market->marketname }}</option>
+                        @endforeach
+                    </select>
+                    @endisset
+                    @error('floor')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    </div>
+                    <div class="form-group">
+                    <label for="floor_no">Floor No</label>
+                    <input type="number" id="floor_no" name="floor_no" class="form-control @error('floor_no') is-invalid @enderror" value="{{ isset($floor) ? $floor->floor_no : '' }}"  holder="Floor no">
+                    @error('floor_no')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    </div>
+                    <div class="form-group">
+                    <label for="floor_note">Floor Note</label>
+                    <input type="text" id="floor_note" name="floor_note" class="form-control" value="{{ isset($floor) ? $floor->floor_note : '' }}" holder="floor Description">
+                    </div>
+                    <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
+                    @isset($floor)
+                    <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
+                    @else
+                    <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
+                    @endisset
+                </form>
             </div>
         </div>
     </div>

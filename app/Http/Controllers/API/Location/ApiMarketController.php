@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Location\Market;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\Location\MarketResource;
 
 class ApiMarketController extends Controller
 {
@@ -15,9 +16,10 @@ class ApiMarketController extends Controller
      */
     public function index()
     {
-        $status = 200;
-        $markets = Market::with('thanaOfMarket')->get();
-        return response()->json($markets, $status);
+        return MarketResource::collection(Market::all());
+        // $status = 200;
+        // $markets = Market::with('thanaOfMarket')->get();
+        // return response()->json($markets, $status);
     }
 
     /**
