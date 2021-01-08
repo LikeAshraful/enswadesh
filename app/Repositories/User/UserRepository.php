@@ -37,12 +37,12 @@ class UserRepository implements UserInterface {
 
         //Return User Model
         return User::create([
-            'role_id'   => $data['role'],
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'image'     => isset($filename) ? $filename : '',
-            'status'    => isset($data['status']) == true ? 1 : 0,
+            'role_id'       => $data['role'],
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'phone_number'  => $data['phone_number'],
+            'password'      => Hash::make($data['password']),
+            'image'         => isset($filename) ? $filename : '',
         ]);
     }
 
@@ -63,12 +63,12 @@ class UserRepository implements UserInterface {
         }
         //Return User Model
         return $user->update([
-            'role_id'   => $data['role'],
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'image'     => isset($filename) ? $filename : $image,
-            'status'    => isset($data['status']) == true ? 1 : 0,
+            'role_id'       => $data['role'],
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'phone_number'  => $data['phone_number'],
+            'password'      => Hash::make($data['password']),
+            'image'         => isset($filename) ? $filename : $image,
         ]);
     }
 

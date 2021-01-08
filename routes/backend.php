@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -16,14 +15,22 @@ use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
+use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
     //Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //Role
     Route::resource('roles', RoleController::class);
-    //User
-    Route::resource('users', UserController::class);
+    //User Management
+   
+    Route::resource('super_admin', SuperAdminController::class);
+    Route::post('users/publish/{publish}', [SuperAdminController::class, 'togglePublish'])->name('users.publish');
+    Route::post('users/blocked/{blocked}', [SuperAdminController::class, 'toggleBlocked'])->name('users.blocked');
+
+    Route::resource('admin', AdminController::class);
+
     //Profile
     Route::get('profile/', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');

@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Users')
+@section('title','Super Admin')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -18,7 +18,7 @@
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.users.create') }}" class="btn-shadow btn btn-info">
+                <a href="{{ route('backend.super_admin.create') }}" class="btn-shadow btn btn-info">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-plus-circle fa-w-20"></i>
                     </span>
@@ -39,6 +39,7 @@
                             <th>Name</th>
                             <th class="text-center">Email</th>
                             <th class="text-center">Status</th>
+                            <th class="text-center">Busniess Status</th>
                             <th class="text-center">Joined At</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -71,24 +72,60 @@
                                 </div>
                             </td>
                             <td class="text-center">{{ $user->email }}</td>
+
                             <td class="text-center">
-                                @if ($user->status)
-                                <div class="badge badge-success">Active</div>
+                                @if($user->status === 1)
+                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">
+                                        Approved
+                                    </button>
+                                </form>
                                 @else
-                                <div class="badge badge-danger">Inactive</div>
+                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
+                                            Pending
+                                        </button>
+
+                                </form>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($user->suspend === 1)
+                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
+                                        Blocked
+                                    </button>
+                                </form>
+                                @else
+                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
+                                            Unblocked
+                                        </button>
+
+                                </form>
                                 @endif
                             </td>
                             <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
                             <td class="text-center">
-                                <a class="fa-eye-style" href="{{ route('backend.users.show',$user->id) }}"><i class="fas fa-eye"></i>
-                                </a> | 
-                                <a class="fa-edit-style" href="{{ route('backend.users.edit',$user->id) }}"><i class="fas fa-edit"></i>
-                                </a> | 
+                                <a class="fa-eye-style" href="{{ route('backend.super_admin.show',$user->id) }}"><i
+                                        class="fas fa-eye"></i>
+                                </a> |
+                                <a class="fa-edit-style" href="{{ route('backend.super_admin.edit',$user->id) }}"><i
+                                        class="fas fa-edit"></i>
+                                </a> |
                                 <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 <form id="delete-form-{{ $user->id }}"
-                                    action="{{ route('backend.users.destroy',$user->id) }}" method="POST"
+                                    action="{{ route('backend.super_admin.destroy',$user->id) }}" method="POST"
                                     style="display: none;">
                                     @csrf()
                                     @method('DELETE')

@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','Users')
+@section('title','Admin')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
@@ -20,11 +20,11 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' User') }}</div>
+            <div>{{ __((isset($admin) ? 'Edit' : 'Create New') . ' Admin') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.users.index') }}" class="btn-shadow btn btn-danger">
+                <a href="{{ route('backend.admin.index') }}" class="btn-shadow btn btn-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -37,11 +37,11 @@
 
 <div class="row">
     <div class="col-12">
-        <form role="form" id="userFrom" method="POST"
-            action="{{ isset($user) ? route('backend.users.update',$user->id) : route('backend.users.store') }}"
+        <form role="form" id="adminFrom" method="POST"
+            action="{{ isset($admin) ? route('backend.admin.update',$user->id) : route('backend.admin.store') }}"
             enctype="multipart/form-data" file="true">
             @csrf
-            @if (isset($user))
+            @if (isset($admin))
             @method('PUT')
             @endif
             <div class="row">
@@ -53,11 +53,15 @@
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
 
-                            <x-forms.textbox type="email" name="email" value="{{ $user->email ?? ''  }}" />
+                            <x-forms.textbox label="E-mail" type="email" name="email" value="{{ $user->email ?? ''  }}" />
 
-                            <x-forms.textbox type="password" name="password" placeholder="******" />
+                            <x-forms.textbox label="Password" type="password" name="password" placeholder="******" />
 
-                            <x-forms.textbox type="password" name="password_confirmation" placeholder="******" />
+                            <x-forms.textbox label="Confirmation Password" type="password" name="password_confirmation" placeholder="******" />
+
+                            <x-forms.textbox label="Phone Number" name="phone_number" value="{{ $user->phone_number ?? ''  }}"
+                                field-attributes="required autofocus">
+                            </x-forms.textbox>
                         </div>
                     </div>
                 </div>
@@ -76,11 +80,8 @@
                             <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
                                 value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
 
-                            <x-forms.checkbox label="Status" name="status" class="custom-switch"
-                                :value="$user->status ?? null" />
-
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
-                                on-click="resetForm('userFrom')" />
+                                on-click="resetForm('adminFrom')" />
 
                             @isset($user)
                             <x-forms.button type="submit" label="Update" icon-class="fas fa-arrow-circle-up" />

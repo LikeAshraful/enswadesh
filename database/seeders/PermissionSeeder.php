@@ -71,27 +71,50 @@ class PermissionSeeder extends Seeder
             'slug' => 'backend.profile.password',
         ]);
 
-        // User management
-        $moduleAppUser = Module::updateOrCreate(['name' => 'User Management']);
+        // User management(Super Admin)
+        $moduleAppSuperAdmin = Module::updateOrCreate(['name' => 'Super Admin Management']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
-            'name' => 'Access Users',
-            'slug' => 'backend.users.index',
+            'module_id' => $moduleAppSuperAdmin->id,
+            'name' => 'Access Super',
+            'slug' => 'backend.super_admin.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
-            'name' => 'Create User',
-            'slug' => 'backend.users.create',
+            'module_id' => $moduleAppSuperAdmin->id,
+            'name' => 'Create Super',
+            'slug' => 'backend.super_admin.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
-            'name' => 'Edit User',
-            'slug' => 'backend.users.edit',
+            'module_id' => $moduleAppSuperAdmin->id,
+            'name' => 'Edit Super',
+            'slug' => 'backend.super_admin.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
-            'name' => 'Delete User',
-            'slug' => 'backend.users.destroy',
+            'module_id' => $moduleAppSuperAdmin->id,
+            'name' => 'Delete Super',
+            'slug' => 'backend.super_admin.destroy',
+        ]);
+
+        // User management(Admin)
+        $moduleAppAdmin = Module::updateOrCreate(['name' => 'Admin Management']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Access Admin',
+            'slug' => 'backend.admin.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Create Admin',
+            'slug' => 'backend.admin.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Edit Admin',
+            'slug' => 'backend.admin.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Delete Admin',
+            'slug' => 'backend.admin.destroy',
         ]);
 
         // Product Property management(Category)

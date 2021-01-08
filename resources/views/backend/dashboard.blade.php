@@ -86,7 +86,7 @@
                                 </td>
                                 <td class="text-center">{{ $user->email }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href="{{ route('backend.users.show',$user->id) }}"><i
+                                    <a class="btn btn-info btn-sm" href="{{ route('backend.super_admin.show',$user->id) }}"><i
                                             class="fas fa-eye"></i>
                                         <span>Details</span>
                                     </a>

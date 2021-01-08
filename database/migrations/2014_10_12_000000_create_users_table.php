@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password')                  ->nullable();
             $table->string('image')                     ->nullable();
             $table->boolean('status')                   ->default(false);
+            $table->boolean('suspend')                  ->default(false);
             $table->rememberToken();
             $table->timestamp('last_login_at')          ->nullable();
             $table->timestamps();

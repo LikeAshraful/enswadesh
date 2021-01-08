@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\UserManagement;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Users\StoreUserRequest;
-use App\Repositories\Interface\User\UserInterface;
 use App\Http\Requests\Users\UpdateUserRequest;
+use App\Repositories\Interface\User\UserInterface;
 
-class UserController extends Controller
+class SuperAdminController extends Controller
 {
     protected $users;
     
@@ -26,11 +27,11 @@ class UserController extends Controller
     public function index()
     {
         //Define user authorize gate
-        Gate::authorize('backend.users.index');
+        Gate::authorize('backend.super_admin.index');
 
         //Access UserInterface all function
         $users = $this->users->all();
-        return view('backend.users.index',compact('users'));
+        return view('backend.user_management.super_admin.index',compact('users'));
     }
 
     /**
@@ -41,19 +42,19 @@ class UserController extends Controller
     public function create()
     {
         //Define user authorize gate
-        Gate::authorize('backend.users.create');
+        Gate::authorize('backend.super_admin.create');
 
         //Access UserInterface allRole function
         $roles = $this->users->allRole();
 
-        return view('backend.users.form', compact('roles'));
+        return view('backend.user_management.super_admin.form', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
     {
@@ -62,7 +63,7 @@ class UserController extends Controller
 
         notify()->success('User Successfully Added.', 'Added');
 
-        return redirect()->route('backend.users.index');
+        return redirect()->route('backend.super_admin.index');
     }
 
     /**
@@ -76,7 +77,7 @@ class UserController extends Controller
         //Access UserInterface store function
         $user = $this->users->get($id);
 
-        return view('backend.users.show',compact('user'));
+        return view('backend.user_management.super_admin.show',compact('user'));
     }
 
     /**
@@ -88,13 +89,13 @@ class UserController extends Controller
     public function edit($id)
     {
         //Define user authorize gate
-        Gate::authorize('backend.users.edit');
+        Gate::authorize('backend.super_admin.edit');
 
         //Access UserInterface allRole and get function
         $roles = $this->users->allRole();
         $user = $this->users->get($id);
 
-        return view('backend.users.form', compact('roles','user'));
+        return view('backend.user_management.super_admin.form', compact('roles','user'));
     }
 
     /**
@@ -111,7 +112,7 @@ class UserController extends Controller
 
         notify()->success('User Successfully Updated.', 'Updated');
 
-        return redirect()->route('backend.users.index');
+        return redirect()->route('backend.super_admin.index');
     }
 
     /**
@@ -123,12 +124,54 @@ class UserController extends Controller
     public function destroy($id)
     {
         //Define user authorize gate
-        Gate::authorize('backend.users.destroy');
+        Gate::authorize('backend.super_admin.destroy');
 
         //Access UserRepository delete function
         $users = $this->users->delete($id);
 
         notify()->success("User Successfully Deleted", "Deleted");
         return back();
+    }
+    public function togglePublish($id)
+    {
+        try {
+            $publish = User::find($id);
+
+            if ($publish->status === 1) {
+                $publish->status = 0;
+
+                $message = 'User Publish Successfully';
+            } else {
+                $publish->status = 1;
+                $message = 'User Unpublish Successfully';
+            }
+
+            $publish->save();
+
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
+        }
+        notify()->success($message);
+        return redirect()->route('backend.super_admin.index');
+    }
+    public function toggleBlocked($id)
+    {
+        try {
+            $blocked = User::find($id);
+            
+            if ($blocked->suspend === 1) {
+                $blocked->suspend = 0;
+                $message = 'User Blocked Successfully';
+            } else {
+                $blocked->suspend = 1;
+                $message = 'User Unblocked Successfully';
+            }
+            $blocked->save();
+
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
+        }
+        notify()->success($message);
+        return redirect()->route('backend.super_admin.index');
     }
 }

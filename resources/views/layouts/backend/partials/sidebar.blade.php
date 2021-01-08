@@ -44,14 +44,14 @@
                 <li class="app-sidebar__heading">User Management</li>
                 <li>
                     <a href="#"
-                        class="{{ Route::is('backend.users.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                        class="{{ Route::is('backend.super_admin.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-users"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('backend.users.index')}}"
+                            <a href="{{route('backend.super_admin.index')}}"
                                 class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Users
