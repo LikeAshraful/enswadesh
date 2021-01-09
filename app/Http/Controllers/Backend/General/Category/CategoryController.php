@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\General\Category;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Repositories\Interface\Category\CategoryInterface;
 
 

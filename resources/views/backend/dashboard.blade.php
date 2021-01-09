@@ -54,6 +54,7 @@
                         <tr>
                             <th>Name</th>
                             <th class="text-center">Email</th>
+                            <th class="text-center">Joined At</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -82,11 +83,19 @@
                                     </div>
                                 </td>
                                 <td class="text-center">{{ Auth::user()->email }}</td>
+                                <td class="text-center">{{ Auth::user()->created_at->diffForHumans() }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href="{{ route('backend.super_admin.show',Auth::user()->id) }}"><i
-                                            class="fas fa-eye"></i>
-                                        <span>Details</span>
-                                    </a>
+                                    @can('backend.super_admin.index')
+                                        <a class="btn btn-info btn-sm" href="{{ route('backend.super_admin.show',Auth::user()->id) }}"><i
+                                                class="fas fa-eye"></i>
+                                            <span>Details</span>
+                                        </a>
+                                    @elsecan('backend.admin.index')
+                                        <a class="btn btn-info btn-sm" href="{{ route('backend.admin.show',Auth::user()->id) }}"><i
+                                                class="fas fa-eye"></i>
+                                            <span>Details</span>
+                                        </a>
+                                    @endcan
                                 </td>
                             </tr>
                         </tbody>
