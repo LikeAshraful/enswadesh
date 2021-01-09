@@ -30,6 +30,7 @@
             </button>
         </span>
     </div>
+
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
@@ -50,20 +51,24 @@
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        <li>
-                            <a href="{{route('backend.super_admin.index')}}"
-                                class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Users
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.roles.index') }}"
-                                class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Roles
-                            </a>
-                        </li>
+                        @can('backend.super_admin.index')      
+                            <li>
+                                <a href="{{route('backend.super_admin.index')}}"
+                                    class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Users
+                                </a>
+                            </li>
+                        @endcan
+                        @can('backend.roles.index')
+                            <li>
+                                <a href="{{ route('backend.roles.index') }}"
+                                    class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Roles
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
