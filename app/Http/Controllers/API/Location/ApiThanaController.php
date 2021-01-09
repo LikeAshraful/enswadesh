@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Location\Thana;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\Location\ThanaResource;
 
 class ApiThanaController extends Controller
 {
@@ -15,9 +16,10 @@ class ApiThanaController extends Controller
      */
     public function index()
     {
-        $status = 200;
-        $thanas = Thana::with('areaOfthana')->get();
-        return response()->json($thanas, $status);
+        return ThanaResource::collection(Thana::all());
+        // $status = 200;
+        // $thanas = Thana::with('areaOfthana')->get();
+        // return response()->json($thanas, $status);
     }
 
     /**

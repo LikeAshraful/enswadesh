@@ -29,7 +29,7 @@ class CreateShopsTable extends Migration
             $table->string('shop_fax')              ->nullable();
             $table->string('shop_slug')             ->nullable();
             $table->string('shop_cover_image')      ->nullable();
-            $table->string('shop_icon')             ->nullable();
+            $table->string('shop_logo')             ->nullable();
             $table->integer('shop_status')          ->nullable();
             $table->text('shop_description')        ->nullable();
             $table->string('meta_title_shop')       ->nullable();

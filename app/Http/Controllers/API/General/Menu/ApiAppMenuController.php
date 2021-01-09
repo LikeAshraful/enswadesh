@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\General\Menu\AppMenu;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\General\Menu\AppMenuResource;
 
 class ApiAppMenuController extends Controller
 {
@@ -15,9 +16,10 @@ class ApiAppMenuController extends Controller
      */
     public function index()
     {
-        $status = 200;
-        $appmenus = AppMenu::all();
-        return response()->json($appmenus, $status);
+        return AppMenuResource::collection(AppMenu::all());
+        // $status = 200;
+        // $appmenus = AppMenu::all();
+        // return response()->json($appmenus, $status);
     }
 
     /**
