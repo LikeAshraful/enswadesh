@@ -38,7 +38,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Order No</th>
                             <th scope="col">Customer Name</th>
-                            <th scope="col">Totla Price</th>
+                            <th scope="col">Total Price</th>
                             <th scope="col">Order Status</th>
                             <th scope="col">Created At</th>
                             <th scope="col">Action</th>
@@ -53,12 +53,14 @@
                                 <td>{{ $order->total_price }}</td>
                                 <td>
                                     @if ($order->order_status == 0)
-                                    <div class="badge badge-danger">Pending</div>
+                                    <div class="badge badge-danger">Canceled</div>
                                     @elseif ($order->order_status == 1)
-                                    <div class="badge badge-warning">Processing</div>
+                                    <div class="badge badge-warning">Pending</div>
                                     @elseif ($order->order_status == 2)
-                                    <div class="badge badge-primary">Delivery</div>
+                                    <div class="badge badge-primary">Processing</div>
                                     @elseif ($order->order_status == 3 )
+                                    <div class="badge badge-info">Delivery</div>
+                                    @elseif ($order->order_status == 4 )
                                     <div class="badge badge-success">Complete</div>
                                     @endif
                                 </td>
