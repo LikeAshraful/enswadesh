@@ -33,7 +33,6 @@
         </div>
     </div>
 </div>
-<div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="main-card mb-3 card">
@@ -73,7 +72,6 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
 @push('js')
 <script src="{{ asset('js/dropify.min.js') }}"></script>

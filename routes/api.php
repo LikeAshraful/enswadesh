@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ApiAuthController;
 use App\Http\Controllers\API\Shop\ApiShopController;
 use App\Http\Controllers\API\Location\ApiAreaController;
 use App\Http\Controllers\API\Location\ApiCityController;
+use App\Http\Controllers\API\Shop\ApiShopTypeController;
 use App\Http\Controllers\API\Location\ApiFloorController;
 use App\Http\Controllers\API\Location\ApiThanaController;
 use App\Http\Controllers\API\Location\ApiMarketController;
@@ -37,8 +38,9 @@ Route::get('/api-areas', [ApiAreaController::class, 'index']);
 Route::get('/api-thanas', [ApiThanaController::class, 'index']);
 Route::get('/api-markets', [ApiMarketController::class, 'index']);
 Route::get('/api-floors', [ApiFloorController::class, 'index']);
-Route::get('/api-shops', [ApiAppMenuController::class, 'index']);
-Route::get('/api-menus', [ApiShopController::class, 'index']);
+Route::get('/api-shops-type', [ApiShopTypeController::class, 'index']);
+Route::get('/api-shop-types', [ApiShopTypeController::class, 'index']);
+Route::get('/api-shops', [ApiShopController::class, 'index']);
 
 //order apis
 Route::get('/api-orders', [ApiOrderController::class, 'index']);

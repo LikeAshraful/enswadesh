@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','Market Create')
+@section('title','Shop Create')
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
@@ -19,7 +19,7 @@
                 <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($shop) ? 'Edit' : 'Create New') . ' Market') }}</div>
+            <div>{{ __((isset($shop) ? 'Edit' : 'Create New') . ' Shop') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
@@ -182,7 +182,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for='shop_icon'>Shop Icon</label>
+                        <label for='shop_icon'>Shop Logo</label>
                         <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
                         @error('shop_icon')
                         <span class="invalid-feedback image-display-error-message" role="alert">
@@ -233,7 +233,7 @@
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="shop_fax">Shop Email</label>
+                    <label for="shop_fax">Shop Fax</label>
                     <input type="text" id="shop_fax" name="shop_fax" class="form-control @error('shop_fax') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_fax : '' }}" holder="Market name">
                     @error('shop_fax')
                     <span class="invalid-feedback" role="alert">
@@ -246,9 +246,9 @@
                     <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}"holder="Market Description">
                     </div>
                     <div class="form-group">
-                    <label for='shop_icon'>Shop Icon</label>
-                    <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
-                    @error('shop_icon')
+                    <label for='shop_cover_image'>Shop Icon</label>
+                    <input type="file" id="shop_cover_image" name="shop_cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_cover_image): '' }}" />
+                    @error('shop_cover_image')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -296,7 +296,7 @@
                     </span>
                     @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                     <label for="meta_og_image_shop">Meta OG Image</label>
                     <input type="text" id="meta_og_image_shop" name="meta_og_image_shop" class="form-control @error('meta_og_image_shop') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_og_image_shop : '' }}" holder="Market Address">
                     @error('meta_og_image_shop')
@@ -304,11 +304,11 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                    </div>
+                    </div> --}}
                     <div class="form-group">
-                    <label for='shop_icon'>Market Icon</label>
-                    <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
-                    @error('shop_icon')
+                    <label for='meta_og_image_shop'>Meta OG Image</label>
+                    <input type="file" id="meta_og_image_shop" name="meta_og_image_shop" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->meta_og_image_shop): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->meta_og_image_shop): '' }}" />
+                    @error('meta_og_image_shop')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
