@@ -32,17 +32,17 @@ class UserRepository implements UserInterface {
         if($image = $data['image']) {
             $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('/uploads/users/' . $filename);
-            Image::make($image)->resize(600, 400)->save($location);
+            Image::make($image)->resize(400, 400)->save($location);
         }
 
         //Return User Model
         return User::create([
-            'role_id'   => $data['role'],
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'image'     => isset($filename) ? $filename : '',
-            'status'    => isset($data['status']) == true ? 1 : 0,
+            'role_id'       => $data['role'],
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'phone_number'  => $data['phone_number'],
+            'password'      => Hash::make($data['password']),
+            'image'         => isset($filename) ? $filename : '',
         ]);
     }
 
@@ -55,7 +55,7 @@ class UserRepository implements UserInterface {
             if (!empty($image = $data['image'])) {
                 $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
                 $locationc = public_path('/uploads/users/' . $filename);
-                Image::make($image)->resize(600, 400)->save($locationc);
+                Image::make($image)->resize(400, 400)->save($locationc);
                 $oldFilenamec = $user->image;
                 $user->image = $image;
                 Storage::delete('/uploads/users/' . $oldFilenamec);
@@ -63,12 +63,12 @@ class UserRepository implements UserInterface {
         }
         //Return User Model
         return $user->update([
-            'role_id'   => $data['role'],
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'image'     => isset($filename) ? $filename : $image,
-            'status'    => isset($data['status']) == true ? 1 : 0,
+            'role_id'       => $data['role'],
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'phone_number'  => $data['phone_number'],
+            'password'      => Hash::make($data['password']),
+            'image'         => isset($filename) ? $filename : $image,
         ]);
     }
 

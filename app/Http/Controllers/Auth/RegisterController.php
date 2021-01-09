@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +22,17 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        $role = Role::where('name', 'Customer')->first();
+        return view('auth.register',compact('role'));
+    }
 
     use RegistersUsers;
 
@@ -65,10 +77,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'role_id'   => 1,
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'password'      => Hash::make($data['password']),
+            'phone_number'  => $data['phone_number'],
+            'role_id'       => $data['role_id'],
+            'image'         =>'user.png',
         ]);
     }
 }
