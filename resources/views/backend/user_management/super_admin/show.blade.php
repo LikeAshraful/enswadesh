@@ -14,18 +14,22 @@
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('backend.super_admin.edit',$user->id) }}" class="btn-shadow btn btn-info">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fas fa-edit fa-w-20"></i>
-                        </span>
-                        {{ __('Edit') }}
-                    </a>
-                    <a href="{{ route('backend.super_admin.index') }}" class="btn-shadow btn btn-danger">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fas fa-arrow-circle-left fa-w-20"></i>
-                        </span>
-                        {{ __('Back to list') }}
-                    </a>
+                    @canany('backend.super_admin.create')
+                        <a href="{{ route('backend.super_admin.edit',$user->id) }}" class="btn-shadow btn btn-info">
+                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fas fa-edit fa-w-20"></i>
+                            </span>
+                            {{ __('Edit') }}
+                        </a>
+                    @endcanany
+                    @canany('backend.super_admin.index')
+                        <a href="{{ route('backend.super_admin.index') }}" class="btn-shadow btn btn-danger">
+                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fas fa-arrow-circle-left fa-w-20"></i>
+                            </span>
+                            {{ __('Back to list') }}
+                        </a>
+                    @endcanany
                 </div>
             </div>
         </div>

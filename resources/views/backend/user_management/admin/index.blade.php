@@ -18,12 +18,14 @@
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.admin.create') }}" class="btn-shadow btn btn-info">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fas fa-plus-circle fa-w-20"></i>
-                    </span>
-                    {{ __('Create User') }}
-                </a>
+                @canany('backend.admin.create')
+                    <a href="{{ route('backend.admin.create') }}" class="btn-shadow btn btn-info">
+                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                            <i class="fas fa-plus-circle fa-w-20"></i>
+                        </span>
+                        {{ __('Create User') }}
+                    </a>
+                @endcanany
             </div>
         </div>
     </div>
@@ -38,8 +40,12 @@
                             <th class="text-center">#</th>
                             <th>Name</th>
                             <th class="text-center">Email</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Busniess Status</th>
+                            @can('backend.super_admin.index')
+                                <th class="text-center">Status</th>
+                            @endcan
+                            @can('backend.super_admin.index')
+                                <th class="text-center">Busniess Status</th>
+                            @endcan
                             <th class="text-center">Joined At</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -73,46 +79,51 @@
                             </td>
                             <td class="text-center">{{ $user->email }}</td>
 
-                            <td class="text-center">
-                                @if($user->status === 1)
-                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">
-                                        Approved
-                                    </button>
-                                </form>
-                                @else
-                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
-                                            Pending
+                            @can('backend.super_admin.index')
+                                <td class="text-center">
+                                    @if($user->status === 1)
+                                    <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">
+                                            Approved
                                         </button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                            <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
+                                                Pending
+                                            </button>
 
-                                </form>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($user->suspend === 1)
-                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
-                                        Blocked
-                                    </button>
-                                </form>
-                                @else
-                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
-                                            Unblocked
+                                    </form>
+                                    @endif
+                                </td>
+                            @endcan
+
+                            @can('backend.super_admin.index')
+                                <td class="text-center">
+                                    @if($user->suspend === 1)
+                                    <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
+                                            Blocked
                                         </button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                            <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
+                                                Unblocked
+                                            </button>
 
-                                </form>
-                                @endif
-                            </td>
+                                    </form>
+                                    @endif
+                                </td>
+                            @endcan
                             <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
                             <td class="text-center">
                                 <a class="fa-eye-style" href="{{ route('backend.admin.show',$user->id) }}"><i
