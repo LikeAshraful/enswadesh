@@ -118,7 +118,7 @@ class PermissionSeeder extends Seeder
         ]);
 
         // Product Property management(Category)
-        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management']);
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management(Category)']);
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,
             'name' => 'Access Category',
@@ -138,6 +138,29 @@ class PermissionSeeder extends Seeder
             'module_id' => $moduleAppUser->id,
             'name' => 'Delete Category',
             'slug' => 'backend.category.destroy',
+        ]);
+
+        // Product Property management(Brand)
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management(Brand)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Access Brand',
+            'slug' => 'backend.brand.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Create Brand',
+            'slug' => 'backend.brand.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Edit Brand',
+            'slug' => 'backend.brand.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Delete Brand',
+            'slug' => 'backend.brand.destroy',
         ]);
 
     }

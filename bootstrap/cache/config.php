@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Laravel',
+    'name' => 'Enswadesh',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -11,7 +11,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:PyiNl7fdZi3/5iqeDpZfbPIDk6fZEC84RHUk4IuhyaA=',
+    'key' => 'base64:bn0UsTrI7/DLN0fbJhX16O6nyHwu19FMfWR8Ur+axLE=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -189,7 +189,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -228,7 +228,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'laravel_cache',
+    'prefix' => 'enswadesh_cache',
   ),
   'cors' => 
   array (
@@ -327,7 +327,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'laravel_database_',
+        'prefix' => 'enswadesh_database_',
       ),
       'default' => 
       array (
@@ -355,12 +355,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\public',
+        'root' => 'C:\\xampp\\htdocs\\enswadesh\\public',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -377,7 +377,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\public\\storage' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\app/public',
+      'C:\\xampp\\htdocs\\enswadesh\\public\\storage' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -432,13 +432,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -488,7 +488,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -538,14 +538,14 @@
     'from' => 
     array (
       'address' => NULL,
-      'name' => 'Laravel',
+      'name' => 'Enswadesh',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\enswadesh\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -555,7 +555,7 @@
     'stubs' => 
     array (
       'enabled' => false,
-      'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh/vendor/nwidart/laravel-modules/src/Commands/stubs',
+      'path' => 'C:\\xampp\\htdocs\\enswadesh/vendor/nwidart/laravel-modules/src/Commands/stubs',
       'files' => 
       array (
         'routes/web' => 'Routes/web.php',
@@ -619,9 +619,9 @@
     ),
     'paths' => 
     array (
-      'modules' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\Modules',
-      'assets' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\public\\modules',
-      'migration' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\database/migrations',
+      'modules' => 'C:\\xampp\\htdocs\\enswadesh\\Modules',
+      'assets' => 'C:\\xampp\\htdocs\\enswadesh\\public\\modules',
+      'migration' => 'C:\\xampp\\htdocs\\enswadesh\\database/migrations',
       'generator' => 
       array (
         'config' => 
@@ -810,7 +810,7 @@
       'enabled' => false,
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\vendor/*/*',
+        0 => 'C:\\xampp\\htdocs\\enswadesh\\vendor/*/*',
       ),
     ),
     'composer' => 
@@ -839,7 +839,7 @@
       'file' => 
       array (
         'class' => 'Nwidart\\Modules\\Activators\\FileActivator',
-        'statuses-file' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\modules_statuses.json',
+        'statuses-file' => 'C:\\xampp\\htdocs\\enswadesh\\modules_statuses.json',
         'cache-key' => 'activator.installed',
         'cache-lifetime' => 604800,
       ),
@@ -939,7 +939,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -948,7 +948,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel_session',
+    'cookie' => 'enswadesh_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
@@ -959,9 +959,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\enswadesh\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\framework\\views',
   ),
   'flare' => 
   array (

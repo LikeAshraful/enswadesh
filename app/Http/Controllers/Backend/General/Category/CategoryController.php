@@ -22,6 +22,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        //Define Category authorize gate
+        Gate::authorize('backend.category.index');
+
         //Access CategoryInterface all function
         $categories = $this->categories->all();
         // dd($categories[1]->subcategory);
@@ -35,6 +38,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        //Define Category authorize gate
+        Gate::authorize('backend.category.create');
+
         //Access CategoryInterface all function
         $categories = $this->categories->all();
 
@@ -74,6 +80,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        //Define Category authorize gate
+        Gate::authorize('backend.category.edit');
+
         //Access CategoryInterface all function
         $categories     = $this->categories->all();
 
@@ -104,6 +113,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        //Define Category authorize gate
+        Gate::authorize('backend.category.destroy');
+
         //Access CategoryInterface delete function
         $categories = $this->categories->delete($id);
         
