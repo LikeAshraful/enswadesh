@@ -51,16 +51,24 @@
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        @can('backend.super_admin.index')      
+                        @canany('backend.super_admin.index')      
                             <li>
                                 <a href="{{route('backend.super_admin.index')}}"
-                                    class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
+                                    class="{{ Route::is('backend.super_admin.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                     Users
                                 </a>
                             </li>
-                        @endcan
-                        @can('backend.roles.index')
+                        @elsecanany('backend.admin.index')      
+                            <li>
+                                <a href="{{route('backend.admin.index')}}"
+                                    class="{{ Route::is('backend.admin.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Users
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.roles.index')
                             <li>
                                 <a href="{{ route('backend.roles.index') }}"
                                     class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
@@ -68,7 +76,7 @@
                                     Roles
                                 </a>
                             </li>
-                        @endcan
+                        @endcanany
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
@@ -137,13 +145,16 @@
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        <li>
-                            <a href="{{route('backend.category.index')}}"
-                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                    Category
-                            </a>
-                        </li>
+                        @canany('backend.category.index')
+                            <li>
+                                <a href="{{route('backend.category.index')}}"
+                                    class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                        Category
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.brand.index')
                         <li>
                             <a href="{{route('backend.brand.index')}}"
                                 class="{{ Route::is('backend.brand.index*') ? 'mm-active' : '' }}">
@@ -151,6 +162,7 @@
                                     Brand
                             </a>
                         </li>
+                        @endcanany
                     </ul>
                 </li>
                 <li>

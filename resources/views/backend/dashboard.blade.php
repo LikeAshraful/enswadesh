@@ -52,47 +52,43 @@
                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">#</th>
                             <th>Name</th>
                             <th class="text-center">Email</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($users as $key=>$user)
                             <tr>
-                                <td class="text-center text-muted">#{{ $key + 1 }}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left mr-3">
                                                 <div class="widget-content-left">
                                                     <img width="50" height="50" class="img-fluid img-thumbnail"
-                                                         src="{{ asset('uploads/users/'.$user->image) }}" alt="{{ $user->name}}">
+                                                         src="{{ asset('uploads/users/'.Auth::user()->image ) }}" alt="{{ Auth::user()->name }}">
                                                 </div>
                                             </div>
                                             <div class="widget-content-left flex2">
-                                                <div class="widget-heading">{{ $user->name }}</div>
+                                                <div class="widget-heading">{{ Auth::user()->name }}</div>
                                                 <div class="widget-subheading opacity-7">
-                                                    @if ($user->role)
-                                                        <span class="badge badge-info">{{ $user->role->name }}</span>
+                                                    @if(!empty(Auth::user()->role))
+                                                        <span class="badge badge-info">{{ Auth::user()->role->name }}</span>
                                                     @else
-                                                        <span class="badge badge-danger">No role found :(</span>
+                                                        <span class="badge badge-danger">No role found</span>
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $user->email }}</td>
+                                <td class="text-center">{{ Auth::user()->email }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href="{{ route('backend.super_admin.show',$user->id) }}"><i
+                                    <a class="btn btn-info btn-sm" href="{{ route('backend.super_admin.show',Auth::user()->id) }}"><i
                                             class="fas fa-eye"></i>
                                         <span>Details</span>
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
                         </tbody>
                     </table>
                 </div>
