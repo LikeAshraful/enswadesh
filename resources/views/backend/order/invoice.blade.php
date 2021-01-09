@@ -45,10 +45,11 @@
                                     @csrf
                                     <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}">
                                     <select class="custom-select custom-select-lg changeStatus">
-                                        <option value="0" {{ $order->order_status == 0 ? "selected" : "" }}>Pending</option>
-                                        <option value="1" {{ $order->order_status == 1 ? "selected" : "" }}>Processing</option>
-                                        <option value="2" {{ $order->order_status == 2 ? "selected" : "" }}>Delivery</option>
-                                        <option value="3" {{ $order->order_status == 3 ? "selected" : "" }}>Complete</option>
+                                        <option value="0" {{ $order->order_status == 0 ? "selected" : "" }}>Canceled</option>
+                                        <option value="1" {{ $order->order_status == 1 ? "selected" : "" }}>Pending</option>
+                                        <option value="2" {{ $order->order_status == 2 ? "selected" : "" }}>Processing</option>
+                                        <option value="3" {{ $order->order_status == 3 ? "selected" : "" }}>Delivery</option>
+                                        <option value="4" {{ $order->order_status == 4 ? "selected" : "" }}>Complete</option>
                                     </select>
                                 </form>
                             </div>
