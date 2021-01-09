@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Location\Floor;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\Location\FloorResource;
 
 class ApiFloorController extends Controller
 {
@@ -15,9 +16,10 @@ class ApiFloorController extends Controller
      */
     public function index()
     {
-        $status = 200;
-        $floors = Floor::with('marketPlaceOfFloor')->get();
-        return response()->json($floors, $status);
+        return FloorResource::collection(Floor::all());
+        // $status = 200;
+        // $floors = Floor::with('marketPlaceOfFloor')->get();
+        // return response()->json($floors, $status);
     }
 
     /**

@@ -6,10 +6,12 @@ use App\Http\Controllers\API\ApiAuthController;
 use App\Http\Controllers\API\Shop\ApiShopController;
 use App\Http\Controllers\API\Location\ApiAreaController;
 use App\Http\Controllers\API\Location\ApiCityController;
+use App\Http\Controllers\API\Shop\ApiShopTypeController;
 use App\Http\Controllers\API\Location\ApiFloorController;
 use App\Http\Controllers\API\Location\ApiThanaController;
 use App\Http\Controllers\API\Location\ApiMarketController;
 use App\Http\Controllers\API\General\Menu\ApiAppMenuController;
+use App\Http\Controllers\API\Order\ApiOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +38,15 @@ Route::get('/api-areas', [ApiAreaController::class, 'index']);
 Route::get('/api-thanas', [ApiThanaController::class, 'index']);
 Route::get('/api-markets', [ApiMarketController::class, 'index']);
 Route::get('/api-floors', [ApiFloorController::class, 'index']);
-Route::get('/api-shops', [ApiAppMenuController::class, 'index']);
-Route::get('/api-menus', [ApiShopController::class, 'index']);
+Route::get('/api-shops-type', [ApiShopTypeController::class, 'index']);
+Route::get('/api-shop-types', [ApiShopTypeController::class, 'index']);
+Route::get('/api-shops', [ApiShopController::class, 'index']);
 
-
+//order apis
+Route::get('/api-orders', [ApiOrderController::class, 'index']);
+Route::get('/api-order/{id}', [ApiOrderController::class, 'show']);
+Route::post('/api-orders', [ApiOrderController::class, 'store']);
+Route::get('/api-my-orders/{id}', [ApiOrderController::class, 'myOrders']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/api-users', [ApiAuthController::class, 'dusers']);

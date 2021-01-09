@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Location\City;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\Location\CityResource;
 
 class ApiCityController extends Controller
 {
@@ -15,9 +16,11 @@ class ApiCityController extends Controller
      */
     public function index()
     {
-        $status = 200;
-        $cities = City::all();
-        return response()->json($cities, $status);
+
+        return CityResource::collection(City::all());
+        // $status = 200;
+        // $cities = City::all();
+        // return response()->json($cities, $status);
     }
 
     /**

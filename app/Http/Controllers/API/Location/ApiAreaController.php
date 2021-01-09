@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Location\Area;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\Location\AreaResource;
 
 class ApiAreaController extends Controller
 {
@@ -15,9 +16,10 @@ class ApiAreaController extends Controller
      */
     public function index()
     {
-        $status = 200;
-         $areas = Area::with('cityOfArea')->get();
-        return response()->json($areas, $status);
+        return AreaResource::collection(Area::all());
+        // $status = 200;
+        // $areas = Area::with('cityOfArea')->get();
+        // return response()->json($areas, $status);
     }
 
     /**
