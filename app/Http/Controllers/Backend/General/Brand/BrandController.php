@@ -21,6 +21,9 @@ class BrandController extends Controller
      */
     public function index()
     {
+        //Define Brand authorize gate
+        Gate::authorize('backend.brand.index');
+
         //Access BrandInterface all function
         $brands = $this->brands->all();
 
@@ -33,6 +36,9 @@ class BrandController extends Controller
      */
     public function create()
     {
+        //Define Brand authorize gate
+        Gate::authorize('backend.brand.create');
+
         return view('backend.general.brand.form');
     }
 
@@ -68,6 +74,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
+        //Define Brand authorize gate
+        Gate::authorize('backend.brand.edit');
+
         //Access BrandInterface get function
         $brand = $this->brands->get($id);
 
@@ -97,6 +106,9 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
+        //Define Brand authorize gate
+        Gate::authorize('backend.brand.destroy');
+
         //Access BrandInterface delete function
         $brand = $this->brands->delete($id);
 
