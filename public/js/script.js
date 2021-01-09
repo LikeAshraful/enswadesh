@@ -19,9 +19,6 @@ function resetForm(formId) {
 }
 
 $(document).ready(function() {
-    // Dropify
-    $('.dropify').dropify();
-
     // Select2
     $('.select').each(function () {
         $(this).select2();
