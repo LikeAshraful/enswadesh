@@ -24,7 +24,7 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     //Role
     Route::resource('roles', RoleController::class);
     //User Management
-   
+
     Route::resource('super_admin', SuperAdminController::class);
     Route::post('users/publish/{publish}', [SuperAdminController::class, 'togglePublish'])->name('users.publish');
     Route::post('users/blocked/{blocked}', [SuperAdminController::class, 'toggleBlocked'])->name('users.blocked');

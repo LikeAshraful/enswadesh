@@ -15,10 +15,25 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
-        return view('backend.order.index')->with('orders', $orders);
+        $order_status = $request->get('order_status');
+        if(($order_status == 0 || $order_status == 5) && $order_status != null){
+            if($order_status == 0){
+                $orders = Order::where('order_status', $order_status)->get();
+                $page_title = 'Cancel Order List';
+            }
+            if($order_status == 5){
+                $orders = Order::where('order_status', $order_status)->get();
+                $page_title = 'Refund Order List';
+            }
+        }
+        else{
+            $orders = Order::whereNotIn('order_status', [0,5])->get();
+            $page_title = 'Order List';
+        }
+
+        return view('backend.order.index', compact('orders', 'page_title'));
     }
 
     /**
@@ -28,7 +43,7 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -77,7 +92,7 @@ class OrdersController extends Controller
     {
         $order = Order::find($id);
         $order->order_status = $request->order_status;
-        $order->update();        
+        $order->update();
         notify()->success('Order Status Successfully Updated.', 'Updated');
         // return redirect()->route('backend.orders.index');
     }

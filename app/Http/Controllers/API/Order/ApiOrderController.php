@@ -41,7 +41,7 @@ class ApiOrderController extends Controller
     public function store(Request $request)
     {
         $order = Order::create([
-            'order_no' => $request->order_no,
+            'order_no' => GenerateOrderNumber(),
             'customer_id' => $request->customer_id,
             'total_quantity' => $request->total_quantity,
             'total_discount' => $request->total_discount,
@@ -55,7 +55,7 @@ class ApiOrderController extends Controller
             'billing_phone' => $request->billing_phone,
             'payment_gateway' => $request->payment_gateway
           ]);
-    
+
           return new OrderResource($order);
     }
 

@@ -19,7 +19,7 @@ class OrderPropertySeeder extends Seeder
     {
          // order
          $order = Order::updateOrCreate([
-            'order_no' => rand(10,1000),
+            'order_no' => GenerateOrderNumber(),
             'customer_id' => 2,
             'total_quantity' => 3,
             'total_price' => 715,
@@ -38,7 +38,7 @@ class OrderPropertySeeder extends Seeder
             ]);
 
             $order2 = Order::updateOrCreate([
-                'order_no' => rand(10,1000),
+                'order_no' => GenerateOrderNumber(),
                 'customer_id' => 3,
                 'total_quantity' => 6,
                 'total_price' => 670,

@@ -51,7 +51,7 @@
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        @can('backend.super_admin.index')      
+                        @can('backend.super_admin.index')
                             <li>
                                 <a href="{{route('backend.super_admin.index')}}"
                                     class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
@@ -165,6 +165,20 @@
                                 class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                     Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.orders.index')}}?order_status=5"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                  Refund Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.orders.index')}}?order_status=0"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                   Cancel Orders
                             </a>
                         </li>
                     </ul>

@@ -50,6 +50,7 @@
                                         <option value="2" {{ $order->order_status == 2 ? "selected" : "" }}>Processing</option>
                                         <option value="3" {{ $order->order_status == 3 ? "selected" : "" }}>Delivery</option>
                                         <option value="4" {{ $order->order_status == 4 ? "selected" : "" }}>Complete</option>
+                                        <option value="5" {{ $order->order_status == 5 ? "selected" : "" }}>Refund</option>
                                     </select>
                                 </form>
                             </div>
@@ -66,7 +67,7 @@
                         <div class="email"><a href="mailto:{{ $order->billing_email }}">{{ $order->billing_email }}</a></div>
                     </div>
                     <div class="col invoice-details">
-                        <h1 class="invoice-id">INVOICE NO: {{ $order->order_no }}</h1>
+                        <h2 class="invoice-id">INVOICE NO: #{{ $order->order_no }}</h2>
                         <div class="date">Date of Invoice: {{ $order->created_at->format('d/m/Y') }}</div>
                         <!-- <div class="date">Due Date: 30/10/2018</div> -->
                     </div>
@@ -136,7 +137,7 @@
 <script>
      $('#printInvoice').click(function(){
         Popup($('.invoice')[0].outerHTML);
-        function Popup(data) 
+        function Popup(data)
         {
             window.print();
             return true;
@@ -156,8 +157,8 @@
                 order_status: $('select.changeStatus').val()
             },
             success: function(data){
-                // alert('Sucessfully changed status');                
-                window.location.href = "{{ route('backend.orders.index') }}";                
+                // alert('Sucessfully changed status');
+                window.location.href = "{{ route('backend.orders.index') }}";
              }
         });
 
