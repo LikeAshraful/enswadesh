@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Order\Order;
-use App\Http\Resources\OrderResource;
+use App\Http\Resources\Order\OrderResource;
 
 use Illuminate\Support\Facades\Auth;
 
