@@ -14,7 +14,7 @@
                     <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('Order') }}</div>
+                <div>{{ $page_title }}</div>
             </div>
             <!-- <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
@@ -62,6 +62,8 @@
                                     <div class="badge badge-info">Delivery</div>
                                     @elseif ($order->order_status == 4 )
                                     <div class="badge badge-success">Complete</div>
+                                    @elseif ($order->order_status == 5 )
+                                    <div class="badge badge-secondary">Refund</div>
                                     @endif
                                 </td>
                                 <td>{{ $order->created_at->format('d/m/y') }}</td>

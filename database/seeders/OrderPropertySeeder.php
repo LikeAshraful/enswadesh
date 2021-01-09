@@ -19,11 +19,16 @@ class OrderPropertySeeder extends Seeder
     {
          // order
          $order = Order::updateOrCreate([
-            'order_no' => rand(10,1000),
+            'order_no' => GenerateOrderNumber(),
             'customer_id' => 2,
             'total_quantity' => 3,
             'total_price' => 715,
             'order_status' => 1,
+            'shipping_email' => Str::random(10) . '@mail.com',
+            'shipping_name' => Str::random(10),
+            'shipping_address' => 'Nikunja',
+            'shipping_city' => 'Dhaka',
+            'shipping_phone' => rand(),
             'billing_email' => Str::random(10) . '@mail.com',
             'billing_name' => Str::random(10),
             'billing_address' => 'Hatirpul',
@@ -33,11 +38,16 @@ class OrderPropertySeeder extends Seeder
             ]);
 
             $order2 = Order::updateOrCreate([
-                'order_no' => rand(10,1000),
+                'order_no' => GenerateOrderNumber(),
                 'customer_id' => 3,
                 'total_quantity' => 6,
                 'total_price' => 670,
                 'order_status' => 1,
+                'shipping_email' => Str::random(10) . '@mail.com',
+                'shipping_name' => Str::random(10),
+                'shipping_address' => 'Nikunja',
+                'shipping_city' => 'Dhaka',
+                'shipping_phone' => rand(),
                 'billing_email' => Str::random(10) . '@mail.com',
                 'billing_name' => Str::random(10),
                 'billing_address' => 'Nikunja',
