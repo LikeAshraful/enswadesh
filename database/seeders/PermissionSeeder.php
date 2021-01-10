@@ -186,5 +186,28 @@ class PermissionSeeder extends Seeder
             'slug' => 'backend.cities.destroy',
         ]);
 
+        // Shop Property Management(Area)
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Shop Property Management(Area)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Access Area',
+            'slug' => 'backend.areas.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Create Area',
+            'slug' => 'backend.areas.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Edit Area',
+            'slug' => 'backend.areas.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Delete Area',
+            'slug' => 'backend.areas.destroy',
+        ]);
+
     }
 }

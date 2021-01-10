@@ -18,6 +18,9 @@ class AreaController extends Controller
      */
     public function index()
     {
+        //Define Area authorize gate
+        Gate::authorize('backend.areas.index');
+
         $areas = Area::with('cityOfArea')->get();
         return view('backend.location.area.index',  compact('areas'));
     }
@@ -28,6 +31,9 @@ class AreaController extends Controller
      */
     public function create()
     {
+        //Define Area authorize gate
+        Gate::authorize('backend.areas.create');
+
         $cities = City::all();
         return view('backend.location.area.form', compact('cities'));
     }
@@ -79,6 +85,9 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
+        //Define Area authorize gate
+        Gate::authorize('backend.areas.edit');
+
         $cities = City::all();
         $area = area::find($id);
         return view('backend.location.area.form', compact('area', 'cities'));
@@ -127,6 +136,9 @@ class AreaController extends Controller
      */
     public function destroy($id)
     {
+        //Define Area authorize gate
+        Gate::authorize('backend.areas.destroy');
+
         $data = Area::find($id);
         $oldFilename = $data->area_icon;
         Storage::delete('/uploads/shopproperty/area/' . $oldFilename);

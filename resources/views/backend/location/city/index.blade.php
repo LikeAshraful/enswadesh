@@ -57,7 +57,7 @@
                                 </td>
                                 <td>
                                     @canany('backend.cities.edit')
-                                        <a class="fa-edit-style" href="{{ route('backend.cities.edit', $city->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a class="fa-edit-style" href="{{ route('backend.cities.edit', $city->id) }}"><i class="fas fa-edit"></i></a> |
                                     @endcanany
                                     @canany('backend.cities.destroy')
                                         <button type="submit" class="delete-btn-style"
