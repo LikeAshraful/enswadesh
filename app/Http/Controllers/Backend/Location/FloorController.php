@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Location\Floor;
 use App\Models\Location\Market;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
 
 class FloorController extends Controller
 {

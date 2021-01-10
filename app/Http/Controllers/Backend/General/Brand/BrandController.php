@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\General\Brand;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Repositories\Interface\Brand\BrandInterface;
 
 class BrandController extends Controller

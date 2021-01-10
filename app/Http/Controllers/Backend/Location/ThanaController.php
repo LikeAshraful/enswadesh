@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\Location\Area;
 use App\Models\Location\Thana;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
 
 class ThanaController extends Controller
 {

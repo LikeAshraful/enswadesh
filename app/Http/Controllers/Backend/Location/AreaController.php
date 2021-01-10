@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\Location\Area;
 use App\Models\Location\City;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
 
 class AreaController extends Controller
 {
