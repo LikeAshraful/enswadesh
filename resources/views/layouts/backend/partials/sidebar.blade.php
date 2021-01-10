@@ -93,18 +93,22 @@
                                 App Menus
                             </a>
                         </li>
-                        <li>
-                            <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Cities
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Areas
-                            </a>
-                        </li>
+                        @canany('backend.cities.index')
+                            <li>
+                                <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Cities
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.areas.index')
+                            <li>
+                                <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Areas
+                                </a>
+                            </li>
+                        @endcanany
                         <li>
                             <a href="{{route('backend.thanas.index')}}" class="{{ Route::is('backend.thanas.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\Location\Thana;
 use App\Models\Location\Market;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
 
 class MarketController extends Controller
 {

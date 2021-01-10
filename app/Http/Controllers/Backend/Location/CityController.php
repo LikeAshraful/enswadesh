@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Location\City;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Gate;
 
 class CityController extends Controller
 {
@@ -18,6 +18,9 @@ class CityController extends Controller
      */
     public function index()
     {
+        //Define Cities authorize gate
+        Gate::authorize('backend.cities.index');
+
         $cities = City::all();
         return view('backend.location.city.index',  compact('cities'));
     }
@@ -28,6 +31,9 @@ class CityController extends Controller
      */
     public function create()
     {
+        //Define Cities authorize gate
+        Gate::authorize('backend.cities.create');
+
         return view('backend.location.city.form');
     }
 
@@ -78,6 +84,9 @@ class CityController extends Controller
      */
     public function edit($id)
     {
+        //Define Cities authorize gate
+        Gate::authorize('backend.cities.edit');
+
         $city = City::find($id);
         return view('backend.location.city.form', compact('city'));
     }
@@ -125,6 +134,9 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
+        //Define Cities authorize gate
+        Gate::authorize('backend.cities.destroy');
+
         $data = City::find($id);
         $oldFilename = $data->city_icon;
         Storage::delete('/uploads/shopproperty/city/' . $oldFilename);

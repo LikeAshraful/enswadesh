@@ -18,12 +18,14 @@
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('backend.areas.create') }}" class="btn-shadow btn btn-info">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fas fa-plus-circle fa-w-20"></i>
-                        </span>
-                        {{ __('Create Area') }}
-                    </a>
+                    @canany('backend.areas.index')
+                        <a href="{{ route('backend.areas.create') }}" class="btn-shadow btn btn-info">
+                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fas fa-plus-circle fa-w-20"></i>
+                            </span>
+                            {{ __('Create Area') }}
+                        </a>
+                    @endcanany
                 </div>
             </div>
         </div>
@@ -56,11 +58,15 @@
                                     <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/area/' . $area->area_icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.areas.edit', $area->id) }}"><i class="fas fa-edit"></i></a> |
-                                    <button type="submit" class="delete-btn-style"
-                                            onclick="deleteData({{ $area->id }})">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    @canany('backend.areas.edit')
+                                        <a class="fa-edit-style" href="{{ route('backend.areas.edit', $area->id) }}"><i class="fas fa-edit"></i></a> |
+                                    @endcanany
+                                    @canany('backend.areas.destroy')
+                                        <button type="submit" class="delete-btn-style"
+                                                onclick="deleteData({{ $area->id }})">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    @endcanany
                                     <form id="delete-form-{{ $area->id }}"
                                             action="{{ route('backend.areas.destroy',$area->id) }}" method="POST"
                                             style="display: none;">

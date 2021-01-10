@@ -163,5 +163,51 @@ class PermissionSeeder extends Seeder
             'slug' => 'backend.brand.destroy',
         ]);
 
+        // Shop Property Management(Cities)
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Shop Property Management(Cities)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Access City',
+            'slug' => 'backend.cities.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Create City',
+            'slug' => 'backend.cities.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Edit City',
+            'slug' => 'backend.cities.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Delete City',
+            'slug' => 'backend.cities.destroy',
+        ]);
+
+        // Shop Property Management(Area)
+        $moduleAppUser = Module::updateOrCreate(['name' => 'Shop Property Management(Area)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Access Area',
+            'slug' => 'backend.areas.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Create Area',
+            'slug' => 'backend.areas.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Edit Area',
+            'slug' => 'backend.areas.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'name' => 'Delete Area',
+            'slug' => 'backend.areas.destroy',
+        ]);
+
     }
 }
