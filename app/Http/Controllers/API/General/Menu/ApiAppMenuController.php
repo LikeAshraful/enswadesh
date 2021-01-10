@@ -2,33 +2,37 @@
 
 namespace App\Http\Controllers\API\General\Menu;
 
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\General\Menu\AppMenu;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\General\Menu\AppMenuResource;
+use Repository\General\AppMenuRepository;
 
 class ApiAppMenuController extends Controller
 {
+
+    use JsonResponseTrait;
+
+    public $appMenuRepo;
+
+    public function __construct(AppMenuRepository $appMenuRepository)
+    {
+        $this->appMenuRepo = $appMenuRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return AppMenuResource::collection(AppMenu::all());
-        // $status = 200;
-        // $appmenus = AppMenu::all();
-        // return response()->json($appmenus, $status);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('shopproperty::create');
+        $allMenu = $this->appMenuRepo->getAll();
+        return $this->json(
+            'Menu list',
+            AppMenuResource::collection($allMenu)
+        );
     }
 
     /**
@@ -38,17 +42,12 @@ class ApiAppMenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('shopproperty::show');
+        // Todo for validation
+        $appMenu = $this->appMenuRepo->create($request->all());
+        return $this->json(
+            'AppMenu created successfully',
+            $appMenu
+        );
     }
 
     /**
