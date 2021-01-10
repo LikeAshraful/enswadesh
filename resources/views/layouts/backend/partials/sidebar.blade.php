@@ -30,6 +30,7 @@
             </button>
         </span>
     </div>
+
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
@@ -44,31 +45,43 @@
                 <li class="app-sidebar__heading">User Management</li>
                 <li>
                     <a href="#"
-                        class="{{ Route::is('backend.users.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                        class="{{ Route::is('backend.super_admin.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-users"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        <li>
-                            <a href="{{route('backend.users.index')}}"
-                                class="{{ Route::is('backend.users.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Users
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.roles.index') }}"
-                                class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Roles
-                            </a>
-                        </li>
+                        @canany('backend.super_admin.index')
+                            <li>
+                                <a href="{{route('backend.super_admin.index')}}"
+                                    class="{{ Route::is('backend.super_admin.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Users
+                                </a>
+                            </li>
+                        @elsecanany('backend.admin.index')
+                            <li>
+                                <a href="{{route('backend.admin.index')}}"
+                                    class="{{ Route::is('backend.admin.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Users
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.roles.index')
+                            <li>
+                                <a href="{{ route('backend.roles.index') }}"
+                                    class="{{ Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Roles
+                                </a>
+                            </li>
+                        @endcanany
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Locations</li>
                 <li>
-                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.marketplaces.index*') || Route::is('backend.thanas.index*') || Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.menus.index*') || Route::is('backend.cities.index*') || Route::is('backend.areas.index*') || Route::is('backend.markets.index*') || Route::is('backend.thanas.index*') || Route::is('backend.floors.index*') || Route::is('backend.shops.index*') || Route::is('backend.shoptypes.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -80,18 +93,22 @@
                                 App Menus
                             </a>
                         </li>
-                        <li>
-                            <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Cities
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Areas
-                            </a>
-                        </li>
+                        @canany('backend.cities.index')
+                            <li>
+                                <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Cities
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.areas.index')
+                            <li>
+                                <a href="{{route('backend.areas.index')}}" class="{{ Route::is('backend.areas.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Areas
+                                </a>
+                            </li>
+                        @endcanany
                         <li>
                             <a href="{{route('backend.thanas.index')}}" class="{{ Route::is('backend.thanas.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
@@ -99,9 +116,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('backend.marketplaces.index')}}" class="{{ Route::is('backend.marketplaces.index*') ? 'mm-active' : '' }}">
+                            <a href="{{route('backend.markets.index')}}" class="{{ Route::is('backend.markets.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
-                                Market Place
+                                Market
                             </a>
                         </li>
                         <li>
@@ -110,40 +127,79 @@
                                 Floor
                             </a>
                         </li>
+                        <li>
+                            <a href="{{route('backend.shoptypes.index')}}" class="{{ Route::is('backend.shoptypes.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Shop Type
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.shops.index')}}" class="{{ Route::is('backend.shops.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                Shops
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Product</li>
                 <li>
-                    <a href="#" class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
+                    <a href="#" class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
                     <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
+                        @canany('backend.category.index')
+                            <li>
+                                <a href="{{route('backend.category.index')}}"
+                                    class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                        Category
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.brand.index')
                         <li>
-                            <a href="{{route('backend.main_category.index')}}"
-                                class="{{ Route::is('backend.main_category.index*') ? 'mm-active' : '' }}">
+                            <a href="{{route('backend.brand.index')}}"
+                                class="{{ Route::is('backend.brand.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
-                                Main Category
+                                    Brand
+                            </a>
+                        </li>
+                        @endcanany
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Order Management
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.orders.index')}}"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Orders
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('backend.sub_category.index')}}"
-                                class="{{ Route::is('backend.sub_category.index*') ? 'mm-active' : '' }}">
+                            <a href="{{route('backend.orders.index')}}?order_status=5"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
-                                Sub Category
+                                  Refund Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.orders.index')}}?order_status=0"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                   Cancel Orders
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="app-sidebar__heading">Charts</li>
-                <li>
-                    <a href="">
-                        <i class="metismenu-icon pe-7s-graph2">
-                        </i>ChartJS
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
