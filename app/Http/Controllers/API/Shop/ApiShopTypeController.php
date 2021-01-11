@@ -5,10 +5,22 @@ namespace App\Http\Controllers\API\Shop;
 use Illuminate\Http\Request;
 use App\Models\Shop\ShopType;
 use App\Http\Controllers\Controller;
+use Repository\Shop\ShopTypeRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Shop\ShopTypeResource;
 
 class ApiShopTypeController extends Controller
 {
+
+    use JsonResponseTrait;
+
+    public $shopTypeRepo;
+
+    public function __construct(ShopTypeRepository $shopTypeRepository)
+    {
+        $this->shopTypeRepo = $shopTypeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +28,11 @@ class ApiShopTypeController extends Controller
      */
     public function index()
     {
-        return ShopTypeResource::collection(ShopType::all());
+        $shopType = $this->shopTypeRepo->getAll();
+        return $this->json(
+            'Shop list',
+            ShopTypeResource::collection($shopType)
+        );
     }
 
     /**
