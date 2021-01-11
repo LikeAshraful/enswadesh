@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\API\Order;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Models\Order\Order;
+use App\Http\Controllers\Controller;
+use Repository\Order\OrderRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Order\OrderResource;
-
-use Illuminate\Support\Facades\Auth;
 
 class ApiOrderController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $orderRepo;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepo = $orderRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +26,11 @@ class ApiOrderController extends Controller
      */
     public function index()
     {
-        return OrderResource::collection(Order::all());
+        $allOrder = $this->orderRepo->getAll();
+        return $this->json(
+            "Order List",
+            OrderResource::collection($allOrder)
+        );
     }
 
     /**
@@ -40,23 +51,14 @@ class ApiOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = Order::create([
-            'order_no' => GenerateOrderNumber(),
-            'customer_id' => $request->customer_id,
-            'total_quantity' => $request->total_quantity,
-            'total_discount' => $request->total_discount,
-            'total_vat' => $request->total_vat,
-            'total_price' =>$request->total_price,
-            'order_status' => $request->order_status,
-            'billing_email' => $request->billing_email,
-            'billing_name' => $request->billing_name,
-            'billing_address' => $request->billing_address,
-            'billing_city' => $request->billing_city,
-            'billing_phone' => $request->billing_phone,
-            'payment_gateway' => $request->payment_gateway
-          ]);
+        $order = $this->orderRepo->create($request->except('order_no') + [
+            'order_no' => GenerateOrderNumber()
+        ]);
 
-          return new OrderResource($order);
+        return $this->json(
+            "Order Created Sucessfully",
+            $order
+        );
     }
 
     /**
@@ -67,7 +69,11 @@ class ApiOrderController extends Controller
      */
     public function show($id)
     {
-        return new OrderResource(Order::find($id));
+        $order = $this->orderRepo->findOrFailByID($id);
+        return $this->json(
+            "Order",
+            new OrderResource($order)
+        );
     }
 
     /**
@@ -104,7 +110,12 @@ class ApiOrderController extends Controller
         //
     }
 
-    public function myOrders($id) {
-        return OrderResource::collection(Order::where('customer_id', $id)->get());
+    public function selfOrder($id) {
+        $selfOrders = $this->orderRepo->getAllByCustomerID($id);
+        return $this->json(
+            "My Order List",
+            OrderResource::collection($selfOrders)
+        );
+
     }
 }

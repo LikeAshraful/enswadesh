@@ -45,4 +45,9 @@ Abstract class BaseRepository {
         $model->update($modelData);
         return $model->reload();
     }
+
+    public function getAllByCustomerID($id)
+    {
+        return $this->model()::where('customer_id', $id)->get();
+    }
 }
