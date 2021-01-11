@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers\Backend\Order;
 
-use App\Http\Controllers\Controller;
+use App\Models\Order\Order;
 use Illuminate\Http\Request;
 
-use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
+use App\Http\Controllers\Controller;
+use Repository\Order\OrderRepository;
 
 class OrdersController extends Controller
 {
+    public $orderRepo;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepo = $orderRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *

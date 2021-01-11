@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\General\Menu;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Models\General\Menu\AppMenu;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\General\Menu\AppMenuResource;
 use Repository\General\AppMenuRepository;
