@@ -29,7 +29,7 @@ Route::get('/api-shops', [ApiShopController::class, 'index']);
 
 Route::prefix('orders')->namespace('Order')->group(function(){
     Route::get('', [ApiOrderController::class, 'index']);
-    Route::get('self', [ApiOrderController::class, 'selfOrder']);
+    Route::get('self/{id}', [ApiOrderController::class, 'selfOrder']);
     Route::get('{id}', [ApiOrderController::class, 'show']);
     Route::post('', [ApiOrderController::class, 'store']);
 });
