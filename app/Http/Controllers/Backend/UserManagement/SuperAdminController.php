@@ -58,6 +58,7 @@ class SuperAdminController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+
         //Access UserInterface store function
         $users = $this->users->store($request->all());
 

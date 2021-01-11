@@ -25,7 +25,7 @@ class AdminController extends Controller
 
         //Retrive Role model excepted Super admin 
         $users = User::where('name','!=','Super Admin')->get();
-
+        
         return view('backend.user_management.admin.index',compact('users'));
     }
 

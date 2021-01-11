@@ -18,25 +18,36 @@ use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
+use App\Http\Controllers\Backend\UserManagement\VendorController;
 
     //Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //Role
     Route::resource('roles', RoleController::class);
-    //User Management
 
+    //User Management(Super Admin)
     Route::resource('super_admin', SuperAdminController::class);
+
+    //User Activation Status
     Route::post('users/publish/{publish}', [SuperAdminController::class, 'togglePublish'])->name('users.publish');
+
+    //User Supend Status
     Route::post('users/blocked/{blocked}', [SuperAdminController::class, 'toggleBlocked'])->name('users.blocked');
 
+    //User Management(Admin)
     Route::resource('admin', AdminController::class);
+
+    //User Management(Vendor)
+    Route::resource('vendor', VendorController::class);
 
     //Profile
     Route::get('profile/', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+
     // Security
     Route::get('profile/security', [ProfileController::class, 'changePassword'])->name('profile.password.change');
     Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+
     // Settings
     Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
         Route::get('general', [SettingController::class, 'index'])->name('index');
@@ -63,9 +74,12 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     // Shop Related
     Route::resource('shoptypes', ShopTypeController::class);
     Route::resource('shops', ShopController::class);
+
     //Category
     Route::resource('category', CategoryController::class);
+
     //Brand
     Route::resource('brand', BrandController::class);
+    
     //Order
     Route::resource('orders', OrdersController::class);

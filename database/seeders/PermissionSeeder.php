@@ -117,6 +117,29 @@ class PermissionSeeder extends Seeder
             'slug' => 'backend.admin.destroy',
         ]);
 
+        // User management(Vendor)
+        $moduleAppAdmin = Module::updateOrCreate(['name' => 'Vendor Management']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Access Vendor',
+            'slug' => 'backend.vendor.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Create Vendor',
+            'slug' => 'backend.vendor.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Edit Vendor',
+            'slug' => 'backend.vendor.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAdmin->id,
+            'name' => 'Delete Vendor',
+            'slug' => 'backend.vendor.destroy',
+        ]);
+
         // Product Property management(Category)
         $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management(Category)']);
         Permission::updateOrCreate([

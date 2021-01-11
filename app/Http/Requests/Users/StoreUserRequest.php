@@ -14,7 +14,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        Gate::authorize('backend.users.create');
+        Gate::authorize('backend.super_admin.create');
         return true;
     }
 

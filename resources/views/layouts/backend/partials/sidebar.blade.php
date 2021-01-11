@@ -67,6 +67,14 @@
                                     Users
                                 </a>
                             </li>
+                            @elsecanany('backend.vendor.index')
+                            <li>
+                                <a href="{{route('backend.vendor.index')}}"
+                                    class="{{ Route::is('backend.vendor.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Users
+                                </a>
+                            </li>
                         @endcanany
                         @canany('backend.roles.index')
                             <li>
