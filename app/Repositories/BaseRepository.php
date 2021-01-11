@@ -8,7 +8,7 @@ Abstract class BaseRepository {
 
     abstract function model();
 
-    public function getAll(): Collection
+    public function getAll()
     {
         return $this->model()::all();
     }
