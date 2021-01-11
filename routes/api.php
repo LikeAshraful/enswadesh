@@ -17,23 +17,23 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 
-Route::get('/api-menus', [ApiAppMenuController::class, 'index']);
-Route::get('/api-cities', [ApiCityController::class, 'index']);
-Route::get('/api-areas', [ApiAreaController::class, 'index']);
-Route::get('/api-thanas', [ApiThanaController::class, 'index']);
-Route::get('/api-markets', [ApiMarketController::class, 'index']);
-Route::get('/api-floors', [ApiFloorController::class, 'index']);
-Route::get('/api-shops-type', [ApiShopTypeController::class, 'index']);
-Route::get('/api-shop-types', [ApiShopTypeController::class, 'index']);
-Route::get('/api-shops', [ApiShopController::class, 'index']);
+Route::get('/menus', [ApiAppMenuController::class, 'index']);
+Route::get('/cities', [ApiCityController::class, 'index']);
+Route::get('/areas', [ApiAreaController::class, 'index']);
+Route::get('/thanas', [ApiThanaController::class, 'index']);
+Route::get('/markets', [ApiMarketController::class, 'index']);
+Route::get('/floors', [ApiFloorController::class, 'index']);
+Route::get('/shops-type', [ApiShopTypeController::class, 'index']);
+Route::get('/shop-types', [ApiShopTypeController::class, 'index']);
+Route::get('/shops', [ApiShopController::class, 'index']);
 
 Route::prefix('orders')->namespace('Order')->group(function(){
     Route::get('', [ApiOrderController::class, 'index']);
-    Route::get('self', [ApiOrderController::class, 'selfOrder']);
+    Route::get('self/{id}', [ApiOrderController::class, 'selfOrder']);
     Route::get('{id}', [ApiOrderController::class, 'show']);
     Route::post('', [ApiOrderController::class, 'store']);
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/api-users', [ApiAuthController::class, 'dusers']);
+    Route::get('/users', [ApiAuthController::class, 'dusers']);
 });

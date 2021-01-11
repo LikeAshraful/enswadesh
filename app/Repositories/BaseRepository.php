@@ -8,7 +8,7 @@ Abstract class BaseRepository {
 
     abstract function model();
 
-    public function getAll(): Collection
+    public function getAll()
     {
         return $this->model()::all();
     }
@@ -44,5 +44,10 @@ Abstract class BaseRepository {
         $model = $this->findOrFailByID($id);
         $model->update($modelData);
         return $model->reload();
+    }
+
+    public function getAllByCustomerID($id)
+    {
+        return $this->model()::where('customer_id', $id)->get();
     }
 }
