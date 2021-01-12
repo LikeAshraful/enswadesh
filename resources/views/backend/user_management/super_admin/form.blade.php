@@ -20,11 +20,11 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' User') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Super Admin') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.super_admin.index') }}" class="btn-shadow btn btn-danger">
+                <a href="{{ route('backend.super-admin.index') }}" class="btn-shadow btn btn-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -37,8 +37,8 @@
 
 <div class="row">
     <div class="col-12">
-        <form role="form" id="userFrom" method="POST"
-            action="{{ isset($user) ? route('backend.super_admin.update',$user->id) : route('backend.super_admin.store') }}"
+        <form role="form" id="superUserFrom" method="POST"
+            action="{{ isset($user) ? route('backend.super-admin.update',$user->id) : route('backend.super-admin.store') }}"
             enctype="multipart/form-data" file="true">
             @csrf
             @if (isset($user))
@@ -48,7 +48,7 @@
                 <div class="col-md-8">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">User Info</h5>
+                            <h5 class="card-title">Admin Info</h5>
                             <x-forms.textbox label="Name" name="name" value="{{ $user->name ?? ''  }}"
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
@@ -81,7 +81,7 @@
                                 value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
 
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
-                                on-click="resetForm('userFrom')" />
+                                on-click="resetForm('superUserFrom')" />
 
                             @isset($user)
                             <x-forms.button type="submit" label="Update" icon-class="fas fa-arrow-circle-up" />
@@ -102,9 +102,7 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Dropify
     $('.dropify').dropify();
-    // Select2
     $('.select').each(function() {
         $(this).select2();
     });

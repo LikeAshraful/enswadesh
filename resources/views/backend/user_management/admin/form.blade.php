@@ -41,7 +41,7 @@
             action="{{ isset($admin) ? route('backend.admin.update',$user->id) : route('backend.admin.store') }}"
             enctype="multipart/form-data" file="true">
             @csrf
-            @if (isset($admin))
+            @if (isset($user))
             @method('PUT')
             @endif
             <div class="row">

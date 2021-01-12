@@ -85,12 +85,12 @@
                                 <td class="text-center">{{ Auth::user()->email }}</td>
                                 <td class="text-center">{{ Auth::user()->created_at->diffForHumans() }}</td>
                                 <td class="text-center">
-                                    @can('backend.super_admin.index')
-                                        <a class="btn btn-info btn-sm" href="{{ route('backend.super_admin.show',Auth::user()->id) }}"><i
+                                    @can('backend.super-admin.index')
+                                        <a class="btn btn-info btn-sm" href="{{ route('backend.super-admin.show',Auth::user()->id) }}"><i
                                                 class="fas fa-eye"></i>
                                             <span>Details</span>
                                         </a>
-                                    @elsecan('backend.admin.index')
+                                    @elsecan('backend.super-admin.index')
                                         <a class="btn btn-info btn-sm" href="{{ route('backend.admin.show',Auth::user()->id) }}"><i
                                                 class="fas fa-eye"></i>
                                             <span>Details</span>

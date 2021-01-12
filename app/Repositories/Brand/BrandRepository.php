@@ -11,13 +11,11 @@ class BrandRepository implements BrandInterface {
 
     public function all()
     {
-        //Return Brand Model
         return Brand::get();
     }
 
     public function get($id)
     {
-        //Return Brand Model
         return Brand::find($id);
     }
 
@@ -30,7 +28,6 @@ class BrandRepository implements BrandInterface {
         }
         $slug = Str::of($data['name'])->slug('_');
 
-        //Return Brand Model
         return Brand::create([
             'name'          => $data['name'],
             'description'   => $data['description'],
@@ -60,7 +57,7 @@ class BrandRepository implements BrandInterface {
         } else {
             $slug = $data['slug'];
         }
-        //Return Brand Model
+
         return $brand->update([
             'name'          => $data['name'],
             'description'   => $data['description'],
@@ -71,7 +68,6 @@ class BrandRepository implements BrandInterface {
 
     public function delete($id)
     {
-        //Return Brand Model
         $brand = Brand::find($id);
         $oldFilename = $brand->image;
         Storage::delete('/uploads/products/brandicon/' . $oldFilename);

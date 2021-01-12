@@ -76,22 +76,22 @@ class PermissionSeeder extends Seeder
         Permission::updateOrCreate([
             'module_id' => $moduleAppSuperAdmin->id,
             'name' => 'Access Super',
-            'slug' => 'backend.super_admin.index',
+            'slug' => 'backend.super-admin.index',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppSuperAdmin->id,
             'name' => 'Create Super',
-            'slug' => 'backend.super_admin.create',
+            'slug' => 'backend.super-admin.create',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppSuperAdmin->id,
             'name' => 'Edit Super',
-            'slug' => 'backend.super_admin.edit',
+            'slug' => 'backend.super-admin.edit',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppSuperAdmin->id,
             'name' => 'Delete Super',
-            'slug' => 'backend.super_admin.destroy',
+            'slug' => 'backend.super-admin.destroy',
         ]);
 
         // User management(Admin)

@@ -18,8 +18,8 @@
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                @canany('backend.super_admin.create')
-                <a href="{{ route('backend.super_admin.create') }}" class="btn-shadow btn btn-info">
+                @canany('backend.super-admin.create')
+                <a href="{{ route('backend.super-admin.create') }}" class="btn-shadow btn btn-info">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-plus-circle fa-w-20"></i>
                     </span>
@@ -117,17 +117,17 @@
                             </td>
                             <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
                             <td class="text-center">
-                                <a class="fa-eye-style" href="{{ route('backend.super_admin.show',$user->id) }}"><i
+                                <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$user->id) }}"><i
                                         class="fas fa-eye"></i>
                                 </a> |
-                                <a class="fa-edit-style" href="{{ route('backend.super_admin.edit',$user->id) }}"><i
+                                <a class="fa-edit-style" href="{{ route('backend.super-admin.edit',$user->id) }}"><i
                                         class="fas fa-edit"></i>
                                 </a> |
                                 <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 <form id="delete-form-{{ $user->id }}"
-                                    action="{{ route('backend.super_admin.destroy',$user->id) }}" method="POST"
+                                    action="{{ route('backend.super-admin.destroy',$user->id) }}" method="POST"
                                     style="display: none;">
                                     @csrf()
                                     @method('DELETE')

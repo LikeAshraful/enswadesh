@@ -11,13 +11,11 @@ class CategoryRepository implements CategoryInterface {
 
     public function all()
     {
-        //Return User Model
         return Category::get();
     }
 
     public function get($id)
     {
-        //Return User Model
         return Category::find($id);
     }
 
@@ -28,9 +26,7 @@ class CategoryRepository implements CategoryInterface {
         {
             notify()->warning('Product Category level will be less then or equle 3.', 'Added');
             return back();
-        }else
-        {
-            //Image
+        }else{
             if ($image = $data['icon']) {
                 $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
                 $location = public_path('/uploads/products/categoriesicon/' . $filename);
@@ -64,7 +60,6 @@ class CategoryRepository implements CategoryInterface {
     public function update($id, array $data)
     {
         $level = Category::where('id', $data['parent_id'])->first();
-
         if($level ? $level->level == 3 : 0)
         {
             notify()->warning('Product Category level will be less then or equle 3.', 'Added');
@@ -77,7 +72,6 @@ class CategoryRepository implements CategoryInterface {
             } else {
                 $slug = $data['slug'];
             }
-
             if(isset($data['icon']) == true){
                 if (!empty($icon = $data['icon'])) {
                     $filename = rand(10, 100) . time() . '.' . $icon->getClientOriginalExtension();

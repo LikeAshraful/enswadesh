@@ -157,7 +157,6 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Datatable
     $("#datatableUser").DataTable();
 });
 </script>

@@ -12,18 +12,15 @@ class UserRepository implements UserInterface {
 
     public function all()
     {
-        //Return User Model
         return User::get();
     }
     public function allRole()
     {
-        //Return Role Model
         return Role::get();
     }
 
     public function get($id)
     {
-        //Return User Model
         return User::find($id);
     }
 
@@ -34,8 +31,6 @@ class UserRepository implements UserInterface {
             $location = public_path('/uploads/users/' . $filename);
             Image::make($image)->resize(400, 400)->save($location);
         }
-
-        //Return User Model
         return User::create([
             'role_id'       => $data['role'],
             'name'          => $data['name'],
@@ -50,7 +45,6 @@ class UserRepository implements UserInterface {
     {
         $user = User::find($id);
         $image = $user->image;
-
         if(isset($data['image']) == true){
             if (!empty($image = $data['image'])) {
                 $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
@@ -61,7 +55,6 @@ class UserRepository implements UserInterface {
                 Storage::delete('/uploads/users/' . $oldFilenamec);
             }
         }
-        //Return User Model
         return $user->update([
             'role_id'       => $data['role'],
             'name'          => $data['name'],
@@ -74,7 +67,6 @@ class UserRepository implements UserInterface {
 
     public function delete($id)
     {
-        //Return User Model
         $user = User::find($id);
         $oldFilename = $user->image;
         Storage::delete('/uploads/users/' . $oldFilename);
