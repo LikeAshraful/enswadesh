@@ -11,12 +11,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        //Define Dashboard authorize gate
         Gate::authorize('backend.dashboard');
-
         $data['usersCount'] = User::count();
         $data['rolesCount'] = Role::count();
-        
         return view('backend.dashboard', $data);
     }
 }

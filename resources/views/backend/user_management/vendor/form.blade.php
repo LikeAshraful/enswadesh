@@ -20,7 +20,7 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($vendor) ? 'Edit' : 'Create New') . ' Vendor') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Vendor') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
@@ -38,17 +38,17 @@
 <div class="row">
     <div class="col-12">
         <form role="form" id="vendorFrom" method="POST"
-            action="{{ isset($vendor) ? route('backend.vendor.update',$user->id) : route('backend.vendor.store') }}"
+            action="{{ isset($user) ? route('backend.vendor.update',$user->id) : route('backend.vendor.store') }}"
             enctype="multipart/form-data" file="true">
             @csrf
-            @if (isset($vendor))
+            @if (isset($user))
             @method('PUT')
             @endif
             <div class="row">
                 <div class="col-md-8">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">User Info</h5>
+                            <h5 class="card-title">Vendor Info</h5>
                             <x-forms.textbox label="Name" name="name" value="{{ $user->name ?? ''  }}"
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
@@ -102,9 +102,7 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Dropify
     $('.dropify').dropify();
-    // Select2
     $('.select').each(function() {
         $(this).select2();
     });

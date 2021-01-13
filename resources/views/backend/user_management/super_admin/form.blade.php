@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','Super Admin')
+@section('title','User')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
@@ -20,7 +20,7 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Super Admin') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' User') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">

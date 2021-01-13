@@ -2,7 +2,7 @@
   
 namespace App\Repositories\Interface\User;
 
-interface UserInterface{
+interface VendorInterface{
     public function all();
 
     public function get($id);
@@ -14,4 +14,5 @@ interface UserInterface{
     public function update($id, array $data);
 
     public function delete($id);
+    
 }

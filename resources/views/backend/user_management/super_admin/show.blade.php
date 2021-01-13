@@ -10,7 +10,7 @@
                     <i class="pe-7s-users icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('User Details') }}</div>
+                <div>{{ __('Super Admin Details') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">

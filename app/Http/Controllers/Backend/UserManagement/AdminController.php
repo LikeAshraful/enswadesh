@@ -1,87 +1,62 @@
 <?php
 
 namespace App\Http\Controllers\Backend\UserManagement;
-
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Users\StoreUserRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Image;
+use App\Repositories\Interface\User\AdminInterface;
 
 class AdminController extends Controller
 {
+    protected $admin;
+    
+    public function __construct(AdminInterface $admin)
+    {
+        $this->admin=$admin;
+    }
+
     public function index()
     {
         Gate::authorize('backend.admin.index');
-        $users = User::whereNotIn('id', [1])->get();
+        $users = $this->admin->all();
         return view('backend.user_management.admin.index',compact('users'));
     }
 
     public function create()
     {
         Gate::authorize('backend.admin.create');
-        $roles = Role::where('slug','!=','super_admin')->get();
+        $roles = $this->admin->allRole();
         return view('backend.user_management.admin.form', compact('roles'));
     }
 
-    public function store(Reguest $request)
+    public function store(StoreUserRequest $request)
     {
-        if($image = $request['image']) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/users/' . $filename);
-            Image::make($image)->resize(400, 400)->save($location);
-        }
-        return User::create([
-            'role_id'       => $request['role'],
-            'name'          => $request['name'],
-            'email'         => $request['email'],
-            'phone_number'  => $request['phone_number'],
-            'password'      => Hash::make($request['password']),
-            'image'         => isset($filename) ? $filename : '',
-        ]);
+        Gate::authorize('backend.admin.create');
+        $user = $this->admin->store($request->all());
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('backend.admin.index');
     }
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-  
+        $user = $this->admin->get($id);
         return view('backend.user_management.admin.show',compact('user'));
     }
 
     public function edit($id)
     {
         Gate::authorize('backend.admin.edit');
-        $user = User::findOrFail($id);
-        $roles = Role::where('slug','!=','super_admin')->get();
+        $roles = $this->admin->allRole();
+        $user = $this->admin->get($id);
         return view('backend.user_management.admin.form', compact('roles','user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update($id, UpdateUserRequest $request)
     {
-        $image  = $user->image;
-        if(isset($request['image']) == true){
-            if (!empty($image = $request['image'])) {
-                $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-                $locationc = public_path('/uploads/users/' . $filename);
-                Image::make($image)->resize(400, 400)->save($locationc);
-                $oldFilenamec = $user->image;
-                $user->image = $image;
-                Storage::delete('/uploads/users/' . $oldFilenamec);
-            }
-        }
-        $user = $user->update([
-            'role_id'       => $request['role'],
-            'name'          => $request['name'],
-            'email'         => $request['email'],
-            'phone_number'  => $request['phone_number'],
-            'password'      => Hash::make($request['password']),
-            'image'         => isset($filename) ? $filename : $image,
-        ]);
+        $users = $this->admin->update($id,$request->all());
         notify()->success('User Successfully Updated.', 'Updated');
         return redirect()->route('backend.admin.index');
     }
@@ -89,10 +64,7 @@ class AdminController extends Controller
     public function destroy($id)
     {
         Gate::authorize('backend.admin.destroy');
-        $user=User::findOrFail($id);
-        $oldFilename = $user->image;
-        Storage::delete('/uploads/users/' . $oldFilename);
-        $user->delete();
+        $user = $this->admin->delete($id);
         notify()->success("User Successfully Deleted", "Deleted");
         return back(); 
     }

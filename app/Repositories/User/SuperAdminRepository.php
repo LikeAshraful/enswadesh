@@ -6,9 +6,9 @@ use Storage;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Repositories\Interface\User\UserInterface;
+use App\Repositories\Interface\User\SuperAdminInterface;
 
-class UserRepository implements UserInterface {
+class SuperAdminRepository implements SuperAdminInterface {
 
     public function all()
     {

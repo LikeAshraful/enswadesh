@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
-use App\Repositories\Interface\User\UserInterface;
+use App\Repositories\Interface\User\SuperAdminInterface;
 
 class SuperAdminController extends Controller
 {
     protected $users;
     
-    public function __construct(UserInterface $users)
+    public function __construct(SuperAdminInterface $users)
     {
         $this->users=$users;
 
@@ -93,7 +93,7 @@ class SuperAdminController extends Controller
         notify()->success($message);
         return redirect()->route('backend.super-admin.index');
     }
-    public function toggleBlocked($id)
+    public function toggleBlock($id)
     {
         try {
             $blocked = User::find($id);
