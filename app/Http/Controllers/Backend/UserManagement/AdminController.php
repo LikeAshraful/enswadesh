@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Backend\UserManagement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
-use Illuminate\Support\Facades\Hash;
 use App\Repositories\Interface\User\AdminInterface;
 
 class AdminController extends Controller
