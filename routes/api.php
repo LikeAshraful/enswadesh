@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiAuthController;
 use App\Http\Controllers\API\Shop\ApiShopController;
-use App\Http\Controllers\API\Order\ApiOrderController;
 use App\Http\Controllers\API\Location\ApiAreaController;
 use App\Http\Controllers\API\Location\ApiCityController;
 use App\Http\Controllers\API\Shop\ApiShopTypeController;
@@ -12,6 +11,8 @@ use App\Http\Controllers\API\Location\ApiThanaController;
 use App\Http\Controllers\API\Location\ApiMarketController;
 use App\Http\Controllers\API\General\ApiTemplateController;
 use App\Http\Controllers\API\General\Menu\ApiAppMenuController;
+use App\Http\Controllers\API\General\Video\ApiVideoController;
+use App\Http\Controllers\API\Order\ApiOrderController;
 
 
 Route::post('/login', [ApiAuthController::class, 'login']);
@@ -43,4 +44,9 @@ Route::prefix('templates')->namespace('Template')->group(function(){
     Route::get('', [ApiTemplateController::class, 'index']);
     Route::get('{id}', [ApiTemplateController::class, 'show']);
     Route::post('', [ApiTemplateController::class, 'store']);
+});
+
+Route::prefix('videos')->namespace('Video')->group(function(){
+    Route::get('', [ApiVideoController::class, 'index']);
+    Route::get('{id}', [ApiVideoController::class, 'show']);
 });

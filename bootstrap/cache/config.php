@@ -1,5 +1,5 @@
 <?php return array (
-  'app' => 
+  'app' =>
   array (
     'name' => 'Laravel',
     'env' => 'local',
@@ -13,7 +13,7 @@
     'faker_locale' => 'en_US',
     'key' => 'base64:PyiNl7fdZi3/5iqeDpZfbPIDk6fZEC84RHUk4IuhyaA=',
     'cipher' => 'AES-256-CBC',
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Illuminate\\Auth\\AuthServiceProvider',
       1 => 'Illuminate\\Broadcasting\\BroadcastServiceProvider',
@@ -46,7 +46,7 @@
       28 => 'App\\Providers\\RouteServiceProvider',
       29 => 'App\\Services\\RepositoryServiceProvider',
     ),
-    'aliases' => 
+    'aliases' =>
     array (
       'App' => 'Illuminate\\Support\\Facades\\App',
       'Arr' => 'Illuminate\\Support\\Arr',
@@ -88,38 +88,38 @@
       'Html' => 'Collective\\Html\\HtmlFacade',
     ),
   ),
-  'auth' => 
+  'auth' =>
   array (
-    'defaults' => 
+    'defaults' =>
     array (
       'guard' => 'web',
       'passwords' => 'users',
     ),
-    'guards' => 
+    'guards' =>
     array (
-      'web' => 
+      'web' =>
       array (
         'driver' => 'session',
         'provider' => 'users',
       ),
-      'api' => 
+      'api' =>
       array (
         'driver' => 'passport',
         'provider' => 'users',
         'hash' => false,
       ),
     ),
-    'providers' => 
+    'providers' =>
     array (
-      'users' => 
+      'users' =>
       array (
         'driver' => 'eloquent',
         'model' => 'App\\Models\\User',
       ),
     ),
-    'passwords' => 
+    'passwords' =>
     array (
-      'users' => 
+      'users' =>
       array (
         'provider' => 'users',
         'table' => 'password_resets',
@@ -129,83 +129,83 @@
     ),
     'password_timeout' => 10800,
   ),
-  'broadcasting' => 
+  'broadcasting' =>
   array (
     'default' => 'log',
-    'connections' => 
+    'connections' =>
     array (
-      'pusher' => 
+      'pusher' =>
       array (
         'driver' => 'pusher',
         'key' => '',
         'secret' => '',
         'app_id' => '',
-        'options' => 
+        'options' =>
         array (
           'cluster' => 'mt1',
           'useTLS' => true,
         ),
       ),
-      'ably' => 
+      'ably' =>
       array (
         'driver' => 'ably',
         'key' => NULL,
       ),
-      'redis' => 
+      'redis' =>
       array (
         'driver' => 'redis',
         'connection' => 'default',
       ),
-      'log' => 
+      'log' =>
       array (
         'driver' => 'log',
       ),
-      'null' => 
+      'null' =>
       array (
         'driver' => 'null',
       ),
     ),
   ),
-  'cache' => 
+  'cache' =>
   array (
     'default' => 'file',
-    'stores' => 
+    'stores' =>
     array (
-      'apc' => 
+      'apc' =>
       array (
         'driver' => 'apc',
       ),
-      'array' => 
+      'array' =>
       array (
         'driver' => 'array',
         'serialize' => false,
       ),
-      'database' => 
+      'database' =>
       array (
         'driver' => 'database',
         'table' => 'cache',
         'connection' => NULL,
       ),
-      'file' => 
+      'file' =>
       array (
         'driver' => 'file',
         'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\framework/cache/data',
       ),
-      'memcached' => 
+      'memcached' =>
       array (
         'driver' => 'memcached',
         'persistent_id' => NULL,
-        'sasl' => 
+        'sasl' =>
         array (
           0 => NULL,
           1 => NULL,
         ),
-        'options' => 
+        'options' =>
         array (
         ),
-        'servers' => 
+        'servers' =>
         array (
-          0 => 
+          0 =>
           array (
             'host' => '127.0.0.1',
             'port' => 11211,
@@ -213,12 +213,12 @@
           ),
         ),
       ),
-      'redis' => 
+      'redis' =>
       array (
         'driver' => 'redis',
         'connection' => 'cache',
       ),
-      'dynamodb' => 
+      'dynamodb' =>
       array (
         'driver' => 'dynamodb',
         'key' => '',
@@ -230,40 +230,40 @@
     ),
     'prefix' => 'laravel_cache',
   ),
-  'cors' => 
+  'cors' =>
   array (
-    'paths' => 
+    'paths' =>
     array (
       0 => 'api/*',
       1 => 'sanctum/csrf-cookie',
     ),
-    'allowed_methods' => 
+    'allowed_methods' =>
     array (
       0 => '*',
     ),
-    'allowed_origins' => 
+    'allowed_origins' =>
     array (
       0 => '*',
     ),
-    'allowed_origins_patterns' => 
+    'allowed_origins_patterns' =>
     array (
     ),
-    'allowed_headers' => 
+    'allowed_headers' =>
     array (
       0 => '*',
     ),
-    'exposed_headers' => 
+    'exposed_headers' =>
     array (
     ),
     'max_age' => 0,
     'supports_credentials' => false,
   ),
-  'database' => 
+  'database' =>
   array (
     'default' => 'mysql',
-    'connections' => 
+    'connections' =>
     array (
-      'sqlite' => 
+      'sqlite' =>
       array (
         'driver' => 'sqlite',
         'url' => NULL,
@@ -271,7 +271,7 @@
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
-      'mysql' => 
+      'mysql' =>
       array (
         'driver' => 'mysql',
         'url' => NULL,
@@ -287,11 +287,11 @@
         'prefix_indexes' => true,
         'strict' => true,
         'engine' => NULL,
-        'options' => 
+        'options' =>
         array (
         ),
       ),
-      'pgsql' => 
+      'pgsql' =>
       array (
         'driver' => 'pgsql',
         'url' => NULL,
@@ -306,7 +306,7 @@
         'schema' => 'public',
         'sslmode' => 'prefer',
       ),
-      'sqlsrv' => 
+      'sqlsrv' =>
       array (
         'driver' => 'sqlsrv',
         'url' => NULL,
@@ -321,15 +321,15 @@
       ),
     ),
     'migrations' => 'migrations',
-    'redis' => 
+    'redis' =>
     array (
       'client' => 'phpredis',
-      'options' => 
+      'options' =>
       array (
         'cluster' => 'redis',
         'prefix' => 'laravel_database_',
       ),
-      'default' => 
+      'default' =>
       array (
         'url' => NULL,
         'host' => '127.0.0.1',
@@ -337,7 +337,7 @@
         'port' => '6379',
         'database' => '0',
       ),
-      'cache' => 
+      'cache' =>
       array (
         'url' => NULL,
         'host' => '127.0.0.1',
@@ -347,24 +347,25 @@
       ),
     ),
   ),
-  'filesystems' => 
+  'filesystems' =>
   array (
     'default' => 'local',
-    'disks' => 
+    'disks' =>
     array (
-      'local' => 
+      'local' =>
       array (
         'driver' => 'local',
         'root' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\public',
+        'url' => 'http://localhost/public',
       ),
-      'public' => 
+      'public' =>
       array (
         'driver' => 'local',
         'root' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\app/public',
         'url' => 'http://localhost:8000/storage',
         'visibility' => 'public',
       ),
-      's3' => 
+      's3' =>
       array (
         'driver' => 's3',
         'key' => '',
@@ -375,30 +376,30 @@
         'endpoint' => NULL,
       ),
     ),
-    'links' => 
+    'links' =>
     array (
       'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\public\\storage' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\app/public',
     ),
   ),
-  'hashing' => 
+  'hashing' =>
   array (
     'driver' => 'bcrypt',
-    'bcrypt' => 
+    'bcrypt' =>
     array (
       'rounds' => 10,
     ),
-    'argon' => 
+    'argon' =>
     array (
       'memory' => 1024,
       'threads' => 2,
       'time' => 2,
     ),
   ),
-  'image' => 
+  'image' =>
   array (
     'driver' => 'gd',
   ),
-  'lara-izitoast' => 
+  'lara-izitoast' =>
   array (
     'titleColor' => '',
     'messageColor' => '',
@@ -415,34 +416,34 @@
     'position' => 'bottomRight',
     'progressBar' => true,
   ),
-  'logging' => 
+  'logging' =>
   array (
     'default' => 'stack',
-    'channels' => 
+    'channels' =>
     array (
-      'stack' => 
+      'stack' =>
       array (
         'driver' => 'stack',
-        'channels' => 
+        'channels' =>
         array (
           0 => 'single',
         ),
         'ignore_exceptions' => false,
       ),
-      'single' => 
+      'single' =>
       array (
         'driver' => 'single',
         'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
-      'daily' => 
+      'daily' =>
       array (
         'driver' => 'daily',
         'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
-      'slack' => 
+      'slack' =>
       array (
         'driver' => 'slack',
         'url' => NULL,
@@ -450,54 +451,54 @@
         'emoji' => ':boom:',
         'level' => 'debug',
       ),
-      'papertrail' => 
+      'papertrail' =>
       array (
         'driver' => 'monolog',
         'level' => 'debug',
         'handler' => 'Monolog\\Handler\\SyslogUdpHandler',
-        'handler_with' => 
+        'handler_with' =>
         array (
           'host' => NULL,
           'port' => NULL,
         ),
       ),
-      'stderr' => 
+      'stderr' =>
       array (
         'driver' => 'monolog',
         'handler' => 'Monolog\\Handler\\StreamHandler',
         'formatter' => NULL,
-        'with' => 
+        'with' =>
         array (
           'stream' => 'php://stderr',
         ),
       ),
-      'syslog' => 
+      'syslog' =>
       array (
         'driver' => 'syslog',
         'level' => 'debug',
       ),
-      'errorlog' => 
+      'errorlog' =>
       array (
         'driver' => 'errorlog',
         'level' => 'debug',
       ),
-      'null' => 
+      'null' =>
       array (
         'driver' => 'monolog',
         'handler' => 'Monolog\\Handler\\NullHandler',
       ),
-      'emergency' => 
+      'emergency' =>
       array (
         'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\logs/laravel.log',
       ),
     ),
   ),
-  'mail' => 
+  'mail' =>
   array (
     'default' => 'smtp',
-    'mailers' => 
+    'mailers' =>
     array (
-      'smtp' => 
+      'smtp' =>
       array (
         'transport' => 'smtp',
         'host' => 'mailhog',
@@ -508,55 +509,55 @@
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
-      'ses' => 
+      'ses' =>
       array (
         'transport' => 'ses',
       ),
-      'mailgun' => 
+      'mailgun' =>
       array (
         'transport' => 'mailgun',
       ),
-      'postmark' => 
+      'postmark' =>
       array (
         'transport' => 'postmark',
       ),
-      'sendmail' => 
+      'sendmail' =>
       array (
         'transport' => 'sendmail',
         'path' => '/usr/sbin/sendmail -bs',
       ),
-      'log' => 
+      'log' =>
       array (
         'transport' => 'log',
         'channel' => NULL,
       ),
-      'array' => 
+      'array' =>
       array (
         'transport' => 'array',
       ),
     ),
-    'from' => 
+    'from' =>
     array (
       'address' => NULL,
       'name' => 'Laravel',
     ),
-    'markdown' => 
+    'markdown' =>
     array (
       'theme' => 'default',
-      'paths' => 
+      'paths' =>
       array (
         0 => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\resources\\views/vendor/mail',
       ),
     ),
   ),
-  'modules' => 
+  'modules' =>
   array (
     'namespace' => 'Modules',
-    'stubs' => 
+    'stubs' =>
     array (
       'enabled' => false,
       'path' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh/vendor/nwidart/laravel-modules/src/Commands/stubs',
-      'files' => 
+      'files' =>
       array (
         'routes/web' => 'Routes/web.php',
         'routes/api' => 'Routes/api.php',
@@ -569,42 +570,42 @@
         'webpack' => 'webpack.mix.js',
         'package' => 'package.json',
       ),
-      'replacements' => 
+      'replacements' =>
       array (
-        'routes/web' => 
+        'routes/web' =>
         array (
           0 => 'LOWER_NAME',
           1 => 'STUDLY_NAME',
         ),
-        'routes/api' => 
+        'routes/api' =>
         array (
           0 => 'LOWER_NAME',
         ),
-        'webpack' => 
+        'webpack' =>
         array (
           0 => 'LOWER_NAME',
         ),
-        'json' => 
+        'json' =>
         array (
           0 => 'LOWER_NAME',
           1 => 'STUDLY_NAME',
           2 => 'MODULE_NAMESPACE',
           3 => 'PROVIDER_NAMESPACE',
         ),
-        'views/index' => 
+        'views/index' =>
         array (
           0 => 'LOWER_NAME',
         ),
-        'views/master' => 
+        'views/master' =>
         array (
           0 => 'LOWER_NAME',
           1 => 'STUDLY_NAME',
         ),
-        'scaffold/config' => 
+        'scaffold/config' =>
         array (
           0 => 'STUDLY_NAME',
         ),
-        'composer' => 
+        'composer' =>
         array (
           0 => 'LOWER_NAME',
           1 => 'STUDLY_NAME',
@@ -617,151 +618,151 @@
       ),
       'gitkeep' => true,
     ),
-    'paths' => 
+    'paths' =>
     array (
       'modules' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\Modules',
       'assets' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\public\\modules',
       'migration' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\database/migrations',
-      'generator' => 
+      'generator' =>
       array (
-        'config' => 
+        'config' =>
         array (
           'path' => 'Config',
           'generate' => true,
         ),
-        'command' => 
+        'command' =>
         array (
           'path' => 'Console',
           'generate' => true,
         ),
-        'migration' => 
+        'migration' =>
         array (
           'path' => 'Database/Migrations',
           'generate' => true,
         ),
-        'seeder' => 
+        'seeder' =>
         array (
           'path' => 'Database/Seeders',
           'generate' => true,
         ),
-        'factory' => 
+        'factory' =>
         array (
           'path' => 'Database/factories',
           'generate' => true,
         ),
-        'model' => 
+        'model' =>
         array (
           'path' => 'Entities',
           'generate' => true,
         ),
-        'routes' => 
+        'routes' =>
         array (
           'path' => 'Routes',
           'generate' => true,
         ),
-        'controller' => 
+        'controller' =>
         array (
           'path' => 'Http/Controllers',
           'generate' => true,
         ),
-        'filter' => 
+        'filter' =>
         array (
           'path' => 'Http/Middleware',
           'generate' => true,
         ),
-        'request' => 
+        'request' =>
         array (
           'path' => 'Http/Requests',
           'generate' => true,
         ),
-        'provider' => 
+        'provider' =>
         array (
           'path' => 'Providers',
           'generate' => true,
         ),
-        'assets' => 
+        'assets' =>
         array (
           'path' => 'Resources/assets',
           'generate' => true,
         ),
-        'lang' => 
+        'lang' =>
         array (
           'path' => 'Resources/lang',
           'generate' => true,
         ),
-        'views' => 
+        'views' =>
         array (
           'path' => 'Resources/views',
           'generate' => true,
         ),
-        'test' => 
+        'test' =>
         array (
           'path' => 'Tests/Unit',
           'generate' => true,
         ),
-        'test-feature' => 
+        'test-feature' =>
         array (
           'path' => 'Tests/Feature',
           'generate' => true,
         ),
-        'repository' => 
+        'repository' =>
         array (
           'path' => 'Repositories',
           'generate' => false,
         ),
-        'event' => 
+        'event' =>
         array (
           'path' => 'Events',
           'generate' => false,
         ),
-        'listener' => 
+        'listener' =>
         array (
           'path' => 'Listeners',
           'generate' => false,
         ),
-        'policies' => 
+        'policies' =>
         array (
           'path' => 'Policies',
           'generate' => false,
         ),
-        'rules' => 
+        'rules' =>
         array (
           'path' => 'Rules',
           'generate' => false,
         ),
-        'jobs' => 
+        'jobs' =>
         array (
           'path' => 'Jobs',
           'generate' => false,
         ),
-        'emails' => 
+        'emails' =>
         array (
           'path' => 'Emails',
           'generate' => false,
         ),
-        'notifications' => 
+        'notifications' =>
         array (
           'path' => 'Notifications',
           'generate' => false,
         ),
-        'resource' => 
+        'resource' =>
         array (
           'path' => 'Transformers',
           'generate' => false,
         ),
-        'component-view' => 
+        'component-view' =>
         array (
           'path' => 'Resources/views/components',
           'generate' => false,
         ),
-        'component-class' => 
+        'component-class' =>
         array (
           'path' => 'View/Component',
           'generate' => false,
         ),
       ),
     ),
-    'commands' => 
+    'commands' =>
     array (
       0 => 'CommandMakeCommand',
       1 => 'ControllerMakeCommand',
@@ -805,38 +806,38 @@
       39 => 'TestMakeCommand',
       40 => 'LaravelModulesV6Migrator',
     ),
-    'scan' => 
+    'scan' =>
     array (
       'enabled' => false,
-      'paths' => 
+      'paths' =>
       array (
         0 => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\vendor/*/*',
       ),
     ),
-    'composer' => 
+    'composer' =>
     array (
       'vendor' => 'nwidart',
-      'author' => 
+      'author' =>
       array (
         'name' => 'Nicolas Widart',
         'email' => 'n.widart@gmail.com',
       ),
     ),
     'composer-output' => false,
-    'cache' => 
+    'cache' =>
     array (
       'enabled' => false,
       'key' => 'laravel-modules',
       'lifetime' => 60,
     ),
-    'register' => 
+    'register' =>
     array (
       'translations' => true,
       'files' => 'register',
     ),
-    'activators' => 
+    'activators' =>
     array (
-      'file' => 
+      'file' =>
       array (
         'class' => 'Nwidart\\Modules\\Activators\\FileActivator',
         'statuses-file' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\modules_statuses.json',
@@ -846,23 +847,23 @@
     ),
     'activator' => 'file',
   ),
-  'queue' => 
+  'queue' =>
   array (
     'default' => 'sync',
-    'connections' => 
+    'connections' =>
     array (
-      'sync' => 
+      'sync' =>
       array (
         'driver' => 'sync',
       ),
-      'database' => 
+      'database' =>
       array (
         'driver' => 'database',
         'table' => 'jobs',
         'queue' => 'default',
         'retry_after' => 90,
       ),
-      'beanstalkd' => 
+      'beanstalkd' =>
       array (
         'driver' => 'beanstalkd',
         'host' => 'localhost',
@@ -870,7 +871,7 @@
         'retry_after' => 90,
         'block_for' => 0,
       ),
-      'sqs' => 
+      'sqs' =>
       array (
         'driver' => 'sqs',
         'key' => '',
@@ -880,7 +881,7 @@
         'suffix' => NULL,
         'region' => 'us-east-1',
       ),
-      'redis' => 
+      'redis' =>
       array (
         'driver' => 'redis',
         'connection' => 'default',
@@ -889,51 +890,51 @@
         'block_for' => NULL,
       ),
     ),
-    'failed' => 
+    'failed' =>
     array (
       'driver' => 'database-uuids',
       'database' => 'mysql',
       'table' => 'failed_jobs',
     ),
   ),
-  'services' => 
+  'services' =>
   array (
-    'mailgun' => 
+    'mailgun' =>
     array (
       'domain' => NULL,
       'secret' => NULL,
       'endpoint' => 'api.mailgun.net',
     ),
-    'postmark' => 
+    'postmark' =>
     array (
       'token' => NULL,
     ),
-    'ses' => 
+    'ses' =>
     array (
       'key' => '',
       'secret' => '',
       'region' => 'us-east-1',
     ),
-    'facebook' => 
+    'facebook' =>
     array (
       'client_id' => NULL,
       'client_secret' => NULL,
       'redirect' => 'http://localhost:8000/login/facebook/callback',
     ),
-    'google' => 
+    'google' =>
     array (
       'client_id' => NULL,
       'client_secret' => NULL,
       'redirect' => 'http://localhost:8000/login/google/callback',
     ),
-    'github' => 
+    'github' =>
     array (
       'client_id' => NULL,
       'client_secret' => NULL,
       'redirect' => 'http://localhost:8000/login/github/callback',
     ),
   ),
-  'session' => 
+  'session' =>
   array (
     'driver' => 'file',
     'lifetime' => '120',
@@ -943,7 +944,7 @@
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
-    'lottery' => 
+    'lottery' =>
     array (
       0 => 2,
       1 => 100,
@@ -955,18 +956,18 @@
     'http_only' => true,
     'same_site' => 'lax',
   ),
-  'view' => 
+  'view' =>
   array (
-    'paths' => 
+    'paths' =>
     array (
       0 => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\resources\\views',
     ),
     'compiled' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\framework\\views',
   ),
-  'flare' => 
+  'flare' =>
   array (
     'key' => NULL,
-    'reporting' => 
+    'reporting' =>
     array (
       'anonymize_ips' => true,
       'collect_git_information' => false,
@@ -978,13 +979,13 @@
     ),
     'send_logs_as_events' => true,
   ),
-  'ignition' => 
+  'ignition' =>
   array (
     'editor' => 'phpstorm',
     'theme' => 'light',
     'enable_share_button' => true,
     'register_commands' => false,
-    'ignored_solution_providers' => 
+    'ignored_solution_providers' =>
     array (
       0 => 'Facade\\Ignition\\SolutionProviders\\MissingPackageSolutionProvider',
     ),
@@ -993,38 +994,38 @@
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
   ),
-  'passport' => 
+  'passport' =>
   array (
     'private_key' => NULL,
     'public_key' => NULL,
     'client_uuids' => false,
-    'personal_access_client' => 
+    'personal_access_client' =>
     array (
       'id' => NULL,
       'secret' => NULL,
     ),
-    'storage' => 
+    'storage' =>
     array (
-      'database' => 
+      'database' =>
       array (
         'connection' => 'mysql',
       ),
     ),
   ),
-  'trustedproxy' => 
+  'trustedproxy' =>
   array (
     'proxies' => NULL,
     'headers' => 94,
   ),
-  'tinker' => 
+  'tinker' =>
   array (
-    'commands' => 
+    'commands' =>
     array (
     ),
-    'alias' => 
+    'alias' =>
     array (
     ),
-    'dont_alias' => 
+    'dont_alias' =>
     array (
       0 => 'App\\Nova',
     ),

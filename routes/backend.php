@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Shop\ShopController;
 use App\Http\Controllers\Backend\Order\OrdersController;
+use App\Http\Controllers\Backend\General\VideoController;
 use App\Http\Controllers\Backend\Location\AreaController;
 use App\Http\Controllers\Backend\Location\CityController;
 use App\Http\Controllers\Backend\Shop\ShopTypeController;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
-    //Dashboard
+//Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //Role
     Route::resource('roles', RoleController::class);
@@ -72,3 +73,4 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('orders', OrdersController::class);
     //Templates
     Route::resource('templates', TemplateController::class);
+    Route::resource('videos', VideoController::class);
