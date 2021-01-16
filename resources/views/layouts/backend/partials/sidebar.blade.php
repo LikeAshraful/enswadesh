@@ -199,7 +199,23 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="app-sidebar__heading">General</li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.videos.index*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Videos
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.videos.index')}}"
+                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    All Videos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
