@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\Shop\ShopTypeController;
 use App\Http\Controllers\Backend\Location\FloorController;
 use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
+use App\Http\Controllers\Backend\General\TemplateController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
@@ -69,3 +70,5 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('brand', BrandController::class);
     //Order
     Route::resource('orders', OrdersController::class);
+    //Templates
+    Route::resource('templates', TemplateController::class);
