@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 <img class="img-fluid img-thumbnail"
-                                    src="/uploads/video/{{ $video->thumbnail }}" width="50" height="50"
+                                    src="/{{ $video->thumbnail }}" width="50" height="50"
                                     alt="{{ $video->title}}">
                             </td>
                             <td>{{ $video->createdBy ? $video->createdBy->name : 'Not found' }}</td>

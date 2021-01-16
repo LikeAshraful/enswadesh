@@ -6,6 +6,7 @@ use Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Repository\General\VideoRepository;
 
 class VideoController extends Controller
@@ -47,20 +48,16 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        if($image = $request->image) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/video/' . $filename);
-            Image::make($image)->resize(250, 250)->save($location);
+        if($request->hasFile('image')){
+            $file = Storage::put('/uploads/video', $request->file('image'));
         }
 
-        $this->videoRepo->create([
-            'title'          => $request->title,
-            'description'   => $request->description,
+        $this->videoRepo->create($request->except(['slug','thumbnail','created_by']) + [
             'slug'          => isset($request->slug) ? $request->slug : str_slug($request->title, '-'),
-            'thumbnail'          => isset($filename) ? $filename : '',
-            'video_url' => $request->url,
+            'thumbnail'          => isset($file) ? $file : '',
             'created_by' => Auth::id()
         ]);
+
         notify()->success('Video Successfully Added.', 'Added');
         return redirect()->route('backend.videos.index');
     }
@@ -99,18 +96,13 @@ class VideoController extends Controller
     {
         $video = $this->videoRepo->findOrFailByID($id);
 
-        if($image = $request->image) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/video/' . $filename);
-            Image::make($image)->resize(250, 250)->save($location);
+        if($request->hasFile('image')){
+            $file = Storage::put('/uploads/video', $request->file('image'));
         }
 
-        $this->videoRepo->updateByID($id, [
-            'title'         => $request->title,
-            'description'   => $request->description,
+        $this->videoRepo->updateByID($id, $request->except(['slug','thumbnail','updated_by']) +[
             'slug'          => isset($request->slug) ? $request->slug : str_slug($request->title, '-'),
-            'thumbnail'     =>  isset($filename) ? $filename : $video->thumbnail,
-            'video_url' => $request->url,
+            'thumbnail'     =>  isset($file) ? $file : $video->thumbnail,
             'updated_by' => Auth::id()
          ]);
 
