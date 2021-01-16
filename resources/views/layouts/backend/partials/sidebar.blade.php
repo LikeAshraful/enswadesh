@@ -209,9 +209,25 @@
                     <ul>
                         <li>
                             <a href="{{route('backend.videos.index')}}"
-                                class="{{ Route::is('backend.category.index*') ? 'mm-active' : '' }}">
+                                class="{{ Route::is('backend.videos.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                     All Videos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Templates
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.templates.index')}}"
+                                class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    All Templates
                             </a>
                         </li>
                     </ul>

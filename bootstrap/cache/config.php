@@ -4,7 +4,7 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://localhost:8000',
     'asset_url' => NULL,
     'placeholder' => 'https://via.placeholder.com/',
     'timezone' => 'UTC',
@@ -362,7 +362,7 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\xampp\\htdocs\\fuzzionIT\\enswadesh\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://localhost:8000/storage',
         'visibility' => 'public',
       ),
       's3' =>
@@ -919,19 +919,19 @@
     array (
       'client_id' => NULL,
       'client_secret' => NULL,
-      'redirect' => 'http://localhost/login/facebook/callback',
+      'redirect' => 'http://localhost:8000/login/facebook/callback',
     ),
     'google' =>
     array (
       'client_id' => NULL,
       'client_secret' => NULL,
-      'redirect' => 'http://localhost/login/google/callback',
+      'redirect' => 'http://localhost:8000/login/google/callback',
     ),
     'github' =>
     array (
       'client_id' => NULL,
       'client_secret' => NULL,
-      'redirect' => 'http://localhost/login/github/callback',
+      'redirect' => 'http://localhost:8000/login/github/callback',
     ),
   ),
   'session' =>

@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Shop\ApiShopTypeController;
 use App\Http\Controllers\API\Location\ApiFloorController;
 use App\Http\Controllers\API\Location\ApiThanaController;
 use App\Http\Controllers\API\Location\ApiMarketController;
+use App\Http\Controllers\API\General\ApiTemplateController;
 use App\Http\Controllers\API\General\Menu\ApiAppMenuController;
 use App\Http\Controllers\API\General\Video\ApiVideoController;
 use App\Http\Controllers\API\Order\ApiOrderController;
@@ -37,6 +38,12 @@ Route::prefix('orders')->namespace('Order')->group(function(){
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users', [ApiAuthController::class, 'dusers']);
+});
+
+Route::prefix('templates')->namespace('Template')->group(function(){
+    Route::get('', [ApiTemplateController::class, 'index']);
+    Route::get('{id}', [ApiTemplateController::class, 'show']);
+    Route::post('', [ApiTemplateController::class, 'store']);
 });
 
 Route::prefix('videos')->namespace('Video')->group(function(){
