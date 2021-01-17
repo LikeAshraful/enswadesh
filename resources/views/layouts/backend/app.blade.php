@@ -31,8 +31,9 @@
 </div>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/backend.js') }}"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+<script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
 @stack('js')
 @include('vendor.lara-izitoast.toast')
