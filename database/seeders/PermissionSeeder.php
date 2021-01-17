@@ -150,7 +150,7 @@ class PermissionSeeder extends Seeder
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,
             'name' => 'Create Category',
-            'slug' => 'backend.categoryrs.create',
+            'slug' => 'backend.category.create',
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppUser->id,

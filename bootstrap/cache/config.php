@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Laravel',
+    'name' => 'ENSWADESH',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -228,7 +228,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'laravel_cache',
+    'prefix' => 'enswadesh_cache',
   ),
   'cors' => 
   array (
@@ -327,7 +327,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'laravel_database_',
+        'prefix' => 'enswadesh_database_',
       ),
       'default' => 
       array (
@@ -349,7 +349,7 @@
   ),
   'filesystems' => 
   array (
-    'default' => 'local',
+    'default' => 'public',
     'disks' => 
     array (
       'local' => 
@@ -538,7 +538,7 @@
     'from' => 
     array (
       'address' => NULL,
-      'name' => 'Laravel',
+      'name' => 'ENSWADESH',
     ),
     'markdown' => 
     array (
@@ -948,7 +948,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel_session',
+    'cookie' => 'enswadesh_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,

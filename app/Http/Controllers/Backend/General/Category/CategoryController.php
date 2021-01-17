@@ -5,36 +5,39 @@ namespace App\Http\Controllers\Backend\General\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Repositories\Interface\Category\CategoryInterface;
+use App\Repositories\Category\CategoryRepository;
 
 class CategoryController extends Controller
 {
-    protected $categories;
+    protected $categoryRepo;
     
-    public function __construct(CategoryInterface $categories)
+    public function __construct(CategoryRepository $CategoryRepository)
     {
-        $this->categories=$categories;
+        $this->categoryRepo=$CategoryRepository;
 
     }
 
     public function index()
     {
         Gate::authorize('backend.category.index');
-        $categories = $this->categories->all();
+        $categories = $this->categoryRepo->getAll();
         return view('backend.general.category.index',compact('categories'));
     }
 
     public function create()
     {
         Gate::authorize('backend.category.create');
-        $categories = $this->categories->all();
+        $categories = $this->categoryRepo->getAll();
         return view('backend.general.category.form',compact('categories'));
 
     }
 
     public function store(Request $request)
     {
-        $category = $this->categories->store($request->all());
+        $icon = $request->hasFile('icon') ? $this->categoryRepo->storeFile($request->file('icon')) : null;
+        $brand = $this->categoryRepo->create($request->except('icon') + [
+            'icon' => $icon
+        ]);
         return redirect()->route('backend.category.index');
     }
 
@@ -60,7 +63,8 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Gate::authorize('backend.category.destroy');
-        $categories = $this->categories->delete($id);
+        $categories = $this->categoryRepo->findByID($id);
+        $icon       = $this->categoryRepo->deleteCategory($id);
         return back();
     }
 }

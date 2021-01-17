@@ -1,76 +1,35 @@
 <?php
 
 namespace App\Repositories\Brand;
-use Image;
-use Storage;
-use Illuminate\Support\Str;
+
+use Repository\BaseRepository;
+use Illuminate\Http\UploadedFile;
 use App\Models\General\Brand\Brand;
+use Illuminate\Support\Facades\Storage;
 use App\Repositories\Interface\Brand\BrandInterface;
 
-class BrandRepository implements BrandInterface {
+class BrandRepository extends BaseRepository {
 
-    public function all()
+    public function model()
     {
-        return Brand::get();
+        return Brand::class;
     }
 
-    public function get($id)
+    public function storeFile(UploadedFile $file)
     {
-        return Brand::find($id);
+        return Storage::put('brands', $file);
     }
 
-    public function store(array $data)
+    public function updateBrandIcon($id)
     {
-        if($image = $data['icon']) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/products/brandicon/' . $filename);
-            Image::make($image)->resize(250, 250)->save($location);
-        }
-        $slug = Str::of($data['name'])->slug('_');
-
-        return Brand::create([
-            'name'          => $data['name'],
-            'description'   => $data['description'],
-            'slug'          => $slug,
-            'icon'          => isset($filename) ? $filename : '',
-        ]);
+        $brandIcon = $this->findByID($id);
+        Storage::delete($brandIcon->icon);
     }
 
-    public function update($id, array $data)
+    public function deleteBrand($id)
     {
-        $brand = Brand::find($id);
-        $icon   =$brand->icon;
-
-        if(isset($data['icon']) == true){
-            if (!empty($icon = $data['icon'])) {
-                $filename = rand(10, 100) . time() . '.' . $icon->getClientOriginalExtension();
-                $locationc = public_path('/uploads/products/brandicon/' . $filename);
-                Image::make($icon)->resize(250, 250)->save($locationc);
-                $oldFilenamec = $brand->icon;
-                $brand->icon = $icon;
-                Storage::delete('/uploads/products/brandicon/' . $oldFilenamec);
-            }
-        }
-
-        if (!empty($data['name'])) {
-            $slug = Str::of($data['name'])->slug('_');
-        } else {
-            $slug = $data['slug'];
-        }
-
-        return $brand->update([
-            'name'          => $data['name'],
-            'description'   => $data['description'],
-            'slug'          =>$slug,
-            'icon'          => isset($filename) ? $filename : $icon,
-        ]);
-    }
-
-    public function delete($id)
-    {
-        $brand = Brand::find($id);
-        $oldFilename = $brand->image;
-        Storage::delete('/uploads/products/brandicon/' . $oldFilename);
-        return $brand->delete();
+        $brandIcon = $this->findByID($id);
+        Storage::delete($brandIcon->icon);
+        $brandIcon->delete(); 
     }
 }

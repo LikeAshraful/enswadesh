@@ -21,7 +21,7 @@ class SettingController extends Controller
 
     public function update(UpdateGeneralSettingsRequest $request)
     {
-        Setting::updateSettings($request->validated());
+        Setting::updateSettings($request->all());
         Artisan::call("env:set APP_NAME='". $request->site_title ."'");
         notify()->success('Settings Successfully Updated.','Success');
         return back();
@@ -48,7 +48,7 @@ class SettingController extends Controller
 
     private function deleteOldLogo($path)
     {
-        Storage::disk('public')->delete($path);
+        return Storage::delete($path);
     }
 
     public function mail()

@@ -4,19 +4,20 @@ namespace App\Repositories\Category;
 use Image;
 use Storage;
 use Illuminate\Support\Str;
+use Repository\BaseRepository;
+use Illuminate\Http\UploadedFile;
 use App\Models\General\Category\Category;
-use App\Repositories\Interface\Category\CategoryInterface;
 
-class CategoryRepository implements CategoryInterface {
+class CategoryRepository extends BaseRepository {
 
-    public function all()
+    public function model()
     {
-        return Category::get();
+        return Category::class;
     }
 
-    public function get($id)
+    public function storeFile(UploadedFile $file)
     {
-        return Category::find($id);
+        return Storage::put('categories', $file);
     }
 
     public function store(array $data)
@@ -96,18 +97,10 @@ class CategoryRepository implements CategoryInterface {
         return $category;
     }
 
-    public function delete($id)
+    public function deleteCategory($id)
     {
-        $categories=Category::find($id);
-        if($categories->parent_id != null)
-        {
-            notify()->warning("This category have sub categories, to delete you need to delete sub categories", "Warning");
-        }
-        else{
-            $oldFilename = $categories->icon;
-            Storage::delete('/uploads/products/categoriesicon/' . $oldFilename);
-            $categories->delete();
-            notify()->success("Product Category Successfully Deleted", "Deleted");
-        }
+        $categoryIcon=$this->findByID($id);
+        Storage::delete($categoryIcon->icon);
+        $categoryIcon->delete(); 
     }
 }
