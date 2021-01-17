@@ -17,7 +17,7 @@ class BrandRepository extends BaseRepository {
 
     public function storeFile(UploadedFile $file)
     {
-        return Storage::put('brands', $file);
+        return Storage::put('fileuploads/brands', $file);
     }
 
     public function updateBrandIcon($id)
