@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\General\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Repositories\Brand\BrandRepository;
+use Repository\Brand\BrandRepository;
 
 class BrandController extends Controller
 {
@@ -71,7 +71,6 @@ class BrandController extends Controller
     public function destroy($id)
     {
         Gate::authorize('backend.brand.destroy');
-        $brand  = $this->brandRepo->findByID($id);
         $icon   = $this->brandRepo->deleteBrand($id);
         notify()->success("Product Brand Successfully Deleted", "Deleted");
         return back();

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories\Brand;
+namespace Repository\Brand;
 
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use App\Models\General\Brand\Brand;
 use Illuminate\Support\Facades\Storage;
-use App\Repositories\Interface\Brand\BrandInterface;
 
 class BrandRepository extends BaseRepository {
 

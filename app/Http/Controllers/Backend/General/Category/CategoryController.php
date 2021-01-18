@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\General\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Repositories\Category\CategoryRepository;
+use Repository\Category\CategoryRepository;
 
 class CategoryController extends Controller
 {
@@ -35,9 +35,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $icon = $request->hasFile('icon') ? $this->categoryRepo->storeFile($request->file('icon')) : null;
-        $brand = $this->categoryRepo->create($request->except('icon') + [
-            'icon' => $icon
-        ]);
+        $this->categoryRepo->storeCategory($request->all(), $icon);
         return redirect()->route('backend.category.index');
     }
 
@@ -49,22 +47,29 @@ class CategoryController extends Controller
     public function edit($id)
     {
         Gate::authorize('backend.category.edit');
-        $categories     = $this->categories->all();
-        $category       = $this->categories->get($id);
+        $categories     = $this->categoryRepo->getAll();
+        $category       = $this->categoryRepo->findByID($id);
         return view('backend.general.category.form',compact('category','categories'));
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $category = $this->categories->update($id,$request->all());
+        $category      = $this->categoryRepo->findByID($id);
+        $categoryIcon  = $request->hasFile('icon');
+        $icon          = $categoryIcon ? $this->categoryRepo->storeFile($request->file('icon')) : $category->icon;
+        if($categoryIcon)
+        {
+            $this->categoryRepo->updateCategoryIcon($id);
+        }
+        $this->categoryRepo->updateCategory($id, $request->all(), $icon);
         return redirect()->route('backend.category.index');
     }
 
     public function destroy($id)
     {
         Gate::authorize('backend.category.destroy');
-        $categories = $this->categoryRepo->findByID($id);
         $icon       = $this->categoryRepo->deleteCategory($id);
+        notify()->success("Product Category Successfully Deleted", "Deleted");
         return back();
     }
 }

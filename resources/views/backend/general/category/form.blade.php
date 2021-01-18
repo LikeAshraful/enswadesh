@@ -90,9 +90,9 @@
                         <label for='icon'>Category Icon</label>
 
                         <input type="file" id="icon" name="icon" class="dropify"
-                            data-default-file="{{ isset($category) ? asset('/uploads/products/categoriesicon/'. $category->icon): '' }}"
+                            data-default-file="{{ isset($category) ? asset('storage/'. $category->icon): '' }}"
                             data-height="220"
-                            value="{{ isset($category) ? asset('/uploads/products/categoriesicon/'. $category->icon): '' }}" />
+                            value="{{ isset($category) ? asset('storage/'. $category->icon): '' }}" />
 
                         @error('icon')
                         <span class="invalid-feedback" role="alert">
