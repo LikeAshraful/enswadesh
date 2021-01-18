@@ -14,6 +14,11 @@ class SuperAdminRepository implements SuperAdminInterface {
     {
         return User::get();
     }
+    public function allVendor()
+    {
+        $roles = Role::where('slug','=','vendor')->first();
+        return User::where('role_id',$roles->id)->get();
+    }
     public function allRole()
     {
         return Role::get();

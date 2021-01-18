@@ -26,6 +26,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles', RoleController::class);
     Route::resource('super-admin', SuperAdminController::class);
+    Route::get('vendor-list', [SuperAdminController::class,'vendorList'])->name('users.vendor');
     Route::post('users/{userID}/publish', [SuperAdminController::class, 'togglePublish'])->name('users.publish');
     Route::post('users/{userID}/block', [SuperAdminController::class, 'toggleBlock'])->name('users.blocked');
     Route::resource('admin', AdminController::class);

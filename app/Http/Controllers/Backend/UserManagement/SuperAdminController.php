@@ -23,7 +23,7 @@ class SuperAdminController extends Controller
     public function index()
     {
         Gate::authorize('backend.super-admin.index');
-        $users = $this->users->all();
+        $users      = $this->users->all();
         return view('backend.user_management.super_admin.index',compact('users'));
     }
 
@@ -72,6 +72,12 @@ class SuperAdminController extends Controller
         return back();
     }
 
+    public function vendorList()
+    {
+        $vendors    = $this->users->allVendor();
+        return view('backend.user_management.super_admin.vendorList',compact('vendors'));
+    }
+
     public function togglePublish($id)
     {
         try {
@@ -91,7 +97,7 @@ class SuperAdminController extends Controller
             $message = $exception->getMessage();
         }
         notify()->success($message);
-        return redirect()->route('backend.super-admin.index');
+        return back();
     }
     public function toggleBlock($id)
     {
@@ -111,6 +117,6 @@ class SuperAdminController extends Controller
             $message = $exception->getMessage();
         }
         notify()->success($message);
-        return redirect()->route('backend.super-admin.index');
+        return back();
     }
 }

@@ -58,6 +58,11 @@
                                     <i class="metismenu-icon"></i>
                                     Users
                                 </a>
+                                <a href="{{route('backend.users.vendor')}}"
+                                    class="{{ Route::is('backend.users.vendor*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Vendor
+                                </a>
                             </li>
                         @elsecanany('backend.admin.index')
                             <li>
