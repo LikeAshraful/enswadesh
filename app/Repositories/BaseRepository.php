@@ -39,6 +39,12 @@ Abstract class BaseRepository {
         return $model->update($modelData);
     }
 
+    public function deletedByID($id)
+    {
+        $model = $this->findOrFailByID($id);
+        return $model->delete();
+    }
+
     public function updateAndReloadByID($id, array $modelData)
     {
         $model = $this->findOrFailByID($id);

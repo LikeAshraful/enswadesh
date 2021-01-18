@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Location\Thana;
-use App\Models\Location\Market;
 use App\Http\Controllers\Controller;
+use Repository\Location\AreaRepository;
+use Repository\Location\MarketRepository;
 
 class MarketController extends Controller
 {
+    public $areaRepo;
+    public $marketRepo;
+
+    public function __construct(AreaRepository $areaRepository, MarketRepository $marketRepository)
+    {
+        $this->areaRepo = $areaRepository;
+        $this->marketRepo = $marketRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $markets = Market::with('thanaOfMarket')->get();
+        $markets = $this->marketRepo->getAll();
         return view('backend.location.market.index',  compact('markets'));
     }
 
@@ -28,8 +34,8 @@ class MarketController extends Controller
      */
     public function create()
     {
-        $thanas = Thana::all();
-        return view('backend.location.market.form', compact('thanas'));
+        $areas = $this->areaRepo->getAll();
+        return view('backend.location.market.form', compact('areas'));
     }
 
     /**
@@ -46,20 +52,13 @@ class MarketController extends Controller
             'market_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        if ($market_icon = $request->file('market_icon')) {
-            $filename = rand(10, 100) . time() . '.' . $market_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/market/' . $filename);
-            Image::make($market_icon)->resize(600, 400)->save($location);
-        }
-
-        $slug = Str::of($request->market_name)->slug('_');
-        Market::create($request->except('market_icon', 'market_slug') +
+        $market_icon = $request->hasFile('market_icon') ? $this->marketRepo->storeFile($request->file('market_icon')) : null;
+        $this->marketRepo->create($request->except('market_icon') +
             [
-                'market_icon' => $filename,
-                'market_slug' => $slug
+                'market_icon' => $market_icon
             ]);
 
-        notify()->success('market Successfully Added.', 'Added');
+        notify()->success('Market Successfully Added.', 'Added');
         return redirect()->route('backend.markets.index');
     }
 
@@ -80,9 +79,9 @@ class MarketController extends Controller
      */
     public function edit($id)
     {
-        $thanas = Thana::all();
-        $market = Market::find($id);
-        return view('backend.location.market.form', compact('market', 'thanas'));
+        $areas = $this->areaRepo->getAll();
+        $market = $this->marketRepo->findByID($id);
+        return view('backend.location.market.form', compact('market', 'areas'));
     }
 
     /**
@@ -93,31 +92,22 @@ class MarketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Market::find($id);
-        $market_icon = $data->market_icon;
-        if (!empty($request->market_name)) {
-            $slug = Str::of($request->market_name)->slug('_');
-        } else {
-            $slug = $data->market_slug;
+        $market = $this->marketRepo->findByID($id);
+
+        $marketIcon = $request->hasFile('market_icon');
+
+        $market_icon = $marketIcon ? $this->marketRepo->storeFile($request->file('market_icon')) : $market->market_icon;
+
+        if ($marketIcon) {
+            $this->marketRepo->updateMarket($id);
         }
 
-        if ($image = $request->file('market_icon')) {
-            $market_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/market/' . $market_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->market_icon;
-            $data->market_icon = $market_icon;
-            Storage::delete('/uploads/shopproperty/market/' . $oldFilenamec);
-        }
-
-        // market info update
-        $data = $data->update($request->except('market_slug', 'market_icon') +
+        $this->marketRepo->updateByID($id, $request->except('market_icon') +
             [
-                'market_slug' => $slug,
                 'market_icon' => $market_icon
             ]);
 
-        notify()->success('market Successfully Updated.', 'Updated');
+        notify()->success('Market Successfully Updated.', 'Updated');
         return redirect()->route('backend.markets.index');
     }
 
@@ -128,10 +118,8 @@ class MarketController extends Controller
      */
     public function destroy($id)
     {
-        $data = Market::find($id);
-        $oldFilename = $data->market_icon;
-        Storage::delete('/uploads/shopproperty/market/' . $oldFilename);
-        $data->delete();
+        $this->marketRepo->deleteMarket($id);
+        notify()->warning('Market Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.markets.index');
     }
 }

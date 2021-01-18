@@ -4,8 +4,10 @@
 namespace Repository\General;
 
 
-use App\Models\General\Menu\AppMenu;
 use Repository\BaseRepository;
+use Illuminate\Http\UploadedFile;
+use App\Models\General\Menu\AppMenu;
+use Illuminate\Support\Facades\Storage;
 
 class AppMenuRepository extends BaseRepository
 {
@@ -13,5 +15,23 @@ class AppMenuRepository extends BaseRepository
     function model()
     {
         return AppMenu::class;
+    }
+
+    public function storeFile(UploadedFile $file)
+    {
+        return Storage::put('fileuploads/menus', $file);
+    }
+
+    public function updateMenu($id)
+    {
+        $menu = $this->findById($id);
+        Storage::delete($menu->menu_icon);
+    }
+
+    public function deleteMenu($id)
+    {
+        $menu = $this->findById($id);
+        Storage::delete($menu->menu_icon);
+        $menu->delete();
     }
 }

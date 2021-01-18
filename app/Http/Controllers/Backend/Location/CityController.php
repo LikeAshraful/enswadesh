@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Location\City;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Repository\Location\CityRepository;
 
 class CityController extends Controller
 {
+    public $cityRepo;
+
+    public function __construct(CityRepository $cityRepository)
+    {
+        $this->cityRepo = $cityRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        //Define Cities authorize gate
         Gate::authorize('backend.cities.index');
-
-        $cities = City::all();
+        $cities = $this->cityRepo->getAll();
         return view('backend.location.city.index',  compact('cities'));
     }
 
@@ -50,17 +52,10 @@ class CityController extends Controller
             'city_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        if ($city_icon = $request->file('city_icon')) {
-            $filename = rand(10, 100) . time() . '.' . $city_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/city/' . $filename);
-            Image::make($city_icon)->resize(600, 400)->save($location);
-        }
-
-        $slug = Str::of($request->city_name)->slug('_');
-        City::create($request->except('city_icon', 'city_slug') +
+        $city_icon = $request->hasFile('city_icon') ? $this->cityRepo->storeFile($request->file('city_icon')) : null;
+        $this->cityRepo->create($request->except('city_icon') +
             [
-                'city_icon' => $filename,
-                'city_slug' => $slug
+                'city_icon' => $city_icon
             ]);
 
         notify()->success('City Successfully Added.', 'Added');
@@ -87,7 +82,7 @@ class CityController extends Controller
         //Define Cities authorize gate
         Gate::authorize('backend.cities.edit');
 
-        $city = City::find($id);
+        $city = $this->cityRepo->findByID($id);
         return view('backend.location.city.form', compact('city'));
     }
 
@@ -99,27 +94,18 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = City::find($id);
-        $city_icon = $data->city_icon;
-        if (!empty($request->city_name)) {
-            $slug = Str::of($request->city_name)->slug('_');
-        } else {
-            $slug = $data->city_slug;
+        $city = $this->cityRepo->findByID($id);
+
+        $cityIcon = $request->hasFile('city_icon');
+
+        $city_icon = $cityIcon ? $this->cityRepo->storeFile($request->file('city_icon')) : $city->city_icon;
+
+        if ($cityIcon) {
+            $this->cityRepo->updateCity($id);
         }
 
-        if ($image = $request->file('city_icon')) {
-            $city_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/city/' . $city_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->city_icon;
-            $data->city_icon = $city_icon;
-            Storage::delete('/uploads/shopproperty/city/' . $oldFilenamec);
-        }
-
-        // city info update
-        $data = $data->update($request->except('city_slug', 'city_icon') +
+        $this->cityRepo->updateByID($id, $request->except('city_icon') +
             [
-                'city_slug' => $slug,
                 'city_icon' => $city_icon
             ]);
 
@@ -137,10 +123,8 @@ class CityController extends Controller
         //Define Cities authorize gate
         Gate::authorize('backend.cities.destroy');
 
-        $data = City::find($id);
-        $oldFilename = $data->city_icon;
-        Storage::delete('/uploads/shopproperty/city/' . $oldFilename);
-        $data->delete();
+        $this->cityRepo->deleteCity($id);
+        notify()->warning('City Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.cities.index');
     }
 }

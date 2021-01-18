@@ -65,9 +65,9 @@
                 <div class="form-group">
                     <label for='menu_icon'>Menu Icon</label>
                     <input id="menu_icon" type="file"
-                    class="dropify @error('menu_icon') is-invalid @enderror" name="menu_icon" data-default-file="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'. $menu->menu_icon): '' }}"
+                    class="dropify @error('menu_icon') is-invalid @enderror" name="menu_icon" data-default-file="{{ isset($menu) ? asset($menu->menu_icon) : '' }}"
                     data-height="220"
-                    value="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'.$menu->menu_icon) : '' }}">
+                    value="{{ isset($menu) ? asset($menu->menu_icon) : '' }}">
                     @error('menu_icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>

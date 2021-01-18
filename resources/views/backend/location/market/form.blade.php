@@ -62,23 +62,23 @@
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="thana_id">thana</label>
+                    <label for="area_id">Area</label>
                     @if(isset($market))
-                    <select name="thana_id" id="thana_id" class="form-control">
+                    <select name="area_id" id="area_id" class="form-control">
                         <option value="">Select One</option>
-                        @foreach($thanas as $thana)
-                            <option value="{{ $thana->id }}" {{ $market->thana_id == $thana->id ? 'selected' : ''}}>{{ $thana->thana_name }}</option>
+                        @foreach($areas as $area)
+                            <option value="{{ $area->id }}" {{ $market->area_id == $area->id ? 'selected' : ''}}>{{ $area->area_name }}</option>
                         @endforeach
                     </select>
                     @else
-                    <select name="thana_id" id="thana_id" class="form-control">
+                    <select name="area_id" id="area_id" class="form-control">
                         <option value="">Select One</option>
-                        @foreach($thanas as $thana)
-                            <option value="{{ $thana->id }}">{{ $thana->thana_name }}</option>
+                        @foreach($areas as $area)
+                            <option value="{{ $area->id }}">{{ $area->area_name }}</option>
                         @endforeach
                     </select>
                     @endisset
-                    @error('thana_id')
+                    @error('area_id')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="form-group">
                     <label for='market_icon'>Market  Icon</label>
-                    <input type="file" id="market_icon" name="market_icon" class="dropify" data-default-file="{{ isset($market) ? asset('/uploads/shopproperty/market/'. $market->market_icon): '' }}" data-height="220" value="{{ isset($market) ? asset('/uploads/shopproperty/market/'. $market->market_icon): '' }}" />
+                    <input type="file" id="market_icon" name="market_icon" class="dropify" data-default-file="{{ isset($market) ? asset($market->market_icon): '' }}" data-height="220" value="{{ isset($market) ? asset($market->market_icon): '' }}" />
                     @error('market_icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
