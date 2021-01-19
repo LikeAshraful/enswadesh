@@ -3,20 +3,27 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiAuthController;
 use App\Http\Controllers\API\Shop\ApiShopController;
+use App\Http\Controllers\API\Order\ApiOrderController;
 use App\Http\Controllers\API\Location\ApiAreaController;
 use App\Http\Controllers\API\Location\ApiCityController;
 use App\Http\Controllers\API\Shop\ApiShopTypeController;
 use App\Http\Controllers\API\Location\ApiFloorController;
 use App\Http\Controllers\API\Location\ApiThanaController;
 use App\Http\Controllers\API\Location\ApiMarketController;
-use App\Http\Controllers\API\General\ApiTemplateController;
+use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\General\Menu\ApiAppMenuController;
+use App\Http\Controllers\API\General\ApiTemplateController;
 use App\Http\Controllers\API\General\Video\ApiVideoController;
-use App\Http\Controllers\API\Order\ApiOrderController;
 
 
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register']);
+// Route::apiResource('vendor', [VendorController::class]);
+Route::get('vendor', [VendorController::class, 'index']);
+Route::post('vendor', [VendorController::class, 'store']);
+Route::get('vendor/{vendor}', [VendorController::class, 'show']);
+Route::put('vendor/{vendor}', [VendorController::class, 'update']);
+Route::delete('vendor/{vendor}', [VendorController::class, 'destroy']);
 
 
 Route::get('/menus', [ApiAppMenuController::class, 'index']);

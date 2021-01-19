@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Super Admin')
+@section('title','User')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
@@ -18,13 +18,13 @@
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                @canany('backend.super-admin.create')
-                <a href="{{ route('backend.super-admin.create') }}" class="btn-shadow btn btn-info">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fas fa-plus-circle fa-w-20"></i>
-                    </span>
-                    {{ __('Create User') }}
-                </a>
+                @canany('backend.vendor.create')
+                    <a href="{{ route('backend.vendor.create') }}" class="btn-shadow btn btn-info">
+                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                            <i class="fas fa-plus-circle fa-w-20"></i>
+                        </span>
+                        {{ __('Create Vendor') }}
+                    </a>
                 @endcanany
             </div>
         </div>
@@ -40,8 +40,9 @@
                             <th class="text-center">#</th>
                             <th>Name</th>
                             <th class="text-center">Email</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Busniess Status</th>
+                            @can('backend.vendor.index')
+                                <th class="text-center">Status</th>
+                            @endcan
                             <th class="text-center">Joined At</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -74,60 +75,41 @@
                                 </div>
                             </td>
                             <td class="text-center">{{ $user->email }}</td>
-
-                            <td class="text-center">
-                                @if($user->status === 1)
-                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">
-                                        Approved
-                                    </button>
-                                </form>
-                                @else
-                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
-                                            Pending
+                            @can('backend.vendor.index')
+                                <td class="text-center">
+                                    @if($user->suspend === 1)
+                                    <form action="{{ route('backend.vendor.block', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
+                                            Blocked
                                         </button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('backend.vendor.block', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                            <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
+                                                Unblocked
+                                            </button>
 
-                                </form>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($user->suspend === 1)
-                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
-                                        Blocked
-                                    </button>
-                                </form>
-                                @else
-                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('POST')
-                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
-                                            Unblocked
-                                        </button>
-
-                                </form>
-                                @endif
-                            </td>
+                                    </form>
+                                    @endif
+                                </td>
+                            @endcan
                             <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
                             <td class="text-center">
-                                <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$user->id) }}"><i
+                                <a class="fa-eye-style" href="{{ route('backend.vendor.show',$user->id) }}"><i
                                         class="fas fa-eye"></i>
                                 </a> |
-                                <a class="fa-edit-style" href="{{ route('backend.super-admin.edit',$user->id) }}"><i
+                                <a class="fa-edit-style" href="{{ route('backend.vendor.edit',$user->id) }}"><i
                                         class="fas fa-edit"></i>
                                 </a> |
                                 <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 <form id="delete-form-{{ $user->id }}"
-                                    action="{{ route('backend.super-admin.destroy',$user->id) }}" method="POST"
+                                    action="{{ route('backend.vendor.destroy',$user->id) }}" method="POST"
                                     style="display: none;">
                                     @csrf()
                                     @method('DELETE')
@@ -148,7 +130,6 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Datatable
     $("#datatableUser").DataTable();
 });
 </script>

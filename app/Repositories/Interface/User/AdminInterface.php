@@ -1,11 +1,13 @@
 <?php
   
-namespace App\Repositories\Interface\Category;
+namespace App\Repositories\Interface\User;
 
-interface CategoryInterface{
+interface AdminInterface{
     public function all();
 
     public function get($id);
+
+    public function allRole();
 
     public function store(array $data);
 

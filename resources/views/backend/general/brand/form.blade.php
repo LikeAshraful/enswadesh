@@ -73,9 +73,9 @@
                         <label for='icon'>Brand Icon</label>
 
                         <input type="file" id="icon" name="icon" class="dropify"
-                            data-default-file="{{ isset($brand) ? asset('/uploads/products/brandicon/'. $brand->icon): '' }}"
+                            data-default-file="{{ isset($brand) ? asset('storage/'.$brand->icon): '' }}"
                             data-height="220"
-                            value="{{ isset($brand) ? asset('/uploads/products/brandicon/'. $brand->icon): '' }}" />
+                            value="{{ isset($brand) ? asset('storage/'.$brand->icon): '' }}" />
 
                         @error('icon')
                         <span class="invalid-feedback" role="alert">
@@ -110,7 +110,6 @@
 <script src="{{ asset('js/dropify.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Dropify
     $('.dropify').dropify();
 });
 </script>

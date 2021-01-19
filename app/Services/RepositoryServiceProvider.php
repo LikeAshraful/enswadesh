@@ -8,10 +8,20 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider{
 
     public function register(){
-        //User Management
+        //Super Admin Management
         $this->app->bind(
-            'App\Repositories\Interface\User\UserInterface',
-            'App\Repositories\User\UserRepository'
+            'App\Repositories\Interface\User\SuperAdminInterface',
+            'App\Repositories\User\SuperAdminRepository'
+        );
+        //Admin Management
+        $this->app->bind(
+            'App\Repositories\Interface\User\AdminInterface',
+            'App\Repositories\User\AdminRepository'
+        );
+        //Vendor Management
+        $this->app->bind(
+            'App\Repositories\Interface\User\VendorInterface',
+            'App\Repositories\User\VendorRepository'
         );
         //Role Management
         $this->app->bind(

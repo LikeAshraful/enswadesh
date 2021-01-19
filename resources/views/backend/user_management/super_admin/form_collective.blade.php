@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','Users')
+@section('title','Super Admin')
 
 @push('css')
 
@@ -23,11 +23,11 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' User') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Super Admin') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.users.index') }}" class="btn-shadow btn btn-danger">
+                <a href="{{ route('backend.super-admin.index') }}" class="btn-shadow btn btn-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -42,10 +42,10 @@
     <div class="col-12">
         <!-- form start -->
         @if($user !== null)
-        {!! Form::model($user, ['method'=>'PUT','route' => ['backend.users.update', $user], 'enctype' =>
+        {!! Form::model($user, ['method'=>'PUT','route' => ['backend.super-admin.update', $user], 'enctype' =>
         'multipart/form-data']) !!}
         @else
-        {!! Form::open(['url' => route('banckend.users.store'),'method' => 'POST','enctype' => 'multipart/form-data'])
+        {!! Form::open(['url' => route('banckend.super-admin.store'),'method' => 'POST','enctype' => 'multipart/form-data'])
         !!}
         @endif
 
@@ -53,7 +53,7 @@
             <div class="col-md-8">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <h5 class="card-title">User Info</h5>
+                        <h5 class="card-title">Super User Info</h5>
 
                         <div class="form-group">
 
