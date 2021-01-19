@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\General;
+namespace App\Http\Resources\General\Interaction;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TemplateResource extends JsonResource
+class InteractionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,9 +19,10 @@ class TemplateResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'slug' => $this->slug,
-            'thumbnail' => $this->thumbnail,
-            'created_by' => $this->createdBy,
-            'updated_by' => $this->updatedBy,
+            'status' => $this->status,
+            'user' => $this->user,
+            'category'=> $this->category,
+            'topic' => $this->topic,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

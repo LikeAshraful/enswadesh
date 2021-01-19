@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\General\Video;
 use Illuminate\Database\Seeder;
+use App\Models\General\Interaction\Interaction;
 
-class VideosSeeder extends Seeder
+class InteractionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class VideosSeeder extends Seeder
      */
     public function run()
     {
-        Video::factory()->count(10)->create();
+        Interaction::factory()->count(10)->create();
     }
 }

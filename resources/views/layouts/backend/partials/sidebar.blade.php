@@ -199,7 +199,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="app-sidebar__heading">General</li>
+                <li class="app-sidebar__heading">Customer Interaction</li>
                 <li>
                     <a href="#" class="{{ Route::is('backend.videos.index*') ? 'mm-active' : '' }}">
                     <i class="metismenu-icon pe-7s-diamond"></i>

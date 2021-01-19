@@ -1,36 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\API\General\Video;
+namespace App\Http\Controllers\Backend\General\Interaction;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\JsonResponseTrait;
-use App\Http\Resources\General\VideoResource;
 use Illuminate\Http\Request;
-use Repository\General\VideoRepository;
+use App\Http\Controllers\Controller;
+use Repository\General\InteractionRepository;
 
-class ApiVideoController extends Controller
+class InteractionController extends Controller
 {
-    use JsonResponseTrait;
+    public $interactionRepo;
 
-    public $videoRepo;
-
-    public function __construct(VideoRepository $videoRepository)
+    public function __construct(InteractionRepository $interactionRepository)
     {
-        $this->videoRepo = $videoRepository;
+        $this->interactionRepo = $interactionRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function videos()
     {
-        $videos = $this->videoRepo->getAll();
-        return $this->json(
-            'Video list',
-            VideoResource::collection($videos)
-        );
+        $videos = $this->interactionRepo->getInteractionByCategoryID(1);
+        return view('backend.general.video.index',compact('videos'));
+    }
+
+    public function templates()
+    {
+        $templates = $this->interactionRepo->getInteractionByCategoryID(2);
+        return view('backend.general.template.index',compact('templates'));
     }
 
     /**
@@ -40,7 +34,7 @@ class ApiVideoController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -51,7 +45,7 @@ class ApiVideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -62,11 +56,7 @@ class ApiVideoController extends Controller
      */
     public function show($id)
     {
-        $video = $this->videoRepo->findOrFailByID($id);
-        return $this->json(
-            "video",
-            new VideoResource($video)
-        );
+        //
     }
 
     /**
@@ -77,7 +67,7 @@ class ApiVideoController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -87,9 +77,10 @@ class ApiVideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function statusUpdate(Request $request, $id)
     {
-        //
+        $this->interactionRepo->updateByID($id, $request->all());
+        notify()->success('Order Status Successfully Updated.', 'Updated');
     }
 
     /**
