@@ -3,6 +3,7 @@
 namespace App\Models\General\Category;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,6 @@ class Category extends Model
     
     public static function boot()
     {
-
         parent::boot();
 
         static::creating(function ($model) {
@@ -36,6 +36,12 @@ class Category extends Model
 
     public function subcategory(){
         return $this->hasMany(Category::class, 'parent_id','id');
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('_');
     }
 
 }

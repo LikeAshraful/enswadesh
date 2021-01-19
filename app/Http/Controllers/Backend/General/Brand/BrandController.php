@@ -5,116 +5,74 @@ namespace App\Http\Controllers\Backend\General\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Repositories\Interface\Brand\BrandInterface;
+use Repository\Brand\BrandRepository;
 
 class BrandController extends Controller
 {
-    protected $brands;
-    
-    public function __construct(BrandInterface $brands)
+    protected $brandRepo;
+
+    public function __construct(BrandRepository $brandRepository)
     {
-        $this->brands=$brands;
+        $this->brandRepo = $brandRepository;
 
     }
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    
     public function index()
     {
-        //Define Brand authorize gate
         Gate::authorize('backend.brand.index');
-
-        //Access BrandInterface all function
-        $brands = $this->brands->all();
-
+        $brands = $this->brandRepo->getAll();
         return view('backend.general.brand.index',compact('brands'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
-        //Define Brand authorize gate
         Gate::authorize('backend.brand.create');
-
         return view('backend.general.brand.form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
-        //Access BrandInterface store function
-        $brand = $this->brands->store($request->all());
-
+        $icon = $request->hasFile('icon') ? $this->brandRepo->storeFile($request->file('icon')) : null;
+        $brand = $this->brandRepo->create($request->except('icon') + [
+            'icon' => $icon
+        ]);
         notify()->success('Product Brand Successfully Added.', 'Added');
-
         return redirect()->route('backend.brand.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('productproperty::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        //Define Brand authorize gate
         Gate::authorize('backend.brand.edit');
-
-        //Access BrandInterface get function
-        $brand = $this->brands->get($id);
-
+        $brand = $this->brandRepo->findByID($id);
         return view('backend.general.brand.form',compact('brand'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
-        //Access BrandInterface update function
-        $brands = $this->brands->update($id,$request->all());
-
+        $brand      = $this->brandRepo->findByID($id);
+        $brandIcon  = $request->hasFile('icon');
+        $icon       = $brandIcon ? $this->brandRepo->storeFile($request->file('icon')) : $brand->icon;
+        if($brandIcon)
+        {
+            $this->brandRepo->updateBrandIcon($id);
+        }
+        $brand  = $this->brandRepo->updateByID($id,$request->except('icon') + [
+            'icon' => $icon
+        ]);
         notify()->success('Product Brand Successfully Updated.', 'Updated');
-
         return redirect()->route('backend.brand.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
-        //Define Brand authorize gate
         Gate::authorize('backend.brand.destroy');
-
-        //Access BrandInterface delete function
-        $brand = $this->brands->delete($id);
-
+        $icon   = $this->brandRepo->deleteBrand($id);
         notify()->success("Product Brand Successfully Deleted", "Deleted");
-
         return back();
     }
 }

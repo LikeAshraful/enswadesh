@@ -45,24 +45,37 @@
                 <li class="app-sidebar__heading">User Management</li>
                 <li>
                     <a href="#"
-                        class="{{ Route::is('backend.super_admin.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
+                        class="{{ Route::is('backend.super-admin.index*') || Route::is('backend.roles.index*') ? 'mm-active' : '' }}">
                         <i class="metismenu-icon pe-7s-users"></i>
                         Property
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        @canany('backend.super_admin.index')
+                        @canany('backend.super-admin.index')
                             <li>
-                                <a href="{{route('backend.super_admin.index')}}"
-                                    class="{{ Route::is('backend.super_admin.index*') ? 'mm-active' : '' }}">
+                                <a href="{{route('backend.super-admin.index')}}"
+                                    class="{{ Route::is('backend.super-admin.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                     Users
+                                </a>
+                                <a href="{{route('backend.users.vendor')}}"
+                                    class="{{ Route::is('backend.users.vendor*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Vendor
                                 </a>
                             </li>
                         @elsecanany('backend.admin.index')
                             <li>
                                 <a href="{{route('backend.admin.index')}}"
                                     class="{{ Route::is('backend.admin.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Users
+                                </a>
+                            </li>
+                            @elsecanany('backend.vendor.index')
+                            <li>
+                                <a href="{{route('backend.vendor.index')}}"
+                                    class="{{ Route::is('backend.vendor.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                     Users
                                 </a>
@@ -199,7 +212,39 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="app-sidebar__heading">General</li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.videos.index*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Videos
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.videos.index')}}"
+                                class="{{ Route::is('backend.videos.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    All Videos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Templates
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('backend.templates.index')}}"
+                                class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    All Templates
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
