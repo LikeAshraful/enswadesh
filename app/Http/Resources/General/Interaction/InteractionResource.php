@@ -23,6 +23,7 @@ class InteractionResource extends JsonResource
             'user' => $this->user,
             'category'=> $this->category,
             'topic' => $this->topic,
+            'file' => $this->file,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

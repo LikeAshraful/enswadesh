@@ -41,11 +41,14 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::prefix('templates')->namespace('Template')->group(function(){
         Route::get('', [InteractionController::class, 'templates']);
-        Route::post('/create', [InteractionController::class, 'templateStore']);
+        Route::post('/create', [InteractionController::class, 'storeTemplate']);
     });
+
     Route::prefix('videos')->namespace('Video')->group(function(){
         Route::get('', [InteractionController::class, 'videos']);
-        Route::post('/create', [InteractionController::class, 'videoStore']);
+        Route::post('/create', [InteractionController::class, 'storeVideo']);
+        Route::get('/{id}', [InteractionController::class, 'showVideo']);
+        Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
     });
 
 });

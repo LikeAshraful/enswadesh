@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ShopPropertyDatabaseSeeder::class);
         $this->call(GeneralSeeder::class);
         $this->call(OrderPropertySeeder::class);
-        $this->call(TemplateSeeder::class);
-        $this->call(VideosSeeder::class);
         $this->call(InteractionCategorySeeder::class);
         $this->call(InteractionTopicSeeder::class);
         $this->call(InteractionSeeder::class);

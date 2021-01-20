@@ -66,6 +66,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
 
     //interactions
     Route::get('videos/', [InteractionController::class, 'videos'])->name('videos.index');
+    Route::get('videos/{id}', [InteractionController::class, 'showVideo'])->name('videos.show');
     Route::get('templates/', [InteractionController::class, 'templates'])->name('templates.index');
     Route::post('interactions/{id}', [InteractionController::class, 'statusUpdate'])->name('interactions.update');
 

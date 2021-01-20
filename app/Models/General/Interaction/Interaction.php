@@ -28,6 +28,11 @@ class Interaction extends Model
         return $this->belongsTo(InteractionTopic::class, 'topic_id', 'id');
     }
 
+    public function file()
+    {
+        return $this->hasOne(InteractionFile::class);
+    }
+
     //generate slug
     public function setTitleAttribute($value)
     {
