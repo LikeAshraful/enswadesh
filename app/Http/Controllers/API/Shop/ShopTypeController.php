@@ -9,7 +9,7 @@ use Repository\Shop\ShopTypeRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Shop\ShopTypeResource;
 
-class ApiShopTypeController extends Controller
+class ShopTypeController extends Controller
 {
 
     use JsonResponseTrait;

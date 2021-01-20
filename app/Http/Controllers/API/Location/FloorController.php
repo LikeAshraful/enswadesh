@@ -1,37 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\API\General\Menu;
+namespace App\Http\Controllers\API\Location;
 
-use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Http\Request;
+use App\Models\Location\Floor;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
-use App\Http\Resources\General\Menu\AppMenuResource;
-use Repository\General\AppMenuRepository;
+use App\Http\Resources\Location\FloorResource;
 
-class ApiAppMenuController extends Controller
+class FloorController extends Controller
 {
-
-    use JsonResponseTrait;
-
-    public $appMenuRepo;
-
-    public function __construct(AppMenuRepository $appMenuRepository)
-    {
-        $this->appMenuRepo = $appMenuRepository;
-    }
-
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $allMenu = $this->appMenuRepo->getAll();
-        return $this->json(
-            'Menu list',
-            AppMenuResource::collection($allMenu)
-        );
+        return FloorResource::collection(Floor::all());
+        // $status = 200;
+        // $floors = Floor::with('marketPlaceOfFloor')->get();
+        // return response()->json($floors, $status);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+    public function create()
+    {
+        return view('shopproperty::create');
     }
 
     /**
@@ -41,12 +38,17 @@ class ApiAppMenuController extends Controller
      */
     public function store(Request $request)
     {
-        // Todo for validation
-        $appMenu = $this->appMenuRepo->create($request->all());
-        return $this->json(
-            'AppMenu created successfully',
-            $appMenu
-        );
+        //
+    }
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function show($id)
+    {
+        return view('shopproperty::show');
     }
 
     /**

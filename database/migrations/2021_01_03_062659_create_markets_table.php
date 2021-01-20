@@ -15,7 +15,7 @@ class CreateMarketsTable extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->id();
-            $table->integer('thana_id')             ->nullable();
+            $table->integer('area_id')             ->nullable();
             $table->string('market_name')           ->nullable();
             $table->string('market_address')        ->nullable();
             $table->string('market_description')    ->nullable();

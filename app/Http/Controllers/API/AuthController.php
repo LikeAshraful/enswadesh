@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\RegistrationConfirmationEmail;
 
-class ApiAuthController extends Controller
+class AuthController extends Controller
 {
     // login system with api
     public function login(Request $request)

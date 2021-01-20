@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Location\Area;
-use App\Models\Location\City;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Repository\Location\AreaRepository;
+use Repository\Location\CityRepository;
 
 class AreaController extends Controller
 {
+    public $areaRepo;
+    public $cityRepo;
+
+    public function __construct(AreaRepository $areaRepository, CityRepository $cityRepository)
+    {
+        $this->areaRepo = $areaRepository;
+        $this->cityRepo = $cityRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -20,8 +27,7 @@ class AreaController extends Controller
     {
         //Define Area authorize gate
         Gate::authorize('backend.areas.index');
-
-        $areas = Area::with('cityOfArea')->get();
+        $areas = $this->areaRepo->getAll();
         return view('backend.location.area.index',  compact('areas'));
     }
 
@@ -33,8 +39,7 @@ class AreaController extends Controller
     {
         //Define Area authorize gate
         Gate::authorize('backend.areas.create');
-
-        $cities = City::all();
+        $cities = $this->cityRepo->getAll();
         return view('backend.location.area.form', compact('cities'));
     }
 
@@ -48,20 +53,13 @@ class AreaController extends Controller
         $request->validate([
             'area_name' => 'required',
             'area_description' => 'required',
-            //'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        if ($area_icon = $request->file('area_icon')) {
-            $filename = rand(10, 100) . time() . '.' . $area_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/area/' . $filename);
-            Image::make($area_icon)->resize(600, 400)->save($location);
-        }
-
-        $slug = Str::of($request->area_name)->slug('_');
-        Area::create($request->except('area_icon', 'area_slug') +
+        $area_icon = $request->hasFile('area_icon') ? $this->areaRepo->storeFile($request->file('area_icon')) : null;
+        $this->areaRepo->create($request->except('area_icon') +
             [
-                'area_icon' => $filename,
-                'area_slug' => $slug
+                'area_icon' => $area_icon
             ]);
 
         notify()->success('Area Successfully Added.', 'Added');
@@ -88,8 +86,8 @@ class AreaController extends Controller
         //Define Area authorize gate
         Gate::authorize('backend.areas.edit');
 
-        $cities = City::all();
-        $area = area::find($id);
+        $cities = $this->cityRepo->getAll();
+        $area = $this->areaRepo->findByID($id);
         return view('backend.location.area.form', compact('area', 'cities'));
     }
 
@@ -101,29 +99,21 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Area::find($id);
-        $area_icon = $data->area_icon;
-        if (!empty($request->area_name)) {
-            $slug = Str::of($request->area_name)->slug('_');
-        } else {
-            $slug = $data->area_slug;
+        $area = $this->areaRepo->findByID($id);
+
+        $areaIcon = $request->hasFile('area_icon');
+
+        $area_icon = $areaIcon ? $this->areaRepo->storeFile($request->file('area_icon')) : $area->area_icon;
+
+        if ($areaIcon) {
+            $this->areaRepo->updateArea($id);
         }
 
-        if ($image = $request->file('area_icon')) {
-            $area_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/area/' . $area_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->area_icon;
-            $data->area_icon = $area_icon;
-            Storage::delete('/uploads/shopproperty/area/' . $oldFilenamec);
-        }
-
-        // area info update
-        $data = $data->update($request->except('area_slug', 'area_icon') +
+        $this->areaRepo->updateByID($id, $request->except('area_icon') +
             [
-                'area_slug' => $slug,
                 'area_icon' => $area_icon
             ]);
+
 
         notify()->success('area Successfully Updated.', 'Updated');
         return redirect()->route('backend.areas.index');
@@ -139,10 +129,8 @@ class AreaController extends Controller
         //Define Area authorize gate
         Gate::authorize('backend.areas.destroy');
 
-        $data = Area::find($id);
-        $oldFilename = $data->area_icon;
-        Storage::delete('/uploads/shopproperty/area/' . $oldFilename);
-        $data->delete();
+        $this->areaRepo->deleteArea($id);
+        notify()->warning('Area Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.areas.index');
     }
 }
