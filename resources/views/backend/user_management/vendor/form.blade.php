@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','User')
+@section('title','Vendor')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
@@ -20,11 +20,11 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' User') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Vendor') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
-                <a href="{{ route('backend.admin.index') }}" class="btn-shadow btn btn-danger">
+                <a href="{{ route('backend.vendor.index') }}" class="btn-shadow btn btn-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-arrow-circle-left fa-w-20"></i>
                     </span>
@@ -37,8 +37,8 @@
 
 <div class="row">
     <div class="col-12">
-        <form role="form" id="adminFrom" method="POST"
-            action="{{ isset($user) ? route('backend.admin.update',$user->id) : route('backend.admin.store') }}"
+        <form role="form" id="vendorFrom" method="POST"
+            action="{{ isset($user) ? route('backend.vendor.update',$user->id) : route('backend.vendor.store') }}"
             enctype="multipart/form-data" file="true">
             @csrf
             @if (isset($user))
@@ -48,7 +48,7 @@
                 <div class="col-md-8">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">User Info</h5>
+                            <h5 class="card-title">Vendor Info</h5>
                             <x-forms.textbox label="Name" name="name" value="{{ $user->name ?? ''  }}"
                                 field-attributes="required autofocus">
                             </x-forms.textbox>
@@ -71,17 +71,17 @@
                             <h5 class="card-title">Select Role and Status</h5>
 
                             <x-forms.select label="Select Role" name="role" class="select js-example-basic-single">
-                                @foreach($roles as $key=>$role)
+
                                 <x-forms.select-item :value="$role->id" :label="$role->name"
                                     :selected="$user->role->id ?? null" />
-                                @endforeach
+
                             </x-forms.select>
 
                             <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
                                 value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
 
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
-                                on-click="resetForm('adminFrom')" />
+                                on-click="resetForm('vendorFrom')" />
 
                             @isset($user)
                             <x-forms.button type="submit" label="Update" icon-class="fas fa-arrow-circle-up" />

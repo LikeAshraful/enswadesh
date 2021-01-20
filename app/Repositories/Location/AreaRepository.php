@@ -7,6 +7,7 @@ use App\Models\Location\Area;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Collection;
 
 class AreaRepository extends BaseRepository
 {
@@ -16,7 +17,7 @@ class AreaRepository extends BaseRepository
         return Area::class;
     }
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->model()::with('cities')->get();
     }

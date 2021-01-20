@@ -7,6 +7,7 @@ use Repository\BaseRepository;
 use App\Models\Location\Market;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Collection;
 
 class MarketRepository extends BaseRepository
 {
@@ -16,7 +17,7 @@ class MarketRepository extends BaseRepository
         return Market::class;
     }
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->model()::with('areas')->get();
     }

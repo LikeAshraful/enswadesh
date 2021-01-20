@@ -12,35 +12,19 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         Gate::authorize('backend.profile.update');
         return view('backend.profile.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateProfileRequest $request)
     {
-        // Get logged in user
         $user = Auth::user();
-        // Update user info
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
         ]);
-        
-        // return with success msg
         notify()->success('Profile Successfully Updated.', 'Updated');
         return redirect()->back();
     }

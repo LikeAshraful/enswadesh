@@ -36,10 +36,10 @@ Route::prefix('orders')->namespace('Order')->group(function(){
 
 Route::group(['middleware' => 'auth:'], function () {
     Route::get('/users', [AuthController::class, 'dusers']);
+
     // shop related
     Route::get('/shops', [ShopController::class, 'index']);
     Route::post('/shops', [ShopController::class, 'store']);
-    //Route::put('/shops', [ShopController::class, 'update']);
 });
 
 Route::prefix('templates')->namespace('Template')->group(function(){

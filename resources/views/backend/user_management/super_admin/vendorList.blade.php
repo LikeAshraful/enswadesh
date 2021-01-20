@@ -14,19 +14,7 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __('All Users') }}</div>
-        </div>
-        <div class="page-title-actions">
-            <div class="d-inline-block dropdown">
-                @canany('backend.super-admin.create')
-                <a href="{{ route('backend.super-admin.create') }}" class="btn-shadow btn btn-info">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fas fa-plus-circle fa-w-20"></i>
-                    </span>
-                    {{ __('Create User') }}
-                </a>
-                @endcanany
-            </div>
+            <div>{{ __('All Vendors') }}</div>
         </div>
     </div>
 </div>
@@ -47,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $key=>$user)
+                        @foreach($vendors as $key=>$vendor)
                         <tr>
                             <td class="text-center text-muted">#{{ $key + 1 }}</td>
                             <td>
@@ -56,15 +44,15 @@
                                         <div class="widget-content-left mr-3">
                                             <div class="widget-content-left">
                                                 <img class="img-fluid img-thumbnail"
-                                                    src="{{ asset('uploads/users/'.$user->image) }}" width="50"
-                                                    height="50" alt="" alt="{{ $user->name}}">
+                                                    src="{{ asset('uploads/users/'.$vendor->image) }}" width="50"
+                                                    height="50" alt="" alt="{{ $vendor->name}}">
                                             </div>
                                         </div>
                                         <div class="widget-content-left flex2">
-                                            <div class="widget-heading">{{ $user->name }}</div>
+                                            <div class="widget-heading">{{ $vendor->name }}</div>
                                             <div class="widget-subheading opacity-7">
-                                                @if ($user->role)
-                                                <span class="badge badge-info">{{ $user->role->name }}</span>
+                                                @if ($vendor->role)
+                                                <span class="badge badge-info">{{ $vendor->role->name }}</span>
                                                 @else
                                                 <span class="badge badge-danger">No role found :(</span>
                                                 @endif
@@ -73,11 +61,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">{{ $user->email }}</td>
-
+                            <td class="text-center">{{ $vendor->email }}</td>
                             <td class="text-center">
-                                @if($user->status === 1)
-                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
+                                @if($vendor->status === 1)
+                                <form action="{{ route('backend.users.publish', $vendor->id) }}" method="post">
                                     @csrf
                                     @method('POST')
                                     <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">
@@ -85,7 +72,7 @@
                                     </button>
                                 </form>
                                 @else
-                                <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
+                                <form action="{{ route('backend.users.publish', $vendor->id) }}" method="post">
                                     @csrf
                                     @method('POST')
                                         <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
@@ -96,8 +83,8 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if($user->suspend === 1)
-                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
+                                @if($vendor->suspend === 1)
+                                <form action="{{ route('backend.users.blocked', $vendor->id) }}" method="post">
                                     @csrf
                                     @method('POST')
                                     <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
@@ -105,7 +92,7 @@
                                     </button>
                                 </form>
                                 @else
-                                <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
+                                <form action="{{ route('backend.users.blocked', $vendor->id) }}" method="post">
                                     @csrf
                                     @method('POST')
                                         <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
@@ -115,19 +102,19 @@
                                 </form>
                                 @endif
                             </td>
-                            <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
+                            <td class="text-center">{{ $vendor->created_at->diffForHumans() }}</td>
                             <td class="text-center">
-                                <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$user->id) }}"><i
+                                <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$vendor->id) }}"><i
                                         class="fas fa-eye"></i>
                                 </a> |
-                                <a class="fa-edit-style" href="{{ route('backend.super-admin.edit',$user->id) }}"><i
+                                <a class="fa-edit-style" href="{{ route('backend.super-admin.edit',$vendor->id) }}"><i
                                         class="fas fa-edit"></i>
                                 </a> |
-                                <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})">
+                                <button type="button" class="delete-btn-style" onclick="deleteData({{ $vendor->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
-                                <form id="delete-form-{{ $user->id }}"
-                                    action="{{ route('backend.super-admin.destroy',$user->id) }}" method="POST"
+                                <form id="delete-form-{{ $vendor->id }}"
+                                    action="{{ route('backend.super-admin.destroy',$vendor->id) }}" method="POST"
                                     style="display: none;">
                                     @csrf()
                                     @method('DELETE')
