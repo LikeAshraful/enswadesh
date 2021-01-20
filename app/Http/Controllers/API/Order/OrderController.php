@@ -8,7 +8,7 @@ use Repository\Order\OrderRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Order\OrderResource;
 
-class ApiOrderController extends Controller
+class OrderController extends Controller
 {
     use JsonResponseTrait;
 

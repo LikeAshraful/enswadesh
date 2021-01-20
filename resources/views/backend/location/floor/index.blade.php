@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                             <th scope="col">#</th>
-                            <th scope="col">City</th>
+                            <th scope="col">Market</th>
                             <th scope="col">Floor No</th>
                             <th scope="col">Floor Note</th>
                             <th scope="col">Action</th>
@@ -46,7 +46,7 @@
                             @foreach($floors as $key => $floor)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $floor->marketPlaceOfFloor ? $floor->marketPlaceOfFloor->market_name : 'Not Found' }}</td>
+                                <td>{{ $floor->markets ? $floor->markets->market_name : 'Not Found' }}</td>
                                 <td>{{ $floor->floor_no }}</td>
                                 <td>{{ $floor->floor_note }}</td>
                                 <td>

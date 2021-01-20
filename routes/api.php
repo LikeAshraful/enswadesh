@@ -1,59 +1,54 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ApiAuthController;
-use App\Http\Controllers\API\Shop\ApiShopController;
-use App\Http\Controllers\API\Order\ApiOrderController;
-use App\Http\Controllers\API\Location\ApiAreaController;
-use App\Http\Controllers\API\Location\ApiCityController;
-use App\Http\Controllers\API\Shop\ApiShopTypeController;
-use App\Http\Controllers\API\Location\ApiFloorController;
-use App\Http\Controllers\API\Location\ApiThanaController;
-use App\Http\Controllers\API\Location\ApiMarketController;
-use App\Http\Controllers\Api\UserManagement\VendorController;
-use App\Http\Controllers\API\General\Menu\ApiAppMenuController;
-use App\Http\Controllers\API\General\ApiTemplateController;
-use App\Http\Controllers\API\General\Video\ApiVideoController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\Shop\ShopController;
+use App\Http\Controllers\API\Order\OrderController;
+use App\Http\Controllers\API\Location\AreaController;
+use App\Http\Controllers\API\Location\CityController;
+use App\Http\Controllers\API\Shop\ShopTypeController;
+use App\Http\Controllers\API\Location\FloorController;
+use App\Http\Controllers\API\Location\ThanaController;
+use App\Http\Controllers\API\Location\MarketController;
+use App\Http\Controllers\Backend\General\VideoController;
+use App\Http\Controllers\API\General\Menu\AppMenuController;
+use App\Http\Controllers\Backend\General\TemplateController;
 
 
-Route::post('/login', [ApiAuthController::class, 'login']);
-Route::post('/register', [ApiAuthController::class, 'register']);
-// Route::apiResource('vendor', [VendorController::class]);
-Route::get('vendor', [VendorController::class, 'index']);
-Route::post('vendor', [VendorController::class, 'store']);
-Route::get('vendor/{vendor}', [VendorController::class, 'show']);
-Route::put('vendor/{vendor}', [VendorController::class, 'update']);
-Route::delete('vendor/{vendor}', [VendorController::class, 'destroy']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 
-Route::get('/menus', [ApiAppMenuController::class, 'index']);
-Route::get('/cities', [ApiCityController::class, 'index']);
-Route::get('/areas', [ApiAreaController::class, 'index']);
-Route::get('/thanas', [ApiThanaController::class, 'index']);
-Route::get('/markets', [ApiMarketController::class, 'index']);
-Route::get('/floors', [ApiFloorController::class, 'index']);
-Route::get('/shops-type', [ApiShopTypeController::class, 'index']);
-Route::get('/shop-types', [ApiShopTypeController::class, 'index']);
-Route::get('/shops', [ApiShopController::class, 'index']);
+Route::get('/menus', [AppMenuController::class, 'index']);
+Route::get('/cities', [CityController::class, 'index']);
+Route::get('/areas', [AreaController::class, 'index']);
+Route::get('/thanas', [ThanaController::class, 'index']);
+Route::get('/markets', [MarketController::class, 'index']);
+Route::get('/floors', [FloorController::class, 'index']);
+Route::get('/shop-types', [ShopTypeController::class, 'index']);
 
 Route::prefix('orders')->namespace('Order')->group(function(){
-    Route::get('', [ApiOrderController::class, 'index']);
-    Route::get('self/{id}', [ApiOrderController::class, 'selfOrder']);
-    Route::get('{id}', [ApiOrderController::class, 'show']);
-    Route::post('', [ApiOrderController::class, 'store']);
+    Route::get('', [OrderController::class, 'index']);
+    Route::get('self/{id}', [OrderController::class, 'selfOrder']);
+    Route::get('{id}', [OrderController::class, 'show']);
+    Route::post('', [OrderController::class, 'store']);
 });
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/users', [ApiAuthController::class, 'dusers']);
+Route::group(['middleware' => 'auth:'], function () {
+    Route::get('/users', [AuthController::class, 'dusers']);
+
+    // shop related
+    Route::get('/shops', [ShopController::class, 'index']);
+    Route::post('/shops', [ShopController::class, 'store']);
 });
 
 Route::prefix('templates')->namespace('Template')->group(function(){
-    Route::get('', [ApiTemplateController::class, 'index']);
-    Route::get('{id}', [ApiTemplateController::class, 'show']);
-    Route::post('', [ApiTemplateController::class, 'store']);
+    Route::get('', [TemplateController::class, 'index']);
+    Route::get('{id}', [TemplateController::class, 'show']);
+    Route::post('', [TemplateController::class, 'store']);
 });
 
 Route::prefix('videos')->namespace('Video')->group(function(){
-    Route::get('', [ApiVideoController::class, 'index']);
-    Route::get('{id}', [ApiVideoController::class, 'show']);
+    Route::get('', [VideoController::class, 'index']);
+    Route::get('{id}', [VideoController::class, 'show']);
 });

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ApiAuthController extends Controller
+class AuthController extends Controller
 {
     // login system with api
     public function login(Request $request)

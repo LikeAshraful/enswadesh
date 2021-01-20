@@ -45,7 +45,7 @@
                     @endif
                     <div class="form-group">
                     <label for="area_name">Area Name</label>
-                    <input type="text" id="area_name" name="area_name" class="form-control @error('area_name') is-invalid @enderror" value="{{ isset($area) ? $area->area_name : '' }}"  placeholder="area name">
+                    <input type="text" id="area_name" name="area_name" class="form-control @error('area_name') is-invalid @enderror" value="{{ isset($area) ? $area->area_name : '' }}"  placeholder="Area name">
                     @error('area_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -77,11 +77,11 @@
                     </div>
                     <div class="form-group">
                     <label for="area_description">area Description</label>
-                    <input type="text" id="area_description" name="area_description" class="form-control" value="{{ isset($area) ? $area->area_description : '' }}" placeholder="area Description">
+                    <input type="text" id="area_description" name="area_description" class="form-control" value="{{ isset($area) ? $area->area_description : '' }}" placeholder="Area Description">
                     </div>
                     <div class="form-group">
                     <label for='area_icon'>area Icon</label>
-                    <input type="file" id="area_icon" name="area_icon" class="dropify" data-default-file="{{ isset($area) ? asset('/uploads/shopproperty/area/'. $area->area_icon): '' }}" data-height="220" value="{{ isset($area) ? asset('/uploads/shopproperty/area/'. $area->area_icon): '' }}" />
+                    <input type="file" id="area_icon" name="area_icon" class="dropify" data-default-file="{{ isset($area) ? asset($area->area_icon): '' }}" data-height="220" value="{{ isset($area) ? asset($area->area_icon): '' }}" />
                     @error('area_icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>

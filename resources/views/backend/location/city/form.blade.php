@@ -65,9 +65,9 @@
                     <div class="form-group">
                         <label for='city_icon'>City Icon</label>
                         <input type="file" id="city_icon" name="city_icon" class="dropify"
-                            data-default-file="{{ isset($city) ? asset('/uploads/shopproperty/city/'. $city->city_icon): '' }}"
+                            data-default-file="{{ isset($city) ? asset($city->city_icon): '' }}"
                             data-height="220"
-                            value="{{ isset($city) ? asset('/uploads/shopproperty/city/'. $city->city_icon): '' }}" />
+                            value="{{ isset($city) ? asset($city->city_icon): '' }}" />
                         @error('city_icon')
                         <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>

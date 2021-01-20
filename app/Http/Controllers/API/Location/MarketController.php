@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API\Location;
 
 use Illuminate\Http\Request;
-use App\Models\Location\Floor;
+use App\Models\Location\Market;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
-use App\Http\Resources\Location\FloorResource;
+use App\Http\Resources\Location\MarketResource;
 
-class ApiFloorController extends Controller
+class MarketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class ApiFloorController extends Controller
      */
     public function index()
     {
-        return FloorResource::collection(Floor::all());
+        return MarketResource::collection(Market::all());
         // $status = 200;
-        // $floors = Floor::with('marketPlaceOfFloor')->get();
-        // return response()->json($floors, $status);
+        // $markets = Market::with('thanaOfMarket')->get();
+        // return response()->json($markets, $status);
     }
 
     /**

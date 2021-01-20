@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\ThanaResource;
 
-class ApiThanaController extends Controller
+class ThanaController extends Controller
 {
     /**
      * Display a listing of the resource.
