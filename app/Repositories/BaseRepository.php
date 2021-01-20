@@ -2,13 +2,13 @@
 namespace Repository;
 
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Collection\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 Abstract class BaseRepository {
 
     abstract function model();
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->model()::all();
     }

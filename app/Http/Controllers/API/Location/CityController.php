@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\API\Shop;
+namespace App\Http\Controllers\API\Location;
 
-use App\Models\Shop\Shop;
 use Illuminate\Http\Request;
+use App\Models\Location\City;
 use Illuminate\Routing\Controller;
-use App\Http\Resources\Shop\ShopResource;
 use Illuminate\Contracts\Support\Renderable;
+use App\Http\Resources\Location\CityResource;
 
-class ApiShopController extends Controller
+class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,11 @@ class ApiShopController extends Controller
      */
     public function index()
     {
-        return ShopResource::collection(Shop::all());
+
+        return CityResource::collection(City::all());
         // $status = 200;
-        // $shops = Shop::all();
-        // return response()->json($shops, $status);
+        // $cities = City::all();
+        // return response()->json($cities, $status);
     }
 
     /**

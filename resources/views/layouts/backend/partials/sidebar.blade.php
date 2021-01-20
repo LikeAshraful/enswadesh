@@ -109,12 +109,12 @@
                                 </a>
                             </li>
                         @endcanany
-                        <li>
+                        {{-- <li>
                             <a href="{{route('backend.thanas.index')}}" class="{{ Route::is('backend.thanas.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Thana
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{route('backend.markets.index')}}" class="{{ Route::is('backend.markets.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>

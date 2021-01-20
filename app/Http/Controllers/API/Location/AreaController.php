@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API\Location;
 
 use Illuminate\Http\Request;
-use App\Models\Location\Market;
+use App\Models\Location\Area;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
-use App\Http\Resources\Location\MarketResource;
+use App\Http\Resources\Location\AreaResource;
 
-class ApiMarketController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class ApiMarketController extends Controller
      */
     public function index()
     {
-        return MarketResource::collection(Market::all());
+        return AreaResource::collection(Area::all());
         // $status = 200;
-        // $markets = Market::with('thanaOfMarket')->get();
-        // return response()->json($markets, $status);
+        // $areas = Area::with('cityOfArea')->get();
+        // return response()->json($areas, $status);
     }
 
     /**

@@ -14,7 +14,7 @@ class Area extends Model
     public function setAreaNameAttribute($value)
     {
         $this->attributes['area_name'] = $value;
-        $this->attributes['area_slug'] = Str::of($value)->slug('_');
+        $this->attributes['area_slug'] = Str::of($value)->slug('-');
     }
 
     public function cities()

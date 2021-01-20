@@ -15,7 +15,7 @@ class Market extends Model
     public function setMarketNameAttribute($value)
     {
         $this->attributes['market_name'] = $value;
-        $this->attributes['market_slug'] = Str::of($value)->slug('_');
+        $this->attributes['market_slug'] = Str::of($value)->slug('-');
     }
 
     public function areas() {

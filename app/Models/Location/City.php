@@ -15,6 +15,6 @@ class City extends Model
     public function setCityNameAttribute($value)
     {
         $this->attributes['city_name'] = $value;
-        $this->attributes['city_slug'] = Str::of($value)->slug('_');
+        $this->attributes['city_slug'] = Str::of($value)->slug('-');
     }
 }

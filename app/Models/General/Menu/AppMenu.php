@@ -15,6 +15,6 @@ class AppMenu extends Model
     public function setMenuNameAttribute($value)
     {
         $this->attributes['menu_name'] = $value;
-        $this->attributes['menu_slug'] = Str::of($value)->slug('_');
+        $this->attributes['menu_slug'] = Str::of($value)->slug('-');
     }
 }
