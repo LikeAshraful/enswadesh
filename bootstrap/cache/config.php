@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Enswadesh',
+    'name' => 'ENSWADESH',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -11,7 +11,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:3vcJKqY0fZEQ1ntGX3m1YFzQxPeYePF5QgE8NPQvxQw=',
+    'key' => 'base64:HnZOdW2gKVvrSiy88WE2wGopmAE2JFemNncMCulO4Ds=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -189,7 +189,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -349,18 +349,18 @@
   ),
   'filesystems' => 
   array (
-    'default' => 'local',
+    'default' => 'public',
     'disks' => 
     array (
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\public',
+        'root' => 'C:\\xampp\\htdocs\\enswadesh\\public',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -377,7 +377,7 @@
     ),
     'links' => 
     array (
-      'D:\\Rana\\xampp\\htdocs\\enswadesh\\public\\storage' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\app/public',
+      'C:\\xampp\\htdocs\\enswadesh\\public\\storage' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -432,13 +432,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -488,7 +488,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -500,11 +500,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'mailhog',
-        'port' => '1025',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'host' => 'smtp.sendgrid.net',
+        'port' => '587',
+        'encryption' => 'tls',
+        'username' => 'apikey',
+        'password' => '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',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -537,15 +537,15 @@
     ),
     'from' => 
     array (
-      'address' => NULL,
-      'name' => 'Enswadesh',
+      'address' => 'eftear.galib@gmail.com',
+      'name' => 'ENSWADESH',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\enswadesh\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -555,7 +555,7 @@
     'stubs' => 
     array (
       'enabled' => false,
-      'path' => 'D:\\Rana\\xampp\\htdocs\\enswadesh/vendor/nwidart/laravel-modules/src/Commands/stubs',
+      'path' => 'C:\\xampp\\htdocs\\enswadesh/vendor/nwidart/laravel-modules/src/Commands/stubs',
       'files' => 
       array (
         'routes/web' => 'Routes/web.php',
@@ -619,9 +619,9 @@
     ),
     'paths' => 
     array (
-      'modules' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\Modules',
-      'assets' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\public\\modules',
-      'migration' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\database/migrations',
+      'modules' => 'C:\\xampp\\htdocs\\enswadesh\\Modules',
+      'assets' => 'C:\\xampp\\htdocs\\enswadesh\\public\\modules',
+      'migration' => 'C:\\xampp\\htdocs\\enswadesh\\database/migrations',
       'generator' => 
       array (
         'config' => 
@@ -810,7 +810,7 @@
       'enabled' => false,
       'paths' => 
       array (
-        0 => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\vendor/*/*',
+        0 => 'C:\\xampp\\htdocs\\enswadesh\\vendor/*/*',
       ),
     ),
     'composer' => 
@@ -839,7 +839,7 @@
       'file' => 
       array (
         'class' => 'Nwidart\\Modules\\Activators\\FileActivator',
-        'statuses-file' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\modules_statuses.json',
+        'statuses-file' => 'C:\\xampp\\htdocs\\enswadesh\\modules_statuses.json',
         'cache-key' => 'activator.installed',
         'cache-lifetime' => 604800,
       ),
@@ -939,7 +939,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -959,9 +959,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\enswadesh\\resources\\views',
     ),
-    'compiled' => 'D:\\Rana\\xampp\\htdocs\\enswadesh\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\enswadesh\\storage\\framework\\views',
   ),
   'flare' => 
   array (

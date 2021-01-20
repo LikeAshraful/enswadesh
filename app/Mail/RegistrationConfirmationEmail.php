@@ -32,15 +32,15 @@ class RegistrationConfirmationEmail extends Mailable
     public function build()
     {
         $address    = 'eftear.galib@gmail.com';
-        $subject    = 'Congratulations and Welcome to Success Team and Our Family';
-        $name       = 'Eftear Galib';
+        $subject    = 'Congratulations and Welcome to ENSWADESH Team and Our Family';
+        $name       = 'Muhammad Sanwarul Islam';
 
         return $this->view('emails.registration_confirmation_mail')
                     ->from($address, $name)
                     ->replyTo($address, $name)
                     ->subject($subject)
-                    ->with([ 'registration_confirmation_mail' => isset($this->data['messagekk']) ? 
-                                                                $this->data['messagekk'] : ''
+                    ->with([ 'registration_confirmation_mail' => isset($this->data['confirm_message']) ? 
+                                                                $this->data['confirm_message'] : ''
                      ]);
     }
     

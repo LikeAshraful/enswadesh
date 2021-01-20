@@ -7,16 +7,29 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Repository\User\API\VendorRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Vendor\VendorResource;
 use App\Http\Resources\Vendor\VendorResourceCollection;
 
 class VendorController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $vendorRepo;
+    
+    public function __construct(VendorRepository $vendorRepository)
+    {
+        $this->vendorRepo = $vendorRepository;
+    }
+
     public function index()
     {
-        $roles      = Role::where('slug','=','vendor')->first();
-        $vendors    = User::where('role_id',$roles->id)->get();
-        return (new VendorResourceCollection($vendors))->response();
+        $vendors = $this->vendorRepo->getAll();
+        return $this->json(
+            'Vendor list',
+            VendorResource::collection($vendors)
+        );
     }
 
     public function store(Request $request)
