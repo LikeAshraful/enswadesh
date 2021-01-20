@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers\Backend\General\Menu;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\General\Menu\AppMenu;
+use Repository\General\AppMenuRepository;
 
 class AppMenuController extends Controller
 {
+    public $appMenuRepo;
+
+    public function __construct(AppMenuRepository $appMenuRepository)
+    {
+        $this->appMenuRepo = $appMenuRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $appmenus = AppMenu::all();
+        $appmenus = $this->appMenuRepo->getAll();
         return view('backend.general.menu.appmenu.index',  compact('appmenus'));
     }
 
@@ -43,19 +47,10 @@ class AppMenuController extends Controller
             'menu_icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        if ($menu_icon = $request->file('menu_icon')) {
-            $filename = rand(10, 100) . time() . '.' . $menu_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/menus/' . $filename);
-            Image::make($menu_icon)->resize(600, 400)->save($location);
-        }
-        // $this->storeImage($request->file('menu_icon'));
-
-
-        $slug = Str::of($request->menu_name)->slug('_');
-        AppMenu::create($request->except('menu_icon', 'menu_slug') +
+        $menu_icon = $request->hasFile('menu_icon') ? $this->appMenuRepo->storeFile($request->file('menu_icon')) : null;
+        $this->appMenuRepo->create($request->except('menu_icon') +
             [
-                'menu_icon' => $filename,
-                'menu_slug' => $slug
+                'menu_icon' => $menu_icon
             ]);
 
         notify()->success('App Menu Successfully Added.', 'Added');
@@ -67,14 +62,6 @@ class AppMenuController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function storeImage($menu_icon)
-    {
-        if ($menu_icon) {
-            $filename = rand(10, 100) . time() . '.' . $menu_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/menus/' . $filename);
-            Image::make($menu_icon)->resize(600, 400)->save($location);
-        }
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -83,7 +70,7 @@ class AppMenuController extends Controller
      */
     public function edit($id)
     {
-        $menu = AppMenu::find($id);
+        $menu = $this->appMenuRepo->findByID($id);
         return view('backend.general.menu.appmenu.form', compact('menu'));
     }
 
@@ -95,48 +82,24 @@ class AppMenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($request->file('menu_icon'));
-        $data = AppMenu::find($id);
-        $menu_icon = $data->menu_icon;
-        if (!empty($request->menu_name)) {
-            $slug = Str::of($request->menu_name)->slug('_');
-        } else {
-            $slug = $data->menu_slug;
+
+        $data = $this->appMenuRepo->findByID($id);
+
+        $menuIcon = $request->hasFile('menu_icon');
+
+        $menu_icon = $menuIcon ? $this->appMenuRepo->storeFile($request->file('menu_icon')) : $data->menu_icon;
+
+        if ($menuIcon) {
+            $this->appMenuRepo->updateMenu($id);
         }
 
-        // if ($image = $request->file('menu_icon')) {
-        //     $menu_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-        //     $locationc = public_path('/uploads/shopproperty/menus/' . $menu_icon);
-        //     Image::make($image)->resize(600, 400)->save($locationc);
-        //     $oldFilenamec = $data->menu_icon;
-        //     $data->menu_icon = $menu_icon;
-        //     Storage::delete('/uploads/shopproperty/menus/' . $oldFilenamec);
-        // }
-
-        $this->updateImage($request->file('menu_icon'), $data);
-        // AppMenu info update
-        $data = $data->update($request->except('menu_slug', 'menu_icon') +
+        $this->appMenuRepo->updateByID($id, $request->except('menu_icon') +
             [
-                'menu_slug' => $slug,
                 'menu_icon' => $menu_icon
             ]);
 
         notify()->success('App Menu Successfully Updated.', 'Updated');
         return redirect()->route('backend.menus.index');
-    }
-
-
-    public function updateImage($image, $data)
-    {
-        if ($image) {
-            $menu_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/menus/' . $menu_icon);
-            //dd($locationc);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->menu_icon;
-            $data->menu_icon = $menu_icon;
-            Storage::delete('/uploads/shopproperty/menus/' . $oldFilenamec);
-        }
     }
 
     /**
@@ -146,10 +109,8 @@ class AppMenuController extends Controller
      */
     public function destroy($id)
     {
-        $data = AppMenu::find($id);
-        $oldFilename = $data->menu_icon;
-        Storage::delete('/uploads/shopproperty/menus/' . $oldFilename);
-        $data->delete();
+        $this->appMenuRepo->deleteMenu($id);
+        notify()->warning('App Menu Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.menus.index');
     }
 }

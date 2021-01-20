@@ -36,9 +36,9 @@
                         <thead>
                             <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Shop Owner</th>
                             <th scope="col">City</th>
                             <th scope="col">Area</th>
-                            <th scope="col">Thana</th>
                             <th scope="col">Market</th>
                             <th scope="col">Floor</th>
                             <th scope="col">Shop</th>
@@ -53,11 +53,11 @@
                             @foreach($shops as $key => $shop)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $shop->cityOfShop ? $shop->cityOfShop->city_name : 'Not Found' }}</td>
-                                <td>{{ $shop->areaOfShop ? $shop->areaOfShop->area_name : 'Not Found' }}</td>
-                                <td>{{ $shop->thanaOfshop ? $shop->thanaOfshop->thana_name : 'Not Found' }}</td>
-                                <td>{{ $shop->marketOfShop ? $shop->marketOfShop->market_name : 'Not Found' }}</td>
-                                <td>{{ $shop->floorOfShop ? $shop->floorOfShop->floor_note : 'Not Found' }}</td>
+                                <td>{{ $shop->shopOwner ? $shop->shopOwner->name : 'Not Found' }}</td>
+                                <td>{{ $shop->city ? $shop->city->city_name : 'Not Found' }}</td>
+                                <td>{{ $shop->area ? $shop->area->area_name : 'Not Found' }}</td>
+                                <td>{{ $shop->market ? $shop->market->market_name : 'Not Found' }}</td>
+                                <td>{{ $shop->floor ? $shop->floor->floor_note : 'Not Found' }}</td>
                                 <td>{{ $shop->shop_name }}</td>
                                 <td>{{ $shop->shop_no }}</td>
                                 <td>{{ $shop->shop_slug }}</td>

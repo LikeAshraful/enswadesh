@@ -14,43 +14,24 @@ use Inertia\Inertia;
 
 class SettingController extends Controller
 {
-    /**
-     * Show General Settings Page
-     * @return \Illuminate\View\View
-     */
     public function index()
     {
         return view('backend.settings.general');
     }
 
-    /**
-     * Update General Settings
-     * @param UpdateGeneralSettingsRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(UpdateGeneralSettingsRequest $request)
     {
-        Setting::updateSettings($request->validated());
-        // Update .env file
+        Setting::updateSettings($request->all());
         Artisan::call("env:set APP_NAME='". $request->site_title ."'");
         notify()->success('Settings Successfully Updated.','Success');
         return back();
     }
 
-    /**
-     * Show Appearance Settings Page
-     * @return \Illuminate\View\View
-     */
     public function appearance()
     {
         return view('backend.settings.appearance');
     }
 
-    /**
-     * Update Appearance
-     * @param UpdateAppearanceRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function updateAppearance(UpdateAppearanceRequest $request)
     {
         if ($request->hasFile('site_logo')) {
@@ -65,32 +46,19 @@ class SettingController extends Controller
         return back();
     }
 
-    /**
-     * Delete old logos from storage
-     * @param $path
-     */
     private function deleteOldLogo($path)
     {
-        Storage::disk('public')->delete($path);
+        return Storage::delete($path);
     }
 
-    /**
-     * Show Mail Settings Page
-     * @return \Illuminate\View\View
-     */
     public function mail()
     {
         return view('backend.settings.mail');
     }
 
-    /**
-     * Update Mail Settings
-     * @param UpdateMailSettingsRequest $request
-     */
     public function updateMailSettings(UpdateMailSettingsRequest $request)
     {
         Setting::updateSettings($request->validated());
-        // Update .env mail settings
         Artisan::call("env:set MAIL_MAILER      ='". $request->mail_mailer ."'");
         Artisan::call("env:set MAIL_HOST        ='". $request->mail_host ."'");
         Artisan::call("env:set MAIL_PORT        ='". $request->mail_port ."'");
@@ -103,34 +71,20 @@ class SettingController extends Controller
         return back();
     }
 
-    /**
-     * Show Socialite Settings Page
-     * @return \Illuminate\View\View
-     */
     public function socialite()
     {
         return view('backend.settings.socialite');
     }
 
-    /**
-     * Update Socialite Settings
-     *
-     * @param UpdateSocialiteSettingsRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function updateSocialiteSettings(UpdateSocialiteSettingsRequest $request)
     {
         Setting::updateSettings($request->validated());
-        // Update .env file
         Artisan::call("env:set FACEBOOK_CLIENT_ID='". $request->facebook_client_id ."'");
         Artisan::call("env:set FACEBOOK_CLIENT_SECRET='". $request->facebook_client_secret ."'");
-
         Artisan::call("env:set GOOGLE_CLIENT_ID='". $request->google_client_id ."'");
         Artisan::call("env:set GOOGLE_CLIENT_SECRET='". $request->google_client_secret ."'");
-
         Artisan::call("env:set GITHUB_CLIENT_ID='". $request->github_client_id ."'");
         Artisan::call("env:set GITHUB_CLIENT_SECRET='". $request->github_client_secret ."'");
-
         notify()->success('Settings Successfully Updated.','Success');
         return back();
     }
