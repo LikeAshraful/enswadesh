@@ -66,7 +66,7 @@ class ShopController extends Controller
 
         $shop = $this->shopRepo->create($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_owner_id') +
             [
-                'shop_owner_id'         => Auth::user()->id,
+                'shop_owner_id'         => Auth::id(),
                 'shop_logo'             => $shop_logo,
                 'shop_cover_image'      => $shop_cover_image,
                 'meta_og_image_shop'    => $meta_og_image_shop
@@ -85,7 +85,21 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        return view('shopproperty::show');
+        return view();
+    }
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function myShop()
+    {
+        $myShops = $this->shopRepo->getAllByUserID('shop_owner_id', Auth::id());
+        return $this->json(
+            'My Shop list',
+            ShopResource::collection($myShops)
+        );
     }
 
     /**
@@ -95,7 +109,11 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
-        return view('shopproperty::edit');
+        $shop = $this->shopRepo->findOrFailByID($id);
+        return $this->json(
+            'Shop Edit',
+            new ShopResource($shop)
+        );
     }
 
     /**
@@ -106,7 +124,37 @@ class ShopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $shop = $this->shopRepo->updateByShopOwner($id);
+        if ($shop == null) {
+            return $this->bad(
+                'You are unauthorized to update this shop!',
+                403
+            );
+        }
+
+        $shopLogo = $request->hasFile('shop_logo');
+        $shopCoverImage = $request->hasFile('shop_cover_image');
+        $metaImageShop = $request->hasFile('meta_og_image_shop');
+
+        $shop_logo = $shopLogo ? $this->shopRepo->storeFile($request->file('shop_logo')) : $shop->shop_logo;
+        $shop_cover_image = $shopCoverImage ? $this->shopRepo->storeFile($request->file('shop_cover_image')) : $shop->shop_cover_image;
+        $meta_og_image_shop = $metaImageShop ? $this->shopRepo->storeFile($request->file('meta_og_image_shop')) : $shop->meta_og_image_shop;
+
+        if ($shopLogo || $shopCoverImage || $metaImageShop) {
+            $this->shopRepo->updateShops($id);
+        }
+
+        $this->shopRepo->updateByID($id, $request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop') +
+            [
+                'shop_logo' => $shop_logo,
+                'shop_cover_image' => $shop_cover_image,
+                'meta_og_image_shop' => $meta_og_image_shop
+            ]);
+
+        return $this->json(
+            'Shop updated successfully',
+            $shop
+        );
     }
 
     /**

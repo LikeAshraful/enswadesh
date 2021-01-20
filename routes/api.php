@@ -27,19 +27,25 @@ Route::get('/markets', [MarketController::class, 'index']);
 Route::get('/floors', [FloorController::class, 'index']);
 Route::get('/shop-types', [ShopTypeController::class, 'index']);
 
-Route::prefix('orders')->namespace('Order')->group(function(){
-    Route::get('', [OrderController::class, 'index']);
-    Route::get('self/{id}', [OrderController::class, 'selfOrder']);
-    Route::get('{id}', [OrderController::class, 'show']);
-    Route::post('', [OrderController::class, 'store']);
-});
-
-Route::group(['middleware' => 'auth:'], function () {
+Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users', [AuthController::class, 'dusers']);
 
     // shop related
-    Route::get('/shops', [ShopController::class, 'index']);
-    Route::post('/shops', [ShopController::class, 'store']);
+    Route::prefix('shops')->namespace('Shop')->group(function(){
+        Route::get('', [ShopController::class, 'index']);
+        Route::post('', [ShopController::class, 'store']);
+        Route::get('{id}/edit', [ShopController::class, 'edit']);
+        Route::get('self', [ShopController::class, 'myShop']);
+        Route::post('update/{id}', [ShopController::class, 'update']);
+    });
+
+    // oder related
+    Route::prefix('orders')->namespace('Order')->group(function(){
+        Route::get('', [OrderController::class, 'index']);
+        Route::get('self', [OrderController::class, 'selfOrder']);
+        Route::get('{id}', [OrderController::class, 'show']);
+        Route::post('', [OrderController::class, 'store']);
+    });
 });
 
 Route::prefix('templates')->namespace('Template')->group(function(){

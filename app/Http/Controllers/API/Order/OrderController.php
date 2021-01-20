@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Order;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Repository\Order\OrderRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Order\OrderResource;
@@ -110,8 +111,8 @@ class OrderController extends Controller
         //
     }
 
-    public function selfOrder($id) {
-        $selfOrders = $this->orderRepo->getAllByCustomerID($id);
+    public function selfOrder() {
+        $selfOrders = $this->orderRepo->getAllByUserID('customer_id', Auth::id());
         return $this->json(
             "My Order List",
             OrderResource::collection($selfOrders)

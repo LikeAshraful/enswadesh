@@ -5,21 +5,33 @@ namespace App\Http\Controllers\API\Location;
 use Illuminate\Http\Request;
 use App\Models\Location\Market;
 use Illuminate\Routing\Controller;
+use Repository\Location\MarketRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\MarketResource;
 
 class MarketController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $marketRepo;
+
+    public function __construct(MarketRepository $marketRepository)
+    {
+        $this->marketRepo = $marketRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return MarketResource::collection(Market::all());
-        // $status = 200;
-        // $markets = Market::with('thanaOfMarket')->get();
-        // return response()->json($markets, $status);
+        $allMarkets = $this->marketRepo->getAll();
+        return $this->json(
+            'Market list',
+            MarketResource::collection($allMarkets)
+        );
     }
 
     /**

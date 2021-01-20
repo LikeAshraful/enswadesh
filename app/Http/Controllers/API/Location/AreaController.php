@@ -5,21 +5,33 @@ namespace App\Http\Controllers\API\Location;
 use Illuminate\Http\Request;
 use App\Models\Location\Area;
 use Illuminate\Routing\Controller;
+use Repository\Location\AreaRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\AreaResource;
 
 class AreaController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $areaRepo;
+
+    public function __construct(AreaRepository $areaRepository)
+    {
+        $this->areaRepo = $areaRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return AreaResource::collection(Area::all());
-        // $status = 200;
-        // $areas = Area::with('cityOfArea')->get();
-        // return response()->json($areas, $status);
+        $allAreas = $this->areaRepo->getAll();
+        return $this->json(
+            'Area list',
+            AreaResource::collection($allAreas)
+        );
     }
 
     /**

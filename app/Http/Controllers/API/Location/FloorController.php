@@ -5,21 +5,33 @@ namespace App\Http\Controllers\API\Location;
 use Illuminate\Http\Request;
 use App\Models\Location\Floor;
 use Illuminate\Routing\Controller;
+use Repository\Location\FloorRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\FloorResource;
 
 class FloorController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $floorRepo;
+
+    public function __construct(FloorRepository $floorRepository)
+    {
+        $this->floorRepo = $floorRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return FloorResource::collection(Floor::all());
-        // $status = 200;
-        // $floors = Floor::with('marketPlaceOfFloor')->get();
-        // return response()->json($floors, $status);
+        $allFloors = $this->floorRepo->getAll();
+        return $this->json(
+            'Floor list',
+            FloorResource::collection($allFloors)
+        );
     }
 
     /**
