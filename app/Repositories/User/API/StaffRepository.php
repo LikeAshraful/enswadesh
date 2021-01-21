@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 
-class VendorRepository extends BaseRepository {
+class StaffRepository extends BaseRepository {
 
     public function model()
     {
@@ -18,7 +18,7 @@ class VendorRepository extends BaseRepository {
 
     public function getAll(): Collection
     {
-        $roles      = Role::where('slug','=','vendor')->first();
+        $roles      = Role::where('slug','=','staff')->first();
         return $this->model()::where('role_id',$roles->id)->get(); 
     }
 

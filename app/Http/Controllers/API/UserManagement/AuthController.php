@@ -51,7 +51,6 @@ class AuthController extends Controller
             'image' => $image,
             'role_id'=>3,
         ]);
-
         $accessToken = $user->createToken('authToken')->accessToken;
         $message = [
             'confirm_message'     => 'Dear '. $user->name . ', Congratulations and Welcome  to ENSWADESH. We want you to know that we appreciate you taking the time to learn more.',

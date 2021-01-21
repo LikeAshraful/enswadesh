@@ -13,7 +13,7 @@ use App\Http\Controllers\Backend\General\VideoController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\General\TemplateController;
-use App\Http\Controllers\Api\UserManagement\VendorController;
+use App\Http\Controllers\Api\UserManagement\StaffController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -36,7 +36,8 @@ Route::prefix('orders')->namespace('Order')->group(function(){
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users', [AuthController::class, 'dusers']);
-    Route::get('/vendors', [VendorController::class, 'index']);
+    Route::get('/vendors', [StaffController::class, 'index']);
+    Route::post('/vendor', [StaffController::class, 'store']);
 
     // shop related
     Route::get('/shops', [ShopController::class, 'index']);
