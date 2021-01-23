@@ -11,8 +11,10 @@ use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\ThanaController;
 use App\Http\Controllers\API\Location\MarketController;
 use App\Http\Controllers\Backend\General\VideoController;
+use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\General\TemplateController;
+use App\Http\Controllers\API\General\Category\CategoryController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -38,6 +40,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('self', [ShopController::class, 'myShop']);
         Route::post('update/{id}', [ShopController::class, 'update']);
     });
+
+    // general topic
+
+    Route::get('brands', [BrandController::class, 'index']);
+    Route::get('categories', [CategoryController::class, 'index']);
 
     // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){
