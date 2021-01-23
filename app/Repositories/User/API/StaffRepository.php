@@ -27,9 +27,17 @@ class StaffRepository extends BaseRepository {
         return Storage::put('fileuploads/brands', $file);
     }
 
-    public function updateVendorImage($id)
+    public function updateStaffImage($id)
     {
-        $brandIcon = $this->findByID($id);
-        Storage::delete($brandIcon->icon);
+        $staffImage = $this->findByID($id);
+        Storage::delete($staffImage->icon);
+    }
+
+    public function deleteStaff($id)
+    {
+        $staffImage = $this->findByID($id);
+        dd($staffImage);
+        Storage::delete($staffImage->image);
+        $staffImage->delete(); 
     }
 }

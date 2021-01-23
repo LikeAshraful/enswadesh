@@ -36,8 +36,9 @@ Route::prefix('orders')->namespace('Order')->group(function(){
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users', [AuthController::class, 'dusers']);
-    Route::get('/vendors', [StaffController::class, 'index']);
-    Route::post('/vendor', [StaffController::class, 'store']);
+    Route::get('/staffs', [StaffController::class, 'index']);
+    Route::post('/staffs', [StaffController::class, 'store']);
+    Route::post('/staff/{id}', [StaffController::class, 'destroy']);
 
     // shop related
     Route::get('/shops', [ShopController::class, 'index']);
