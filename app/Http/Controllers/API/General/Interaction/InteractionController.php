@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API\General\Interaction;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\JsonResponseTrait;
+use App\Models\General\Interaction\InteractionFile;
 use Repository\General\Interaction\InteractionRepository;
 use App\Http\Resources\General\Interaction\InteractionResource;
-use App\Models\General\Interaction\InteractionFile;
 
 class InteractionController extends Controller
 {
@@ -33,19 +35,39 @@ class InteractionController extends Controller
 
     public function storeVideo(Request $request)
     {
-        $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'video') : null;
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+            'thumbnail' => 'required|mimes:jpeg,jpg,png|max:500',
+            'status' => 'required|in:Pending,Approved,Declined'
+        ]);
 
+        if ($validator->fails()) {
+            $message = $validator->errors();
+            return response()->json($message);
+        }
+
+        $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'video') : null;
         $videoFile = $request->hasFile('video') ? $this->interactionRepo->storeFile($request->file('video'), 'video') : null;
 
-        $video = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
-            'thumbnail' => $image,
-            'user_id' => Auth::id()
-        ]);
-        InteractionFile::create([
-            'interaction_id' => $video->id,
-            'file_path' => $videoFile,
-            'file_type' => $request->file_type
-        ]);
+        DB::beginTransaction();
+        try {
+            $video = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
+                'thumbnail' => $image,
+                'user_id' => Auth::id()
+            ]);
+            InteractionFile::create([
+                'interaction_id' => $video->id,
+                'file_path' => $videoFile,
+                'file_type' => $request->file_type
+            ]);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json($e);
+        }
 
         return $this->json(
             "Video Created Sucessfully",
@@ -67,6 +89,17 @@ class InteractionController extends Controller
 
     public function updateVideo(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+            'thumbnail' => 'nullable|mimes:jpeg,jpg,png|max:500',
+            'status' => 'required|in:Pending,Approved,Declined'
+        ]);
+
+        if ($validator->fails()) {
+            $message = $validator->errors();
+            return response()->json($message);
+        }
 
         $video = $this->interactionRepo->findInteractionByCategoryID(1, $id);
 
@@ -79,15 +112,23 @@ class InteractionController extends Controller
             $this->interactionRepo->storeFile($request->file('video'), 'video');
         }
 
-        $this->interactionRepo->updateByID($id, $request->except(['thumbnail','user_id']) + [
-            'thumbnail' => $image,
-            'user_id' => Auth::id()
-        ]);
+        DB::beginTransaction();
+        try {
+            $this->interactionRepo->updateByID($video->id, $request->except(['thumbnail','user_id']) + [
+                'thumbnail' => $image,
+                'user_id' => Auth::id()
+            ]);
 
-        InteractionFile::where('interaction_id', $id)->update([
-            'file_path' => $videoFile,
-            'file_type' => $request->file_type
-        ]);
+            InteractionFile::where('interaction_id', $id)->update([
+                'file_path' => $videoFile,
+                'file_type' => $request->file_type
+            ]);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            return response()->json($e);
+        }
 
         return $this->json(
             "Video Updated Sucessfully",
@@ -107,6 +148,18 @@ class InteractionController extends Controller
 
     public function storeTemplate(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+            'thumbnail' => 'required|mimes:jpeg,jpg,png|max:500',
+            'status' => 'required|in:Pending,Approved,Declined'
+        ]);
+
+        if ($validator->fails()) {
+            $message = $validator->errors();
+            return response()->json($message);
+        }
+
         $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'template') : null;
 
         $template = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [

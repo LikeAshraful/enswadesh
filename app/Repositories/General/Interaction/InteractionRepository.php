@@ -6,7 +6,6 @@ use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use App\Models\General\Interaction\Interaction;
-use Illuminate\Database\Eloquent\Model;
 
 class InteractionRepository extends BaseRepository
 {
