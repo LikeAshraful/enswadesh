@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\UserManagement;
 
-use Mail;
 use Illuminate\Http\Request;
 use App\Helpers\API\ApiHelpers;
 use App\Http\Controllers\Controller;
