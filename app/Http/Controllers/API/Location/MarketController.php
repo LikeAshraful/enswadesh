@@ -38,29 +38,27 @@ class MarketController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function topMarkets()
     {
-        return view('shopproperty::create');
+        $topMarkets = $this->marketRepo->getTopMarkets();
+        return $this->json(
+            'Top Market list',
+            MarketResource::collection($topMarkets)
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
+     * Single market the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function market($id)
     {
-        return view('shopproperty::show');
+        $market = $this->marketRepo->findById($id);
+        return $this->json(
+            'Single Market',
+            new MarketResource($market)
+        );
     }
 
     /**

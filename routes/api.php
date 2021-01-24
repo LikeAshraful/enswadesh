@@ -8,7 +8,6 @@ use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
-use App\Http\Controllers\API\Location\ThanaController;
 use App\Http\Controllers\API\Location\MarketController;
 use App\Http\Controllers\Backend\General\VideoController;
 use App\Http\Controllers\API\General\Brand\BrandController;
@@ -24,8 +23,13 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/menus', [AppMenuController::class, 'index']);
 Route::get('/cities', [CityController::class, 'index']);
 Route::get('/areas', [AreaController::class, 'index']);
-Route::get('/thanas', [ThanaController::class, 'index']);
-Route::get('/markets', [MarketController::class, 'index']);
+
+Route::prefix('markets')->namespace('Market')->group(function(){
+    Route::get('', [MarketController::class, 'index']);
+    Route::get('/top', [MarketController::class, 'topMarkets']);
+    Route::get('{id}', [MarketController::class, 'market']);
+});
+
 Route::get('/floors', [FloorController::class, 'index']);
 Route::get('/shop-types', [ShopTypeController::class, 'index']);
 
@@ -42,7 +46,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // general topic
-
     Route::get('brands', [BrandController::class, 'index']);
     Route::get('categories', [CategoryController::class, 'index']);
 

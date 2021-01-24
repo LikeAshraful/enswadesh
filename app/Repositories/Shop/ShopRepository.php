@@ -30,13 +30,17 @@ class ShopRepository extends BaseRepository
     public function updateShops($id)
     {
         $shop = $this->findById($id);
-        Storage::delete($shop->shop_icon);
+        Storage::delete($shop->shop_logo);
+        Storage::delete($shop->shop_cover_image);
+        Storage::delete($shop->meta_og_image_shop);
     }
 
     public function deleteShops($id)
     {
         $shop = $this->findById($id);
-        Storage::delete($shop->shop_icon);
+        Storage::delete($shop->shop_logo);
+        Storage::delete($shop->shop_cover_image);
+        Storage::delete($shop->meta_og_image_shop);
         $shop->delete();
     }
 }
