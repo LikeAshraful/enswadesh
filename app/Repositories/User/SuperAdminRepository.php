@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Repositories\User;
-use Image;
-use Storage;
+namespace Repository\User;
 use App\Models\Role;
 use App\Models\User;
+use Repository\BaseRepository;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
-use App\Repositories\Interface\User\SuperAdminInterface;
+use Illuminate\Support\Facades\Storage;
 
-class SuperAdminRepository implements SuperAdminInterface {
+class SuperAdminRepository extends BaseRepository {
 
-    public function all()
+    public function model()
     {
-        return User::get();
+        return User::class;
     }
     public function allVendor()
     {
@@ -24,57 +24,57 @@ class SuperAdminRepository implements SuperAdminInterface {
         return Role::get();
     }
 
-    public function get($id)
+    public function storeFile(UploadedFile $file)
     {
-        return User::find($id);
+        return Storage::put('fileuploads/user', $file);
     }
 
-    public function store(array $data)
+    public function updateImageForSuperAdmin($id)
     {
-        if($image = $data['image']) {
-            $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('/uploads/users/' . $filename);
-            Image::make($image)->resize(400, 400)->save($location);
-        }
-        return User::create([
-            'role_id'       => $data['role'],
-            'name'          => $data['name'],
-            'email'         => $data['email'],
-            'phone_number'  => $data['phone_number'],
-            'password'      => Hash::make($data['password']),
-            'image'         => isset($filename) ? $filename : '',
-        ]);
+        $userImage = $this->findByID($id);
+        Storage::delete($userImage->icon);
     }
 
-    public function update($id, array $data)
+    public function deleteForSuperAdmin($id)
     {
-        $user = User::find($id);
-        $image = $user->image;
-        if(isset($data['image']) == true){
-            if (!empty($image = $data['image'])) {
-                $filename = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-                $locationc = public_path('/uploads/users/' . $filename);
-                Image::make($image)->resize(400, 400)->save($locationc);
-                $oldFilenamec = $user->image;
-                $user->image = $image;
-                Storage::delete('/uploads/users/' . $oldFilenamec);
+        $userImage = $this->findByID($id);
+        Storage::delete($userImage->image);
+        $userImage->delete(); 
+    }
+
+    public function publishByID($id)
+    {
+        try {
+            $publish = $this->findByID($id);
+            if ($publish->status === 1) {
+                $publish->status = 0;
+                $message = 'User Publish Successfully';
+            } else {
+                $publish->status = 1;
+                $message = 'User Unpublish Successfully';
             }
+            $publish->save();
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
         }
-        return $user->update([
-            'role_id'       => $data['role'],
-            'name'          => $data['name'],
-            'email'         => $data['email'],
-            'phone_number'  => $data['phone_number'],
-            'password'      => Hash::make($data['password']),
-            'image'         => isset($filename) ? $filename : $image,
-        ]);
+        notify()->success($message);
     }
 
-    public function delete($id)
+    public function blockByID($id)
     {
-        $user = User::find($id);
-        $oldFilename = $user->image;
-        Storage::delete('/uploads/users/' . $oldFilename);
-        return $user->delete();
+        try {
+            $blocked = $this->findByID($id);
+            if ($blocked->suspend === 1) {
+                $blocked->suspend = 0;
+                $message = 'User Blocked Successfully';
+            } else {
+                $blocked->suspend = 1;
+                $message = 'User Unblocked Successfully';
+            }
+            $blocked->save();
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
+        }
+        notify()->success($message); 
     }
 }
