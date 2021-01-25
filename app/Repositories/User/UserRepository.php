@@ -8,20 +8,32 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class SuperAdminRepository extends BaseRepository {
+class UserRepository extends BaseRepository {
 
     public function model()
     {
         return User::class;
     }
+
     public function allVendor()
     {
         $roles = Role::where('slug','=','vendor')->first();
         return User::where('role_id',$roles->id)->get();
     }
+
     public function allRole()
     {
         return Role::get();
+    }
+
+    public function allRoleForAdmin()
+    {
+        return Role::where('slug','!=','super_admin')->get();
+    }
+
+    public function allRoleForVendor()
+    {
+        return Role::where('slug','=','staff')->first();
     }
 
     public function storeFile(UploadedFile $file)
@@ -29,13 +41,13 @@ class SuperAdminRepository extends BaseRepository {
         return Storage::put('fileuploads/user', $file);
     }
 
-    public function updateImageForSuperAdmin($id)
+    public function updateFile($id)
     {
         $userImage = $this->findByID($id);
         Storage::delete($userImage->icon);
     }
 
-    public function deleteForSuperAdmin($id)
+    public function deleteByID($id)
     {
         $userImage = $this->findByID($id);
         Storage::delete($userImage->image);

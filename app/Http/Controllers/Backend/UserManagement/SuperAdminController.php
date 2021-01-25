@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Repository\User\SuperAdminRepository;
+use Repository\User\UserRepository;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 
@@ -15,7 +15,7 @@ class SuperAdminController extends Controller
 {
     protected $superAdminRepo;
     
-    public function __construct(SuperAdminRepository $superAdmin)
+    public function __construct(UserRepository $superAdmin)
     {
         $this->superAdminRepo=$superAdmin;
 
@@ -42,7 +42,7 @@ class SuperAdminController extends Controller
         $user = $this->superAdminRepo->create($request->except('image','role_id','password') + [
             'image'     =>  $image,
             'role_id'   =>  $request->role,
-            'password'      => Hash::make($request->password),
+            'password'  => Hash::make($request->password),
         ]);
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('backend.super-admin.index');
@@ -70,12 +70,12 @@ class SuperAdminController extends Controller
         $image      = $userImage ? $this->superAdminRepo->storeFile($request->file('image')) : $user->image;
         if($userImage)
         {
-            $this->superAdminRepo->updateImageForSuperAdmin($id);
+            $this->superAdminRepo->updateFile($id);
         }
         $user  = $this->superAdminRepo->updateByID($id,$request->except('image','role_id','password') + [
             'image'     => $image,
             'role_id'   =>  $request->role,
-            'password'      => Hash::make($request->password),
+            'password'  => Hash::make($request->password),
         ]);
         notify()->success('User Successfully Updated.', 'Updated');
         return redirect()->route('backend.super-admin.index');
@@ -84,7 +84,7 @@ class SuperAdminController extends Controller
     public function destroy($id)
     {
         Gate::authorize('backend.super-admin.destroy');
-        $users = $this->superAdminRepo->deleteForSuperAdmin($id);
+        $users = $this->superAdminRepo->deleteByID($id);
         notify()->success("User Successfully Deleted", "Deleted");
         return back();
     }

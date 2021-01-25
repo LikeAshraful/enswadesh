@@ -35,7 +35,7 @@
         <div class="col-md-2">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <img src="{{ asset('uploads/users/'.$user->image) }}" class="img-fluid img-thumbnail" alt="avatar">
+                    <img src="{{ asset('storage/'.$user->image) }}" class="img-fluid img-thumbnail" alt="avatar">
                 </div>
                 <!-- /.card-body -->
             </div>
