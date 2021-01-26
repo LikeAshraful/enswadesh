@@ -38,9 +38,18 @@ class MarketController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function topMarkets($id)
+    public function allMarketsByCity($id)
     {
-        $topMarkets = $this->marketRepo->getTopMarkets($id);
+        $topMarkets = $this->marketRepo->getAllMarketsByCity($id);
+        return $this->json(
+            'All Market list',
+            MarketResource::collection($topMarkets)
+        );
+    }
+
+    public function topMarketsByCity($id)
+    {
+        $topMarkets = $this->marketRepo->getTopMarketsByCity($id);
         return $this->json(
             'Top Market list',
             MarketResource::collection($topMarkets)
@@ -52,7 +61,7 @@ class MarketController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function market($id)
+    public function singleMarket($id)
     {
         $market = $this->marketRepo->findById($id);
         return $this->json(
