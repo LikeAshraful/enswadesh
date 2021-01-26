@@ -42,7 +42,7 @@ class MarketController extends Controller
     {
         $topMarkets = $this->marketRepo->getAllMarketsByCity($id);
         return $this->json(
-            'All Market list',
+            'All Market list by City',
             MarketResource::collection($topMarkets)
         );
     }
@@ -51,7 +51,25 @@ class MarketController extends Controller
     {
         $topMarkets = $this->marketRepo->getTopMarketsByCity($id);
         return $this->json(
-            'Top Market list',
+            'Top Market list by City',
+            MarketResource::collection($topMarkets)
+        );
+    }
+
+    public function allMarketsByArea($id)
+    {
+        $topMarkets = $this->marketRepo->getAllMarketsByArea($id);
+        return $this->json(
+            'All Market list by Area',
+            MarketResource::collection($topMarkets)
+        );
+    }
+
+    public function topMarketsByArea($id)
+    {
+        $topMarkets = $this->marketRepo->getTopMarketsByArea($id);
+        return $this->json(
+            'Top Market list by Area',
             MarketResource::collection($topMarkets)
         );
     }
