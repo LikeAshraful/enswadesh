@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\API\Order;
+namespace App\Http\Controllers\API\General\Category;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Repository\Order\OrderRepository;
 use App\Http\Controllers\JsonResponseTrait;
-use App\Http\Resources\Order\OrderResource;
+use Repository\Category\CategoryRepository;
+use App\Http\Resources\General\Category\CategoryResource;
 
-class OrderController extends Controller
+class CategoryController extends Controller
 {
+
     use JsonResponseTrait;
 
-    public $orderRepo;
+    public $categoryRepo;
 
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->orderRepo = $orderRepository;
+        $this->categoryRepo = $categoryRepository;
     }
 
     /**
@@ -27,10 +27,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $allOrder = $this->orderRepo->getAll();
+        $allcategories = $this->categoryRepo->getAll();
         return $this->json(
-            "Order List",
-            OrderResource::collection($allOrder)
+            'Category list',
+            CategoryResource::collection($allcategories)
         );
     }
 
@@ -52,14 +52,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = $this->orderRepo->create($request->except('order_no') + [
-            'order_no' => GenerateOrderNumber()
-        ]);
-
-        return $this->json(
-            "Order Created Sucessfully",
-            $order
-        );
+        //
     }
 
     /**
@@ -70,11 +63,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = $this->orderRepo->findOrFailByID($id);
-        return $this->json(
-            "Order",
-            new OrderResource($order)
-        );
+        //
     }
 
     /**
@@ -109,14 +98,5 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function selfOrder() {
-        $selfOrders = $this->orderRepo->getAllByUserID('customer_id', Auth::id());
-        return $this->json(
-            "My Order List",
-            OrderResource::collection($selfOrders)
-        );
-
     }
 }

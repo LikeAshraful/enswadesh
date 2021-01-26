@@ -22,6 +22,11 @@ class MarketRepository extends BaseRepository
         return $this->model()::with('areas')->get();
     }
 
+    public function getTopMarkets($id)
+    {
+        return $this->model()::where('city_id', $id)->withCount('shops')->orderBy('shops_count', 'desc')->limit(8)->get();
+    }
+
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/market', $file);

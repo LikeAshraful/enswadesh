@@ -21,4 +21,9 @@ class Area extends Model
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
+
+    public function areaMarkets()
+    {
+        return $this->hasMany(Market::class, 'area_id');
+    }
 }

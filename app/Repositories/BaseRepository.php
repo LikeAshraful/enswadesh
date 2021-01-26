@@ -52,8 +52,8 @@ Abstract class BaseRepository {
         return $model->reload();
     }
 
-    public function getAllByCustomerID($id)
+    public function getAllByUserID($field, $id)
     {
-        return $this->model()::where('customer_id', $id)->get();
+        return $this->model()::where($field, $id)->get();
     }
 }

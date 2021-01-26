@@ -5,31 +5,48 @@ namespace App\Http\Controllers\API\Location;
 use Illuminate\Http\Request;
 use App\Models\Location\City;
 use Illuminate\Routing\Controller;
+use Repository\Location\CityRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\CityResource;
+use App\Http\Resources\Location\MarketResource;
 
 class CityController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $cityRepo;
+
+    public function __construct(CityRepository $cityRepository)
+    {
+        $this->cityRepo = $cityRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-
-        return CityResource::collection(City::all());
-        // $status = 200;
-        // $cities = City::all();
-        // return response()->json($cities, $status);
+        $allCities = $this->cityRepo->getAll();
+        return $this->json(
+            'City list',
+            CityResource::collection($allCities)
+        );
     }
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function cityMarkets($id)
     {
-        return view('shopproperty::create');
+        $markets = $this->cityRepo->getTopMarkets($id);
+
+        return $this->json(
+            'City by markete list',
+            $markets
+        );
     }
 
     /**

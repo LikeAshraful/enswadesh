@@ -7,12 +7,11 @@ use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
-use App\Http\Controllers\API\Location\ThanaController;
 use App\Http\Controllers\API\Location\MarketController;
-use App\Http\Controllers\Backend\General\VideoController;
-use App\Http\Controllers\API\UserManagement\AuthController;
+use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
-use App\Http\Controllers\Backend\General\TemplateController;
+use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\General\Interaction\InteractionController;
 
@@ -20,24 +19,48 @@ use App\Http\Controllers\API\General\Interaction\InteractionController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/menus', [AppMenuController::class, 'index']);
-Route::get('/cities', [CityController::class, 'index']);
+
+Route::get('/menus', [AppMenuController::class, 'index']);;
 Route::get('/areas', [AreaController::class, 'index']);
-Route::get('/thanas', [ThanaController::class, 'index']);
-Route::get('/markets', [MarketController::class, 'index']);
+
+
+
+Route::prefix('cities')->namespace('City')->group(function(){
+    Route::get('', [CityController::class, 'index']);
+    Route::get('{id}/markets', [CityController::class, 'cityMarkets']);
+});
+
+Route::prefix('markets')->namespace('Market')->group(function(){
+    Route::get('', [MarketController::class, 'index']);
+    Route::get('/top/{id}', [MarketController::class, 'topMarkets']);
+    Route::get('{id}', [MarketController::class, 'market']);
+});
+
 Route::get('/floors', [FloorController::class, 'index']);
 Route::get('/shop-types', [ShopTypeController::class, 'index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
+
     Route::get('/users', [AuthController::class, 'dusers']);
     Route::get('/users', [AuthController::class, 'dusers']);
     Route::get('/staffs', [StaffController::class, 'index']);
     Route::post('/staffs', [StaffController::class, 'store']);
     Route::post('/staff/{id}', [StaffController::class, 'destroy']);
-    // shop related
-    Route::get('/shops', [ShopController::class, 'index']);
-    Route::post('/shops', [ShopController::class, 'store']);
 
+    // shop related
+    Route::prefix('shops')->namespace('Shop')->group(function(){
+        Route::get('', [ShopController::class, 'index']);
+        Route::post('', [ShopController::class, 'store']);
+        Route::get('{id}/edit', [ShopController::class, 'edit']);
+        Route::get('self', [ShopController::class, 'myShop']);
+        Route::post('update/{id}', [ShopController::class, 'update']);
+    });
+
+    // general topic
+    Route::get('brands', [BrandController::class, 'index']);
+    Route::get('categories', [CategoryController::class, 'index']);
+
+    // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){
         Route::get('', [OrderController::class, 'index']);
         Route::get('self/{id}', [OrderController::class, 'selfOrder']);

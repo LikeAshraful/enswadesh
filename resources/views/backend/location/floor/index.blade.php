@@ -32,7 +32,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatableFloor" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatableFloor" class="align-center mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
                             <th scope="col">#</th>

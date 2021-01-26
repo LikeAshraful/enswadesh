@@ -5,50 +5,60 @@ namespace App\Http\Controllers\API\Location;
 use Illuminate\Http\Request;
 use App\Models\Location\Market;
 use Illuminate\Routing\Controller;
+use Repository\Location\MarketRepository;
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\MarketResource;
 
 class MarketController extends Controller
 {
+    use JsonResponseTrait;
+
+    public $marketRepo;
+
+    public function __construct(MarketRepository $marketRepository)
+    {
+        $this->marketRepo = $marketRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return MarketResource::collection(Market::all());
-        // $status = 200;
-        // $markets = Market::with('thanaOfMarket')->get();
-        // return response()->json($markets, $status);
+        $allMarkets = $this->marketRepo->getAll();
+        return $this->json(
+            'Market list',
+            MarketResource::collection($allMarkets)
+        );
     }
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function topMarkets($id)
     {
-        return view('shopproperty::create');
+        $topMarkets = $this->marketRepo->getTopMarkets($id);
+        return $this->json(
+            'Top Market list',
+            MarketResource::collection($topMarkets)
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
+     * Single market the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function market($id)
     {
-        return view('shopproperty::show');
+        $market = $this->marketRepo->findById($id);
+        return $this->json(
+            'Single Market',
+            new MarketResource($market)
+        );
     }
 
     /**
