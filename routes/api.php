@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
 use App\Http\Controllers\API\Location\AreaController;
@@ -9,11 +8,12 @@ use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
-use App\Http\Controllers\Backend\General\VideoController;
 use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
-use App\Http\Controllers\Backend\General\TemplateController;
 use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\UserManagement\AuthController;
+use App\Http\Controllers\Api\UserManagement\StaffController;
+use App\Http\Controllers\API\General\Interaction\InteractionController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -40,7 +40,12 @@ Route::get('/floors', [FloorController::class, 'index']);
 Route::get('/shop-types', [ShopTypeController::class, 'index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
+
     Route::get('/users', [AuthController::class, 'dusers']);
+    Route::get('/users', [AuthController::class, 'dusers']);
+    Route::get('/staffs', [StaffController::class, 'index']);
+    Route::post('/staffs', [StaffController::class, 'store']);
+    Route::post('/staff/{id}', [StaffController::class, 'destroy']);
 
     // shop related
     Route::prefix('shops')->namespace('Shop')->group(function(){
@@ -58,19 +63,24 @@ Route::group(['middleware' => 'auth:api'], function () {
     // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){
         Route::get('', [OrderController::class, 'index']);
-        Route::get('self', [OrderController::class, 'selfOrder']);
+        Route::get('self/{id}', [OrderController::class, 'selfOrder']);
         Route::get('{id}', [OrderController::class, 'show']);
         Route::post('', [OrderController::class, 'store']);
     });
+
+    Route::prefix('templates')->namespace('Template')->group(function(){
+        Route::get('', [InteractionController::class, 'templates']);
+        Route::post('/create', [InteractionController::class, 'storeTemplate']);
+    });
+
+    Route::prefix('videos')->namespace('Video')->group(function(){
+        Route::get('', [InteractionController::class, 'videos']);
+        Route::post('/create', [InteractionController::class, 'storeVideo']);
+        Route::get('/{id}', [InteractionController::class, 'showVideo']);
+        Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
+    });
+
 });
 
-Route::prefix('templates')->namespace('Template')->group(function(){
-    Route::get('', [TemplateController::class, 'index']);
-    Route::get('{id}', [TemplateController::class, 'show']);
-    Route::post('', [TemplateController::class, 'store']);
-});
 
-Route::prefix('videos')->namespace('Video')->group(function(){
-    Route::get('', [VideoController::class, 'index']);
-    Route::get('{id}', [VideoController::class, 'show']);
-});
+

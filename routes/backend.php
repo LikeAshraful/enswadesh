@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Shop\ShopController;
@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\General\Brand\BrandController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\General\Interaction\InteractionController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 use App\Http\Controllers\Backend\UserManagement\VendorController;
 
@@ -62,6 +63,10 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     Route::resource('category', CategoryController::class);
     Route::resource('brand', BrandController::class);
     Route::resource('orders', OrdersController::class);
-    //Templates
-    Route::resource('templates', TemplateController::class);
-    Route::resource('videos', VideoController::class);
+
+    //interactions
+    Route::get('videos/', [InteractionController::class, 'videos'])->name('videos.index');
+    Route::get('videos/{id}', [InteractionController::class, 'showVideo'])->name('videos.show');
+    Route::get('templates/', [InteractionController::class, 'templates'])->name('templates.index');
+    Route::post('interactions/{id}', [InteractionController::class, 'statusUpdate'])->name('interactions.update');
+
