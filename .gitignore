@@ -3,6 +3,7 @@
 /public/storage
 /storage
 /vendor
+/bootstrap/cache
 .env
 .env.*
 .env.backup
@@ -12,4 +13,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/storage
+storage
+/public/fileuploads
+/public/uploads
