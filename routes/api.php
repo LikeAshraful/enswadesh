@@ -20,13 +20,19 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 
-Route::get('/menus', [AppMenuController::class, 'index']);
-Route::get('/cities', [CityController::class, 'index']);
+Route::get('/menus', [AppMenuController::class, 'index']);;
 Route::get('/areas', [AreaController::class, 'index']);
+
+
+
+Route::prefix('cities')->namespace('City')->group(function(){
+    Route::get('', [CityController::class, 'index']);
+    Route::get('{id}/markets', [CityController::class, 'cityMarkets']);
+});
 
 Route::prefix('markets')->namespace('Market')->group(function(){
     Route::get('', [MarketController::class, 'index']);
-    Route::get('/top', [MarketController::class, 'topMarkets']);
+    Route::get('/top/{id}', [MarketController::class, 'topMarkets']);
     Route::get('{id}', [MarketController::class, 'market']);
 });
 

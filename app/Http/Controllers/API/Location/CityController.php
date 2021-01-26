@@ -9,6 +9,7 @@ use Repository\Location\CityRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Resources\Location\CityResource;
+use App\Http\Resources\Location\MarketResource;
 
 class CityController extends Controller
 {
@@ -38,9 +39,14 @@ class CityController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function cityMarkets($id)
     {
-        return view('shopproperty::create');
+        $markets = $this->cityRepo->getTopMarkets($id);
+
+        return $this->json(
+            'City by markete list',
+            $markets
+        );
     }
 
     /**

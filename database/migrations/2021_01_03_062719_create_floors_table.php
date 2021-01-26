@@ -15,10 +15,11 @@ class CreateFloorsTable extends Migration
     {
         Schema::create('floors', function (Blueprint $table) {
             $table->id();
-            $table->integer('market_id')  ->nullable();
+            $table->unsignedBigInteger('market_id');
             $table->integer('floor_no')   ->nullable();
             $table->string('floor_note')  ->nullable();
             $table->timestamps();
+            $table->foreign('market_id')->references('id')->on('markets')->onDelete('cascade');
         });
     }
 

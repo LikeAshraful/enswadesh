@@ -15,13 +15,12 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->integer('shop_owner_id')        ->nullable();
-            $table->integer('city_id')              ->nullable();
-            $table->integer('area_id')              ->nullable();
-            $table->integer('thana_id')             ->nullable();
-            $table->integer('market_id')            ->nullable();
-            $table->integer('floor_id')             ->nullable();
-            $table->integer('shop_type_id')         ->nullable();
+            $table->unsignedBigInteger('shop_owner_id');
+            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('area_id');
+            $table->unsignedBigInteger('market_id');
+            $table->integer('floor_no')              ->nullable();
+            $table->unsignedBigInteger('shop_type_id')->nullable();
             $table->string('shop_no')               ->nullable();
             $table->string('shop_name')             ->nullable();
             $table->string('shop_phone')            ->nullable();
@@ -38,6 +37,10 @@ class CreateShopsTable extends Migration
             $table->string('meta_og_image_shop')    ->nullable();
             $table->string('meta_og_url_shop')      ->nullable();
             $table->timestamps();
+            $table->foreign('shop_owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
+            $table->foreign('market_id')->references('id')->on('markets')->onDelete('cascade');
         });
     }
 
