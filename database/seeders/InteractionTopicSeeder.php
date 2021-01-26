@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\General\Template;
 use Illuminate\Database\Seeder;
+use App\Models\General\Interaction\InteractionTopic;
 
-class TemplateSeeder extends Seeder
+class InteractionTopicSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class TemplateSeeder extends Seeder
      */
     public function run()
     {
-        Template::factory()->count(10)->create();
+        InteractionTopic::factory()->count(10)->create();
     }
 }

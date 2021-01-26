@@ -17,14 +17,14 @@
             <div>{{ __('All Videos') }}</div>
         </div>
         <div class="page-title-actions">
-            <div class="d-inline-block dropdown">
+            {{-- <div class="d-inline-block dropdown">
                 <a href="{{ route('backend.videos.create') }}" class="btn-shadow btn btn-info">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fas fa-plus-circle fa-w-20"></i>
                     </span>
                     {{ __('Create Video') }}
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
@@ -39,8 +39,8 @@
                             <th scope="col">Title</th>
                             <th scope="col">Image</th>
                             <th scope="col">Created By</th>
-                            <th scope="col">Updated By</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Change Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,24 +53,35 @@
                             <td>
                                 <img class="img-fluid img-thumbnail"
                                     src="/{{ $video->thumbnail }}" width="50" height="50"
-                                    alt="{{ $video->title}}">
+                                    alt="">
                             </td>
-                            <td>{{ $video->createdBy ? $video->createdBy->name : 'Not found' }}</td>
-                            <td>{{ $video->updatedBy ? $video->updatedBy->name : 'Not found' }}</td>
+                            <td>{{ $video->user ? $video->user->name : 'Not found' }}</td>
+                            <td><div class="badge {{ $video->status == 'Pending' ? 'badge-warning' : ($video->status == 'Approved' ? 'badge-primary' : 'badge-danger') }}">{{ $video->status }}</div></td>
                             <td>
-                                <a class="fa-edit-style" href="{{ route('backend.videos.edit', $video->id) }}"><i
+                                <form action="" id="status_form">
+                                    @csrf
+                                    <input type="hidden" id="video_id_{{ $video->id }}" class="video" name="video_id" value="{{ $video->id }}">
+                                    <select class="form-control-sm form-control changeStatus" name="status">
+                                        <option value="Pending" {{$video->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="Approved" {{$video->status == 'Approved' ? 'selected' : '' }}>Approved</option>
+                                        <option value="Declined" {{$video->status == 'Declined' ? 'selected' : '' }}>Declined</option>
+                                    </select>
+                                </form>
+                            </td>
+                            {{-- <td>
+                                <a class="fa-edit-style" href=""><i
                                         class="fas fa-edit"></i></a> |
                                 <button type="submit" class="delete-btn-style" onclick="deleteData({{ $video->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 <form id="delete-form-{{ $video->id }}"
-                                    action="{{ route('backend.videos.destroy',$video->id) }}" method="POST"
+                                    action="" method="POST"
                                     style="display: none;">
                                     @csrf()
                                     @method('DELETE')
                                 </form>
 
-                            </td>
+                            </td> --}}
                         </tr>
                         @endforeach
                     </tbody>
@@ -87,6 +98,26 @@
 $(document).ready(function() {
     // Datatable
     $("#datatableBrand").DataTable();
+
+    //Change video status
+    $('select.changeStatus').change(function(){
+
+        var videoId = $(this).siblings('.video').val();
+        var getStatus = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '/backend/interactions/' + videoId,
+            data: {
+                _token:  $('input[name="_token"]').val(),
+                status: getStatus
+            },
+            success: function(data){
+                // alert('Sucessfully changed status ' + videoId);
+                window.location.href = "{{ route('backend.videos.index') }}";
+             }
+        });
+
+    });
 });
 </script>
 @endpush

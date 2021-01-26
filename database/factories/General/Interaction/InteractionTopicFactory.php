@@ -1,19 +1,19 @@
 <?php
 
-namespace Database\Factories\General;
+namespace Database\Factories\General\Interaction;
 
-use App\Models\User;
-use App\Models\General\Video;
+use App\Models\General\Interaction\InteractionTopic;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class VideoFactory extends Factory
+class InteractionTopicFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Video::class;
+    protected $model = InteractionTopic::class;
 
     /**
      * Define the model's default state.
@@ -22,12 +22,13 @@ class VideoFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence(10);
+        $slug = Str::of($title)->slug('_');
 
         return [
-            'title' => $this->faker->sentence(10),
+            'title' => $title,
             'description' => $this->faker->paragraph,
-            'slug' => $this->faker->slug,
-            'created_by' => User::all()->random()->id
+            'slug' => $slug
         ];
     }
 }
