@@ -22,7 +22,12 @@ class MarketRepository extends BaseRepository
         return $this->model()::with('areas')->get();
     }
 
-    public function getTopMarkets($id)
+    public function getAllMarketsByCity($id)
+    {
+        return $this->model()::where('city_id', $id)->limit(12)->get();
+    }
+
+    public function getTopMarketsByCity($id)
     {
         return $this->model()::where('city_id', $id)->withCount('shops')->orderBy('shops_count', 'desc')->limit(8)->get();
     }

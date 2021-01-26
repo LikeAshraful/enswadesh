@@ -16,19 +16,6 @@ class CityRepository extends BaseRepository
         return City::class;
     }
 
-    public function marketsByCity($id)
-    {
-        return $this->model()::with('marketsByCity')->find($id);
-    }
-
-    public function getTopMarkets($id)
-    {
-        return $this->model()::with('marketsByCity')
-                    ->withCount('shops')->orderBy('shops_count', 'desc')
-                    ->where('id', $id)
-                    ->limit(8)->get();
-    }
-
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/city', $file);

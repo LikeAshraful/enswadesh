@@ -32,8 +32,9 @@ Route::prefix('cities')->namespace('City')->group(function(){
 
 Route::prefix('markets')->namespace('Market')->group(function(){
     Route::get('', [MarketController::class, 'index']);
-    Route::get('/top/{id}', [MarketController::class, 'topMarkets']);
-    Route::get('{id}', [MarketController::class, 'market']);
+    Route::get('/all-market-by-city/{id}', [MarketController::class, 'allMarketsByCity']);
+    Route::get('/top-market-by-city/{id}', [MarketController::class, 'topMarketsByCity']);
+    Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
 Route::get('/floors', [FloorController::class, 'index']);
