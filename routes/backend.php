@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Shop\ShopController;

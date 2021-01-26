@@ -1,49 +1,31 @@
 <?php
 
-namespace App\Repositories\Role;
+namespace Repository\Role;
 use App\Models\Role;
-use App\Models\User;
 use App\Models\Module;
-use Illuminate\Support\Str;
-use App\Repositories\Interface\Role\RoleInterface;
+use Repository\BaseRepository;
 
-class RoleRepository implements RoleInterface {
+class RoleRepository extends BaseRepository {
     
-    public function all()
+    public function model()
     {
-        return Role::get();
+        return Role::class;
     }
+
     public function allModules()
     {
         return Module::get();
     }
-    public function get($id)
+    
+    public function updateByID($id, array $modelData)
     {
-        return Role::find($id);
+        $model = $this->findOrFailByID($id);
+        return $model->updateOrCreate($modelData);
     }
 
-    public function store(array $data)
+    public function deleteRole($id)
     {
-        $slug = Str::slug($data['name'], '_');
-        return Role::create([
-            'name'      => $data['name'],
-            'slug'      => $slug
-        ])->permissions()->sync($data['permissions']);
-    }
-
-    public function update($id, array $data)
-    {
-        $role = Role::find($id);
-        $role = Str::slug($role['name'], '_');
-        return Role::updateOrCreate([
-            'name'      => $data['name'],
-            'slug'      => $role     
-        ])->permissions()->sync($data['permissions']);
-    }
-
-    public function delete($id)
-    {
-        $role = Role::find($id);
-        return $role->delete();
+        $role = $this->findByID($id);
+        $role->delete(); 
     }
 }

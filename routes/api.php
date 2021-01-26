@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
 use App\Http\Controllers\API\Location\AreaController;
@@ -10,13 +9,16 @@ use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\ThanaController;
 use App\Http\Controllers\API\Location\MarketController;
+use App\Http\Controllers\Backend\General\VideoController;
+use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
+use App\Http\Controllers\Backend\General\TemplateController;
+use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\General\Interaction\InteractionController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-
 
 Route::get('/menus', [AppMenuController::class, 'index']);
 Route::get('/cities', [CityController::class, 'index']);
@@ -28,6 +30,10 @@ Route::get('/shop-types', [ShopTypeController::class, 'index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users', [AuthController::class, 'dusers']);
+    Route::get('/users', [AuthController::class, 'dusers']);
+    Route::get('/staffs', [StaffController::class, 'index']);
+    Route::post('/staffs', [StaffController::class, 'store']);
+    Route::post('/staff/{id}', [StaffController::class, 'destroy']);
     // shop related
     Route::get('/shops', [ShopController::class, 'index']);
     Route::post('/shops', [ShopController::class, 'store']);

@@ -30,9 +30,7 @@
                     <div class="form-row">
                         <div class="col-6 mx-auto">
                             <div class="position-relative form-group">
-                                
-                                <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{ asset('uploads/users/'. Auth::user()->image) }}" />
-                                
+                                <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="" />
                                 @error('avatar')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -47,35 +45,33 @@
 
         <div class="col-12">
             <div class="main-card mb-3 card">
-                <div class="card-header">CONTACT INFORMATION</div>
+                <div class="card-header">USER INFORMATION</div>
 
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                        <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                name="name" value="{{ Auth::user()->name ?? old('name') }}" required autocomplete="name"
+                            <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
+                                name="address" value="" required autocomplete="address"
                                 autofocus>
 
-                            @error('name')
+                            @error('address')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
                     </div>
-
                     <div class="form-group row">
-                        <label for="email"
-                            class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        <label for="bio" class="col-md-4 col-form-label text-md-right">{{ __('Bio') }}</label>
 
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ Auth::user()->email ?? old('email') }}" required
-                                autocomplete="email">
+                            <input id="bio" type="text" class="form-control @error('bio') is-invalid @enderror"
+                                name="bio" value="" required autocomplete="address"
+                                autofocus>
 
-                            @error('email')
+                            @error('bio')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
