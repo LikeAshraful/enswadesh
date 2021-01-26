@@ -211,8 +211,13 @@
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Customer Interaction</li>
+<<<<<<< HEAD
                 <li class="{{ Route::is('backend.videos.index*') || Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
                     <a href="#">
+=======
+                <li>
+                    <a href="#" class="{{ Route::is('backend.videos.index*') ? 'mm-active' : '' }}">
+>>>>>>> c2b703b77090b551c16807297d7190511a53c960
                     <i class="metismenu-icon pe-7s-diamond"></i>
                         Videos
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
