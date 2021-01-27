@@ -18,7 +18,7 @@ class InteractionController extends Controller
     public function videos()
     {
         $videos = $this->interactionRepo->getInteractionsByCategoryID(1);
-        return view('backend.general.video.index',compact('videos'));
+        return view('backend.general.interaction.video.index',compact('videos'));
     }
 
     public function showVideo($id)
@@ -30,7 +30,7 @@ class InteractionController extends Controller
     public function templates()
     {
         $templates = $this->interactionRepo->getInteractionsByCategoryID(2);
-        return view('backend.general.template.index',compact('templates'));
+        return view('backend.general.interaction.template.index',compact('templates'));
     }
 
     public function statusUpdate(Request $request, $id)
