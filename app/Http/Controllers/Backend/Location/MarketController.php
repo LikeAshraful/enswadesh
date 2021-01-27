@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Repository\Location\AreaRepository;
+use Repository\Location\CityRepository;
 use Repository\Location\MarketRepository;
 
 class MarketController extends Controller
@@ -12,8 +13,9 @@ class MarketController extends Controller
     public $areaRepo;
     public $marketRepo;
 
-    public function __construct(AreaRepository $areaRepository, MarketRepository $marketRepository)
+    public function __construct(CityRepository $cityRepository, AreaRepository $areaRepository, MarketRepository $marketRepository)
     {
+        $this->cityRepo = $cityRepository;
         $this->areaRepo = $areaRepository;
         $this->marketRepo = $marketRepository;
     }
@@ -34,8 +36,9 @@ class MarketController extends Controller
      */
     public function create()
     {
+        $cities = $this->cityRepo->getAll();
         $areas = $this->areaRepo->getAll();
-        return view('backend.location.market.form', compact('areas'));
+        return view('backend.location.market.form', compact('cities', 'areas'));
     }
 
     /**
@@ -79,9 +82,10 @@ class MarketController extends Controller
      */
     public function edit($id)
     {
+        $cities = $this->cityRepo->getAll();
         $areas = $this->areaRepo->getAll();
         $market = $this->marketRepo->findByID($id);
-        return view('backend.location.market.form', compact('market', 'areas'));
+        return view('backend.location.market.form', compact('market', 'cities', 'areas'));
     }
 
     /**
