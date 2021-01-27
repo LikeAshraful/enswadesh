@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
 use App\Http\Controllers\Backend\General\Interaction\InteractionController;
+use App\Http\Controllers\Backend\General\Interaction\TopicController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 use App\Http\Controllers\Backend\UserManagement\VendorController;
 
@@ -64,7 +65,8 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     Route::resource('brand', BrandController::class);
     Route::resource('orders', OrdersController::class);
 
-    //interactions
+    //customer interactions
+    Route::resource('topics', TopicController::class);
     Route::get('videos/', [InteractionController::class, 'videos'])->name('videos.index');
     Route::get('videos/{id}', [InteractionController::class, 'showVideo'])->name('videos.show');
     Route::get('templates/', [InteractionController::class, 'templates'])->name('templates.index');
