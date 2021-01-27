@@ -19,6 +19,10 @@ class Market extends Model
         $this->attributes['market_slug'] = Str::of($value)->slug('-');
     }
 
+    public function city() {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
     public function areas() {
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }

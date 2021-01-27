@@ -36,6 +36,7 @@
                         <thead>
                             <tr>
                             <th scope="col">#</th>
+                            <th scope="col">City</th>
                             <th scope="col">Area</th>
                             <th scope="col">Market Name</th>
                             <th scope="col">Address</th>
@@ -49,6 +50,7 @@
                             @foreach($markets as $key => $market)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
+                                <td>{{ $market->city ? $market->city->city_name : 'Not Found' }}</td>
                                 <td>{{ $market->areas ? $market->areas->area_name : 'Not Found' }}</td>
                                 <td>{{ $market->market_name }}</td>
                                 <td>{{ $market->market_address }}</td>

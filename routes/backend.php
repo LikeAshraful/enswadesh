@@ -7,19 +7,18 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Shop\ShopController;
 use App\Http\Controllers\Backend\Order\OrdersController;
-use App\Http\Controllers\Backend\General\VideoController;
 use App\Http\Controllers\Backend\Location\AreaController;
 use App\Http\Controllers\Backend\Location\CityController;
 use App\Http\Controllers\Backend\Shop\ShopTypeController;
 use App\Http\Controllers\Backend\Location\FloorController;
 use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
-use App\Http\Controllers\Backend\General\TemplateController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
-use App\Http\Controllers\Backend\General\Interaction\InteractionController;
+use App\Http\Controllers\Backend\Interaction\InteractionController;
+use App\Http\Controllers\Backend\Interaction\TopicController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 use App\Http\Controllers\Backend\UserManagement\VendorController;
 
@@ -54,6 +53,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     });
     Route::resource('menus', AppMenuController::class);
     Route::resource('cities', CityController::class);
+    Route::get('getCities/{id}', [CityController::class, 'getCities']);
     Route::resource('areas', AreaController::class);
     Route::resource('thanas', ThanaController::class);
     Route::resource('markets', MarketController::class);
@@ -64,7 +64,8 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     Route::resource('brand', BrandController::class);
     Route::resource('orders', OrdersController::class);
 
-    //interactions
+    //customer interactions
+    Route::resource('topics', TopicController::class);
     Route::get('videos/', [InteractionController::class, 'videos'])->name('videos.index');
     Route::get('videos/{id}', [InteractionController::class, 'showVideo'])->name('videos.show');
     Route::get('templates/', [InteractionController::class, 'templates'])->name('templates.index');
