@@ -13,7 +13,7 @@ use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\API\General\Category\CategoryController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\Api\UserManagement\StaffController;
-use App\Http\Controllers\API\General\Interaction\InteractionController;
+use App\Http\Controllers\API\Interaction\InteractionController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -34,6 +34,8 @@ Route::prefix('markets')->namespace('Market')->group(function(){
     Route::get('', [MarketController::class, 'index']);
     Route::get('/all-market-by-city/{id}', [MarketController::class, 'allMarketsByCity']);
     Route::get('/top-market-by-city/{id}', [MarketController::class, 'topMarketsByCity']);
+    Route::get('/all-market-by-area/{id}', [MarketController::class, 'allMarketsByArea']);
+    Route::get('/top-market-by-area/{id}', [MarketController::class, 'topMarketsByArea']);
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 

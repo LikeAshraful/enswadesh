@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\General\Interaction;
+namespace App\Http\Controllers\API\Interaction;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\JsonResponseTrait;
-use App\Models\General\Interaction\InteractionFile;
-use Repository\General\Interaction\InteractionRepository;
-use App\Http\Resources\General\Interaction\InteractionResource;
+use App\Models\Interaction\InteractionFile;
+use Repository\Interaction\InteractionRepository;
+use App\Http\Resources\Interaction\InteractionResource;
 
 class InteractionController extends Controller
 {

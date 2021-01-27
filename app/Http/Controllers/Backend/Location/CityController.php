@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Location;
 
 use Illuminate\Http\Request;
+use App\Models\Location\Area;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Repository\Location\CityRepository;
@@ -37,6 +38,11 @@ class CityController extends Controller
         Gate::authorize('backend.cities.create');
 
         return view('backend.location.city.form');
+    }
+
+    public function getCities($id) {
+        $areas = Area::where('city_id', $id)->pluck('area_name', 'id');
+        return response()->json($areas);
     }
 
     /**

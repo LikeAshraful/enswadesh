@@ -1,13 +1,13 @@
 <?php
 
-namespace Database\Factories\General\Interaction;
+namespace Database\Factories\Interaction;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use App\Models\General\Interaction\Interaction;
+use App\Models\Interaction\Interaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\General\Interaction\InteractionTopic;
-use App\Models\General\Interaction\InteractionCategory;
+use App\Models\Interaction\InteractionTopic;
+use App\Models\Interaction\InteractionCategory;
 
 class InteractionFactory extends Factory
 {
