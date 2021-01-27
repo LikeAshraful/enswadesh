@@ -44,7 +44,7 @@
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="area_id">City</label>
+                        <label for="city_id">City</label>
                         @if(isset($shop))
                         <select name="city_id" id="city_id" class="form-control">
                             <option value="">Select One</option>

@@ -55,6 +55,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     });
     Route::resource('menus', AppMenuController::class);
     Route::resource('cities', CityController::class);
+    Route::get('getCities/{id}', [CityController::class, 'getCities']);
     Route::resource('areas', AreaController::class);
     Route::resource('thanas', ThanaController::class);
     Route::resource('markets', MarketController::class);

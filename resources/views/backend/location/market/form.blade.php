@@ -62,6 +62,29 @@
                     @enderror
                     </div>
                     <div class="form-group">
+                        <label for="city_id">City</label>
+                        @if(isset($market))
+                        <select name="city_id" id="city_id" class="form-control">
+                            <option value="">Select One</option>
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}" {{ $market->city_id == $city->id ? 'selected' : ''}}>{{ $city->city_name }}</option>
+                            @endforeach
+                        </select>
+                        @else
+                        <select name="city_id" id="city_id" class="form-control">
+                            <option value="">Select One</option>
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                            @endforeach
+                        </select>
+                        @endisset
+                        @error('city_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                     <label for="area_id">Area</label>
                     @if(isset($market))
                     <select name="area_id" id="area_id" class="form-control">
@@ -120,6 +143,47 @@ $(document).ready(function() {
     $('.select').each(function() {
         $(this).select2();
     });
+
+    // dependen drop down for catgory
+
+    $('select[name="city_id"]').on('change', function() {
+        var cityId = $(this).val();
+        if(cityId) {
+            $.ajax({
+                url: '/backend/getCities/'+ cityId,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    $('select[name="area_id"]').empty();
+                    $.each(data, function(key, value) {
+                        $('select[name="area_id"]').append('<option value="'+ key +'">'+ value +'</option>').trigger('change');
+                    });
+                }
+            });
+        }else{
+            $('select[name="area_id"]').empty();
+        }
+    });
+    // $('select[name="sub_category_id"]').on('change', function() {
+    //     var subId = $(this).val();
+    //     if(subId) {
+    //         $.ajax({
+    //             url: '/getChildcategory/'+subId,
+    //             type: "GET",
+    //             dataType: "json",
+    //             success:function(data) {
+
+    //                 $('select[name="child_category_id"]').empty();
+    //                 $.each(data, function(key, value) {
+    //                     $('select[name="child_category_id"]').append('<option value="'+ key +'">'+ value +'</option>').trigger('change');
+    //                 });
+    //             }
+    //         });
+    //     }else{
+    //         $('select[name="child_category_id"]').empty();
+    //     }
+    // });
+
 });
 </script>
 @endpush
