@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Backend\General\Interaction;
+namespace App\Http\Controllers\Backend\Interaction;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Repository\General\Interaction\TopicRepository;
+use Repository\Interaction\TopicRepository;
 
 class TopicController extends Controller
 {
@@ -25,7 +24,7 @@ class TopicController extends Controller
     {
         $topics = $this->topicRepo->getAll();
 
-        return view('backend.general.interaction.topic.index',compact('topics'));
+        return view('backend.interaction.topic.index',compact('topics'));
     }
 
     /**
@@ -35,7 +34,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        return view('backend.general.interaction.topic.form');
+        return view('backend.interaction.topic.form');
     }
 
     /**
@@ -82,7 +81,7 @@ class TopicController extends Controller
     public function edit($id)
     {
         $topic = $this->topicRepo->findByID($id);
-        return view('backend.general.interaction.topic.form',compact('topic'));
+        return view('backend.interaction.topic.form',compact('topic'));
     }
 
     /**

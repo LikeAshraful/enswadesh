@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\General\Interaction;
+namespace App\Models\Interaction;
 
 use App\Models\User;
 use Illuminate\Support\Str;

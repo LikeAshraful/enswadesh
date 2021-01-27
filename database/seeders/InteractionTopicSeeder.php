@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\General\Interaction\InteractionTopic;
+use App\Models\Interaction\InteractionTopic;
 
 class InteractionTopicSeeder extends Seeder
 {

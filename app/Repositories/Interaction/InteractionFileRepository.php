@@ -1,8 +1,8 @@
 <?php
 
-namespace Repository\General\Interaction;
+namespace Repository\Interaction;
 
-use App\Models\General\Interaction\InteractionFile;
+use App\Models\Interaction\InteractionFile;
 use Repository\BaseRepository;
 
 class InteractionFileRepository extends BaseRepository

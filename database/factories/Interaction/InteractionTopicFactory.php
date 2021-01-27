@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories\General\Interaction;
+namespace Database\Factories\Interaction;
 
-use App\Models\General\Interaction\InteractionTopic;
+use App\Models\Interaction\InteractionTopic;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
