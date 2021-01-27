@@ -30,6 +30,7 @@
     </div>
 </div>
 <!-- Scripts -->
+
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/backend.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>

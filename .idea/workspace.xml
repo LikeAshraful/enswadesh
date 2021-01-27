@@ -2,13 +2,172 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7fb75a5d-a731-4616-8cfe-293d5daab9b8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/enswadesh.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/enswadesh.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Helpers/API/ApiHelpers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/General/Interaction/InteractionController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Location/MarketController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Shop/ShopController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/UserManagement/AuthController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/UserManagement/StaffController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/Interaction/InteractionController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/API/Staff/SignInRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/API/Staff/SignUpRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/Auth/AuthResource.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/General/Brand/BrandResource.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/General/Category/CategoryResource.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Mail/RegistrationConfirmationEmail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/General/Interaction/Interaction.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/General/Interaction/InteractionCategory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/General/Interaction/InteractionFile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/General/Interaction/InteractionTopic.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Profile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/General/Interaction/InteractionFileRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/General/Interaction/InteractionRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/Location/AreaRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/Location/CityRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/Location/FloorRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/Location/MarketRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/Shop/ShopRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/User/API/AuthRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/User/API/StaffRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/User/UserRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/General/Interaction/InteractionFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_01_15_044817_create_profiles_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_01_23_055600_create_comments_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_01_23_055640_create_interaction_logs_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeders/InteractionCategorySeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/menus/n69lyg1lGTLgXmTrGkQ2r210pK5OlyMu2QUr2A5q.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/menus/u1FBUQXzxTF5M2XQJVr2l35w1XD49pPlitvhXLBz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/users/611611490393.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/backend.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/dataTables.bootstrap4.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/dropify.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/iziToast.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/jquery.dataTables.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/scripts/select2.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/emails/registration_confirmation_mail.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/cache/config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.rnd" beforeDir="false" afterPath="$PROJECT_DIR$/.rnd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ApiAuthController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/General/ApiTemplateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/General/Brand/BrandController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/General/Menu/ApiAppMenuController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/General/Menu/AppMenuController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/General/Video/ApiVideoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/General/Category/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Location/ApiAreaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Location/AreaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Location/ApiCityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Location/CityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Location/ApiFloorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Location/FloorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Location/ApiMarketController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Location/ApiThanaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Location/ThanaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Order/ApiOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Order/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Shop/ApiShopController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Shop/ApiShopTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Shop/ShopTypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/UserManagement/VendorController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/Category/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/Category/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/Menu/AppMenuController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/Menu/AppMenuController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/TemplateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/General/VideoController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/AreaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/AreaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/CityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/CityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/FloorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/FloorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/MarketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Location/MarketController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/RoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/RoleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Shop/ShopTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/Shop/ShopTypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/SuperAdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/SuperAdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/VendorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/UserManagement/VendorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Profile/UpdateProfileRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Profile/UpdateProfileRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/General/Menu/AppMenuResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/General/Menu/AppMenuResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/General/TemplateResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/General/Interaction/InteractionResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/General/VideoResource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Location/AreaResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Location/AreaResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Location/CityResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Location/CityResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Location/FloorResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Location/FloorResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Location/MarketResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Location/MarketResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Location/ThanaResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Location/ThanaResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Shop/ShopResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Shop/ShopResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Shop/ShopTypeResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Shop/ShopTypeResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Vendor/VendorResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Staff/StaffResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Vendor/VendorResourceCollection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/General/Menu/AppMenu.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/General/Menu/AppMenu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/General/Template.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/General/Video.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Location/Area.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location/Area.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Location/City.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location/City.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Location/Floor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location/Floor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Location/Market.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Location/Market.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/General/Interaction/Like.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product/ProductColor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/General/Interaction/Share.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product/ProductImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/General/Interaction/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product/ProductSize.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/General/Interaction/InteractionLog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product/Stock.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Role.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Shop/Shop.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shop/Shop.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Shop/ShopType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shop/ShopType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/BaseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/BaseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/General/AppMenuRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/General/AppMenuRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/General/TemplateRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/General/VideoRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Interface/Role/RoleInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Role/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Role/RoleRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/Shop/ShopTypeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/Shop/ShopTypeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/User/SuperAdminRepository.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap/cache/packages.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/packages.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bootstrap/cache/services.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/General/TemplateFactory.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/General/VideoFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/General/Interaction/InteractionTopicFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_01_135056_create_permissions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_01_135056_create_permissions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_30_065300_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_30_065300_create_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_03_062544_create_areas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_03_062544_create_areas_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_03_062659_create_markets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_03_062659_create_markets_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_03_062719_create_floors_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_03_062719_create_floors_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_03_062909_create_shops_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_03_062909_create_shops_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_12_050521_create_videos_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_18_053254_create_interactions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_14_062507_create_templates_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_18_054755_create_interaction_topics_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_16_075313_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_23_055622_create_shares_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_16_075450_create_product_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_23_055536_create_likes_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_16_075537_create_product_colors_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_18_052437_create_interaction_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_16_075605_create_product_sizes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_18_075421_create_interaction_files_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_16_075630_create_stocks_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/ShopPropertyDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/ShopPropertyDatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/TemplateSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/InteractionTopicSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/UserSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/UserSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/VideosSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/InteractionSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/general/menu/appmenu/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/general/menu/appmenu/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/general/menu/appmenu/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/general/menu/appmenu/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/general/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/general/template/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/general/video/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/general/video/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/area/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/area/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/area/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/area/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/city/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/city/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/city/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/city/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/floor/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/floor/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/floor/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/floor/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/market/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/market/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/location/market/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/location/market/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/profile/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/shop/shop/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/shop/shop/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/admin/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/admin/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/admin/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/admin/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/admin/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/admin/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/super_admin/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/super_admin/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/super_admin/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/super_admin/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/vendor/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/vendor/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/vendor/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/vendor/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/user_management/vendor/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/user_management/vendor/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/backend/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/backend/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/backend/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/backend/partials/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/backend.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,9 +377,9 @@
       <screen x="0" y="25" width="1440" height="833" />
     </state>
     <state x="361" y="262" key="NewPhpClassDialog/0.25.1440.833@0.25.1440.833" timestamp="1610271271110" />
-    <state x="539" y="369" key="NewPhpFileDialog" timestamp="1610270465829">
+    <state x="539" y="369" key="NewPhpFileDialog" timestamp="1611732101953">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state x="539" y="369" key="NewPhpFileDialog/0.25.1440.833@0.25.1440.833" timestamp="1610270465829" />
+    <state x="539" y="369" key="NewPhpFileDialog/0.25.1440.833@0.25.1440.833" timestamp="1611732101953" />
   </component>
 </project>

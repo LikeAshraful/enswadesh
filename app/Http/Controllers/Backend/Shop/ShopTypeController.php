@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers\Backend\Shop;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Shop\ShopType;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
+use Repository\Shop\ShopTypeRepository;
 
 class ShopTypeController extends Controller
 {
+    public $shopTypeRepo;
+
+    public function __construct(ShopTypeRepository $shopTypeRepository)
+    {
+        $this->shopTypeRepo = $shopTypeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $shoptypes  = ShopType::all();
+        $shoptypes  = $this->shopTypeRepo->getAll();
         return view('backend.shop.shoptype.index',  compact('shoptypes'));
     }
 
@@ -41,11 +44,8 @@ class ShopTypeController extends Controller
         $request->validate([
             'shop_type_name' => 'required'
         ]);
-        $slug = Str::of($request->shop_type_name)->slug('_');
-        ShopType::create($request->except('shop_type_slug') +
-            [
-                'shop_type_slug' => $slug
-            ]);
+
+        $this->shopTypeRepo->create($request->all());
 
         notify()->success('Shop type Successfully Added.', 'Added');
         return redirect()->route('backend.shoptypes.index');
@@ -68,7 +68,7 @@ class ShopTypeController extends Controller
      */
     public function edit($id)
     {
-        $shoptype= ShopType::find($id);
+        $shoptype = $this->shopTypeRepo->findByID($id);
         return view('backend.shop.shoptype.form', compact('shoptype'));
     }
 
@@ -80,19 +80,7 @@ class ShopTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = ShopType::find($id);
-        if (!empty($request->shop_type_name)) {
-            $slug = Str::of($request->shop_type_name)->slug('_');
-        } else {
-            $slug = $data->shop_type_slug;
-        }
-
-
-        // shop info update
-        $data = $data->update($request->except('shop_type_slug') +
-            [
-                'shop_type_slug' => $slug
-            ]);
+        $this->shopTypeRepo->updateByID($id, $request->all());
 
         notify()->success('Shop type Successfully Updated.', 'Updated');
         return redirect()->route('backend.shoptypes.index');
@@ -105,8 +93,8 @@ class ShopTypeController extends Controller
      */
     public function destroy($id)
     {
-        $data = ShopType::find($id);
-        $data->delete();
+        $this->shopTypeRepo->deletedByID($id);
+        notify()->warning('Floor Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.shoptypes.index');
     }
 }

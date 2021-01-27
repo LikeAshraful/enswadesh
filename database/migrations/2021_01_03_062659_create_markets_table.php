@@ -15,7 +15,8 @@ class CreateMarketsTable extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->id();
-            $table->integer('thana_id')             ->nullable();
+            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('area_id');
             $table->string('market_name')           ->nullable();
             $table->string('market_address')        ->nullable();
             $table->string('market_description')    ->nullable();
@@ -28,6 +29,8 @@ class CreateMarketsTable extends Migration
             $table->string('market_icon')           ->nullable();
             $table->string('market_image')          ->nullable();
             $table->timestamps();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
         });
     }
 

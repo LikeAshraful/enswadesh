@@ -2,12 +2,14 @@ button.delete-btn-style {
     border: none;
     color: red;
     background: transparent;
+    cursor: pointer;
 }
 
 button.delete-btn-style:hover {
     border: none;
     color: red;
     background: transparent;
+    cursor: pointer;
 }
 
 a.fa-edit-style {
@@ -33,5 +35,3 @@ a.fa-eye-style:hover {
     color: #226d04;
     background: transparent;
 }
-
-

@@ -15,7 +15,7 @@ class AppMenuResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id'                => $this->id,
             'menu_name'         => $this->menu_name,
             'menu_description'  => $this->menu_description,
             'menu_slug'         => $this->menu_slug,

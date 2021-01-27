@@ -78,7 +78,7 @@
                             </x-forms.select>
 
                             <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
-                                value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
+                                value="{{ isset($user) ? asset('storage/'.$user->image): '' }}" />
 
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
                                 on-click="resetForm('adminFrom')" />

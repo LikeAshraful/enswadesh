@@ -32,11 +32,11 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="table-responsive">
-                    <table id="datatableFloor" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <table id="datatableFloor" class="align-center mb-0 table table-borderless table-striped table-hover">
                         <thead>
                             <tr>
                             <th scope="col">#</th>
-                            <th scope="col">City</th>
+                            <th scope="col">Market</th>
                             <th scope="col">Floor No</th>
                             <th scope="col">Floor Note</th>
                             <th scope="col">Action</th>
@@ -46,7 +46,7 @@
                             @foreach($floors as $key => $floor)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $floor->marketPlaceOfFloor ? $floor->marketPlaceOfFloor->market_name : 'Not Found' }}</td>
+                                <td>{{ $floor->markets ? $floor->markets->market_name : 'Not Found' }}</td>
                                 <td>{{ $floor->floor_no }}</td>
                                 <td>{{ $floor->floor_note }}</td>
                                 <td>

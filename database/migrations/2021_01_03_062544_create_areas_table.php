@@ -15,12 +15,13 @@ class CreateAreasTable extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->integer('city_id')          ->nullable();
+            $table->unsignedBigInteger('city_id');
             $table->string('area_name')         ->nullable();
             $table->text('area_description')    ->nullable();
             $table->string('area_slug')         ->nullable();
             $table->string('area_icon')         ->nullable();
             $table->timestamps();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
     }
 

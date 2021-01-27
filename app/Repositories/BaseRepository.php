@@ -2,13 +2,13 @@
 namespace Repository;
 
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Collection\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 Abstract class BaseRepository {
 
     abstract function model();
 
-    public function getAll()
+    public function getAll(): Collection
     {
         return $this->model()::all();
     }
@@ -39,6 +39,12 @@ Abstract class BaseRepository {
         return $model->update($modelData);
     }
 
+    public function deletedByID($id)
+    {
+        $model = $this->findOrFailByID($id);
+        return $model->delete();
+    }
+
     public function updateAndReloadByID($id, array $modelData)
     {
         $model = $this->findOrFailByID($id);
@@ -46,8 +52,8 @@ Abstract class BaseRepository {
         return $model->reload();
     }
 
-    public function getAllByCustomerID($id)
+    public function getAllByUserID($field, $id)
     {
-        return $this->model()::where('customer_id', $id)->get();
+        return $this->model()::where($field, $id)->get();
     }
 }
