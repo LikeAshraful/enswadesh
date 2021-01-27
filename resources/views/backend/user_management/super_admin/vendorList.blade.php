@@ -44,7 +44,7 @@
                                         <div class="widget-content-left mr-3">
                                             <div class="widget-content-left">
                                                 <img class="img-fluid img-thumbnail"
-                                                    src="{{ asset('uploads/users/'.$vendor->image) }}" width="50"
+                                                    src="{{$vendor->profile ? asset('storage/'.$vendor->profile->image) : asset('users/user.png') }}" width="50"
                                                     height="50" alt="" alt="{{ $vendor->name}}">
                                             </div>
                                         </div>

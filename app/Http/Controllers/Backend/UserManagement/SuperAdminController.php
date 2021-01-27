@@ -18,7 +18,6 @@ class SuperAdminController extends Controller
     public function __construct(UserRepository $superAdmin)
     {
         $this->superAdminRepo=$superAdmin;
-
     }
 
     public function index()
@@ -38,9 +37,7 @@ class SuperAdminController extends Controller
     public function store(StoreUserRequest $request)
     {
         Gate::authorize('backend.super-admin.create');
-        $image = $request->hasFile('image') ? $this->superAdminRepo->storeFile($request->file('image')) : null;
-        $user = $this->superAdminRepo->create($request->except('image','role_id','password') + [
-            'image'     =>  $image,
+        $user = $this->superAdminRepo->create($request->except('role_id','password') + [
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);
@@ -66,14 +63,7 @@ class SuperAdminController extends Controller
     {
         Gate::authorize('backend.super-admin.edit');
         $user       = $this->superAdminRepo->findByID($id);
-        $userImage  = $request->hasFile('image');
-        $image      = $userImage ? $this->superAdminRepo->storeFile($request->file('image')) : $user->image;
-        if($userImage)
-        {
-            $this->superAdminRepo->updateFile($id);
-        }
-        $user  = $this->superAdminRepo->updateByID($id,$request->except('image','role_id','password') + [
-            'image'     => $image,
+        $user  = $this->superAdminRepo->updateByID($id,$request->except('role_id','password') + [
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);

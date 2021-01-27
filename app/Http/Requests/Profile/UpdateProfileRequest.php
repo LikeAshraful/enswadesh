@@ -8,27 +8,21 @@ use Illuminate\Support\Facades\Gate;
 
 class UpdateProfileRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         Gate::authorize('backend.profile.update');
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-            'address'      => 'required|string|max:255',
-            'image'    => 'nullable|image'
+            'address'           => 'required|string|max:120',
+            'image'             => 'nullable|image',
+            'bio'               => 'required|string|max:244',
+            'nid'               => 'required|string|max:18',
+            'passport_id'       => 'required|string|max:18',
+            'driving_license'   => 'required|string|max:18'
         ];
     }
 }

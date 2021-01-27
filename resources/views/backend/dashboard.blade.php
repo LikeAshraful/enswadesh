@@ -66,7 +66,7 @@
                                             <div class="widget-content-left mr-3">
                                                 <div class="widget-content-left">
                                                     <img width="50" height="50" class="img-fluid img-thumbnail"
-                                                         src="{{ asset('uploads/users/'.Auth::user()->image ) }}" alt="{{ Auth::user()->name }}">
+                                                         src="{{ asset('storage/'.Auth::user()->profile->image ) }}" alt="{{ Auth::user()->name }}">
                                                 </div>
                                             </div>
                                             <div class="widget-content-left flex2">
