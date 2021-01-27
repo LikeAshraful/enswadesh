@@ -31,7 +31,7 @@
         </span>
     </div>
 
-    <div class="scrollbar-sidebar">
+    <div class="scrollbar-sidebar ">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
@@ -237,6 +237,13 @@
                                 class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                     Templates
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.comments.index')}}"
+                                class="{{ Route::is('backend.comments.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                   Comments
                             </a>
                         </li>
                     </ul>
