@@ -1,11 +1,11 @@
 <?php
 
-namespace Repository\General\Interaction;
+namespace Repository\Interaction;
 
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use App\Models\General\Interaction\Interaction;
+use App\Models\Interaction\Interaction;
 
 class InteractionRepository extends BaseRepository
 {

@@ -13,7 +13,7 @@ use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\API\General\Category\CategoryController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\Api\UserManagement\StaffController;
-use App\Http\Controllers\API\General\Interaction\InteractionController;
+use App\Http\Controllers\API\Interaction\InteractionController;
 
 
 Route::post('/login', [AuthController::class, 'login']);

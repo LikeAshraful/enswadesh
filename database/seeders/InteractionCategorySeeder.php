@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use App\Models\General\Interaction\InteractionCategory;
+use App\Models\Interaction\InteractionCategory;
 
 class InteractionCategorySeeder extends Seeder
 {
