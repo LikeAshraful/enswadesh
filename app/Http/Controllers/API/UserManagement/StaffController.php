@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 use Repository\User\API\StaffRepository;
+use App\Notifications\RegisteredUserMail;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Staff\StaffResource;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\API\Staff\SignUpRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,6 +57,7 @@ class StaffController extends Controller
             $code = Response::HTTP_CREATED;
             $message = "Staff Successfully Registered.";
             $response = ApiHelpers::createAPIResponse(false, $code, $message, new StaffResource($staff));
+            Notification::send($staff, new RegisteredUserMail());
         } catch (QueryException $exception) {
             $message = $exception->getMessage();
             $code = $exception->getCode();

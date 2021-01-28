@@ -35,9 +35,7 @@ class VendorController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        $image = $request->hasFile('image') ? $this->vendorRepo->storeFile($request->file('image')) : null;
-        $user = $this->vendorRepo->create($request->except('image','role_id','password') + [
-            'image'     =>  $image,
+        $user = $this->vendorRepo->create($request->except('role_id','password') + [
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);
@@ -62,14 +60,7 @@ class VendorController extends Controller
     public function update($id, UpdateUserRequest $request)
     {
         $user       = $this->vendorRepo->findByID($id);
-        $userImage  = $request->hasFile('image');
-        $image      = $userImage ? $this->vendorRepo->storeFile($request->file('image')) : $user->image;
-        if($userImage)
-        {
-            $this->vendorRepo->updateFile($id);
-        }
-        $user  = $this->vendorRepo->updateByID($id,$request->except('image','role_id','password') + [
-            'image'     => $image,
+        $user  = $this->vendorRepo->updateByID($id,$request->except('role_id','password') + [
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);

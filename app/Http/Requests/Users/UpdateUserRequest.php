@@ -22,7 +22,6 @@ class UpdateUserRequest extends FormRequest
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $parameter],
             'password'  => ['nullable', 'string', 'min:8', 'confirmed'],
             'role'      => ['required'],
-            'image'     => 'nullable|mimes:jpeg,jpg,png|max:500',
         ];
     }
 }

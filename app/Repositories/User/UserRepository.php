@@ -3,8 +3,10 @@
 namespace Repository\User;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Profile;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,6 +38,22 @@ class UserRepository extends BaseRepository {
         return Role::where('slug','=','staff')->first();
     }
 
+    public function findByUser($id)
+    {
+        return Profile::where('user_id', $id)->first();
+    }
+
+    public function updateProfileByID($id, array $modelData)
+    {
+        $profile = Profile::where('user_id', $id)->first();
+         if($profile != null)
+        {
+            $profile->update($modelData);
+        }else{
+            return Profile::create($modelData);
+        }
+    }
+
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/user', $file);
@@ -43,8 +61,30 @@ class UserRepository extends BaseRepository {
 
     public function updateFile($id)
     {
-        $userImage = $this->findByID($id);
-        Storage::delete($userImage->icon);
+        $userImage = Profile::where('user_id', $id)->first();
+        if($userImage)
+        {
+            Storage::delete($userImage->image);
+        }
+    }
+
+    public function updatePasswordByID($id)
+    {
+        $hashedPassword = Auth::user()->password;
+        if (Hash::check($id['current_password'], $hashedPassword)) {
+            if (!Hash::check($id['password'], $hashedPassword)) {
+                Auth::user()->update([
+                    'password' => Hash::make($id['password'])
+                ]);
+                Auth::logout();
+                notify()->success('Password Successfully Changed.', 'Success');
+                return redirect()->route('login');
+            } else {
+                notify()->warning('New password cannot be the same as old password.', 'Warning');
+            }
+        } else {
+            notify()->error('Current password not match.', 'Error');
+        }
     }
 
     public function deleteByID($id)
