@@ -11,7 +11,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Brand extends Model
 {
     use HasFactory;
-    protected $guarded = ['id', 'created_at'];
+    protected $fillable = [
+        'name', 
+        'description', 
+        'slug', 
+        'icon'
+    ];
     
     public static function boot()
     {
