@@ -17,6 +17,7 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'comment' => $this->comment,
+            'count' => $this->countComent(),
             'user' => $this->user,
             'interaction'=> $this->interaction,
             'file_type' => $this->file_type,
