@@ -8,8 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Repository\User\API\AuthRepository;
 use App\Http\Resources\Auth\AuthResource;
+use App\Notifications\RegisteredUserMail;
 use App\Http\Controllers\JsonResponseTrait;
-use App\Mail\RegistrationConfirmationEmail;
+use Illuminate\Support\Facades\Notification;
 
 class AuthController extends Controller
 {
@@ -52,10 +53,7 @@ class AuthController extends Controller
             'role_id'=>3,
         ]);
         $accessToken = $user->createToken('authToken')->accessToken;
-        $message = [
-            'confirm_message'     => 'Dear '. $user->name . ', Congratulations and Welcome  to ENSWADESH. We want you to know that we appreciate you taking the time to learn more.',
-        ];
-        // Mail::to($user->email)->send(new RegistrationConfirmationEmail($message));
+        Notification::send($user, new RegisteredUserMail());
         return $this->json(
             "User Created Sucessfully",
             [ 'user' => $user, 'access_token' => $accessToken],

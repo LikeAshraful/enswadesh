@@ -2,8 +2,6 @@
 @section('title','User')
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
-<link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 
 <style>
@@ -76,10 +74,6 @@
                                     :selected="$user->role->id ?? null" />
                                 @endforeach
                             </x-forms.select>
-
-                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
-                                value="{{ isset($user) ? asset('storage/'.$user->image): '' }}" />
-
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
                                 on-click="resetForm('superUserFrom')" />
 
@@ -98,11 +92,9 @@
 @endsection
 
 @push('js')
-<script src="{{ asset('js/dropify.min.js') }}"></script>
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    $('.dropify').dropify();
     $('.select').each(function() {
         $(this).select2();
     });

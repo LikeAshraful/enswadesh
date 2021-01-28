@@ -35,9 +35,7 @@ class AdminController extends Controller
     public function store(StoreUserRequest $request)
     {
         Gate::authorize('backend.admin.create');
-        $image = $request->hasFile('image') ? $this->adminRepo->storeFile($request->file('image')) : null;
-        $user = $this->adminRepo->create($request->except('image','role_id','password') + [
-            'image'     =>  $image,
+        $user = $this->adminRepo->create($request->except('role_id','password') + [
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);
@@ -62,14 +60,7 @@ class AdminController extends Controller
     public function update($id, UpdateUserRequest $request)
     {
         $user       = $this->adminRepo->findByID($id);
-        $userImage  = $request->hasFile('image');
-        $image      = $userImage ? $this->adminRepo->storeFile($request->file('image')) : $user->image;
-        if($userImage)
-        {
-            $this->adminRepo->updateFile($id);
-        }
-        $user  = $this->adminRepo->updateByID($id,$request->except('image','role_id','password') + [
-            'image'     => $image,
+        $user  = $this->adminRepo->updateByID($id,$request->except('role_id','password') + [
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);
