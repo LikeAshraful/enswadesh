@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Backend\UserManagement;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Repository\User\UserRepository;
+use App\Notifications\RegisteredUserMail;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 
@@ -41,6 +43,7 @@ class SuperAdminController extends Controller
             'role_id'   =>  $request->role,
             'password'  => Hash::make($request->password),
         ]);
+        Notification::send($user, new RegisteredUserMail());
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('backend.super-admin.index');
     }

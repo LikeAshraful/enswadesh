@@ -38,6 +38,7 @@ class GeneralSeeder extends Seeder
             'slug'          => 'electronic',
             'status'        => 1,
             'shop_id'       =>0,
+            'user_id'       => 1,
             'level'         =>1,
             'icon'          => '1.jpg',
             'description'   => 'This is description part'
@@ -49,6 +50,7 @@ class GeneralSeeder extends Seeder
             'slug'          => 'laptop',
             'status'        => 1,
             'shop_id'       =>0,
+            'user_id'       => 1,
             'level'         =>$category->level+1,
             'icon'          => '2.jpg',
             'description'   => 'This is description part'
@@ -59,6 +61,7 @@ class GeneralSeeder extends Seeder
             'name'          => 'Asus',
             'slug'          => 'asus',
             'status'        => 1,
+            'user_id'       => 1,
             'shop_id'       =>0,
             'level'         =>$category_one->level+1,
             'icon'          => '3.jpg',
@@ -72,6 +75,7 @@ class GeneralSeeder extends Seeder
             'status'        => 1,
             'shop_id'       =>0,
             'level'         =>1,
+            'user_id'       => 1,
             'icon'          => '4.jpg',
             'description'   => 'This is description part'
             ]);
@@ -80,6 +84,7 @@ class GeneralSeeder extends Seeder
             'name'          => 'Fish',
             'slug'          => 'fish',
             'status'        => 1,
+            'user_id'       => 1,
             'level'         =>$category->level+1,
             'shop_id'       =>0,
             'icon'          => '1.jpg',
@@ -90,6 +95,7 @@ class GeneralSeeder extends Seeder
             'name'          => 'Hilsha',
             'slug'          => 'hilsha',
             'status'        => 1,
+            'user_id'       => 1,
             'level'         =>$category_one->level+1,
             'shop_id'       =>0,
             'icon'          => '1.jpg',
