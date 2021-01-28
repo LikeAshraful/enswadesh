@@ -134,12 +134,12 @@
                                 Market
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{route('backend.floors.index')}}" class="{{ Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Floor
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{route('backend.shoptypes.index')}}" class="{{ Route::is('backend.shoptypes.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>

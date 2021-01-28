@@ -36,6 +36,8 @@ Route::prefix('markets')->namespace('Market')->group(function(){
     Route::get('', [MarketController::class, 'index']);
     Route::get('/all-market-by-city/{id}', [MarketController::class, 'allMarketsByCity']);
     Route::get('/top-market-by-city/{id}', [MarketController::class, 'topMarketsByCity']);
+    Route::get('/all-market-by-area/{id}', [MarketController::class, 'allMarketsByArea']);
+    Route::get('/top-market-by-area/{id}', [MarketController::class, 'topMarketsByArea']);
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
