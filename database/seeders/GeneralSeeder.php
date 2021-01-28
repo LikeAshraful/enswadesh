@@ -30,7 +30,7 @@ class GeneralSeeder extends Seeder
         ]);
 
 
-        
+
         // Category
         $category = Category::updateOrCreate([
             'parent_id'     => 0,

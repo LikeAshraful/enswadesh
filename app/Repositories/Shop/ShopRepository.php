@@ -6,8 +6,10 @@ namespace Repository\Shop;
 
 use App\Models\Shop\Shop;
 use Repository\BaseRepository;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class ShopRepository extends BaseRepository
 {
