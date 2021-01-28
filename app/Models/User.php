@@ -16,7 +16,16 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'role_id',
+        'name',
+        'phone_number',
+        'email',
+        'password',
+        'status',
+        'suspend',
+        'last_login_at'
+    ];
 
     protected $hidden = [
         'password', 'remember_token',
