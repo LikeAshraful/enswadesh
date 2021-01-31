@@ -17,7 +17,7 @@ class CreateInteractionTopicsTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
-            $table->boolean('status')->nullable();
+            $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->timestamps();
