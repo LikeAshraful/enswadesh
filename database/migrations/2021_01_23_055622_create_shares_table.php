@@ -15,8 +15,8 @@ class CreateSharesTable extends Migration
     {
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('interaction_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('interaction_id')->constrained('interactions')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

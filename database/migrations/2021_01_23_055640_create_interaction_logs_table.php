@@ -15,9 +15,10 @@ class CreateInteractionLogsTable extends Migration
     {
         Schema::create('interaction_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('description')->nullable();
-            $table->enum('status', ['Pending' ,'Approved', 'Declined']);
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('interaction_id')->constrained('interactions')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('log')->nullable();
+            $table->enum('type', ['general' ,'created', 'updated']);
             $table->timestamps();
         });
     }
