@@ -23,7 +23,7 @@
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
-                        {{ __('Create Vendor') }}
+                        {{ __('Create Staff') }}
                     </a>
                 @endcanany
             </div>
@@ -48,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $key=>$user)
+                        @foreach($users->staffs as $key=>$user)
                         <tr>
                             <td class="text-center text-muted">#{{ $key + 1 }}</td>
                             <td>
@@ -62,10 +62,10 @@
                                             </div>
                                         </div>
                                         <div class="widget-content-left flex2">
-                                            <div class="widget-heading">{{ $user->name }}</div>
+                                            <div class="widget-heading">{{ $user->user->name }}</div>
                                             <div class="widget-subheading opacity-7">
-                                                @if ($user->role)
-                                                <span class="badge badge-info">{{ $user->role->name }}</span>
+                                                @if ($user->user->role)
+                                                <span class="badge badge-info">{{ $user->user->role->name }}</span>
                                                 @else
                                                 <span class="badge badge-danger">No role found :(</span>
                                                 @endif
@@ -74,11 +74,11 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">{{ $user->email }}</td>
+                            <td class="text-center">{{ $user->user->email }}</td>
                             @can('backend.vendor.index')
                                 <td class="text-center">
-                                    @if($user->suspend === 1)
-                                    <form action="{{ route('backend.vendor.block', $user->id) }}" method="post">
+                                    @if($user->user->suspend === 1)
+                                    <form action="{{ route('backend.vendor.block', $user->user->id) }}" method="post">
                                         @csrf
                                         @method('POST')
                                         <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-warning">
@@ -86,7 +86,7 @@
                                         </button>
                                     </form>
                                     @else
-                                    <form action="{{ route('backend.vendor.block', $user->id) }}" method="post">
+                                    <form action="{{ route('backend.vendor.block', $user->user->id) }}" method="post">
                                         @csrf
                                         @method('POST')
                                             <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
@@ -97,19 +97,19 @@
                                     @endif
                                 </td>
                             @endcan
-                            <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
+                            <td class="text-center">{{ $user->user->created_at->diffForHumans() }}</td>
                             <td class="text-center">
-                                <a class="fa-eye-style" href="{{ route('backend.vendor.show',$user->id) }}"><i
+                                <a class="fa-eye-style" href="{{ route('backend.vendor.show',$user->user->id) }}"><i
                                         class="fas fa-eye"></i>
                                 </a> |
-                                <a class="fa-edit-style" href="{{ route('backend.vendor.edit',$user->id) }}"><i
+                                <a class="fa-edit-style" href="{{ route('backend.vendor.edit',$user->user->id) }}"><i
                                         class="fas fa-edit"></i>
                                 </a> |
-                                <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})">
+                                <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->user->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
-                                <form id="delete-form-{{ $user->id }}"
-                                    action="{{ route('backend.vendor.destroy',$user->id) }}" method="POST"
+                                <form id="delete-form-{{ $user->user->id }}"
+                                    action="{{ route('backend.vendor.destroy',$user->user->id) }}" method="POST"
                                     style="display: none;">
                                     @csrf()
                                     @method('DELETE')

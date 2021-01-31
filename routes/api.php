@@ -12,7 +12,7 @@ use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\API\General\Category\CategoryController;
 use App\Http\Controllers\API\UserManagement\AuthController;
-use App\Http\Controllers\Api\UserManagement\StaffController;
+use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 
 
@@ -46,9 +46,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/users', [AuthController::class, 'dusers']);
     Route::get('/users', [AuthController::class, 'dusers']);
-    Route::get('/staffs', [StaffController::class, 'index']);
-    Route::post('/staffs', [StaffController::class, 'store']);
-    Route::post('/staff/{id}', [StaffController::class, 'destroy']);
+    Route::get('/staffs', [VendorController::class, 'index']);
+    Route::post('/staffs', [VendorController::class, 'store']);
+    Route::post('/staff/{id}', [VendorController::class, 'destroy']);
 
     // shop related
     Route::prefix('shops')->namespace('Shop')->group(function(){

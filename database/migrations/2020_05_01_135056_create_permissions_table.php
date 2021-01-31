@@ -10,15 +10,10 @@ class CreatePermissionsTable extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('module_id');
             $table->string('name');
             $table->string('slug')->unique();
+            $table->foreignId('module_id')->constrained('modules')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('module_id')
-                ->references('id')
-                ->on('modules')
-                ->onDelete('cascade');
         });
     }
 

@@ -110,4 +110,9 @@ class SuperAdminController extends Controller
         $block = $this->superAdminRepo->blockByID($id);
         return back();
     }
+    public function toggleShopOwner($id)
+    {
+        $showOwner = $this->superAdminRepo->showOwnerByID($id);
+        return back();
+    }
 }

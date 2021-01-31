@@ -8,6 +8,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\VendorStaff;
 
 
 class User extends Authenticatable
@@ -34,6 +35,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function staffs()
+    {
+        return $this->hasMany(VendorStaff::class, 'owner_id');
+    }
 
     public function role()
     {

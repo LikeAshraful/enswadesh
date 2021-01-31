@@ -18,7 +18,7 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Vendor') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' Staff') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">

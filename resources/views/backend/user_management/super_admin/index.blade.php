@@ -40,6 +40,7 @@
                             <th class="text-center">#</th>
                             <th>Name</th>
                             <th class="text-center">Email</th>
+                            <th class="text-center">Owner Status</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Busniess Status</th>
                             <th class="text-center">Joined At</th>
@@ -73,7 +74,26 @@
                                 </div>
                             </td>
                             <td class="text-center">{{ $user->email }}</td>
+                            <td class="text-center">
+                                @if($user->owner_id === 1)
+                                <form action="{{ route('backend.owner.status', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">
+                                        Approved
+                                    </button>
+                                </form>
+                                @else
+                                <form action="{{ route('backend.owner.status', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">
+                                            Pending
+                                        </button>
 
+                                </form>
+                                @endif
+                            </td>
                             <td class="text-center">
                                 @if($user->status === 1)
                                 <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
