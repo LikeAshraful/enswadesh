@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Api\UserManagement;
 
 use Illuminate\Http\Request;
 use App\Helpers\API\ApiHelpers;
+use Illuminate\Support\Facades\DB;
+use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
-use Repository\User\API\VendorRepository;
 use App\Notifications\RegisteredUserMail;
 use App\Http\Controllers\JsonResponseTrait;
-use App\Http\Resources\Vendor\VendorResource;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Resources\Vendor\VendorResource;
 use App\Http\Requests\API\Staff\SignUpRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -23,7 +25,7 @@ class VendorController extends Controller
 
     public $vendorRepo;
     
-    public function __construct(VendorRepository $vendorRepository)
+    public function __construct(UserRepository $vendorRepository)
     {
         $this->vendorRepo = $vendorRepository;
     }
@@ -32,9 +34,9 @@ class VendorController extends Controller
     {
         try {
             $users = $this->vendorRepo->findByID(Auth::id());
-            // dd($users->users[0]->user->name);
+            // dd($users->staffs[0]->user->name);
             $code = Response::HTTP_FOUND;
-            $message = $users->count() ." Staff Found!";
+            $message = $users->staffs->count() ." Staff Found!";
             $response = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::make($users));
         } catch (QueryException $exception) {
             $code = $exception->getCode();
@@ -47,19 +49,23 @@ class VendorController extends Controller
     public function store(SignUpRequest $request)
     {
         $user = null;
+        DB::beginTransaction();
         try {
-            $image = $request->hasFile('image') ? $this->vendorRepo->storeFile($request->file('image')) : null;
-            $user = $this->vendorRepo->create($request->except('image','role_id','password') + [
-                'image'         => $image,
+            $user = $this->vendorRepo->create($request->except('role_id','password') + [
                 'role_id'       =>5,
                 'password'      => Hash::make($request->password),
             ]);
-            $accessToken = $user->createToken('authToken')->accessToken;
+            $this->vendorRepo->updateProfileByID($user->id,$request->except('user_id') + [
+                'user_id'       => $user->id
+            ]);
+            $this->vendorRepo->staffVendorByID($user->id);
             $code = Response::HTTP_CREATED;
             $message = "user Successfully Registered.";
             $response = ApiHelpers::createAPIResponse(false, $code, $message, new VendorResource($user));
             Notification::send($user, new RegisteredUserMail());
+            DB::commit();
         } catch (QueryException $exception) {
+            DB::rollback();
             $message = $exception->getMessage();
             $code = $exception->getCode();
             $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
@@ -69,20 +75,43 @@ class VendorController extends Controller
 
     public function show($id)
     {
-        
+        try {
+            $user = $this->vendorRepo->findByID($id);
+            $code = Response::HTTP_FOUND;
+            $message = $user->name." Hello!";
+            $response = ApiHelpers::createAPIResponse(false, $code, $message, $user);
+        } catch (QueryException $exception) {
+            $code = $exception->getCode();
+            $message = $exception->getMessage();
+            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+        }
+        return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $user  = $this->vendorRepo->findByID($id);
+            $user  = $this->vendorRepo->updateByID($id,$request->except('password') + [
+                'password'  => Hash::make($request->password),
+            ]);
+            $code = Response::HTTP_FOUND;
+            $message = " Edit Your Information!";
+            $response = ApiHelpers::createAPIResponse(false, $code, $message, $user);
+        } catch (QueryException $exception) {
+            $code = $exception->getCode();
+            $message = $exception->getMessage();
+            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+        }
+        return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }
 
     public function destroy($id)
     {
         try {
-            $user = $this->vendorRepo->deleteStaff($id);
+            $user = $this->vendorRepo->deleteByID($id);
             $code = Response::HTTP_FOUND;
-            $message = $user->name ." Staff Deleted!";
+            $message =" Staff Deleted!";
             $response = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::collection($user));
         } catch (QueryException $exception) {
             $code = $exception->getCode();

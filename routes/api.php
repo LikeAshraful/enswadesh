@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users', [AuthController::class, 'dusers']);
     Route::get('/staffs', [VendorController::class, 'index']);
     Route::post('/staffs', [VendorController::class, 'store']);
+    Route::get('/staff/{id}', [VendorController::class, 'show']);
+    Route::post('/staff/update/{id}', [VendorController::class, 'update']);
     Route::post('/staff/{id}', [VendorController::class, 'destroy']);
 
     // shop related
