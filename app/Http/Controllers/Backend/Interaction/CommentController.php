@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Interaction\Comment;
 use App\Http\Controllers\Controller;
 use Repository\Interaction\CommentRepository;
-use Repository\Interaction\InteractionRepository;
 
 class CommentController extends Controller
 {
