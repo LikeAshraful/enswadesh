@@ -4,8 +4,10 @@ namespace Repository\Interaction;
 
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Interaction\Interaction;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Interaction\InteractionLog;
 
 class InteractionRepository extends BaseRepository
 {
@@ -35,6 +37,16 @@ class InteractionRepository extends BaseRepository
     public function showInteraction($category_id, $id)
     {
         return $this->model()::where('interaction_category_id', $category_id)->with('file')->find($id);
+    }
+
+    public function storeLog($interaction_id, $message, $type = "general")
+    {
+        InteractionLog::create([
+            'interaction_id' => $interaction_id,
+            'user_id' => Auth::id(),
+            'log' => $message,
+            'type' => $type
+        ]);
     }
 
 }

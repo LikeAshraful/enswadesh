@@ -8,6 +8,8 @@ use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
+use App\Http\Controllers\API\Interaction\LikeController;
+use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
 use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\UserManagement\AuthController;
@@ -16,7 +18,6 @@ use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\Interaction\CommentController;
-use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
 
@@ -100,7 +101,19 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('', [CommentController::class, 'index']);
         Route::get('/{interaction_id}', [CommentController::class, 'show']);
         Route::post('/create', [CommentController::class, 'store']);
+        Route::post('/{id}/update', [CommentController::class, 'update']);
         Route::get('/delete/{id}', [CommentController::class, 'destroy']);
+    });
+
+    Route::prefix('likes')->namespace('Like')->group(function(){
+        Route::get('/{interaction_id}', [LikeController::class, 'getLikes']);
+        Route::post('/create', [LikeController::class, 'store']);
+        Route::get('/delete/{id}', [LikeController::class, 'destroy']);
+    });
+
+    Route::prefix('shares')->namespace('Share')->group(function(){
+        Route::get('/{interaction_id}', [ShareController::class, 'getShares']);
+        Route::post('/create', [ShareController::class, 'store']);
     });
 
 });
