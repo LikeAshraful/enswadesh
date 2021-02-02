@@ -17,7 +17,7 @@ class CreateWeightsTable extends Migration
             $table->id();
             $table->string('name', 50)->index()->unique();
             $table->enum('type', ['base', 'custom'])->default('custom');
-            $table->unsignedBigInteger('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
