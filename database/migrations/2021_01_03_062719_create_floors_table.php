@@ -19,7 +19,7 @@ class CreateFloorsTable extends Migration
             $table->integer('floor_no')   ->nullable();
             $table->string('floor_note')  ->nullable();
             $table->timestamps();
-            $table->foreign('market_id')->references('id')->on('markets')->onDelete('cascade');
+            $table->foreign('market_id')->references('id')->on('markets')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

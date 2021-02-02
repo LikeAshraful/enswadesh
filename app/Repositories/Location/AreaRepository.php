@@ -22,6 +22,11 @@ class AreaRepository extends BaseRepository
         return $this->model()::with('cities')->get();
     }
 
+    public function areaByCityId($id): Collection
+    {
+        return $this->model()::with('cities')->where('city_id', $id)->get();
+    }
+
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/area', $file);

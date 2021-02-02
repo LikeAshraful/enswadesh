@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
 use App\Http\Controllers\Backend\Interaction\TopicController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
+use App\Http\Controllers\Backend\Product\Base\WeightController;
 use App\Http\Controllers\Backend\Interaction\CommentController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
@@ -62,10 +63,13 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('floors', FloorController::class);
     Route::resource('shoptypes', ShopTypeController::class);
     Route::resource('shops', ShopController::class);
+
     Route::resource('category', CategoryController::class);
     Route::resource('brand', BrandController::class);
-    Route::resource('orders', OrdersController::class);
     Route::resource('colors', ColorController::class);
+    Route::resource('weights', WeightController::class);
+
+    Route::resource('orders', OrdersController::class);
 
     //customer interactions
     Route::resource('topics', TopicController::class);
