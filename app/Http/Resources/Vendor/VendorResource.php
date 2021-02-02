@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Staff;
+namespace App\Http\Resources\Vendor;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StaffResource extends JsonResource
+class VendorResource extends JsonResource
 {
 
     public function toArray($request)

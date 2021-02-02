@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = ['id'];
+    protected $fillable = ['name'];
 
     public function permissions()
     {

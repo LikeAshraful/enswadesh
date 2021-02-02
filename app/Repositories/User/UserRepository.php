@@ -4,6 +4,7 @@ namespace Repository\User;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\VendorStaff;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,14 @@ class UserRepository extends BaseRepository {
     public function allRole()
     {
         return Role::get();
+    }
+
+    public function staffVendorByID($id)
+    {
+        return VendorStaff::create([
+            'user_id'       => $id,
+            'owner_id'      => Auth::id(),
+        ]);
     }
 
     public function allRoleForAdmin()
@@ -128,5 +137,23 @@ class UserRepository extends BaseRepository {
             $message = $exception->getMessage();
         }
         notify()->success($message); 
+    }
+
+    public function showOwnerByID($id)
+    {
+        try {
+            $showOwner = $this->findByID($id);
+            if ($showOwner->owner_id === 1) {
+                $showOwner->owner_id = 0;
+                $message = 'User Show Owner Successfully';
+            } else {
+                $showOwner->owner_id = 1;
+                $message = 'User Show Owner Successfully';
+            }
+            $showOwner->save();
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
+        }
+        notify()->success($message);
     }
 }

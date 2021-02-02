@@ -6,6 +6,7 @@ use Storage;
 use Illuminate\Support\Str;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use App\Models\General\Category\Category;
 
 class CategoryRepository extends BaseRepository {
@@ -44,6 +45,7 @@ class CategoryRepository extends BaseRepository {
                 'name'              => $data['name'],
                 'description'       => $data['description'],
                 'icon'              => $icon,
+                'user_id'           => Auth::id(),
                 'parent_id'         => $data['parent_id'],
                 'level'             => $level ? $level->level+1 : 1
             ]);

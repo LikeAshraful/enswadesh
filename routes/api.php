@@ -8,11 +8,13 @@ use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
-use App\Http\Controllers\API\Product\Base\ColorController;
+use App\Http\Controllers\API\Product\Base\SizeController;
 use App\Http\Controllers\API\General\Brand\BrandController;
-use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
+use App\Http\Controllers\Api\UserManagement\VendorController;
+use App\Http\Controllers\API\Product\Base\ColorController;
+use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\Interaction\CommentController;
 use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\Interaction\InteractionController;
@@ -50,9 +52,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/users', [AuthController::class, 'dusers']);
     Route::get('/users', [AuthController::class, 'dusers']);
-    Route::get('/staffs', [StaffController::class, 'index']);
-    Route::post('/staffs', [StaffController::class, 'store']);
-    Route::post('/staff/{id}', [StaffController::class, 'destroy']);
+    Route::get('/staffs', [VendorController::class, 'index']);
+    Route::post('/staffs', [VendorController::class, 'store']);
+    Route::get('/staff/{id}', [VendorController::class, 'show']);
+    Route::post('/staff/update/{id}', [VendorController::class, 'update']);
+    Route::post('/staff/{id}', [VendorController::class, 'destroy']);
 
     // shop related
     Route::prefix('shops')->namespace('Shop')->group(function(){
@@ -69,6 +73,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // product related
     Route::get('colors', [ColorController::class, 'index']);
+    Route::get('sizes', [SizeController::class, 'index']);
     Route::get('weights', [WeightController::class, 'index']);
 
     // oder related
@@ -99,6 +104,3 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
 });
-
-
-
