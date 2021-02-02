@@ -31,7 +31,7 @@
         </span>
     </div>
 
-    <div class="scrollbar-sidebar">
+    <div class="scrollbar-sidebar ">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
@@ -143,7 +143,7 @@
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Product</li>
-                <li class="{{ Route::is('backend.category.index*') ||  Route::is('backend.brand.index*') || Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
+                <li class="{{ Route::is('backend.category.index*') ||  Route::is('backend.brand.index*') || Route::is('backend.colors.index*') || Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
                     <a href="#">
                     <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
@@ -168,6 +168,13 @@
                             </a>
                         </li>
                         @endcanany
+                        <li>
+                            <a href="{{route('backend.colors.index')}}"
+                                class="{{ Route::is('backend.colors.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Colors
+                            </a>
+                        </li>
                         @canany('backend.brand.index')
                         <li>
                             <a href="{{route('backend.weights.index')}}"
@@ -234,6 +241,13 @@
                                 class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                     Templates
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.comments.index')}}"
+                                class="{{ Route::is('backend.comments.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                   Comments
                             </a>
                         </li>
                     </ul>

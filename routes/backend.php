@@ -15,12 +15,14 @@ use App\Http\Controllers\Backend\Location\MarketController;
 use App\Http\Controllers\Backend\Interaction\TopicController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
 use App\Http\Controllers\Backend\Product\Base\WeightController;
+use App\Http\Controllers\Backend\Interaction\CommentController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\UserManagement\VendorController;
 use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\Interaction\InteractionController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\Product\Base\ColorController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
 //Dashboard
@@ -61,9 +63,12 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('floors', FloorController::class);
     Route::resource('shoptypes', ShopTypeController::class);
     Route::resource('shops', ShopController::class);
+
     Route::resource('category', CategoryController::class);
     Route::resource('brand', BrandController::class);
+    Route::resource('colors', ColorController::class);
     Route::resource('weights', WeightController::class);
+
     Route::resource('orders', OrdersController::class);
 
     //customer interactions
@@ -72,4 +77,5 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::get('videos/{id}', [InteractionController::class, 'showVideo'])->name('videos.show');
     Route::get('templates/', [InteractionController::class, 'templates'])->name('templates.index');
     Route::post('interactions/{id}', [InteractionController::class, 'statusUpdate'])->name('interactions.update');
-
+    Route::resource('comments', CommentController::class);
+    Route::post('comments/update-status', [CommentController::class, 'changeStatus'])->name('comments.statusUpdate');
