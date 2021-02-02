@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Shop\ShopController;
@@ -13,14 +12,16 @@ use App\Http\Controllers\Backend\Shop\ShopTypeController;
 use App\Http\Controllers\Backend\Location\FloorController;
 use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
+use App\Http\Controllers\Backend\Interaction\TopicController;
+use App\Http\Controllers\Backend\Product\Base\SizeController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
-use App\Http\Controllers\Backend\General\Category\CategoryController;
-use App\Http\Controllers\Backend\Interaction\InteractionController;
-use App\Http\Controllers\Backend\Interaction\TopicController;
-use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 use App\Http\Controllers\Backend\UserManagement\VendorController;
+use App\Http\Controllers\Backend\UserManagement\ProfileController;
+use App\Http\Controllers\Backend\Interaction\InteractionController;
+use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
 //Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -63,6 +64,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     Route::resource('shops', ShopController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('brand', BrandController::class);
+    Route::resource('size', SizeController::class);
     Route::resource('orders', OrdersController::class);
 
     //customer interactions
@@ -71,4 +73,3 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
     Route::get('videos/{id}', [InteractionController::class, 'showVideo'])->name('videos.show');
     Route::get('templates/', [InteractionController::class, 'templates'])->name('templates.index');
     Route::post('interactions/{id}', [InteractionController::class, 'statusUpdate'])->name('interactions.update');
-

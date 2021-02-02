@@ -37,20 +37,20 @@
                 <table id="datatableUser" class="align-middle mb-0 table table-borderless table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th>Name</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Owner Status</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Busniess Status</th>
-                            <th class="text-center">Joined At</th>
-                            <th class="text-center">Actions</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Owner Status</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Busniess Status</th>
+                            <th scope="col">Joined At</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users as $key=>$user)
                         <tr>
-                            <td class="text-center text-muted">#{{ $key + 1 }}</td>
+                            <td scope="row">#{{ $key + 1 }}</td>
                             <td>
                                 <div class="widget-content p-0">
                                     <div class="widget-content-wrapper">
@@ -73,8 +73,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">{{ $user->email }}</td>
-                            <td class="text-center">
+                            <td>{{ $user->email }}</td>
+                            <td>
                                 @if($user->owner_id === 1)
                                 <form action="{{ route('backend.owner.status', $user->id) }}" method="post">
                                     @csrf
@@ -94,7 +94,7 @@
                                 </form>
                                 @endif
                             </td>
-                            <td class="text-center">
+                            <td>
                                 @if($user->status === 1)
                                 <form action="{{ route('backend.users.publish', $user->id) }}" method="post">
                                     @csrf
@@ -114,7 +114,7 @@
                                 </form>
                                 @endif
                             </td>
-                            <td class="text-center">
+                            <td>
                                 @if($user->suspend === 1)
                                 <form action="{{ route('backend.users.blocked', $user->id) }}" method="post">
                                     @csrf
@@ -134,16 +134,13 @@
                                 </form>
                                 @endif
                             </td>
-                            <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
-                            <td class="text-center">
-                                <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$user->id) }}"><i
-                                        class="fas fa-eye"></i>
+                            <td>{{ $user->created_at->diffForHumans() }}</td>
+                            <td>
+                                <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$user->id) }}"><i class="fas fa-eye"></i>
                                 </a> |
-                                <a class="fa-edit-style" href="{{ route('backend.super-admin.edit',$user->id) }}"><i
-                                        class="fas fa-edit"></i>
+                                <a class="fa-edit-style" href="{{ route('backend.super-admin.edit',$user->id) }}"><i class="fas fa-edit"></i>
                                 </a> |
-                                <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})">
-                                    <i class="fas fa-trash-alt"></i>
+                                <button type="button" class="delete-btn-style" onclick="deleteData({{ $user->id }})"><i class="fas fa-trash-alt"></i>
                                 </button>
                                 <form id="delete-form-{{ $user->id }}"
                                     action="{{ route('backend.super-admin.destroy',$user->id) }}" method="POST"

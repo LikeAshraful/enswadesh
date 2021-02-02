@@ -37,20 +37,20 @@
                 <table id="datatableUser" class="align-middle mb-0 table table-borderless table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th>Name</th>
-                            <th class="text-center">Email</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
                             @can('backend.vendor.index')
-                                <th class="text-center">Status</th>
+                                <th scope="col">Status</th>
                             @endcan
-                            <th class="text-center">Joined At</th>
-                            <th class="text-center">Actions</th>
+                            <th scope="col">Joined At</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users->staffs as $key=>$user)
                         <tr>
-                            <td class="text-center text-muted">#{{ $key + 1 }}</td>
+                            <td>#{{ $key + 1 }}</td>
                             <td>
                                 <div class="widget-content p-0">
                                     <div class="widget-content-wrapper">
@@ -74,9 +74,9 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">{{ $user->user->email }}</td>
+                            <td>{{ $user->user->email }}</td>
                             @can('backend.vendor.index')
-                                <td class="text-center">
+                                <td>
                                     @if($user->user->suspend === 1)
                                     <form action="{{ route('backend.vendor.block', $user->user->id) }}" method="post">
                                         @csrf
@@ -97,8 +97,8 @@
                                     @endif
                                 </td>
                             @endcan
-                            <td class="text-center">{{ $user->user->created_at->diffForHumans() }}</td>
-                            <td class="text-center">
+                            <td>{{ $user->user->created_at->diffForHumans() }}</td>
+                            <td>
                                 <a class="fa-eye-style" href="{{ route('backend.vendor.show',$user->user->id) }}"><i
                                         class="fas fa-eye"></i>
                                 </a> |

@@ -25,19 +25,19 @@
                 <table id="datatableUser" class="align-middle mb-0 table table-borderless table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th>Name</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Busniess Status</th>
-                            <th class="text-center">Joined At</th>
-                            <th class="text-center">Actions</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Busniess Status</th>
+                            <th scope="col">Joined At</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($vendors as $key=>$vendor)
                         <tr>
-                            <td class="text-center text-muted">#{{ $key + 1 }}</td>
+                            <td>#{{ $key + 1 }}</td>
                             <td>
                                 <div class="widget-content p-0">
                                     <div class="widget-content-wrapper">
@@ -61,8 +61,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">{{ $vendor->email }}</td>
-                            <td class="text-center">
+                            <td>{{ $vendor->email }}</td>
+                            <td>
                                 @if($vendor->status === 1)
                                 <form action="{{ route('backend.users.publish', $vendor->id) }}" method="post">
                                     @csrf
@@ -82,7 +82,7 @@
                                 </form>
                                 @endif
                             </td>
-                            <td class="text-center">
+                            <td>
                                 @if($vendor->suspend === 1)
                                 <form action="{{ route('backend.users.blocked', $vendor->id) }}" method="post">
                                     @csrf
@@ -102,8 +102,8 @@
                                 </form>
                                 @endif
                             </td>
-                            <td class="text-center">{{ $vendor->created_at->diffForHumans() }}</td>
-                            <td class="text-center">
+                            <td>{{ $vendor->created_at->diffForHumans() }}</td>
+                            <td>
                                 <a class="fa-eye-style" href="{{ route('backend.super-admin.show',$vendor->id) }}"><i
                                         class="fas fa-eye"></i>
                                 </a> |

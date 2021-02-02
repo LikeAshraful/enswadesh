@@ -155,7 +155,7 @@
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Product</li>
-                <li class="{{ Route::is('backend.category.index*') ||  Route::is('backend.brand.index*') ? 'mm-active' : '' }}">
+                <li class="{{ Route::is('backend.category.index*') ||  Route::is('backend.brand.index*') ||  Route::is('backend.size.index*') ? 'mm-active' : '' }}">
                     <a href="#">
                     <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
@@ -180,6 +180,13 @@
                             </a>
                         </li>
                         @endcanany
+                        <li>
+                            <a href="{{route('backend.size.index')}}"
+                                class="{{ Route::is('backend.size.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Size
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
