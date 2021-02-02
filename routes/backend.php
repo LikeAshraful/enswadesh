@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
 use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\Interaction\InteractionController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\Product\Base\ColorController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
 //Dashboard
@@ -64,6 +65,7 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('category', CategoryController::class);
     Route::resource('brand', BrandController::class);
     Route::resource('orders', OrdersController::class);
+    Route::resource('colors', ColorController::class);
 
     //customer interactions
     Route::resource('topics', TopicController::class);
