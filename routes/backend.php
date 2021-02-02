@@ -13,7 +13,9 @@ use App\Http\Controllers\Backend\Location\FloorController;
 use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
 use App\Http\Controllers\Backend\Interaction\TopicController;
+use App\Http\Controllers\Backend\Product\Base\SizeController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
+use App\Http\Controllers\Backend\Product\Base\WeightController;
 use App\Http\Controllers\Backend\Interaction\CommentController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
@@ -21,6 +23,7 @@ use App\Http\Controllers\Backend\UserManagement\VendorController;
 use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\Interaction\InteractionController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
+use App\Http\Controllers\Backend\Product\Base\ColorController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
 //Dashboard
@@ -28,6 +31,7 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('roles', RoleController::class);
     Route::resource('super-admin', SuperAdminController::class);
     Route::get('vendor-list', [SuperAdminController::class,'vendorList'])->name('users.vendor');
+    Route::post('users/{ownerID}/status', [SuperAdminController::class, 'toggleShopOwner'])->name('owner.status');
     Route::post('users/{userID}/publish', [SuperAdminController::class, 'togglePublish'])->name('users.publish');
     Route::post('users/{userID}/block', [SuperAdminController::class, 'toggleBlock'])->name('users.blocked');
     Route::resource('admin', AdminController::class);
@@ -61,8 +65,13 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('floors', FloorController::class);
     Route::resource('shoptypes', ShopTypeController::class);
     Route::resource('shops', ShopController::class);
+
     Route::resource('category', CategoryController::class);
     Route::resource('brand', BrandController::class);
+    Route::resource('colors', ColorController::class);
+    Route::resource('size', SizeController::class);
+    Route::resource('weights', WeightController::class);
+
     Route::resource('orders', OrdersController::class);
 
     //customer interactions

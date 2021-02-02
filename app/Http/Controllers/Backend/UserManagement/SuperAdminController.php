@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\UserManagement;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -17,7 +18,7 @@ class SuperAdminController extends Controller
 {
     protected $superAdminRepo;
     
-    public function __construct(UserRepository $superAdmin)
+    public function __construct(UserRepository $superAdmin, )
     {
         $this->superAdminRepo=$superAdmin;
     }
@@ -39,11 +40,22 @@ class SuperAdminController extends Controller
     public function store(StoreUserRequest $request)
     {
         Gate::authorize('backend.super-admin.create');
-        $user = $this->superAdminRepo->create($request->except('role_id','password') + [
-            'role_id'   =>  $request->role,
-            'password'  => Hash::make($request->password),
-        ]);
-        Notification::send($user, new RegisteredUserMail());
+        DB::beginTransaction();
+        try {
+            $user = $this->superAdminRepo->create($request->except('role_id','password') + [
+                'role_id'   =>  $request->role,
+                'password'  => Hash::make($request->password),
+            ]);
+            $this->superAdminRepo->updateProfileByID($user->id,$request->except('user_id') + [
+                'user_id'       => $user->id
+            ]);
+            Notification::send($user, new RegisteredUserMail());
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            notify()->error($e);
+            return redirect()->route('backend.super-admin.index');
+        }
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('backend.super-admin.index');
     }
@@ -96,6 +108,11 @@ class SuperAdminController extends Controller
     public function toggleBlock($id)
     {
         $block = $this->superAdminRepo->blockByID($id);
+        return back();
+    }
+    public function toggleShopOwner($id)
+    {
+        $showOwner = $this->superAdminRepo->showOwnerByID($id);
         return back();
     }
 }

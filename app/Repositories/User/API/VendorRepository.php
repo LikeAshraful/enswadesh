@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 
-class StaffRepository extends BaseRepository {
+class VendorRepository extends BaseRepository {
 
     public function model()
     {

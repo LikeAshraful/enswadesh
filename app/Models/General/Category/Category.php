@@ -12,26 +12,22 @@ class Category extends Model
 {
     use HasFactory; 
 
-    protected $guarded = ['id', 'created_at'];
+    protected $fillable = [
+        'name', 
+        'description', 
+        'slug', 
+        'icon',
+        'thumbnail',
+        'level',
+        'shop_id',
+        'type',
+        'user_id',
+        'status',
+        'parent_id'
+    ];
     
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->created_by = Auth::id();
-        });
-        static::updating(function ($model) {
-            $model->updated_by = Auth::id();
-        });
-        static::deleting(function ($model) {
-            $model->deleted_by = Auth::id();
-            $model->save();
-        });
-
-    }
     public function createdBy(){
-        return $this->belongsTo(User::class,'created_by','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
     public function subcategory(){

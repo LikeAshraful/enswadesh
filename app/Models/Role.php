@@ -7,7 +7,12 @@ use Illuminate\Support\Str;
 
 class Role extends Model
 {
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'deletable'
+    ];
 
     public function users()
     {
