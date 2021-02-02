@@ -31,7 +31,7 @@
         </span>
     </div>
 
-    <div class="scrollbar-sidebar">
+    <div class="scrollbar-sidebar ">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
@@ -122,24 +122,12 @@
                                 </a>
                             </li>
                         @endcanany
-                        {{-- <li>
-                            <a href="{{route('backend.thanas.index')}}" class="{{ Route::is('backend.thanas.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Thana
-                            </a>
-                        </li> --}}
                         <li>
                             <a href="{{route('backend.markets.index')}}" class="{{ Route::is('backend.markets.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                 Market
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href="{{route('backend.floors.index')}}" class="{{ Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Floor
-                            </a>
-                        </li> --}}
                         <li>
                             <a href="{{route('backend.shoptypes.index')}}" class="{{ Route::is('backend.shoptypes.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
@@ -155,7 +143,7 @@
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Product</li>
-                <li class="{{ Route::is('backend.category.index*') ||  Route::is('backend.brand.index*') ||  Route::is('backend.size.index*') ? 'mm-active' : '' }}">
+                <li class="{{ Route::is('backend.category.index*') ||  Route::is('backend.brand.index*') || Route::is('backend.colors.index*') ||  Route::is('backend.size.index*') || Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
                     <a href="#">
                     <i class="metismenu-icon pe-7s-diamond"></i>
                         Property
@@ -181,12 +169,28 @@
                         </li>
                         @endcanany
                         <li>
+                            <a href="{{route('backend.colors.index')}}"
+                                class="{{ Route::is('backend.colors.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Colors
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{route('backend.size.index')}}"
                                 class="{{ Route::is('backend.size.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                     Size
                             </a>
                         </li>
+                        @canany('backend.brand.index')
+                        <li>
+                            <a href="{{route('backend.weights.index')}}"
+                                class="{{ Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Weights
+                            </a>
+                        </li>
+                        @endcanany
                     </ul>
                 </li>
                 <li class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
@@ -244,6 +248,13 @@
                                 class="{{ Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>
                                     Templates
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.comments.index')}}"
+                                class="{{ Route::is('backend.comments.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                   Comments
                             </a>
                         </li>
                     </ul>

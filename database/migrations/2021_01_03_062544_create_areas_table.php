@@ -21,7 +21,7 @@ class CreateAreasTable extends Migration
             $table->string('area_slug')         ->nullable();
             $table->string('area_icon')         ->nullable();
             $table->timestamps();
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

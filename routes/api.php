@@ -13,6 +13,10 @@ use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Api\UserManagement\VendorController;
+use App\Http\Controllers\API\Product\Base\ColorController;
+use App\Http\Controllers\API\Product\Base\WeightController;
+use App\Http\Controllers\API\Interaction\CommentController;
+use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
 
@@ -23,6 +27,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/menus', [AppMenuController::class, 'index']);;
 Route::get('/areas', [AreaController::class, 'index']);
+Route::get('/areas-by-city/{id}', [AreaController::class, 'areaByCity']);
 
 
 
@@ -53,8 +58,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/staff/update/{id}', [VendorController::class, 'update']);
     Route::post('/staff/{id}', [VendorController::class, 'destroy']);
 
-    Route::get('/sizes', [SizeController::class, 'index']);
-
     // shop related
     Route::prefix('shops')->namespace('Shop')->group(function(){
         Route::get('', [ShopController::class, 'index']);
@@ -67,6 +70,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     // general topic
     Route::get('brands', [BrandController::class, 'index']);
     Route::get('categories', [CategoryController::class, 'index']);
+
+    // product related
+    Route::get('colors', [ColorController::class, 'index']);
+    Route::get('sizes', [SizeController::class, 'index']);
+    Route::get('weights', [WeightController::class, 'index']);
 
     // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){
@@ -86,6 +94,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/create', [InteractionController::class, 'storeVideo']);
         Route::get('/{id}', [InteractionController::class, 'showVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
+    });
+
+    Route::prefix('comments')->namespace('Comment')->group(function(){
+        Route::get('', [CommentController::class, 'index']);
+        Route::get('/{interaction_id}', [CommentController::class, 'show']);
+        Route::post('/create', [CommentController::class, 'store']);
+        Route::get('/delete/{id}', [CommentController::class, 'destroy']);
     });
 
 });
