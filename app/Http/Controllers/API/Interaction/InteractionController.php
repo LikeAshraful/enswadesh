@@ -61,6 +61,8 @@ class InteractionController extends Controller
                 'file_path' => $videoFile,
                 'file_type' => $request->file_type
             ]);
+            //save logs
+            $this->interactionRepo->storeLog($video->id, 'Video Created', 'created');
 
             DB::commit();
 
@@ -123,6 +125,8 @@ class InteractionController extends Controller
                 'file_path' => $videoFile,
                 'file_type' => $request->file_type
             ]);
+            //save logs
+            $this->interactionRepo->storeLog($video->id, 'Video Updated', 'updated');
 
             DB::commit();
 
@@ -162,10 +166,23 @@ class InteractionController extends Controller
 
         $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'template') : null;
 
+       DB::beginTransaction();
+       try
+       {
         $template = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
             'thumbnail'          => $image,
             'user_id' => Auth::id()
         ]);
+
+        //save logs
+        $this->interactionRepo->storeLog($template->id, 'Template Created', 'created');
+
+        Db::commit();
+
+       } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json($e);
+       }
 
         return $this->json(
             "Tempalte Created Sucessfully",

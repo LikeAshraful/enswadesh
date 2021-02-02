@@ -10,7 +10,6 @@ use Repository\Interaction\CommentRepository;
 class CommentController extends Controller
 {
     public $commentRepo;
-
     public function __construct(CommentRepository $commentRepository)
     {
         $this->commentRepo = $commentRepository;
@@ -30,7 +29,6 @@ class CommentController extends Controller
     public function changeStatus(Request $request){
         $comment = Comment::find($request->id);
         $comment =  $comment->update($request->except('status') + ['status' => $request->status]);
-
         return response()->json($comment);
     }
 

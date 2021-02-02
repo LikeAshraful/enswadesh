@@ -36,6 +36,8 @@ class InteractionController extends Controller
     public function statusUpdate(Request $request, $id)
     {
         $this->interactionRepo->updateByID($id, $request->all());
+        //save logs
+        $this->interactionRepo->storeLog($id, 'Status Updated', 'updated');
         notify()->success('Status Successfully Updated.', 'Updated');
     }
 

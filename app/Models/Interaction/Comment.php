@@ -12,7 +12,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['comment','file', 'file_type', 'status', 'interaction_id', 'user_id'];
+    protected $fillable = ['comment','file', 'file_type', 'status', 'interaction_id', 'user_id', 'reply_id'];
 
     public function user()
     {
@@ -24,7 +24,7 @@ class Comment extends Model
         return $this->belongsTo(Interaction::class, 'interaction_id', 'id');
     }
 
-    public function countComent()
+    public function count()
     {
         return Comment::where('interaction_id', $this->id)->count();
       // return DB::select("SELECT interaction_id, count(*) as count FROM comments  WHERE interaction_id = '$this->id' GROUP BY interaction_id");

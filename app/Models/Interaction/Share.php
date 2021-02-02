@@ -2,10 +2,29 @@
 
 namespace App\Models\Interaction;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Interaction\Interaction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Share extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id','interaction_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function interaction()
+    {
+        return $this->belongsTo(Interaction::class, 'interaction_id', 'id');
+    }
+
+    public function count()
+    {
+        return Share::where('interaction_id', $this->id)->count();
+    }
 }
