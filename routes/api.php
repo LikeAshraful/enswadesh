@@ -8,14 +8,15 @@ use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
+use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\General\Brand\BrandController;
-use App\Http\Controllers\API\General\Menu\AppMenuController;
-use App\Http\Controllers\API\General\Category\CategoryController;
 use App\Http\Controllers\API\Interaction\CommentController;
-use App\Http\Controllers\API\Interaction\CommentsController;
 use App\Http\Controllers\API\UserManagement\AuthController;
+use App\Http\Controllers\API\General\Menu\AppMenuController;
+use App\Http\Controllers\API\Interaction\CommentsController;
 use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\Interaction\InteractionController;
+use App\Http\Controllers\API\General\Category\CategoryController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -64,6 +65,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     // general topic
     Route::get('brands', [BrandController::class, 'index']);
     Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('colors', [ColorController::class, 'index']);
 
     // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){
