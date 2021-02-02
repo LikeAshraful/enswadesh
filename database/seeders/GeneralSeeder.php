@@ -15,8 +15,8 @@ class GeneralSeeder extends Seeder
      */
     public function run()
     {
-         //Brand
-         $brand = Brand::updateOrCreate([
+        //Brand
+        $brand = Brand::updateOrCreate([
             'name'          => 'Asus',
             'slug'          => 'asus',
             'description'   => 'This is description part',
