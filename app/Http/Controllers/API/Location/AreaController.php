@@ -38,9 +38,13 @@ class AreaController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function areaByCity($id)
     {
-        return view('shopproperty::create');
+        $areasByCity = $this->areaRepo->areaByCityId($id);
+        return $this->json(
+            'Area list by city',
+            AreaResource::collection($areasByCity)
+        );
     }
 
     /**

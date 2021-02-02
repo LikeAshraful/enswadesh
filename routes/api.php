@@ -9,11 +9,12 @@ use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
 use App\Http\Controllers\API\General\Brand\BrandController;
-use App\Http\Controllers\API\General\Menu\AppMenuController;
-use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
+use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Api\UserManagement\StaffController;
 use App\Http\Controllers\API\Interaction\InteractionController;
+use App\Http\Controllers\API\General\Category\CategoryController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,6 +23,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/menus', [AppMenuController::class, 'index']);;
 Route::get('/areas', [AreaController::class, 'index']);
+Route::get('/areas-by-city/{id}', [AreaController::class, 'areaByCity']);
 
 
 
@@ -62,6 +64,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     // general topic
     Route::get('brands', [BrandController::class, 'index']);
     Route::get('categories', [CategoryController::class, 'index']);
+
+    // product related
+
+    Route::get('weights', [WeightController::class, 'index']);
 
     // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){

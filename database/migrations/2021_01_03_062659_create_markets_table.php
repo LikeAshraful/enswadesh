@@ -29,8 +29,8 @@ class CreateMarketsTable extends Migration
             $table->string('market_icon')           ->nullable();
             $table->string('market_image')          ->nullable();
             $table->timestamps();
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

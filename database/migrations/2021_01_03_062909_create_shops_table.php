@@ -37,10 +37,10 @@ class CreateShopsTable extends Migration
             $table->string('meta_og_image_shop')    ->nullable();
             $table->string('meta_og_url_shop')      ->nullable();
             $table->timestamps();
-            $table->foreign('shop_owner_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
-            $table->foreign('market_id')->references('id')->on('markets')->onDelete('cascade');
+            $table->foreign('shop_owner_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('market_id')->references('id')->onUpdate('cascade')->on('markets')->onDelete('cascade');
         });
     }
 
