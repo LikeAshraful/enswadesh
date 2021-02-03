@@ -28,7 +28,7 @@ class ShopResource extends JsonResource
             'shop_fax'                  => $this->shop_fax,
             'shop_slug'                 => $this->shop_slug,
             'shop_cover_image'          => $this->shop_cover_image,
-            'shop_icon'                 => $this->shop_icon,
+            'shop_logo'                 => $this->shop_logo,
             'shopType'                  => $this->shopType,
             'shop_description'          => $this->shop_description,
             'meta_title_shop'           => $this->meta_title_shop,

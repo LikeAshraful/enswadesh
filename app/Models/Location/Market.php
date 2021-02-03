@@ -11,7 +11,7 @@ class Market extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['area_id', 'market_name', 'market_address', 'market_description', 'market_slug',  'market_icon',];
+    protected $fillable = ['city_id', 'area_id', 'market_name', 'market_address', 'market_description', 'market_slug',  'market_icon'];
 
     public function setMarketNameAttribute($value)
     {
@@ -34,5 +34,10 @@ class Market extends Model
     public function getShopsCountAttribute()
     {
         return $this->shops()->count();
+    }
+
+    public function getShopsFloorAttribute()
+    {
+        return $this->shops()->groupBY('floor_no')->count();
     }
 }
