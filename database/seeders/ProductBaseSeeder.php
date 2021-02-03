@@ -24,6 +24,7 @@ class ProductBaseSeeder extends Seeder
             'user_id'       => 1,
             'status'        => 0
         ]);
+
         $color = Color::updateOrCreate([
             'name'          => 'Black',
             'color_code'    => '#000000',
@@ -32,8 +33,6 @@ class ProductBaseSeeder extends Seeder
             'status'        => 1
         ]);
 
-
-
         //Size
         $size = Size::updateOrCreate([
             'name'          => 'M',
@@ -41,7 +40,6 @@ class ProductBaseSeeder extends Seeder
             'user_id'       => 1,
             'status'        => 0
         ]);
-
 
         $size = Size::updateOrCreate([
             'name'          => 'L',

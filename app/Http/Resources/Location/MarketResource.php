@@ -23,6 +23,8 @@ class MarketResource extends JsonResource
             'market_slug'           => $this->market_slug,
             'market_icon'           => $this->market_icon,
             'shop_count'            => $this->shops_count,
+            'shop_count_floor'      => $this->shops_floor,
+            'total_floor'           => $this->total_floor,
             'created_at'            => $this->created_at,
             'updated_at'            => $this->updated_at,
         ];

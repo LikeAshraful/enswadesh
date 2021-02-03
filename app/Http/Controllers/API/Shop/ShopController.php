@@ -54,10 +54,9 @@ class ShopController extends Controller
         $request->validate([
             'shop_name'           => 'required',
             'shop_no'             => 'required',
-            'shop_description'    => 'required',
-            'shop_logo'           => 'nullable|mimes:jpeg,jpg,png|max:500',
-            'shop_cover_image'    => 'nullable|mimes:jpeg,jpg,png|max:500',
-            'meta_og_image_shop'  => 'nullable|mimes:jpeg,jpg,png|max:500',
+            'shop_logo'           => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'shop_cover_image'    => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'meta_og_image_shop'  => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
 
         $shop_logo = $request->hasFile('shop_logo') ? $this->shopRepo->storeFile($request->file('shop_logo')) : null;
@@ -165,5 +164,24 @@ class ShopController extends Controller
     public function destroy($id)
     {
         $this->shopRepo->deleteShops($id);;
+    }
+
+
+    public function shopByMarket($id)
+    {
+        $shops = $this->shopRepo->shopByMarketId($id);
+        return $this->json(
+            'Shop list by market',
+            ShopResource::collection($shops)
+        );
+    }
+
+    public function shopByMarketByFloor($id)
+    {
+        $shops = $this->shopRepo->shopByMarketByFloorNo($id);
+        return $this->json(
+            'Shop count list by floor',
+            $shops
+        );
     }
 }

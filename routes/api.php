@@ -22,13 +22,13 @@ use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
 
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 
 
-Route::get('/menus', [AppMenuController::class, 'index']);;
-Route::get('/areas', [AreaController::class, 'index']);
-Route::get('/areas-by-city/{id}', [AreaController::class, 'areaByCity']);
+Route::get('menus', [AppMenuController::class, 'index']);;
+Route::get('areas', [AreaController::class, 'index']);
+Route::get('areas-by-city/{id}', [AreaController::class, 'areaByCity']);
 
 
 
@@ -39,25 +39,27 @@ Route::prefix('cities')->namespace('City')->group(function(){
 
 Route::prefix('markets')->namespace('Market')->group(function(){
     Route::get('', [MarketController::class, 'index']);
-    Route::get('/all-market-by-city/{id}', [MarketController::class, 'allMarketsByCity']);
-    Route::get('/top-market-by-city/{id}', [MarketController::class, 'topMarketsByCity']);
-    Route::get('/all-market-by-area/{id}', [MarketController::class, 'allMarketsByArea']);
-    Route::get('/top-market-by-area/{id}', [MarketController::class, 'topMarketsByArea']);
+    Route::get('all-market-by-city/{id}', [MarketController::class, 'allMarketsByCity']);
+    Route::get('top-market-by-city/{id}', [MarketController::class, 'topMarketsByCity']);
+    Route::get('all-market-by-area/{id}', [MarketController::class, 'allMarketsByArea']);
+    Route::get('top-market-by-area/{id}', [MarketController::class, 'topMarketsByArea']);
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
-Route::get('/floors', [FloorController::class, 'index']);
-Route::get('/shop-types', [ShopTypeController::class, 'index']);
+Route::get('floors', [FloorController::class, 'index']);
+Route::get('shop-types', [ShopTypeController::class, 'index']);
+Route::get('shops/all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
+Route::get('shops/shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
 
 Route::group(['middleware' => 'auth:api'], function () {
 
-    Route::get('/users', [AuthController::class, 'dusers']);
-    Route::get('/users', [AuthController::class, 'dusers']);
-    Route::get('/staffs', [VendorController::class, 'index']);
-    Route::post('/staffs', [VendorController::class, 'store']);
-    Route::get('/staff/{id}', [VendorController::class, 'show']);
-    Route::post('/staff/update/{id}', [VendorController::class, 'update']);
-    Route::post('/staff/{id}', [VendorController::class, 'destroy']);
+    Route::get('users', [AuthController::class, 'dusers']);
+    Route::get('users', [AuthController::class, 'dusers']);
+    Route::get('staffs', [VendorController::class, 'index']);
+    Route::post('staffs', [VendorController::class, 'store']);
+    Route::get('staff/{id}', [VendorController::class, 'show']);
+    Route::post('staff/update/{id}', [VendorController::class, 'update']);
+    Route::post('staff/{id}', [VendorController::class, 'destroy']);
 
     // shop related
     Route::prefix('shops')->namespace('Shop')->group(function(){
