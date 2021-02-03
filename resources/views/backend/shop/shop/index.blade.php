@@ -45,7 +45,7 @@
                             <th scope="col">Shop No</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Icon</th>
+                            <th scope="col">Logo</th>
                             <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -63,7 +63,7 @@
                                 <td>{{ $shop->shop_slug }}</td>
                                 <td>{{ $shop->shop_description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/shop/' . $shop->shop_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset('/' . $shop->shop_logo)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> |

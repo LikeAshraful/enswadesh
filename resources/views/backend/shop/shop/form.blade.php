@@ -182,9 +182,9 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for='shop_icon'>Shop Logo</label>
-                        <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
-                        @error('shop_icon')
+                        <label for='shop_logo'>Shop Logo</label>
+                        <input type="file" id="shop_logo" name="shop_logo" class="dropify" data-default-file="{{ isset($shop) ? asset('/'. $shop->shop_logo): '' }}" data-height="220" value="{{ isset($shop) ? asset('/'. $shop->shop_logo): '' }}" />
+                        @error('shop_logo')
                         <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -246,8 +246,8 @@
                     <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}"holder="Market Description">
                     </div>
                     <div class="form-group">
-                    <label for='shop_cover_image'>Shop Icon</label>
-                    <input type="file" id="shop_cover_image" name="shop_cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_cover_image): '' }}" />
+                    <label for='shop_cover_image'>Shop Cover Image</label>
+                    <input type="file" id="shop_cover_image" name="shop_cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('/'. $shop->shop_cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('/'. $shop->shop_cover_image): '' }}" />
                     @error('shop_cover_image')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>

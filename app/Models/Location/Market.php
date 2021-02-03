@@ -35,4 +35,9 @@ class Market extends Model
     {
         return $this->shops()->count();
     }
+
+    public function getShopsFloorAttribute()
+    {
+        return $this->shops()->groupBY('floor_no')->count();
+    }
 }
