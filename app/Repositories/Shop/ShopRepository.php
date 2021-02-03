@@ -41,11 +41,21 @@ class ShopRepository extends BaseRepository
         return DB::select("SELECT floor_no, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_no ORDER BY 'ASC'");
     }
 
-    public function updateShops($id)
+    public function updateShopsLogo($id)
     {
         $shop = $this->findById($id);
         Storage::delete($shop->shop_logo);
+    }
+
+    public function updateShopsImage($id)
+    {
+        $shop = $this->findById($id);
         Storage::delete($shop->shop_cover_image);
+    }
+
+    public function updateShopsOgImage($id)
+    {
+        $shop = $this->findById($id);
         Storage::delete($shop->meta_og_image_shop);
     }
 

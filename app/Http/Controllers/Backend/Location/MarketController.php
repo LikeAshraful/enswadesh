@@ -10,6 +10,7 @@ use Repository\Location\MarketRepository;
 
 class MarketController extends Controller
 {
+    public $cityRepo;
     public $areaRepo;
     public $marketRepo;
 

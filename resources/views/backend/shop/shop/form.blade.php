@@ -90,29 +90,6 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="thana_id">Thana</label>
-                        @if(isset($shop))
-                        <select name="thana_id" id="thana_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($thanas as $thana)
-                                <option value="{{ $thana->id }}" {{ $shop->thana_id == $thana->id ? 'selected' : ''}}>{{ $thana->thana_name }}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select name="thana_id" id="thana_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($thanas as $thana)
-                                <option value="{{ $thana->id }}">{{ $thana->thana_name }}</option>
-                            @endforeach
-                        </select>
-                        @endisset
-                        @error('thana_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
                         <label for="market_id">Market</label>
                         @if(isset($shop))
                         <select name="market_id" id="market_id" class="form-control">
@@ -136,29 +113,6 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="floor_id">Floor</label>
-                        @if(isset($shop))
-                        <select name="floor_id" id="floor_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($floors as $floor)
-                                <option value="{{ $floor->id }}" {{ $shop->floor_id == $floor->id ? 'selected' : ''}}>{{ $floor->floor_note }}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select name="floor_id" id="floor_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($floors as $floor)
-                                <option value="{{ $floor->id }}">{{ $floor->floor_note }}</option>
-                            @endforeach
-                        </select>
-                        @endisset
-                        @error('floor_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
                         <label for="shop_type_id">Shop Type</label>
                         @if(isset($shop))
                         <select name="shop_type_id" id="shop_type_id" class="form-control">
@@ -176,6 +130,45 @@
                         </select>
                         @endisset
                         @error('shop_type_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="floor_no">Floor No</label>
+                        @isset($shop->floor_no)
+                        <select name="floor_no" id="floor_no" class="form-control">
+                            <option value="">Select One</option>
+                            <option value="Ground Floor" {{ $shop->floor_no == 'Ground Floor' ? 'selected' : ''}}>Ground Floor</option>
+                            <option value="1st Floor" {{ $shop->floor_no == '1st Floor' ? 'selected' : ''}}>1st Floor</option>
+                            <option value="2nd Floor" {{ $shop->floor_no == '2nd Floor' ? 'selected' : ''}}>2nd Floor</option>
+                            <option value="3rd Floor" {{ $shop->floor_no == '3rd Floor' ? 'selected' : ''}}>3rd Floor</option>
+                            <option value="4th Floor" {{ $shop->floor_no == '4th Floor' ? 'selected' : ''}}>4th Floor</option>
+                            <option value="5th Floor" {{ $shop->floor_no == '5th Floor' ? 'selected' : ''}}>5th Floor</option>
+                            <option value="6th Floor" {{ $shop->floor_no == '6th Floor' ? 'selected' : ''}}>6th Floor</option>
+                            <option value="7th Floor" {{ $shop->floor_no == '7th Floor' ? 'selected' : ''}}>7th Floor</option>
+                            <option value="8th Floor" {{ $shop->floor_no == '8th Floor' ? 'selected' : ''}}>8th Floor</option>
+                            <option value="9th Floor" {{ $shop->floor_no == '9th Floor' ? 'selected' : ''}}>9th Floor</option>
+                            <option value="10th Floor" {{ $shop->floor_no == '10th Floor' ? 'selected' : ''}}>10th Floor</option>
+                        </select>
+                        @else
+                        <select name="floor_no" id="floor_no" class="form-control">
+                            <option value="">Select One</option>
+                            <option value="Ground Floor">Ground Floor</option>
+                            <option value="1st Floor">1st Floor</option>
+                            <option value="2nd Floor">2nd Floor</option>
+                            <option value="3rd Floor">3rd Floor</option>
+                            <option value="4th Floor">4th Floor</option>
+                            <option value="5th Floor">5th Floor</option>
+                            <option value="6th Floor">6th Floor</option>
+                            <option value="7th Floor">7th Floor</option>
+                            <option value="8th Floor">8th Floor</option>
+                            <option value="9th Floor">9th Floor</option>
+                            <option value="10th Floor">10th Floor</option>
+                        </select>
+                        @endisset
+                        @error('floor_no')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -307,7 +300,7 @@
                     </div> --}}
                     <div class="form-group">
                     <label for='meta_og_image_shop'>Meta OG Image</label>
-                    <input type="file" id="meta_og_image_shop" name="meta_og_image_shop" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->meta_og_image_shop): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->meta_og_image_shop): '' }}" />
+                    <input type="file" id="meta_og_image_shop" name="meta_og_image_shop" class="dropify" data-default-file="{{ isset($shop) ? asset('/'. $shop->meta_og_image_shop): '' }}" data-height="220" value="{{ isset($shop) ? asset('/'. $shop->meta_og_image_shop): '' }}" />
                     @error('meta_og_image_shop')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>

@@ -84,7 +84,11 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        return view();
+        $shop = $this->shopRepo->findOrFailByID($id);
+        return $this->json(
+            'Single Shop',
+            $shop
+        );
     }
 
     /**
@@ -139,8 +143,16 @@ class ShopController extends Controller
         $shop_cover_image = $shopCoverImage ? $this->shopRepo->storeFile($request->file('shop_cover_image')) : $shop->shop_cover_image;
         $meta_og_image_shop = $metaImageShop ? $this->shopRepo->storeFile($request->file('meta_og_image_shop')) : $shop->meta_og_image_shop;
 
-        if ($shopLogo || $shopCoverImage || $metaImageShop) {
-            $this->shopRepo->updateShops($id);
+        if ($shopLogo) {
+            $this->shopRepo->updateShopsLogo($id);
+        }
+
+        if ($shopCoverImage) {
+            $this->shopRepo->updateShopsImage($id);
+        }
+
+        if ($metaImageShop) {
+            $this->shopRepo->updateShopsOgImage($id);
         }
 
         $this->shopRepo->updateByID($id, $request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop') +
@@ -163,7 +175,7 @@ class ShopController extends Controller
      */
     public function destroy($id)
     {
-        $this->shopRepo->deleteShops($id);;
+        $this->shopRepo->deleteShops($id);
     }
 
 
