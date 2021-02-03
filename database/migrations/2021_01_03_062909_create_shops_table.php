@@ -19,7 +19,7 @@ class CreateShopsTable extends Migration
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('market_id');
-            $table->integer('floor_no')              ->nullable();
+            $table->string('floor_no')              ->nullable();
             $table->unsignedBigInteger('shop_type_id')->nullable();
             $table->string('shop_no')               ->nullable();
             $table->string('shop_name')             ->nullable();
