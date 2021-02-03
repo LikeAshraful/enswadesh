@@ -57,7 +57,7 @@
                                 <td>{{ $shop->city ? $shop->city->city_name : 'Not Found' }}</td>
                                 <td>{{ $shop->area ? $shop->area->area_name : 'Not Found' }}</td>
                                 <td>{{ $shop->market ? $shop->market->market_name : 'Not Found' }}</td>
-                                <td>{{ $shop->floor ? $shop->floor->floor_note : 'Not Found' }}</td>
+                                <td>{{ $shop->floor_no }}</td>
                                 <td>{{ $shop->shop_name }}</td>
                                 <td>{{ $shop->shop_no }}</td>
                                 <td>{{ $shop->shop_slug }}</td>
