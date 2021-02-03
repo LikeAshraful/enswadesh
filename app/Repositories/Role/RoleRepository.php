@@ -6,7 +6,7 @@ use App\Models\Module;
 use Repository\BaseRepository;
 
 class RoleRepository extends BaseRepository {
-    
+
     public function model()
     {
         return Role::class;
@@ -16,7 +16,7 @@ class RoleRepository extends BaseRepository {
     {
         return Module::get();
     }
-    
+
     public function updateByID($id, array $modelData)
     {
         $model = $this->findOrFailByID($id);
@@ -26,6 +26,6 @@ class RoleRepository extends BaseRepository {
     public function deleteRole($id)
     {
         $role = $this->findByID($id);
-        $role->delete(); 
+        $role->delete();
     }
 }

@@ -3,9 +3,11 @@
 namespace Repository\User;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Module;
 use App\Models\Profile;
 use App\Models\VendorStaff;
 use Repository\BaseRepository;
+use App\Models\PermissionStaff;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +37,27 @@ class UserRepository extends BaseRepository {
             'user_id'       => $id,
             'owner_id'      => Auth::id(),
         ]);
+    }
+
+    public function staffPermissionsByID($id, $role_id, array $modelData)
+    {
+        foreach($modelData as $data)
+        {
+            $staff = new PermissionStaff;
+
+                $staff->permission_id = $data;
+                $staff->user_id       = $id;
+                $staff->owner_id      = Auth::id();
+                $staff->role_id      = $role_id;
+                $staff->save();
+
+        }
+        return $staff;
+    }
+
+    public function staffModules()
+    {
+        return Module::whereNotBetween('id',[1,4])->get();
     }
 
     public function allRoleForAdmin()
@@ -100,7 +123,7 @@ class UserRepository extends BaseRepository {
     {
         $userImage = $this->findByID($id);
         Storage::delete($userImage->image);
-        $userImage->delete(); 
+        $userImage->delete();
     }
 
     public function publishByID($id)
@@ -136,7 +159,7 @@ class UserRepository extends BaseRepository {
         } catch (\Exception $exception) {
             $message = $exception->getMessage();
         }
-        notify()->success($message); 
+        notify()->success($message);
     }
 
     public function showOwnerByID($id)
