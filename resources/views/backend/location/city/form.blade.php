@@ -46,29 +46,29 @@
                     @method('PUT')
                     @endif
                     <div class="form-group">
-                        <label for="city_name">City Name</label>
-                        <input type="text" id="city_name" name="city_name"
-                            class="form-control @error('city_name') is-invalid @enderror"
-                            value="{{ isset($city) ? $city->city_name : '' }}" placeholder="City name">
-                        @error('city_name')
+                        <label for="name">City Name</label>
+                        <input type="text" id="name" name="name"
+                            class="form-control @error('name') is-invalid @enderror"
+                            value="{{ isset($city) ? $city->name : '' }}" placeholder="City name">
+                        @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="city_description">City Description</label>
-                        <input type="text" id="city_description" name="city_description" class="form-control"
-                            value="{{ isset($city) ? $city->city_description : '' }}"
+                        <label for="description">City Description</label>
+                        <input type="text" id="description" name="description" class="form-control"
+                            value="{{ isset($city) ? $city->description : '' }}"
                             placeholder="City Description">
                     </div>
                     <div class="form-group">
-                        <label for='city_icon'>City Icon</label>
-                        <input type="file" id="city_icon" name="city_icon" class="dropify"
-                            data-default-file="{{ isset($city) ? asset($city->city_icon): '' }}"
+                        <label for='icon'>City Icon</label>
+                        <input type="file" id="icon" name="icon" class="dropify"
+                            data-default-file="{{ isset($city) ? asset($city->icon): '' }}"
                             data-height="220"
-                            value="{{ isset($city) ? asset($city->city_icon): '' }}" />
-                        @error('city_icon')
+                            value="{{ isset($city) ? asset($city->icon): '' }}" />
+                        @error('icon')
                         <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

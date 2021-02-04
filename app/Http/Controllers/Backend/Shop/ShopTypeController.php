@@ -42,7 +42,7 @@ class ShopTypeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'shop_type_name' => 'required'
+            'name' => 'required'
         ]);
 
         $this->shopTypeRepo->create($request->all());

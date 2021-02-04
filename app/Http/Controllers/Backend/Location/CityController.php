@@ -41,7 +41,7 @@ class CityController extends Controller
     }
 
     public function getCities($id) {
-        $areas = Area::where('city_id', $id)->pluck('area_name', 'id');
+        $areas = Area::where('city_id', $id)->pluck('name', 'id');
         return response()->json($areas);
     }
 
@@ -53,15 +53,15 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'city_name' => 'required',
-            'city_description' => 'required',
-            'city_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'name' => 'required',
+            'description' => 'required',
+            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        $city_icon = $request->hasFile('city_icon') ? $this->cityRepo->storeFile($request->file('city_icon')) : null;
-        $this->cityRepo->create($request->except('city_icon') +
+        $icon = $request->hasFile('icon') ? $this->cityRepo->storeFile($request->file('icon')) : null;
+        $this->cityRepo->create($request->except('icon') +
             [
-                'city_icon' => $city_icon
+                'icon' => $icon
             ]);
 
         notify()->success('City Successfully Added.', 'Added');
@@ -102,17 +102,17 @@ class CityController extends Controller
     {
         $city = $this->cityRepo->findByID($id);
 
-        $cityIcon = $request->hasFile('city_icon');
+        $cityIcon = $request->hasFile('icon');
 
-        $city_icon = $cityIcon ? $this->cityRepo->storeFile($request->file('city_icon')) : $city->city_icon;
+        $icon = $cityIcon ? $this->cityRepo->storeFile($request->file('icon')) : $city->icon;
 
         if ($cityIcon) {
             $this->cityRepo->updateCity($id);
         }
 
-        $this->cityRepo->updateByID($id, $request->except('city_icon') +
+        $this->cityRepo->updateByID($id, $request->except('icon') +
             [
-                'city_icon' => $city_icon
+                'icon' => $icon
             ]);
 
         notify()->success('City Successfully Updated.', 'Updated');

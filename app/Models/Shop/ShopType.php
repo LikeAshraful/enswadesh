@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ShopType extends Model
 {
     use HasFactory;
-    protected $fillable = ['shop_type_name', 'shop_type_description', 'shop_type_slug'];
+    protected $fillable = ['name', 'description', 'slug'];
 
-    public function setShopTypeNameAttribute($value)
+    public function setNameAttribute($value)
     {
-        $this->attributes['shop_type_name'] = $value;
-        $this->attributes['shop_type_slug'] = Str::of($value)->slug('-');
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 }

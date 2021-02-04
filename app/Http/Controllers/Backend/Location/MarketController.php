@@ -50,16 +50,16 @@ class MarketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'market_name' => 'required',
-            'market_address' => 'required',
-            'market_description' => 'required',
-            'market_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'name' => 'required',
+            'address' => 'required',
+            'description' => 'required',
+            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        $market_icon = $request->hasFile('market_icon') ? $this->marketRepo->storeFile($request->file('market_icon')) : null;
-        $this->marketRepo->create($request->except('market_icon') +
+        $icon = $request->hasFile('icon') ? $this->marketRepo->storeFile($request->file('icon')) : null;
+        $this->marketRepo->create($request->except('icon') +
             [
-                'market_icon' => $market_icon
+                'icon' => $icon
             ]);
 
         notify()->success('Market Successfully Added.', 'Added');
@@ -99,17 +99,17 @@ class MarketController extends Controller
     {
         $market = $this->marketRepo->findByID($id);
 
-        $marketIcon = $request->hasFile('market_icon');
+        $marketIcon = $request->hasFile('icon');
 
-        $market_icon = $marketIcon ? $this->marketRepo->storeFile($request->file('market_icon')) : $market->market_icon;
+        $icon = $marketIcon ? $this->marketRepo->storeFile($request->file('icon')) : $market->icon;
 
         if ($marketIcon) {
             $this->marketRepo->updateMarket($id);
         }
 
-        $this->marketRepo->updateByID($id, $request->except('market_icon') +
+        $this->marketRepo->updateByID($id, $request->except('icon') +
             [
-                'market_icon' => $market_icon
+                'icon' => $icon
             ]);
 
         notify()->success('Market Successfully Updated.', 'Updated');

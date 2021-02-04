@@ -46,9 +46,9 @@
                             @foreach($shoptypes as $key => $shoptype)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $shoptype->shop_type_name }}</td>
-                                <td>{{ $shoptype->shop_type_description }}</td>
-                                <td>{{ $shoptype->shop_type_slug }}</td>
+                                <td>{{ $shoptype->name }}</td>
+                                <td>{{ $shoptype->description }}</td>
+                                <td>{{ $shoptype->slug }}</td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.shoptypes.edit', $shoptype->id) }}"><i class="fas fa-edit"></i></a> |
                                     <button type="submit" class="delete-btn-style"

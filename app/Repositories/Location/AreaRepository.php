@@ -35,13 +35,13 @@ class AreaRepository extends BaseRepository
     public function updateArea($id)
     {
         $area = $this->findById($id);
-        Storage::delete($area->area_icon);
+        Storage::delete($area->icon);
     }
 
     public function deleteArea($id)
     {
         $area = $this->findById($id);
-        Storage::delete($area->area_icon);
+        Storage::delete($area->icon);
         $area->delete();
     }
 }

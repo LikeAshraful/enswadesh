@@ -50,14 +50,14 @@
                             @foreach($markets as $key => $market)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $market->city ? $market->city->city_name : 'Not Found' }}</td>
-                                <td>{{ $market->areas ? $market->areas->area_name : 'Not Found' }}</td>
-                                <td>{{ $market->market_name }}</td>
-                                <td>{{ $market->market_address }}</td>
-                                <td>{{ $market->market_slug }}</td>
-                                <td>{{ $market->market_description }}</td>
+                                <td>{{ $market->city ? $market->city->name : 'Not Found' }}</td>
+                                <td>{{ $market->areas ? $market->areas->name : 'Not Found' }}</td>
+                                <td>{{ $market->name }}</td>
+                                <td>{{ $market->address }}</td>
+                                <td>{{ $market->slug }}</td>
+                                <td>{{ $market->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset($market->market_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset($market->icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.markets.edit', $market->id) }}"><i class="fas fa-edit"></i></a> |

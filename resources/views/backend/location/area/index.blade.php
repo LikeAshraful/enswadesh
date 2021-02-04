@@ -50,12 +50,12 @@
                             @foreach($areas as $key => $area)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $area->cities ? $area->cities->city_name : 'Not Found' }}</td>
-                                <td>{{ $area->area_name }}</td>
-                                <td>{{ $area->area_slug }}</td>
-                                <td>{{ $area->area_description }}</td>
+                                <td>{{ $area->cities ? $area->cities->name : 'Not Found' }}</td>
+                                <td>{{ $area->name }}</td>
+                                <td>{{ $area->slug }}</td>
+                                <td>{{ $area->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset($area->area_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset($area->icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
                                     @canany('backend.areas.edit')

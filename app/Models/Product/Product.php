@@ -15,7 +15,7 @@ class Product extends Model
 
     public function setAreaNameAttribute($value)
     {
-        $this->attributes['area_name'] = $value;
-        $this->attributes['area_slug'] = Str::of($value)->slug('-');
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 }

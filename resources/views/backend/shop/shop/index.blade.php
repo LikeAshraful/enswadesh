@@ -54,16 +54,16 @@
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
                                 <td>{{ $shop->shopOwner ? $shop->shopOwner->name : 'Not Found' }}</td>
-                                <td>{{ $shop->city ? $shop->city->city_name : 'Not Found' }}</td>
-                                <td>{{ $shop->area ? $shop->area->area_name : 'Not Found' }}</td>
-                                <td>{{ $shop->market ? $shop->market->market_name : 'Not Found' }}</td>
+                                <td>{{ $shop->city ? $shop->city->name : 'Not Found' }}</td>
+                                <td>{{ $shop->area ? $shop->area->name : 'Not Found' }}</td>
+                                <td>{{ $shop->market ? $shop->market->name : 'Not Found' }}</td>
                                 <td>{{ $shop->floor_no }}</td>
-                                <td>{{ $shop->shop_name }}</td>
+                                <td>{{ $shop->name }}</td>
                                 <td>{{ $shop->shop_no }}</td>
-                                <td>{{ $shop->shop_slug }}</td>
-                                <td>{{ $shop->shop_description }}</td>
+                                <td>{{ $shop->slug }}</td>
+                                <td>{{ $shop->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/' . $shop->shop_logo)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset('/' . $shop->logo)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> |
