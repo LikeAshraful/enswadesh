@@ -4,7 +4,7 @@ namespace Repository\Product;
 use Repository\BaseRepository;
 use App\Models\Product\Product;
 
-class SizeRepository extends BaseRepository {
+class ProductRepository extends BaseRepository {
 
     public function model()
     {

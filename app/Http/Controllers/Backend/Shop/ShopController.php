@@ -73,23 +73,23 @@ class ShopController extends Controller
     {
         //dd($request->all());
         $request->validate([
-            'name'           => 'required',
+            'shop_name'           => 'required',
             'shop_no'             => 'required',
-            'logo'           => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            'cover_image'    => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            'meta_og_image'  => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'shop_logo'           => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'shop_cover_image'    => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'meta_og_image_shop'  => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
 
-        $logo = $request->hasFile('logo') ? $this->shopRepo->storeFile($request->file('logo')) : null;
-        $cover_image = $request->hasFile('cover_image') ? $this->shopRepo->storeFile($request->file('cover_image')) : null;
-        $meta_og_image = $request->hasFile('meta_og_image') ? $this->shopRepo->storeFile($request->file('meta_og_image')) : null;
+        $shop_logo = $request->hasFile('shop_logo') ? $this->shopRepo->storeFile($request->file('shop_logo')) : null;
+        $shop_cover_image = $request->hasFile('shop_cover_image') ? $this->shopRepo->storeFile($request->file('shop_cover_image')) : null;
+        $meta_og_image_shop = $request->hasFile('meta_og_image_shop') ? $this->shopRepo->storeFile($request->file('meta_og_image_shop')) : null;
 
-        $shop = $this->shopRepo->create($request->except('logo', 'cover_image', 'meta_og_image', 'shop_owner_id') +
+        $shop = $this->shopRepo->create($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_owner_id') +
             [
                 'shop_owner_id'         => Auth::id(),
-                'logo'             => $logo,
-                'cover_image'      => $cover_image,
-                'meta_og_image'    => $meta_og_image
+                'shop_logo'             => $shop_logo,
+                'shop_cover_image'      => $shop_cover_image,
+                'meta_og_image_shop'    => $meta_og_image_shop
             ]);
 
         notify()->success('shop Successfully Added.', 'Added');
@@ -138,13 +138,13 @@ class ShopController extends Controller
             );
         }
 
-        $shopLogo = $request->hasFile('logo');
-        $shopCoverImage = $request->hasFile('cover_image');
-        $metaImageShop = $request->hasFile('meta_og_image');
+        $shopLogo = $request->hasFile('shop_logo');
+        $shopCoverImage = $request->hasFile('shop_cover_image');
+        $metaImageShop = $request->hasFile('meta_og_image_shop');
 
-        $logo = $shopLogo ? $this->shopRepo->storeFile($request->file('logo')) : $shop->logo;
-        $cover_image = $shopCoverImage ? $this->shopRepo->storeFile($request->file('cover_image')) : $shop->cover_image;
-        $meta_og_image = $metaImageShop ? $this->shopRepo->storeFile($request->file('meta_og_image')) : $shop->meta_og_image;
+        $shop_logo = $shopLogo ? $this->shopRepo->storeFile($request->file('shop_logo')) : $shop->shop_logo;
+        $shop_cover_image = $shopCoverImage ? $this->shopRepo->storeFile($request->file('shop_cover_image')) : $shop->shop_cover_image;
+        $meta_og_image_shop = $metaImageShop ? $this->shopRepo->storeFile($request->file('meta_og_image_shop')) : $shop->meta_og_image_shop;
 
         if ($shopLogo) {
             $this->shopRepo->updateShopsLogo($id);
@@ -158,11 +158,11 @@ class ShopController extends Controller
             $this->shopRepo->updateShopsOgImage($id);
         }
 
-        $this->shopRepo->updateByID($id, $request->except('logo', 'cover_image', 'meta_og_image') +
+        $this->shopRepo->updateByID($id, $request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop') +
             [
-                'logo' => $logo,
-                'cover_image' => $cover_image,
-                'meta_og_image' => $meta_og_image
+                'shop_logo' => $shop_logo,
+                'shop_cover_image' => $shop_cover_image,
+                'meta_og_image_shop' => $meta_og_image_shop
             ]);
 
         notify()->success('Shop Successfully Updated.', 'Updated');
