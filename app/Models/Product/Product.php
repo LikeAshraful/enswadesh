@@ -12,4 +12,10 @@ class Product extends Model
                             'thumbnail_id', 'can_bargain', 'product_type', 'refund_policy', 'service_policy', 'description',
                             'offers', 'total_stocks',
                           ];
+
+    public function setAreaNameAttribute($value)
+    {
+        $this->attributes['area_name'] = $value;
+        $this->attributes['area_slug'] = Str::of($value)->slug('-');
+    }
 }
