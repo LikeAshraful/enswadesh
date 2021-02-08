@@ -40,6 +40,14 @@ a.fa-eye-style:hover {
     overflow-y: scroll;
 }
 
+.image-display-error-message {
+    display: block !important;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #d92550;
+}
+
 /* slider switch  */
 .switch {
     position: relative;
@@ -75,10 +83,10 @@ a.fa-eye-style:hover {
     transition: 0.4s;
 }
 input:checked + .sliderswitch {
-    background-color: #64BD63;
+    background-color: #64bd63;
 }
 input:focus + .sliderswitch {
-    box-shadow: 0 0 1px #64BD63;
+    box-shadow: 0 0 1px #64bd63;
 }
 input:checked + .sliderswitch:before {
     -webkit-transform: translateX(26px);

@@ -80,7 +80,7 @@
                     <input type="text" id="description" name="description" class="form-control" value="{{ isset($area) ? $area->description : '' }}" placeholder="Area Description">
                     </div>
                     <div class="form-group">
-                    <label for='icon'>area Icon</label>
+                    <label for='icon'>Area Icon</label>
                     <input type="file" id="icon" name="icon" class="dropify" data-default-file="{{ isset($area) ? asset($area->icon): '' }}" data-height="220" value="{{ isset($area) ? asset($area->icon): '' }}" />
                     @error('icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">

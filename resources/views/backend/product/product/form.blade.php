@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','product Create')
+@section('title','Product Create')
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
@@ -19,7 +19,7 @@
                 <i class="pe-7s-photo-gallery icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($product) ? 'Edit' : 'Create New') . ' product') }}</div>
+            <div>{{ __((isset($product) ? 'Edit' : 'Create New') . ' Product') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
@@ -40,7 +40,7 @@
     @method('PUT')
     @endif
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <div class="form-group">
@@ -130,18 +130,42 @@
                     </div>
                     <div class="form-group">
                         <label for="total_stocks">Stocks</label>
-                        <input type="text" id="total_stocks" name="total_stocks" class="form-control @error('total_stocks') is-invalid @enderror" value="{{ isset($product) ? $product->total_stocks : '' }}" placeholder="total_stocks">
+                        <input type="number" id="total_stocks" name="total_stocks" class="form-control @error('total_stocks') is-invalid @enderror" value="{{ isset($product) ? $product->total_stocks : '' }}" placeholder="Total stocks">
                         @error('total_stocks')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="description">Description</label>
                         <textarea name="description" id="description" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror" value="{{ isset($product) ? $product->description : '' }}" placeholder="Description">{{ isset($product) ? $product->description : '' }}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" cols="30" rows="6" class="form-control @error('description') is-invalid @enderror" value="{{ isset($product) ? $product->description : '' }}" placeholder="Description">{{ isset($product) ? $product->description : '' }}</textarea>
+                        @error('description')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for='src'>Image</label>
+                        <input type="file" id="src" name="src" class="dropify" data-default-file="{{ isset($product) ? asset($product->src): '' }}" data-height="220" value="{{ isset($product) ? asset($product->src): '' }}" />
+                        @error('src')
+                        <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror

@@ -4,22 +4,27 @@ namespace App\Http\Controllers\Backend\Product;
 
 use Illuminate\Http\Request;
 use App\Models\Product\Product;
+use Illuminate\Support\Facades\DB;
 use Repository\Shop\ShopRepository;
 use App\Http\Controllers\Controller;
+use App\Models\Product\ProductMedia;
 use Illuminate\Support\Facades\Auth;
 use Repository\Brand\BrandRepository;
 use Repository\Product\ProductRepository;
+use Repository\Product\ProductMediaRepository;
 
 class ProductController extends Controller
 {
     public $shopRepo;
     public $brandRepo;
+    public $proMediaRepo;
     public $productRepo;
 
-    public function __construct(ShopRepository $shopRepository, BrandRepository $brandRepository, ProductRepository $productRepository)
+    public function __construct(ShopRepository $shopRepository, BrandRepository $brandRepository, ProductMediaRepository $productMediaRepository, ProductRepository $productRepository)
     {
         $this->shopRepo = $shopRepository;
         $this->brandRepo = $brandRepository;
+        $this->proMediaRepo = $productMediaRepository;
         $this->productRepo = $productRepository;
     }
 
@@ -57,17 +62,39 @@ class ProductController extends Controller
     {
         $request->validate([
             'name'           => 'required',
-            'shop_id'        => 'required'
+            'shop_id'        => 'required',
+            'src' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        $this->productRepo->create($request->except('user_id') +
+        DB::beginTransaction();
+        try {
+            $product = $this->productRepo->create($request->except('user_id') +
             [
                 'user_id'         => Auth::id()
             ]);
 
+
+            $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
+                [
+                    'src'        => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
+                    'product_id' => $product->id,
+                    'type' => 'image'
+                ]);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json($e);
+        }
+
         notify()->success('Product Successfully Added.', 'Added');
         return redirect()->route('backend.products.index');
+
+
     }
+
+
 
     /**
      * Display the specified resource.
@@ -103,6 +130,36 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+        try {
+            $product = $this->productRepo->create($request->except('user_id') +
+            [
+                'user_id'         => Auth::id()
+            ]);
+
+            $src = $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null;
+            $media = new ProductMedia;
+            $media->product_id = $product->id;
+            $media->src = $request->src;
+            $media->type = $src;
+            $media->save();
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json($e);
+        }
+
+        $product = $this->productRepo->findByID($id);
+
+        $srcImage = $request->hasFile('src');
+
+        $src = $srcImage ? $this->productRepo->storeFile($request->file('src')) : $product->src;
+
+        if ($srcImage) {
+            $this->productRepo->updateProduct($id);
+        }
+
         $this->productRepo->updateByID($id, $request->except('user_id') +
             [
                 'user_id'         => Auth::id()
@@ -120,7 +177,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $this->productRepo->deletedByID($id);
+        $this->productRepo->deleteProduct($id);
         notify()->warning('Product Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.products.index');
     }
