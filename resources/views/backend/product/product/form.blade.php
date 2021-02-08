@@ -85,6 +85,29 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="category_id">Category</label>
+                        @if(isset($product))
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="">Select One</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @else
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="">Select One</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @endisset
+                        @error('category_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="brand_id">Brand</label>
                         @if(isset($product))
                         <select name="brand_id" id="brand_id" class="form-control">

@@ -11,19 +11,25 @@ use App\Models\Product\ProductMedia;
 use Illuminate\Support\Facades\Auth;
 use Repository\Brand\BrandRepository;
 use Repository\Product\ProductRepository;
+use Repository\Category\CategoryRepository;
 use Repository\Product\ProductMediaRepository;
+use Repository\Product\ProductCategoryRepository;
 
 class ProductController extends Controller
 {
     public $shopRepo;
+    public $categoryRepo;
     public $brandRepo;
+    public $proCaregoryRepo;
     public $proMediaRepo;
     public $productRepo;
 
-    public function __construct(ShopRepository $shopRepository, BrandRepository $brandRepository, ProductMediaRepository $productMediaRepository, ProductRepository $productRepository)
+    public function __construct(ShopRepository $shopRepository, CategoryRepository $categoryRepository, BrandRepository $brandRepository, ProductCategoryRepository $productCategoryRepository, ProductMediaRepository $productMediaRepository, ProductRepository $productRepository)
     {
         $this->shopRepo = $shopRepository;
+        $this->categoryRepo = $categoryRepository;
         $this->brandRepo = $brandRepository;
+        $this->proCaregoryRepo = $productCategoryRepository;
         $this->proMediaRepo = $productMediaRepository;
         $this->productRepo = $productRepository;
     }
@@ -47,8 +53,9 @@ class ProductController extends Controller
     public function create()
     {
         $shops = $this->shopRepo->getAll();
+        $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
-        return view('backend.product.product.form', compact('shops', 'brands'));
+        return view('backend.product.product.form', compact('shops', 'categories', 'brands'));
 
     }
 
@@ -79,6 +86,11 @@ class ProductController extends Controller
                     'src'        => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
                     'product_id' => $product->id,
                     'type' => 'image'
+                ]);
+
+            $this->proCaregoryRepo->create($request->except('product_id') +
+                [
+                    'product_id' => $product->id,
                 ]);
 
             DB::commit();
@@ -117,8 +129,9 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $shops = $this->shopRepo->getAll();
+        $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
-        return view('backend.product.product.form', compact('product', 'shops', 'brands'));
+        return view('backend.product.product.form', compact('product', 'shops', 'categories', 'brands'));
     }
 
     /**
