@@ -81,7 +81,7 @@ class ProductController extends Controller
             ]);
 
 
-            $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
+            $this->proMediaRepo->create($request->except('src', 'product_id', 'type') +
                 [
                     'src'        => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
                     'product_id' => $product->id,
@@ -102,8 +102,6 @@ class ProductController extends Controller
 
         notify()->success('Product Successfully Added.', 'Added');
         return redirect()->route('backend.products.index');
-
-
     }
 
 
@@ -127,7 +125,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('category')->find($id);
         $shops = $this->shopRepo->getAll();
         $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
@@ -144,42 +142,39 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        try {
-            $product = $this->productRepo->create($request->except('user_id') +
-            [
-                'user_id'         => Auth::id()
-            ]);
+            try {
+                //product update
+            $this->productRepo->updateByID($id, $request->except('user_id') +
+                [
+                    'user_id'         => Auth::id()
+                ]);
+            //product media update
+            $productMedida = $this->proMediaRepo->updateProductMediaById($id);
+            $srcImage = $request->hasFile('src');
+            $src = $srcImage ? $this->proMediaRepo->storeFile($request->file('src')) : $productMedida->src;
+            if ($srcImage) {
+                $this->proMediaRepo->updateProductMedia($id);
+            }
+            $this->proMediaRepo->productMediaUpdateByID($id, $request->except('src', 'product_id', 'type') +
+                    [
+                        'src'        => $src,
+                        'product_id' => $id,
+                        'type' => 'image'
+                    ]);
+            // catetory update
+            $this->proCaregoryRepo->updateProductCategoryById($id, $request->except('product_id') +
+                [
+                    'product_id' => $id,
+                ]);
 
-            $src = $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null;
-            $media = new ProductMedia;
-            $media->product_id = $product->id;
-            $media->src = $request->src;
-            $media->type = $src;
-            $media->save();
+            notify()->success('Product Successfully Updated.', 'Updated');
+            return redirect()->route('backend.products.index');
             DB::commit();
 
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
         }
-
-        $product = $this->productRepo->findByID($id);
-
-        $srcImage = $request->hasFile('src');
-
-        $src = $srcImage ? $this->productRepo->storeFile($request->file('src')) : $product->src;
-
-        if ($srcImage) {
-            $this->productRepo->updateProduct($id);
-        }
-
-        $this->productRepo->updateByID($id, $request->except('user_id') +
-            [
-                'user_id'         => Auth::id()
-            ]);
-
-        notify()->success('Product Successfully Updated.', 'Updated');
-        return redirect()->route('backend.products.index');
     }
 
     /**
