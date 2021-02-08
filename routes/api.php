@@ -47,9 +47,14 @@ Route::prefix('markets')->namespace('Market')->group(function(){
 });
 
 Route::get('floors', [FloorController::class, 'index']);
-Route::get('shop-types', [ShopTypeController::class, 'index']);
-Route::get('shops/all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
-Route::get('shops/shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
+
+// shop related
+Route::prefix('shops')->namespace('Shop')->group(function(){
+    Route::get('shop-types', [ShopTypeController::class, 'index']);
+    Route::get('all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
+    Route::get('{id}', [ShopController::class, 'show']);
+    Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
+});
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -61,8 +66,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
 
-    // shop related
-    Route::prefix('shops')->namespace('Shop')->group(function(){
+    // my shop related
+    Route::prefix('my-shops')->namespace('Shop')->group(function(){
         Route::get('', [ShopController::class, 'index']);
         Route::post('', [ShopController::class, 'store']);
         Route::get('{id}/edit', [ShopController::class, 'edit']);

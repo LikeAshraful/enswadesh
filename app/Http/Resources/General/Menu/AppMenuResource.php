@@ -16,10 +16,10 @@ class AppMenuResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'menu_name'         => $this->menu_name,
-            'menu_description'  => $this->menu_description,
-            'menu_slug'         => $this->menu_slug,
-            'menu_icon'         => $this->menu_icon,
+            'name'         => $this->name,
+            'description'  => $this->description,
+            'slug'         => $this->slug,
+            'icon'         => $this->icon,
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
         ];

@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->text('service_policy')->nullable();
             $table->text('description')->nullable();
             $table->text('offers')->nullable();
+            $table->text('tag')->nullable();
             $table->unsignedBigInteger('total_stocks')->default(0);
             $table->timestamps();
 

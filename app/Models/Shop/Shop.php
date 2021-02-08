@@ -17,14 +17,14 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_no', 'shop_no', 'shop_name',
-     'shop_phone', 'shop_email', 'shop_fax', 'shop_slug', 'shop_cover_image', 'shop_logo', 'shop_type_id', 'shop_description', 'meta_title_shop',
-      'meta_keywords_shop', 'meta_description_shop', 'meta_og_image_shop', 'meta_og_url_shop'];
+    protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_no', 'shop_no', 'name',
+     'phone', 'email', 'fax', 'slug', 'cover_image', 'logo', 'shop_type_id', 'description', 'meta_title',
+      'meta_keywords', 'meta_description', 'meta_og_image', 'meta_og_url'];
 
-    public function setShopNameAttribute($value)
+    public function setNameAttribute($value)
     {
-        $this->attributes['shop_name'] = $value;
-        $this->attributes['shop_slug'] = Str::of($value)->slug('-');
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 
     public function shopOwner() {

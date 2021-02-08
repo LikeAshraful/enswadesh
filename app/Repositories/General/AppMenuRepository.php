@@ -25,13 +25,13 @@ class AppMenuRepository extends BaseRepository
     public function updateMenu($id)
     {
         $menu = $this->findById($id);
-        Storage::delete($menu->menu_icon);
+        Storage::delete($menu->icon);
     }
 
     public function deleteMenu($id)
     {
         $menu = $this->findById($id);
-        Storage::delete($menu->menu_icon);
+        Storage::delete($menu->icon);
         $menu->delete();
     }
 }

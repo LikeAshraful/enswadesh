@@ -42,15 +42,15 @@ class AppMenuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'menu_name' => 'required',
-            'menu_description' => 'required',
-            'menu_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'name' => 'required',
+            'description' => 'required',
+            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        $menu_icon = $request->hasFile('menu_icon') ? $this->appMenuRepo->storeFile($request->file('menu_icon')) : null;
-        $this->appMenuRepo->create($request->except('menu_icon') +
+        $icon = $request->hasFile('icon') ? $this->appMenuRepo->storeFile($request->file('icon')) : null;
+        $this->appMenuRepo->create($request->except('icon') +
             [
-                'menu_icon' => $menu_icon
+                'icon' => $icon
             ]);
 
         notify()->success('App Menu Successfully Added.', 'Added');
@@ -85,17 +85,17 @@ class AppMenuController extends Controller
 
         $data = $this->appMenuRepo->findByID($id);
 
-        $menuIcon = $request->hasFile('menu_icon');
+        $menuIcon = $request->hasFile('icon');
 
-        $menu_icon = $menuIcon ? $this->appMenuRepo->storeFile($request->file('menu_icon')) : $data->menu_icon;
+        $icon = $menuIcon ? $this->appMenuRepo->storeFile($request->file('icon')) : $data->icon;
 
         if ($menuIcon) {
             $this->appMenuRepo->updateMenu($id);
         }
 
-        $this->appMenuRepo->updateByID($id, $request->except('menu_icon') +
+        $this->appMenuRepo->updateByID($id, $request->except('icon') +
             [
-                'menu_icon' => $menu_icon
+                'icon' => $icon
             ]);
 
         notify()->success('App Menu Successfully Updated.', 'Updated');
