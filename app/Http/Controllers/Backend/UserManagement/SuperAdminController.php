@@ -17,7 +17,7 @@ use App\Http\Requests\Users\UpdateUserRequest;
 class SuperAdminController extends Controller
 {
     protected $superAdminRepo;
-    
+
     public function __construct(UserRepository $superAdmin, )
     {
         $this->superAdminRepo=$superAdmin;

@@ -34,8 +34,7 @@ class VendorController extends Controller
     {
         Gate::authorize('backend.vendor.create');
         $role = $this->vendorRepo->allRoleForVendor();
-        $modules = $this->vendorRepo->staffModules();
-        return view('backend.user_management.vendor.form', compact('role','modules'));
+        return view('backend.user_management.vendor.form', compact('role'));
     }
 
     public function store(StoreUserRequest $request)
@@ -50,7 +49,6 @@ class VendorController extends Controller
                 'user_id'       => $user->id
             ]);
             $this->vendorRepo->staffVendorByID($user->id);
-            $this->vendorRepo->staffPermissionsByID($user->id,$user->role_id,$request->permissions);
             Notification::send($user, new RegisteredUserMail());
             DB::commit();
         } catch (\Exception $e) {

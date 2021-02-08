@@ -86,46 +86,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card-body">
-                        @forelse($modules->chunk(2) as $key => $chunks)
-                            <div class="form-row">
-                                @foreach($chunks as $key=>$module)
-                                <div class="col">
-                                    <h5>Module: {{ $module->name }}</h5>
-                                    @foreach($module->permissions as $key=>$permission)
-                                    <div class="mb-3 ml-4">
-                                        <div class="custom-control custom-checkbox mb-2">
-                                            <input type="checkbox" class="custom-control-input"
-                                                id="permission-{{ $permission->id }}" value="{{ $permission->id }}"
-                                                name="permissions[]"
-                                                @if(isset($role))
-                                                    @foreach($role->permissions as $rPermission)
-                                                        {{ $permission->id == $rPermission->id ? 'checked' : '' }}
-                                                    @endforeach
-                                                @endif
-                                            >
-                                            <label class="custom-control-label"
-                                                for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                                @endforeach
-                            </div>
-                                @empty
-                            <div class="row">
-                                <div class="col text-center">
-                                    <strong>No Module Found.</strong>
-                                </div>
-                            </div>
-                        @endforelse
-                    </div>
-
-                </div>
-
-            </div>
         </form>
     </div>
 </div>

@@ -9,9 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\VendorStaff;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasApiTokens;
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'phone_number',
         'email',
+        'otp',
         'password',
         'status',
         'suspend',

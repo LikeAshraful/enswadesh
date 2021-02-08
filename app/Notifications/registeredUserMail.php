@@ -13,7 +13,7 @@ class RegisteredUserMail extends Notification
 
     public function __construct()
     {
-        
+
     }
 
     public function via($notifiable)

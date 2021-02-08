@@ -4,13 +4,19 @@ namespace App\Http\Controllers\API\UserManagement;
 
 use Mail;
 use Illuminate\Http\Request;
+use App\Helpers\API\ApiHelpers;
+use Illuminate\Support\Facades\DB;
+use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Repository\User\API\AuthRepository;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\Auth\AuthResource;
 use App\Notifications\RegisteredUserMail;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\API\Staff\SignUpRequest;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -18,7 +24,7 @@ class AuthController extends Controller
 
     public $authRepo;
 
-    public function __construct(AuthRepository $authRepository)
+    public function __construct(UserRepository $authRepository)
     {
         $this->authRepo = $authRepository;
     }
@@ -47,17 +53,29 @@ class AuthController extends Controller
             'password'      => 'required|confirmed',
             'phone_number'  => 'required|max:12'
         ]);
-        $image = $request->hasFile('image') ? $this->authRepo->storeFile($request->file('image')) : null;
-        $user = $this->authRepo->create($request->except('image','role_id') + [
-            'image' => $image,
-            'role_id'=>3,
-        ]);
-        $accessToken = $user->createToken('authToken')->accessToken;
-        Notification::send($user, new RegisteredUserMail());
-        return $this->json(
-            "User Created Sucessfully",
-            [ 'user' => $user, 'access_token' => $accessToken],
-        );
+        DB::beginTransaction();
+        try {
+            $user = $this->authRepo->create($request->except('role_id','password','otp') + [
+                'role_id'       =>5,
+                'password'      => Hash::make($request->password),
+                'otp'           => rand(1000, 9999),
+            ]);
+            $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
+                'user_id'       => $user->id
+            ]);
+            $accessToken = $user->createToken('authToken')->accessToken;
+            Notification::send($user, new RegisteredUserMail());
+            DB::commit();
+            return redirect()->route('text-link',$accessToken);
+            // return $this->json(
+            //     "User Created Sucessfully",
+            //     [ 'user' => $user, 'access_token' => $accessToken],
+            // );
+        } catch (\Exception $exception) {
+            DB::rollback();
+            $message = $exception->getMessage();
+        }
+        notify()->success($message);
     }
 
     public function dusers(){

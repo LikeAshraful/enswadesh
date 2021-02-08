@@ -14,8 +14,8 @@ class VendorResource extends JsonResource
             'name'          => $this->name,
             'email'         => $this->email,
             'phone_number'  => $this->phone_number,
-            'created_at'    => $this->created_at,
-            'updated_at'    => $this->updated_at,
+            'created_at'    => $this->created_at->diffForHumans(),
+            'updated_at'    => $this->updated_at->diffForHumans(),
         ];
     }
 }

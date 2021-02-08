@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,11 +27,9 @@ Route::get('/clear', function() {
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('text-link?', function () {
+    return ('gksdhvkjgshg');
+})->name('text-link');
 
-Auth::routes();
-
+Auth::routes(['verify' => true]);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-// Route::get('{any}', function () {
-//     return view('welcome');
-// })->where('any', '.*');

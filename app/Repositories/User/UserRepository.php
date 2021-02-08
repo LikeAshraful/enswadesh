@@ -5,6 +5,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Module;
 use App\Models\Profile;
+use App\Models\Permission;
 use App\Models\VendorStaff;
 use Repository\BaseRepository;
 use App\Models\PermissionStaff;
@@ -37,27 +38,6 @@ class UserRepository extends BaseRepository {
             'user_id'       => $id,
             'owner_id'      => Auth::id(),
         ]);
-    }
-
-    public function staffPermissionsByID($id, $role_id, array $modelData)
-    {
-        foreach($modelData as $data)
-        {
-            $staff = new PermissionStaff;
-
-                $staff->permission_id = $data;
-                $staff->user_id       = $id;
-                $staff->owner_id      = Auth::id();
-                $staff->role_id      = $role_id;
-                $staff->save();
-
-        }
-        return $staff;
-    }
-
-    public function staffModules()
-    {
-        return Module::whereNotBetween('id',[1,4])->get();
     }
 
     public function allRoleForAdmin()
