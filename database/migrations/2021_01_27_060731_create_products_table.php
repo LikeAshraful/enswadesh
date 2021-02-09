@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->text('offers')->nullable();
             $table->text('tag')->nullable();
+            $table->float('price', 8,2)->default(0);
             $table->unsignedBigInteger('total_stocks')->default(0);
             $table->timestamps();
 
