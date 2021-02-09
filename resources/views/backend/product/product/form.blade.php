@@ -152,6 +152,15 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" step="any" min="0" max="100" id="price" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ isset($product) ? $product->price : '' }}" placeholder="Total stocks">
+                        @error('price')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="total_stocks">Stocks</label>
                         <input type="number" id="total_stocks" name="total_stocks" class="form-control @error('total_stocks') is-invalid @enderror" value="{{ isset($product) ? $product->total_stocks : '' }}" placeholder="Total stocks">
                         @error('total_stocks')
@@ -160,15 +169,6 @@
                         </span>
                         @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea name="description" id="description" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror" value="{{ isset($product) ? $product->description : '' }}" placeholder="Description">{{ isset($product) ? $product->description : '' }}</textarea>
-                        @error('description')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -179,6 +179,15 @@
                         <label for="description">Description</label>
                         <textarea name="description" id="description" cols="30" rows="6" class="form-control @error('description') is-invalid @enderror" value="{{ isset($product) ? $product->description : '' }}" placeholder="Description">{{ isset($product) ? $product->description : '' }}</textarea>
                         @error('description')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="tag">Tags</label>
+                        <input type="text" id="tag" name="tag" class="form-control @error('tag') is-invalid @enderror" data-role="tagsinput" value="{{ isset($product) ? $product->tag : '' }}" placeholder="Tags">
+                        @error('tag')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -207,9 +216,30 @@
     </div>
 </form>
 @endsection
+@section('style')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+<style type="text/css">
+    .bootstrap-tagsinput .tag {
+      margin-right: 2px;
+      padding: 2px;
+      color: white;
+      background-color: #37a16f;
+      border-radius: 3px;
+    }
+
+    span.tag.label.label-info {
+        padding: 2px;
+        font-weight: 600;
+    }
+    .bootstrap-tagsinput {
+        width: 100% !important;
+    }
+</style>
+@endsection
 @push('js')
 <script src="{{ asset('js/dropify.min.js') }}"></script>
 <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 <script>
 $(document).ready(function() {
     // Dropify
@@ -218,6 +248,13 @@ $(document).ready(function() {
     $('.select').each(function() {
         $(this).select2();
     });
+
+    $('#tag').tagsinput({
+      confirmKeys: [32, 188],
+      maxTags: 5,
+      tagClass: 'tagstyle'
+    });
+
 });
 </script>
 @endpush
