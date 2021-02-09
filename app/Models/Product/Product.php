@@ -6,7 +6,10 @@ use App\Models\User;
 use App\Models\Shop\Shop;
 use Illuminate\Support\Str;
 use App\Models\General\Brand\Brand;
+use App\Models\Product\ProductMedia;
+use App\Models\Product\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\General\Category\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -36,6 +39,21 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function productCategory()
+    {
+        return $this->hasOne(ProductCategory::class);
+    }
+
+    public function productImage()
+    {
+        return $this->hasOne(ProductMedia::class);
     }
 
 }

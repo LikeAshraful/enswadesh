@@ -11,19 +11,25 @@ use App\Models\Product\ProductMedia;
 use Illuminate\Support\Facades\Auth;
 use Repository\Brand\BrandRepository;
 use Repository\Product\ProductRepository;
+use Repository\Category\CategoryRepository;
 use Repository\Product\ProductMediaRepository;
+use Repository\Product\ProductCategoryRepository;
 
 class ProductController extends Controller
 {
     public $shopRepo;
+    public $categoryRepo;
     public $brandRepo;
+    public $proCaregoryRepo;
     public $proMediaRepo;
     public $productRepo;
 
-    public function __construct(ShopRepository $shopRepository, BrandRepository $brandRepository, ProductMediaRepository $productMediaRepository, ProductRepository $productRepository)
+    public function __construct(ShopRepository $shopRepository, CategoryRepository $categoryRepository, BrandRepository $brandRepository, ProductCategoryRepository $productCategoryRepository, ProductMediaRepository $productMediaRepository, ProductRepository $productRepository)
     {
         $this->shopRepo = $shopRepository;
+        $this->categoryRepo = $categoryRepository;
         $this->brandRepo = $brandRepository;
+        $this->proCaregoryRepo = $productCategoryRepository;
         $this->proMediaRepo = $productMediaRepository;
         $this->productRepo = $productRepository;
     }
@@ -47,8 +53,9 @@ class ProductController extends Controller
     public function create()
     {
         $shops = $this->shopRepo->getAll();
+        $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
-        return view('backend.product.product.form', compact('shops', 'brands'));
+        return view('backend.product.product.form', compact('shops', 'categories', 'brands'));
 
     }
 
@@ -74,11 +81,16 @@ class ProductController extends Controller
             ]);
 
 
-            $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
+            $this->proMediaRepo->create($request->except('src', 'product_id', 'type') +
                 [
                     'src'        => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
                     'product_id' => $product->id,
                     'type' => 'image'
+                ]);
+
+            $this->proCaregoryRepo->create($request->except('product_id') +
+                [
+                    'product_id' => $product->id,
                 ]);
 
             DB::commit();
@@ -90,8 +102,6 @@ class ProductController extends Controller
 
         notify()->success('Product Successfully Added.', 'Added');
         return redirect()->route('backend.products.index');
-
-
     }
 
 
@@ -115,10 +125,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('category')->find($id);
         $shops = $this->shopRepo->getAll();
+        $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
-        return view('backend.product.product.form', compact('product', 'shops', 'brands'));
+        return view('backend.product.product.form', compact('product', 'shops', 'categories', 'brands'));
     }
 
     /**
@@ -131,39 +142,36 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        try {
-            $product = $this->productRepo->create($request->except('user_id') +
-            [
-                'user_id'         => Auth::id()
-            ]);
-
-            $src = $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null;
-            $media = new ProductMedia;
-            $media->product_id = $product->id;
-            $media->src = $request->src;
-            $media->type = $src;
-            $media->save();
+            try {
+                //product update
+            $this->productRepo->updateByID($id, $request->except('user_id') +
+                [
+                    'user_id'         => Auth::id()
+                ]);
+            //product media update
+            $productMedida = $this->proMediaRepo->updateProductMediaById($id);
+            $srcImage = $request->hasFile('src');
+            $src = $srcImage ? $this->proMediaRepo->storeFile($request->file('src')) : $productMedida->src;
+            if ($srcImage) {
+                $this->proMediaRepo->updateProductMedia($id);
+            }
+            $this->proMediaRepo->productMediaUpdateByID($id, $request->except('src', 'product_id', 'type') +
+                    [
+                        'src'        => $src,
+                        'product_id' => $id,
+                        'type' => 'image'
+                    ]);
+            //catetory update updateProductCategoryById
+            $this->proCaregoryRepo->updateProductCategoryById($id, $request->except('product_id') +
+                [
+                    'product_id' => $id,
+                ]);
             DB::commit();
 
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
         }
-
-        $product = $this->productRepo->findByID($id);
-
-        $srcImage = $request->hasFile('src');
-
-        $src = $srcImage ? $this->productRepo->storeFile($request->file('src')) : $product->src;
-
-        if ($srcImage) {
-            $this->productRepo->updateProduct($id);
-        }
-
-        $this->productRepo->updateByID($id, $request->except('user_id') +
-            [
-                'user_id'         => Auth::id()
-            ]);
 
         notify()->success('Product Successfully Updated.', 'Updated');
         return redirect()->route('backend.products.index');

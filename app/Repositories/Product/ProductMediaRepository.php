@@ -18,16 +18,20 @@ class ProductMediaRepository extends BaseRepository {
         return Storage::put('fileuploads/products', $file);
     }
 
-    public function updateProductMedial($id)
+    public function updateProductMediaById($id)
     {
-        $product = $this->findById($id);
-        Storage::delete($product->icon);
+        return $this->model()::where('product_id', $id)->first();
     }
 
-    public function deleteProductMedial($id)
+    public function updateProductMedia($id)
     {
-        $product = $this->findById($id);
-        Storage::delete($product->icon);
-        $product->delete();
+        $productMedia = $this->model()::where('product_id', $id)->first();
+        Storage::delete($productMedia->src);
+    }
+
+    public function productMediaUpdateByID($id, array $modelData)
+    {
+        $productMedia = $this->model()::where('product_id', $id)->first();
+        return $productMedia->update($modelData);
     }
 }
