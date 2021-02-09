@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
@@ -8,19 +9,19 @@ use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
+use App\Http\Controllers\API\Product\ProductController;
 use App\Http\Controllers\API\Interaction\LikeController;
 use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
+use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\General\Brand\BrandController;
+use App\Http\Controllers\API\Interaction\CommentController;
+use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Api\UserManagement\VendorController;
-use App\Http\Controllers\API\Product\Base\ColorController;
-use App\Http\Controllers\API\Product\Base\WeightController;
-use App\Http\Controllers\API\Interaction\CommentController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
-
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -29,8 +30,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('menus', [AppMenuController::class, 'index']);;
 Route::get('areas', [AreaController::class, 'index']);
 Route::get('areas-by-city/{id}', [AreaController::class, 'areaByCity']);
-
-
 
 Route::prefix('cities')->namespace('City')->group(function(){
     Route::get('', [CityController::class, 'index']);
@@ -55,6 +54,9 @@ Route::prefix('shops')->namespace('Shop')->group(function(){
     Route::get('{id}', [ShopController::class, 'show']);
     Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
 });
+
+Route::get('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
+Route::get('products/{id}', [ProductController::class, 'show']);
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -83,6 +85,15 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('colors', [ColorController::class, 'index']);
     Route::get('sizes', [SizeController::class, 'index']);
     Route::get('weights', [WeightController::class, 'index']);
+
+    //Product
+    Route::prefix('products')->namespace('Product')->group(function(){
+        Route::get('', [ProductController::class, 'index']);
+        Route::get('self/{id}', [ProductController::class, 'selfProduct']);
+        Route::post('', [ProductController::class, 'store']);
+        Route::post('update/{id}', [ProductController::class, 'update']);
+        Route::get('delete/{id}', [ProductController::class, 'destroy']);
+    });
 
     // oder related
     Route::prefix('orders')->namespace('Order')->group(function(){

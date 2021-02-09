@@ -13,6 +13,11 @@ class ProductRepository extends BaseRepository {
         return Product::class;
     }
 
+    public function getAllByShopID($shop_id)
+    {
+        return $this->model()::where('shop_id', $shop_id)->get();
+    }
+
     public function deleteProduct($id)
     {
         $product = $this->findById($id);
