@@ -10,6 +10,7 @@ use Repository\Product\ProductRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use Repository\Product\ProductMediaRepository;
 use App\Http\Resources\Product\ProductResource;
+use Repository\Product\ProductCategoryRepository;
 
 class ProductController extends Controller
 {
@@ -17,10 +18,12 @@ class ProductController extends Controller
 
     public $productRepo;
     public $proMediaRepo;
-    public function __construct(ProductRepository $productRepository,  ProductMediaRepository $productMediaRepository)
+    public $proCategoryRepo;
+    public function __construct(ProductRepository $productRepository,  ProductMediaRepository $productMediaRepository, ProductCategoryRepository $productCategoryRepository)
     {
         $this->productRepo = $productRepository;
         $this->proMediaRepo = $productMediaRepository;
+        $this->proCategoryRepo = $productCategoryRepository;
     }
 
     /**
@@ -78,16 +81,26 @@ class ProductController extends Controller
             [
                 'user_id' => Auth::id()
             ]);
-            $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
-                [
-                    'src' => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
-                    'product_id' => $product->id,
-                    'type' => 'image'
-                ]);
 
-            DB::commit();
+            //product media store
+            $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
+            [
+                'src' => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
+                'product_id' => $product->id,
+                'type' => 'image'
+            ]);
+
+            //product category store
+            $this->proCategoryRepo->create($request->except('product_id') +
+            [
+                'product_id' => $product->id,
+            ]);
+
+        DB::commit();
+
         } catch (\Exception $e) {
-            DB::rollback();
+
+        DB::rollback();
             return $this->json('something wrong',$e);
         }
 
@@ -132,32 +145,37 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name'           => 'nullable',
-            'shop_id'        => 'nullable',
-            'src' => 'nullable|mimes:jpeg,jpg,png|max:500',
-        ]);
-
         DB::beginTransaction();
         try {
-            $product = $this->productRepo->updateByID($id, $request->except('user_id') +
-            [
-                'user_id' => Auth::id()
-            ]);
-            // dd($product);
-            // $this->proMediaRepo->updateByID($request->except('src', 'product_id', 'image') +
-            //     [
-            //         'src' => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
-            //         'product_id' => $product->id,
-            //         'type' => 'image'
-            //     ]);
-
+                //product update
+           $product = $this->productRepo->updateByID($id, $request->except('user_id') +
+                [
+                    'user_id' => Auth::id()
+                ]);
+            //product media update
+            $productMedida = $this->proMediaRepo->updateProductMediaById($id);
+            $srcImage = $request->hasFile('src');
+            $src = $srcImage ? $this->proMediaRepo->storeFile($request->file('src')) : $productMedida->src;
+            if ($srcImage) {
+                $this->proMediaRepo->updateProductMedia($id);
+            }
+            $this->proMediaRepo->productMediaUpdateByID($id, $request->except('src', 'product_id', 'type') +
+                [
+                    'src'        => $src,
+                    'product_id' => $id,
+                    'type' => 'image'
+                ]);
+            //catetory update updateProductCategoryById
+            $this->proCategoryRepo->updateProductCategoryById($id, $request->except('product_id') +
+                [
+                    'product_id' => $id,
+                ]);
             DB::commit();
+
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->json('something wrong',$e);
+            return response()->json($e);
         }
-
         return $this->json(
             "Product Updated Sucessfully",
             $product
