@@ -27,9 +27,8 @@ Route::get('/clear', function() {
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('text-link?', function () {
-    return ('gksdhvkjgshg');
-})->name('text-link');
 
+Route::get('otp-verify', [RegisterController::class, 'register'])->name('otp-verify');
+Route::post('otp-verify', [RegisterController::class, 'otpVerification'])->name('verified.otp');
 Auth::routes(['verify' => true]);
 Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->boolean('status')                   ->default(false);
             $table->boolean('suspend')                  ->default(false);
             $table->unsignedBigInteger('owner_id')      ->nullable();
-            $table->integer('otp')                      ->nullable();
             $table->rememberToken();
             $table->timestamp('last_login_at')          ->nullable();
             $table->timestamps();

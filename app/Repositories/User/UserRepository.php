@@ -5,6 +5,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Module;
 use App\Models\Profile;
+use App\Models\UserOtp;
 use App\Models\Permission;
 use App\Models\VendorStaff;
 use Repository\BaseRepository;
@@ -63,6 +64,30 @@ class UserRepository extends BaseRepository {
             $profile->update($modelData);
         }else{
             return Profile::create($modelData);
+        }
+    }
+
+    public function updateOtpByID($id, array $modelData)
+    {
+        $otp = UserOtp::where('user_id', $id)->first();
+         if($otp != null)
+        {
+            $otp->update($modelData);
+        }else{
+            return UserOtp::create($modelData);
+        }
+    }
+
+    public function verifyOtpByID($id, $otp, array $modelData)
+    {
+        $otp = UserOtp::where('user_id', $id)->where('otp', $otp)->first();
+         if($otp != null)
+        {
+            $otp->update($modelData);
+            notify()->success('You are verify by your OTP.', 'Success');
+        }else{
+            notify()->warning('Your OTP is not valid, please resend.', 'Warning');
+            return back();
         }
     }
 
