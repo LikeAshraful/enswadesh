@@ -161,20 +161,20 @@ class ProductController extends Controller
                         'product_id' => $id,
                         'type' => 'image'
                     ]);
-            // catetory update
+            //catetory update updateProductCategoryById
             $this->proCaregoryRepo->updateProductCategoryById($id, $request->except('product_id') +
                 [
                     'product_id' => $id,
                 ]);
-
-            notify()->success('Product Successfully Updated.', 'Updated');
-            return redirect()->route('backend.products.index');
             DB::commit();
 
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
         }
+
+        notify()->success('Product Successfully Updated.', 'Updated');
+        return redirect()->route('backend.products.index');
     }
 
     /**

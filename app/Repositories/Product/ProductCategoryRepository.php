@@ -14,7 +14,6 @@ class ProductCategoryRepository extends BaseRepository {
     public function updateProductCategoryById($id, array $modelData)
     {
         $productCategory = $this->model()::where('product_id', $id)->first();
-        dd($productCategory);
         return $productCategory->update($modelData);
     }
 }

@@ -186,7 +186,7 @@
                     </div>
                     <div class="form-group">
                         <label for='src'>Image</label>
-                        <input type="file" id="src" name="src" class="dropify" data-default-file="{{ isset($product) ? asset($product->src): '' }}" data-height="220" value="{{ isset($product) ? asset($product->src): '' }}" />
+                        <input type="file" id="src" name="src" class="dropify" data-default-file="{{ isset($product->productImage) ? asset($product->productImage->src): '' }}" data-height="220" value="{{ isset($product->productImage) ? asset($product->productImage->src): '' }}" />
                         @error('src')
                         <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
