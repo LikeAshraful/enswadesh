@@ -42,6 +42,7 @@
                             <th scope="col">Shop</th>
                             <th scope="col">Brand</th>
                             <th scope="col">Bargain</th>
+                            <th scope="col">Price</th>
                             <th scope="col">Stocks</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Description</th>
@@ -64,6 +65,7 @@
                                     <span class="badge badge-danger">No</span>
                                     @endif
                                 </td>
+                                <td>{{ $product->price }}</td>
                                 <td>{{ $product->total_stocks }}</td>
                                 <td>{{ $product->slug }}</td>
                                 <td>{{ $product->description }}</td>
