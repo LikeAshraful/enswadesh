@@ -17,7 +17,7 @@ use App\Http\Requests\Users\UpdateUserRequest;
 class VendorController extends Controller
 {
     protected $vendorRepo;
-    
+
     public function __construct(UserRepository $vendor)
     {
         $this->vendorRepo=$vendor;
@@ -63,15 +63,15 @@ class VendorController extends Controller
     public function show($id)
     {
         $user = $this->vendorRepo->findByID($id);
-        return view('backend.user_management.vendor.show',compact('user'));   
+        return view('backend.user_management.vendor.show',compact('user'));
     }
 
     public function edit($id)
     {
         Gate::authorize('backend.vendor.edit');
         $role   = $this->vendorRepo->allRoleForVendor();
-        $user   = $this->vendorRepo->findByID($id); 
-        return view('backend.user_management.vendor.form', compact('role','user')); 
+        $user   = $this->vendorRepo->findByID($id);
+        return view('backend.user_management.vendor.form', compact('role','user'));
     }
 
     public function update($id, UpdateUserRequest $request)
@@ -90,7 +90,7 @@ class VendorController extends Controller
         Gate::authorize('backend.vendor.destroy');
         $user = $this->vendorRepo->deleteByID($id);
         notify()->success("User Successfully Deleted", "Deleted");
-        return back(); 
+        return back();
     }
 
     public function toggleBlock($id)

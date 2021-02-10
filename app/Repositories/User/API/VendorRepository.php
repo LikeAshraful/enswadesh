@@ -19,7 +19,7 @@ class VendorRepository extends BaseRepository {
     public function getAll(): Collection
     {
         $roles      = Role::where('slug','=','staff')->first();
-        return $this->model()::where('role_id',$roles->id)->get(); 
+        return $this->model()::where('role_id',$roles->id)->get();
     }
 
     public function storeFile(UploadedFile $file)
@@ -36,8 +36,7 @@ class VendorRepository extends BaseRepository {
     public function deleteStaff($id)
     {
         $staffImage = $this->findByID($id);
-        dd($staffImage);
         Storage::delete($staffImage->image);
-        $staffImage->delete(); 
+        $staffImage->delete();
     }
 }

@@ -24,7 +24,7 @@ class VendorController extends Controller
     use JsonResponseTrait;
 
     public $vendorRepo;
-    
+
     public function __construct(UserRepository $vendorRepository)
     {
         $this->vendorRepo = $vendorRepository;
@@ -34,7 +34,6 @@ class VendorController extends Controller
     {
         try {
             $users = $this->vendorRepo->findByID(Auth::id());
-            // dd($users->staffs[0]->user->name);
             $code = Response::HTTP_FOUND;
             $message = $users->staffs->count() ." Staff Found!";
             $response = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::make($users));

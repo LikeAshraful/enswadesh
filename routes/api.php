@@ -61,7 +61,6 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('users', [AuthController::class, 'dusers']);
-    Route::get('users', [AuthController::class, 'dusers']);
     Route::get('staffs', [VendorController::class, 'index']);
     Route::post('staffs', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);

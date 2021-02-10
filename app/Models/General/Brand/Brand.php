@@ -12,12 +12,12 @@ class Brand extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 
-        'description', 
-        'slug', 
+        'name',
+        'description',
+        'slug',
         'icon'
     ];
-    
+
     public static function boot()
     {
         parent::boot();
@@ -41,7 +41,7 @@ class Brand extends Model
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::of($value)->slug('_');
+        $this->attributes['slug'] = Str::of($value)->slug('-');
     }
-    
+
 }

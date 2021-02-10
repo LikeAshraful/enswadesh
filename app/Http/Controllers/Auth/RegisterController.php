@@ -2,87 +2,96 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use App\Models\User;
 use App\Models\Role;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Repository\User\UserRepository;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Redirect;
+use App\Notifications\RegisteredUserMail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
+    public $authRepo;
 
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\View\View
-     */
+    public function __construct(UserRepository $authRepository)
+    {
+        $this->authRepo = $authRepository;
+        $this->middleware('guest');
+    }
+
     public function showRegistrationForm()
     {
         $role = Role::where('name', 'Customer')->first();
         return view('auth.register',compact('role'));
     }
 
-    use RegistersUsers;
+    // use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function register(Request $request)
     {
-        $this->middleware('guest');
+        $this->validator($request->all())->validate();
+        DB::beginTransaction();
+        try {
+            $user = $this->authRepo->create($request->except('role_id','password') + [
+                'role_id'       =>5,
+                'password'      => Hash::make($request->password),
+            ]);
+            $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
+                'user_id'       => $user->id
+            ]);
+            $user_verification= $this->authRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
+                'user_id'       => $user->id,
+                'otp'           => rand(1000, 9999),
+                'access_token'  => $user->createToken('authToken')->accessToken,
+            ]);
+            Notification::send($user, new RegisteredUserMail());
+            DB::commit();
+            // return redirect()->route('otp-verify',$access_token)->with($user_verification);
+            return view('auth.otp',compact('user_verification'));
+
+        } catch (\Exception $exception) {
+            DB::rollback();
+            $message = $exception->getMessage();
+        }
+        notify()->warning($message);
+        return redirect()->route('login');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+    public function otpVerification(Request $request)
+    {
+        $this->authRepo->verifyOtpByID($request->user_id,$request->otp,$request->except('otp_verified_at') + [
+            'otp_verified_at'  => date('Y-m-d H:i:s'),
+            ]);
+        return redirect()->route('login');
+    }
+
+    protected function guard()
+    {
+        return Auth::guard();
+    }
+
+    protected function registered(Request $request, $user)
+    {
+
+    }
+
+    protected $redirectTo = RouteServiceProvider::HOME;
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name'      => ['required', 'string', 'max:255'],
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name'          => $data['name'],
-            'email'         => $data['email'],
-            'password'      => Hash::make($data['password']),
-            'phone_number'  => $data['phone_number'],
-            'role_id'       => $data['role_id'],
-            'image'         =>'user.png',
         ]);
     }
 }

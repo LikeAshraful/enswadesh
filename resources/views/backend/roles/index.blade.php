@@ -35,30 +35,30 @@
                     <table id="datatable" class="align-middle mb-0 table table-borderless table-striped table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Name</th>
-                            <th class="text-center">Permissions</th>
-                            <th class="text-center">Updated At</th>
-                            <th class="text-center">Actions</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Permissions</th>
+                            <th scope="col">Updated At</th>
+                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($roles as $key=>$role)
                             <tr>
-                                <td class="text-center text-muted">#{{ $key + 1 }}</td>
-                                <td class="text-center">{{ $role->name }}</td>
-                                <td class="text-center">
+                                <td>#{{ $key + 1 }}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>
                                     @if ($role->permissions->count() > 0)
                                         <span class="badge badge-info">{{ $role->permissions->count() }}</span>
                                     @else
                                         <span class="badge badge-danger">No permission found :(</span>
                                     @endif
                                 </td>
-                                <td class="text-center">{{ $role->created_at->diffForHumans() }}</td>
-                                <td class="text-center">
+                                <td>{{ $role->created_at->diffForHumans() }}</td>
+                                <td>
                                     <a class="fa-edit-style" href="{{ route('backend.roles.edit',$role->id) }}"><i
                                             class="fas fa-edit"></i>
-                                    </a> 
+                                    </a>
                                     @if ($role->deletable == true)
                                         <span> | </span>
                                         <button type="button" class="delete-btn-style"
@@ -86,7 +86,7 @@
 @push('js')
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-    
+
     <script>
         $(document).ready(function() {
             // Datatable

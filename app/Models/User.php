@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Models\Profile;
+use App\Models\UserOtp;
+use App\Models\VendorStaff;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\VendorStaff;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasApiTokens;
@@ -22,6 +24,7 @@ class User extends Authenticatable
         'name',
         'phone_number',
         'email',
+        'otp',
         'password',
         'status',
         'suspend',
@@ -39,6 +42,11 @@ class User extends Authenticatable
     public function staffs()
     {
         return $this->hasMany(VendorStaff::class, 'owner_id');
+    }
+
+    public function userOtpByID()
+    {
+        return $this->hasOne(UserOtp::class);
     }
 
     public function role()
