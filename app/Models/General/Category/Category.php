@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory; 
+    use HasFactory;
 
     protected $fillable = [
-        'name', 
-        'description', 
-        'slug', 
+        'name',
+        'description',
+        'slug',
         'icon',
         'thumbnail',
         'level',
@@ -25,7 +25,7 @@ class Category extends Model
         'status',
         'parent_id'
     ];
-    
+
     public function createdBy(){
         return $this->belongsTo(User::class,'user_id','id');
     }
@@ -37,7 +37,7 @@ class Category extends Model
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::of($value)->slug('_');
+        $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 
 }

@@ -19,14 +19,12 @@ class GeneralSeeder extends Seeder
         $brand = Brand::updateOrCreate([
             'name'          => 'Asus',
             'slug'          => 'asus',
-            'description'   => 'This is description part',
-            'icon'          => '1.jpg'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ]);
         $brand = Brand::updateOrCreate([
             'name'          => 'Dell',
             'slug'          => 'dell',
-            'description'   => 'This is description part',
-            'icon'          => '1.jpg'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ]);
 
 
@@ -40,8 +38,7 @@ class GeneralSeeder extends Seeder
             'shop_id'       =>0,
             'user_id'       => 1,
             'level'         =>1,
-            'icon'          => '1.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
 
         $category_one = Category::updateOrCreate([
@@ -52,8 +49,7 @@ class GeneralSeeder extends Seeder
             'shop_id'       =>0,
             'user_id'       => 1,
             'level'         =>$category->level+1,
-            'icon'          => '2.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
 
         $category_two = Category::updateOrCreate([
@@ -64,8 +60,7 @@ class GeneralSeeder extends Seeder
             'user_id'       => 1,
             'shop_id'       =>0,
             'level'         =>$category_one->level+1,
-            'icon'          => '3.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
 
         $category = Category::updateOrCreate([
@@ -76,8 +71,7 @@ class GeneralSeeder extends Seeder
             'shop_id'       =>0,
             'level'         =>1,
             'user_id'       => 1,
-            'icon'          => '4.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
         $category_one = Category::updateOrCreate([
             'parent_id'     => $category->id,
@@ -87,8 +81,7 @@ class GeneralSeeder extends Seeder
             'user_id'       => 1,
             'level'         =>$category->level+1,
             'shop_id'       =>0,
-            'icon'          => '1.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
         $category_two = Category::updateOrCreate([
             'parent_id'     => $category->id,
@@ -98,8 +91,7 @@ class GeneralSeeder extends Seeder
             'user_id'       => 1,
             'level'         =>$category_one->level+1,
             'shop_id'       =>0,
-            'icon'          => '1.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
     }
 }
