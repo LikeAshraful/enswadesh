@@ -16,10 +16,10 @@ class AreaResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'area_name'         => $this->area_name,
-            'area_description'  => $this->area_description,
-            'area_slug'         => $this->area_slug,
-            'area_icon'         => $this->area_icon,
+            'name'         => $this->name,
+            'description'  => $this->description,
+            'slug'         => $this->slug,
+            'icon'         => $this->icon,
             'city'              => $this->cities,
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,

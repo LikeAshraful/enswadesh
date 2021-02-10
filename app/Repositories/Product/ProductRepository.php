@@ -1,0 +1,27 @@
+<?php
+
+namespace Repository\Product;
+use Repository\BaseRepository;
+use App\Models\Product\Product;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+
+class ProductRepository extends BaseRepository {
+
+    public function model()
+    {
+        return Product::class;
+    }
+
+    public function getAllByShopID($shop_id)
+    {
+        return $this->model()::where('shop_id', $shop_id)->get();
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = $this->findById($id);
+        Storage::delete($product->icon);
+        $product->delete();
+    }
+}

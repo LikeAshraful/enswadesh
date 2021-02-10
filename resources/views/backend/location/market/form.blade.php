@@ -44,18 +44,18 @@
                     @method('PUT')
                     @endif
                     <div class="form-group">
-                    <label for="market_name">Market Name</label>
-                    <input type="text" id="market_name" name="market_name" class="form-control @error('market_name') is-invalid @enderror" value="{{ isset($market) ? $market->market_name : '' }}"  holder="Market name">
-                    @error('market_name')
+                    <label for="name">Market Name</label>
+                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ isset($market) ? $market->name : '' }}"  holder="Market name">
+                    @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="market_address">Market Address</label>
-                    <input type="text" id="market_address" name="market_address" class="form-control @error('market_address') is-invalid @enderror" value="{{ isset($market) ? $market->market_address : '' }}"  holder="Market Address">
-                    @error('market_address')
+                    <label for="address">Market Address</label>
+                    <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ isset($market) ? $market->address : '' }}"  holder="Market Address">
+                    @error('address')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -67,14 +67,14 @@
                         <select name="city_id" id="city_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($cities as $city)
-                                <option value="{{ $city->id }}" {{ $market->city_id == $city->id ? 'selected' : ''}}>{{ $city->city_name }}</option>
+                                <option value="{{ $city->id }}" {{ $market->city_id == $city->id ? 'selected' : ''}}>{{ $city->name }}</option>
                             @endforeach
                         </select>
                         @else
                         <select name="city_id" id="city_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($cities as $city)
-                                <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
                             @endforeach
                         </select>
                         @endisset
@@ -90,14 +90,14 @@
                     <select name="area_id" id="area_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($areas as $area)
-                            <option value="{{ $area->id }}" {{ $market->area_id == $area->id ? 'selected' : ''}}>{{ $area->area_name }}</option>
+                            <option value="{{ $area->id }}" {{ $market->area_id == $area->id ? 'selected' : ''}}>{{ $area->name }}</option>
                         @endforeach
                     </select>
                     @else
                     <select name="area_id" id="area_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                            <option value="{{ $area->id }}">{{ $area->name }}</option>
                         @endforeach
                     </select>
                     @endisset
@@ -108,13 +108,13 @@
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="market_description">Market  Description</label>
-                    <input type="text" id="market_description" name="market_description" class="form-control" value="{{ isset($market) ? $market->market_description : '' }}" holder="Market  Description">
+                    <label for="description">Market  Description</label>
+                    <input type="text" id="description" name="description" class="form-control" value="{{ isset($market) ? $market->description : '' }}" holder="Market  Description">
                     </div>
                     <div class="form-group">
-                    <label for='market_icon'>Market  Icon</label>
-                    <input type="file" id="market_icon" name="market_icon" class="dropify" data-default-file="{{ isset($market) ? asset($market->market_icon): '' }}" data-height="220" value="{{ isset($market) ? asset($market->market_icon): '' }}" />
-                    @error('market_icon')
+                    <label for='icon'>Market  Icon</label>
+                    <input type="file" id="icon" name="icon" class="dropify" data-default-file="{{ isset($market) ? asset($market->icon): '' }}" data-height="220" value="{{ isset($market) ? asset($market->icon): '' }}" />
+                    @error('icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

@@ -58,14 +58,14 @@
                     <select name="area_id" id="area_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($areas as $area)
-                            <option value="{{ $area->id }}" {{ $thana->area_id == $area->id ? 'selected' : ''}}>{{ $area->area_name }}</option>
+                            <option value="{{ $area->id }}" {{ $thana->area_id == $area->id ? 'selected' : ''}}>{{ $area->name }}</option>
                         @endforeach
                     </select>
                     @else
                     <select name="area_id" id="area_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                            <option value="{{ $area->id }}">{{ $area->name }}</option>
                         @endforeach
                     </select>
                     @endisset

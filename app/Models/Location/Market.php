@@ -11,12 +11,12 @@ class Market extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['city_id', 'area_id', 'market_name', 'market_address', 'market_description', 'market_slug',  'market_icon'];
+    protected $fillable = ['city_id', 'area_id', 'name', 'address', 'description', 'slug',  'icon'];
 
-    public function setMarketNameAttribute($value)
+    public function setNameAttribute($value)
     {
-        $this->attributes['market_name'] = $value;
-        $this->attributes['market_slug'] = Str::of($value)->slug('-');
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 
     public function city() {

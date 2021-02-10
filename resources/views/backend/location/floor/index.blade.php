@@ -46,7 +46,7 @@
                             @foreach($floors as $key => $floor)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $floor->markets ? $floor->markets->market_name : 'Not Found' }}</td>
+                                <td>{{ $floor->markets ? $floor->markets->name : 'Not Found' }}</td>
                                 <td>{{ $floor->floor_no }}</td>
                                 <td>{{ $floor->floor_note }}</td>
                                 <td>

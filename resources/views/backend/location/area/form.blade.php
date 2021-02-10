@@ -44,9 +44,9 @@
                     @method('PUT')
                     @endif
                     <div class="form-group">
-                    <label for="area_name">Area Name</label>
-                    <input type="text" id="area_name" name="area_name" class="form-control @error('area_name') is-invalid @enderror" value="{{ isset($area) ? $area->area_name : '' }}"  placeholder="Area name">
-                    @error('area_name')
+                    <label for="name">Area Name</label>
+                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ isset($area) ? $area->name : '' }}"  placeholder="Area name">
+                    @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -58,31 +58,31 @@
                     <select name="city_id" id="city_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($cities as $city)
-                            <option value="{{ $city->id }}" {{ $area->city_id == $city->id ? 'selected' : ''}}>{{ $city->city_name }}</option>
+                            <option value="{{ $city->id }}" {{ $area->city_id == $city->id ? 'selected' : ''}}>{{ $city->name }}</option>
                         @endforeach
                     </select>
                     @else
                     <select name="city_id" id="city_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                            <option value="{{ $city->id }}">{{ $city->name }}</option>
                         @endforeach
                     </select>
                     @endisset
-                    @error('area_name')
+                    @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="area_description">area Description</label>
-                    <input type="text" id="area_description" name="area_description" class="form-control" value="{{ isset($area) ? $area->area_description : '' }}" placeholder="Area Description">
+                    <label for="description">area Description</label>
+                    <input type="text" id="description" name="description" class="form-control" value="{{ isset($area) ? $area->description : '' }}" placeholder="Area Description">
                     </div>
                     <div class="form-group">
-                    <label for='area_icon'>area Icon</label>
-                    <input type="file" id="area_icon" name="area_icon" class="dropify" data-default-file="{{ isset($area) ? asset($area->area_icon): '' }}" data-height="220" value="{{ isset($area) ? asset($area->area_icon): '' }}" />
-                    @error('area_icon')
+                    <label for='icon'>Area Icon</label>
+                    <input type="file" id="icon" name="icon" class="dropify" data-default-file="{{ isset($area) ? asset($area->icon): '' }}" data-height="220" value="{{ isset($area) ? asset($area->icon): '' }}" />
+                    @error('icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

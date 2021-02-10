@@ -48,7 +48,7 @@
                             @foreach($thanas as $key => $thana)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $thana->areaOfthana ? $thana->areaOfthana->area_name : 'Not Found' }}</td>
+                                <td>{{ $thana->areaOfthana ? $thana->areaOfthana->name : 'Not Found' }}</td>
                                 <td>{{ $thana->thana_name }}</td>
                                 <td>{{ $thana->thana_slug }}</td>
                                 <td>{{ $thana->thana_description }}</td>

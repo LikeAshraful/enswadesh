@@ -51,15 +51,15 @@ class AreaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'area_name' => 'required',
-            'area_description' => 'required',
-            'area_icon' => 'required|mimes:jpeg,jpg,png|max:500',
+            'name' => 'required',
+            'description' => 'required',
+            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
         ]);
 
-        $area_icon = $request->hasFile('area_icon') ? $this->areaRepo->storeFile($request->file('area_icon')) : null;
-        $this->areaRepo->create($request->except('area_icon') +
+        $icon = $request->hasFile('icon') ? $this->areaRepo->storeFile($request->file('icon')) : null;
+        $this->areaRepo->create($request->except('icon') +
             [
-                'area_icon' => $area_icon
+                'icon' => $icon
             ]);
 
         notify()->success('Area Successfully Added.', 'Added');
@@ -101,17 +101,17 @@ class AreaController extends Controller
     {
         $area = $this->areaRepo->findByID($id);
 
-        $areaIcon = $request->hasFile('area_icon');
+        $areaIcon = $request->hasFile('icon');
 
-        $area_icon = $areaIcon ? $this->areaRepo->storeFile($request->file('area_icon')) : $area->area_icon;
+        $icon = $areaIcon ? $this->areaRepo->storeFile($request->file('icon')) : $area->icon;
 
         if ($areaIcon) {
             $this->areaRepo->updateArea($id);
         }
 
-        $this->areaRepo->updateByID($id, $request->except('area_icon') +
+        $this->areaRepo->updateByID($id, $request->except('icon') +
             [
-                'area_icon' => $area_icon
+                'icon' => $icon
             ]);
 
 

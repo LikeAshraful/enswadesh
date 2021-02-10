@@ -12,18 +12,19 @@ use App\Http\Controllers\Backend\Shop\ShopTypeController;
 use App\Http\Controllers\Backend\Location\FloorController;
 use App\Http\Controllers\Backend\Location\ThanaController;
 use App\Http\Controllers\Backend\Location\MarketController;
+use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\Interaction\TopicController;
 use App\Http\Controllers\Backend\Product\Base\SizeController;
+use App\Http\Controllers\Backend\Product\Base\ColorController;
 use App\Http\Controllers\Backend\General\Brand\BrandController;
-use App\Http\Controllers\Backend\Product\Base\WeightController;
 use App\Http\Controllers\Backend\Interaction\CommentController;
+use App\Http\Controllers\Backend\Product\Base\WeightController;
 use App\Http\Controllers\Backend\General\Menu\AppMenuController;
 use App\Http\Controllers\Backend\UserManagement\AdminController;
 use App\Http\Controllers\Backend\UserManagement\VendorController;
 use App\Http\Controllers\Backend\UserManagement\ProfileController;
 use App\Http\Controllers\Backend\Interaction\InteractionController;
 use App\Http\Controllers\Backend\General\Category\CategoryController;
-use App\Http\Controllers\Backend\Product\Base\ColorController;
 use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
 
 //Dashboard
@@ -71,6 +72,8 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('colors', ColorController::class);
     Route::resource('size', SizeController::class);
     Route::resource('weights', WeightController::class);
+
+    Route::resource('products', ProductController::class);
 
     Route::resource('orders', OrdersController::class);
 

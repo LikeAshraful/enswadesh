@@ -50,13 +50,13 @@ class MarketRepository extends BaseRepository
     public function updateMarket($id)
     {
         $market = $this->findById($id);
-        Storage::delete($market->market_icon);
+        Storage::delete($market->icon);
     }
 
     public function deleteMarket($id)
     {
         $market = $this->findById($id);
-        Storage::delete($market->market_icon);
+        Storage::delete($market->icon);
         $market->delete();
     }
 }

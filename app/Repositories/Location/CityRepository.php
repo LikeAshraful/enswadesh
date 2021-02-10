@@ -24,13 +24,13 @@ class CityRepository extends BaseRepository
     public function updateCity($id)
     {
         $city = $this->findById($id);
-        Storage::delete($city->city_icon);
+        Storage::delete($city->icon);
     }
 
     public function deleteCity($id)
     {
         $city = $this->findById($id);
-        Storage::delete($city->city_icon);
+        Storage::delete($city->icon);
         $city->delete();
     }
 }
