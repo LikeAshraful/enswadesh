@@ -15,26 +15,6 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        // Dashboard
-        $moduleAppDashboard = Module::updateOrCreate(['name' => 'Admin Dashboard']);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppDashboard->id,
-            'name' => 'Access Dashboard',
-            'slug' => 'backend.dashboard',
-        ]);
-        // Settings
-        $moduleAppSettings = Module::updateOrCreate(['name' => 'Settings']);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppSettings->id,
-            'name' => 'Access Settings',
-            'slug' => 'backend.settings.index',
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppSettings->id,
-            'name' => 'Update Settings',
-            'slug' => 'backend.settings.update',
-        ]);
-
         // Role management
         $moduleAppRole = Module::updateOrCreate(['name' => 'Role Management']);
         Permission::updateOrCreate([
@@ -57,20 +37,6 @@ class PermissionSeeder extends Seeder
             'name' => 'Delete Role',
             'slug' => 'backend.roles.destroy',
         ]);
-
-        // Profile
-        $moduleAppProfile = Module::updateOrCreate(['name' => 'Profile']);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppProfile->id,
-            'name' => 'Update Profile',
-            'slug' => 'backend.profile.update',
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppProfile->id,
-            'name' => 'Update Password',
-            'slug' => 'backend.profile.password',
-        ]);
-
         // User management(Super Admin)
         $moduleAppSuperAdmin = Module::updateOrCreate(['name' => 'Super Admin Management']);
         Permission::updateOrCreate([
@@ -139,7 +105,37 @@ class PermissionSeeder extends Seeder
             'name' => 'Delete Vendor',
             'slug' => 'backend.vendor.destroy',
         ]);
-
+        // Dashboard
+        $moduleAppDashboard = Module::updateOrCreate(['name' => 'Admin Dashboard']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppDashboard->id,
+            'name' => 'Access Dashboard',
+            'slug' => 'backend.dashboard',
+        ]);
+        // Settings
+        $moduleAppSettings = Module::updateOrCreate(['name' => 'Settings']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSettings->id,
+            'name' => 'Access Settings',
+            'slug' => 'backend.settings.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSettings->id,
+            'name' => 'Update Settings',
+            'slug' => 'backend.settings.update',
+        ]);
+        // Profile
+        $moduleAppProfile = Module::updateOrCreate(['name' => 'Profile']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProfile->id,
+            'name' => 'Update Profile',
+            'slug' => 'backend.profile.update',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProfile->id,
+            'name' => 'Update Password',
+            'slug' => 'backend.profile.password',
+        ]);
         // Product Property management(Category)
         $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management(Category)']);
         Permission::updateOrCreate([

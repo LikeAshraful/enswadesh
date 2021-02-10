@@ -76,11 +76,12 @@
                                 <div class="custom-control custom-checkbox mb-2">
                                     <input type="checkbox" class="custom-control-input"
                                         id="permission-{{ $permission->id }}" value="{{ $permission->id }}"
-                                        name="permissions[]" @if(isset($role)) @foreach($role->permissions as
-                                    $rPermission)
-                                    {{ $permission->id == $rPermission->id ? 'checked' : '' }}
-                                    @endforeach
-                                    @endif
+                                        name="permissions[]"
+                                        @if(isset($role))
+                                            @foreach($role->permissions as $rPermission)
+                                                {{ $permission->id == $rPermission->id ? 'checked' : '' }}
+                                            @endforeach
+                                        @endif
                                     >
                                     <label class="custom-control-label"
                                         for="permission-{{ $permission->id }}">{{ $permission->name }}</label>

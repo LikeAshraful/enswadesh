@@ -13,7 +13,7 @@ class RegisteredUserMail extends Notification
 
     public function __construct()
     {
-        
+
     }
 
     public function via($notifiable)
@@ -26,6 +26,7 @@ class RegisteredUserMail extends Notification
         return (new MailMessage)
                     ->line('Thank you '.$notifiable->name.' notification.')
                     ->action('Notification Action', url('/login'))
+                    ->line('Your OTP is '.$notifiable->userOtpByID->otp)
                     ->line('Thank you for using our application!');
     }
 

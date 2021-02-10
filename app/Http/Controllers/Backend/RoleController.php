@@ -12,13 +12,13 @@ use App\Http\Requests\Roles\UpdateRoleRequest;
 class RoleController extends Controller
 {
     protected $roleRepo;
-    
+
     public function __construct(RoleRepository $roles)
     {
         $this->roleRepo=$roles;
 
     }
-    
+
     public function index()
     {
         Gate::authorize('backend.roles.index');
