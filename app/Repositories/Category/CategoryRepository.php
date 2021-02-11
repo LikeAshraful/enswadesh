@@ -78,6 +78,6 @@ class CategoryRepository extends BaseRepository {
     {
         $categoryIcon=$this->findByID($id);
         Storage::delete($categoryIcon->icon);
-        $categoryIcon->delete(); 
+        $categoryIcon->delete();
     }
 }

@@ -57,6 +57,7 @@ Route::prefix('shops')->namespace('Shop')->group(function(){
 
 Route::get('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
 Route::get('products/{id}', [ProductController::class, 'show']);
+Route::get('categories', [CategoryController::class, 'index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -78,7 +79,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // general topic
     Route::get('brands', [BrandController::class, 'index']);
-    Route::get('categories', [CategoryController::class, 'index']);
 
     // product related
     Route::get('colors', [ColorController::class, 'index']);
