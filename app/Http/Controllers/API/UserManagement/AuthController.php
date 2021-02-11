@@ -35,13 +35,14 @@ class AuthController extends Controller
             'email'     => 'email|required',
             'password'  => 'required'
         ]);
+
         if(!Auth()->attempt($loginData)){
             return $this->bad('UnAuthorised Action', 403);
         }
-        $accessToken = Auth()->user()->createToken('authToken')->accessToken;
+        $accessToken = Auth::user()->createToken('authToken')->accessToken;
         return $this->json(
             "Successfully Login",
-            ['user' => Auth()->user(), 'access_token' => $accessToken]
+            ['user' => Auth::user(), 'access_token' => $accessToken]
         );
     }
 

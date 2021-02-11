@@ -15,6 +15,7 @@ use App\Models\Location\Thana;
 use App\Models\Location\Market;
 use Repository\Shop\ShopRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManager;
 use Repository\Location\AreaRepository;
 use Repository\Location\CityRepository;
@@ -86,7 +87,7 @@ class ShopController extends Controller
 
         $shop = $this->shopRepo->create($request->except('logo', 'cover_image', 'meta_og_image', 'shop_owner_id') +
             [
-                'shop_owner_id'         => Auth::id(),
+                'shop_owner_id'    => Auth::id(),
                 'logo'             => $logo,
                 'cover_image'      => $cover_image,
                 'meta_og_image'    => $meta_og_image
