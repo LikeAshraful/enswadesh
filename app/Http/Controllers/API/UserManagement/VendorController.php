@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\UserManagement;
+namespace App\Http\Controllers\API\UserManagement;
 
 use Illuminate\Http\Request;
 use App\Helpers\API\ApiHelpers;
