@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API\Staff;
 
 use App\Helpers\APIHelpers;
 use App\Models\User;
