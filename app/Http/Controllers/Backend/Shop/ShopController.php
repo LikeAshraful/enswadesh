@@ -5,17 +5,11 @@ namespace App\Http\Controllers\Backend\Shop;
 use Image;
 use Storage;
 use App\Models\Shop\Shop;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Location\Area;
-use App\Models\Location\City;
 use App\Models\Shop\ShopType;
-use App\Models\Location\Floor;
-use App\Models\Location\Thana;
-use App\Models\Location\Market;
 use Repository\Shop\ShopRepository;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Auth;
 use Repository\Location\AreaRepository;
 use Repository\Location\CityRepository;
 use Repository\Shop\ShopTypeRepository;
@@ -71,25 +65,25 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        
         $request->validate([
-            'shop_name'           => 'required',
-            'shop_no'             => 'required',
-            'logo'           => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            'cover_image'    => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            'meta_og_image'  => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'name' => 'required',
+            'shop_no' => 'required',
+            'logo' => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'cover_image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            'meta_og_image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
-
+            // dd($request->all());
         $logo = $request->hasFile('logo') ? $this->shopRepo->storeFile($request->file('logo')) : null;
         $cover_image = $request->hasFile('cover_image') ? $this->shopRepo->storeFile($request->file('cover_image')) : null;
         $meta_og_image = $request->hasFile('meta_og_image') ? $this->shopRepo->storeFile($request->file('meta_og_image')) : null;
 
         $shop = $this->shopRepo->create($request->except('logo', 'cover_image', 'meta_og_image', 'shop_owner_id') +
             [
-                'shop_owner_id'         => Auth::id(),
-                'logo'             => $logo,
-                'cover_image'      => $cover_image,
-                'meta_og_image'    => $meta_og_image
+                'shop_owner_id' => Auth::id(),
+                'logo' => $logo,
+                'cover_image' => $cover_image,
+                'meta_og_image' => $meta_og_image
             ]);
 
         notify()->success('shop Successfully Added.', 'Added');
