@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 use App\Notifications\RegisteredUserMail;
-use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Resources\Vendor\VendorResource;
 use App\Http\Requests\API\Staff\SignUpRequest;
@@ -21,8 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class VendorController extends Controller
 {
-    use JsonResponseTrait;
-
     public $vendorRepo;
 
     public function __construct(UserRepository $vendorRepository)
