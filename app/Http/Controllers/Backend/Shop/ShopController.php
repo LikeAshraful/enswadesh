@@ -65,7 +65,7 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required',
             'shop_no' => 'required',
@@ -80,10 +80,10 @@ class ShopController extends Controller
 
         $shop = $this->shopRepo->create($request->except('logo', 'cover_image', 'meta_og_image', 'shop_owner_id') +
             [
-                'shop_owner_id' => Auth::id(),
-                'logo' => $logo,
-                'cover_image' => $cover_image,
-                'meta_og_image' => $meta_og_image
+                'shop_owner_id'    => Auth::id(),
+                'logo'             => $logo,
+                'cover_image'      => $cover_image,
+                'meta_og_image'    => $meta_og_image
             ]);
 
         notify()->success('shop Successfully Added.', 'Added');
