@@ -19,26 +19,18 @@ class SignInRequest extends FormRequest
 
     public function rules()
     {
-        if ($this->getMethod() == 'POST') {
-            return User::LOGIN_VALIDATION_RULES;
-        }
+        return [
+            'email' => 'required|string|max:255',
+            'password' => 'required|string|min:8|max:255'
+        ];
     }
 
     public function messages()
     {
         return [
-            'email.required'    => 'The email field is required.',
-            'email.email'       => 'Invalid email format.',
+            'email_or_phone.required'    => 'The email field is required.',
             'password.required' => 'The password filed is required.',
             'password.min'      => 'The password length must be at least 6 characters',
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        $code = Response::HTTP_UNPROCESSABLE_ENTITY;
-        $message = "Login Failed!";
-        $response = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(),$token);
-        throw new HttpResponseException(new JsonResponse($response, $code));
     }
 }

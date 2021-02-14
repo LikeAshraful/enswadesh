@@ -12,7 +12,7 @@ class UserOtp extends Model
         'user_id',
         'otp',
         'otp_verified_at',
-        'access_token'
+        'token'
     ];
 
     public function user()

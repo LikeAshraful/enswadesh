@@ -33,7 +33,7 @@ class LoginController extends Controller
         $user = Auth::guard('web')->attempt([$checkUserInput => $request->email, 'password' => $request->password]);
         if ($user == 'true') {
             if (Auth::user()->status == 1) {
-                notify()->success('Welcome '.Auth::user()->name.' To ENSWADESH');
+                notify()->success('Welcome ' . Auth::user()->name . ' To ENSWADESH');
                 return redirect()->route('backend.dashboard');
             } else {
                 notify()->success('User not approved yet!', 'Pendding');
