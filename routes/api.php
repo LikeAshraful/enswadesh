@@ -4,6 +4,7 @@ use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
+use App\Http\Controllers\API\UserManagement\VerificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
@@ -25,9 +26,6 @@ use App\Http\Controllers\API\General\Category\CategoryController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::get('/email/resend', 'Api\VerificationController@resend')->name('verification.resend');
-Route::get('/email/verify/{id}/{hash}', 'Api\VerificationController@verify')->name('verification.verify');
-
 
 Route::get('menus', [AppMenuController::class, 'index']);;
 Route::get('areas', [AreaController::class, 'index']);

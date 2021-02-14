@@ -16,13 +16,12 @@ class SignUpRequest extends FormRequest
 {
     public function authorize()
     {
-        // Gate::authorize('backend.staff.create');
         return true;
     }
 
     public function rules()
     {
-        $rules = [];
+        $rules = User::REGISTRATION_VALIDATION_RULES;
         if ($this->getMethod() == 'POST') {
             $rules += [
                 'email' => [
@@ -85,7 +84,7 @@ class SignUpRequest extends FormRequest
     {
         $code       = Response::HTTP_UNPROCESSABLE_ENTITY;
         $message    = "Registration Failed!";
-        $response   = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors());
+        $response   = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(),$token);
         throw new HttpResponseException(new JsonResponse($response, $code));
     }
 }
