@@ -63,4 +63,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role->permissions()->where('slug', $permission)->first() ? true : false;
     }
+
+    public const REGISTRATION_VALIDATION_RULES = [
+        'name' => ['required', 'string', 'between:2,50']
+    ];
+
+    public const LOGIN_VALIDATION_RULES = [
+        'email' => [
+            'required',
+            'email'
+        ],
+        'password' => [
+            'required',
+            'string',
+            'min:8'
+        ]
+    ];
 }

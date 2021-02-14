@@ -200,7 +200,7 @@
                     </div>
                     <div class="form-group">
                     <label for="shop_no">Shop No</label>
-                    <input type="text" id="shop_no" name="shop_no" class="form-control @error('shop_no') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_no : '' }}" holder="Market name">
+                    <input type="no" id="shop_no" name="shop_no" class="form-control @error('shop_no') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_no : '' }}" holder="Market name">
                     @error('shop_no')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

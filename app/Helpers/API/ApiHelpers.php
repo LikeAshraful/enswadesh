@@ -4,7 +4,7 @@ namespace App\Helpers\API;
 
 class ApiHelpers
 {
-    public static function createAPIResponse($is_error, $code, $message, $content)
+    public static function createAPIResponse($is_error, $code, $message, $content, $token)
     {
         $result = [];
 
@@ -20,6 +20,7 @@ class ApiHelpers
             $result['success'] = true;
             $result['code'] = $code;
             $result['message'] = $message;
+            $result['token'] = $token;
 
             if ($content != null) {
                 $result['data'] = $content;

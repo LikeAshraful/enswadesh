@@ -4,6 +4,7 @@ use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
+use App\Http\Controllers\API\UserManagement\VerificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
@@ -25,7 +26,6 @@ use App\Http\Controllers\API\General\Category\CategoryController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-
 
 Route::get('menus', [AppMenuController::class, 'index']);;
 Route::get('areas', [AreaController::class, 'index']);
@@ -57,6 +57,7 @@ Route::prefix('shops')->namespace('Shop')->group(function(){
 
 Route::get('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
 Route::get('products/{id}', [ProductController::class, 'show']);
+Route::get('categories', [CategoryController::class, 'index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -78,7 +79,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // general topic
     Route::get('brands', [BrandController::class, 'index']);
-    Route::get('categories', [CategoryController::class, 'index']);
 
     // product related
     Route::get('colors', [ColorController::class, 'index']);

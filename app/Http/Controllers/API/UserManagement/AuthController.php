@@ -12,16 +12,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 use App\Http\Resources\Auth\AuthResource;
 use App\Notifications\RegisteredUserMail;
-use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\API\Staff\SignInRequest;
 use App\Http\Requests\API\Staff\SignUpRequest;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
-    use JsonResponseTrait;
-
     public $authRepo;
 
     public function __construct(UserRepository $authRepository)
@@ -29,21 +27,21 @@ class AuthController extends Controller
         $this->authRepo = $authRepository;
     }
 
-    public function login(Request $request)
+    public function login(SignInRequest $request)
     {
-        $loginData = $request->validate([
-            'email'     => 'email|required',
-            'password'  => 'required'
-        ]);
-
-        if(!Auth()->attempt($loginData)){
-            return $this->bad('UnAuthorised Action', 403);
+        $credentials    = $request->only(['email', 'password']);
+        if(!Auth()->attempt($credentials)){
+            $code       = Response::HTTP_UNAUTHORIZED;
+            $message    = "Credentials does not matches.";
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null,null);
+            return new JsonResponse($response);
+        }else{
+            $token      = Auth()->user()->createToken('authToken')->accessToken;
+            $code       = Response::HTTP_OK;
+            $message    = "Welcome To ENSWADESH.";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, null,$token);
+            return new JsonResponse($response);
         }
-        $accessToken = Auth::user()->createToken('authToken')->accessToken;
-        return $this->json(
-            "Successfully Login",
-            ['user' => Auth::user(), 'access_token' => $accessToken]
-        );
     }
 
     public function register(SignUpRequest $request)
@@ -63,9 +61,10 @@ class AuthController extends Controller
                 'otp'           => rand(1000, 9999),
                 'access_token'  => $user->createToken('authToken')->accessToken,
             ]);
-            $code = Response::HTTP_CREATED;
-            $message = "user Successfully Registered.";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, new AuthResource($user));
+            $token      = $user->createToken('authToken')->accessToken;
+            $code       = Response::HTTP_CREATED;
+            $message    = "user Successfully Registered.";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, new AuthResource($user),$token);
             Notification::send($user, new RegisteredUserMail());
             DB::commit();
         } catch (QueryException $exception) {
@@ -79,14 +78,14 @@ class AuthController extends Controller
 
     public function dusers(){
         try {
-            $user = Auth::user();
-            $code = Response::HTTP_FOUND;
-            $message = "Welcome ".$user->name. " in ENSWADESH";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, $user);
+            $user       = Auth::user();
+            $code       = Response::HTTP_FOUND;
+            $message    = "Welcome ".$user->name. " in ENSWADESH";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, $user);
         } catch (QueryException $exception) {
-            $code = $exception->getCode();
-            $message = $exception->getMessage();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $code       = $exception->getCode();
+            $message    = $exception->getMessage();
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null);
         }
         return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }

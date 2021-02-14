@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Repository\Shop\ShopRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Shop\ShopResource;
+use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -182,10 +183,11 @@ class ShopController extends Controller
     public function shopByMarket($id)
     {
         $shops = $this->shopRepo->shopByMarketId($id);
-        return $this->json(
-            'Shop list by market',
-            ShopResource::collection($shops)
-        );
+        return $this->json('shoplist',$shops);
+        // return $this->json(
+        //     'Shop list by Market ID',
+        //     new ShopCollection($shops)
+        // );
     }
 
     public function shopByMarketByFloor($id)

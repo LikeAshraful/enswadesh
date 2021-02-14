@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API\Staff;
 
-use App\Helpers\APIHelpers;
+use App\Helpers\API\ApiHelpers;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,21 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SignInRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         if ($this->getMethod() == 'POST') {
@@ -37,21 +27,18 @@ class SignInRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'The email field is required.',
-            'email.email' => 'Invalid email format.',
+            'email.required'    => 'The email field is required.',
+            'email.email'       => 'Invalid email format.',
             'password.required' => 'The password filed is required.',
-            'password.min' => 'The password length must be at least 6 characters',
+            'password.min'      => 'The password length must be at least 6 characters',
         ];
     }
 
     public function failedValidation(Validator $validator)
     {
         $code = Response::HTTP_UNPROCESSABLE_ENTITY;
-
         $message = "Login Failed!";
-
-        $response = APIHelpers::createAPIResponse(true, $code, $message, $validator->errors());
-
+        $response = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(),$token);
         throw new HttpResponseException(new JsonResponse($response, $code));
     }
 }
