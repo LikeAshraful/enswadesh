@@ -13,9 +13,14 @@ class ProductRepository extends BaseRepository {
         return Product::class;
     }
 
-    public function getAllByShopID($shop_id)
+    public function getAllByShopID($shop_id, $per_page = null)
     {
-        return $this->model()::where('shop_id', $shop_id)->get();
+        $products = $this->model()::where('shop_id', $shop_id);
+        if($products != null)
+           return $products->paginate($per_page);
+
+        return $products->get();
+        
     }
 
     public function deleteProduct($id)

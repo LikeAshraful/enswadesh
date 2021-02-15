@@ -43,12 +43,8 @@ class ProductController extends Controller
 
     public function productsByShop($shop_id)
     {
-        $products = $this->productRepo->getAllByShopID($shop_id);
-        return $this->json(
-            "Product List",
-            ProductResource::collection($products)
-        );
-
+        $products = $this->productRepo->getAllByShopID($shop_id, 2);
+        return $this->json('Product List', ProductResource::collection($products)->response()->getData(true));
     }
 
     /**

@@ -31,9 +31,13 @@ class ShopRepository extends BaseRepository
         return $this->model()::where('shop_owner_id', Auth::id())->find($id);
     }
 
-    public function shopByMarketId($id)
+    public function shopByMarketId($id, $per_page = null)
     {
-        return $this->model()::where('market_id', $id)->paginate(6);
+        $shop = $this->model()::where('market_id', $id);
+        if($per_page != null)
+            return $shop->paginate($per_page);
+        
+        return $shop->get();
     }
 
     public function shopByMarketByFloorNo($id)

@@ -182,12 +182,11 @@ class ShopController extends Controller
 
     public function shopByMarket($id)
     {
-        $shops = $this->shopRepo->shopByMarketId($id);
-        return $this->json('shoplist',$shops);
-        // return $this->json(
-        //     'Shop list by Market ID',
-        //     new ShopCollection($shops)
-        // );
+        $shops = $this->shopRepo->shopByMarketId($id, 2);
+        return $this->json(
+            'Shop list',
+            ShopResource::collection($shops)->response()->getData(true)
+        );
     }
 
     public function shopByMarketByFloor($id)
