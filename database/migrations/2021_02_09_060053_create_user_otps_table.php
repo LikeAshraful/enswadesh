@@ -15,10 +15,10 @@ class CreateUserOtpsTable extends Migration
     {
         Schema::create('user_otps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('otp')                      ->nullable();
             $table->timestamp('otp_verified_at')        ->nullable();
-            $table->longText('access_token')            ->nullable();
+            $table->longText('token')                   ->nullable();
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

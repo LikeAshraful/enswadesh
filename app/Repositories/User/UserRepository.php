@@ -1,6 +1,7 @@
 <?php
 
 namespace Repository\User;
+
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Module;
@@ -15,17 +16,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class UserRepository extends BaseRepository {
+class UserRepository extends BaseRepository
+{
 
     public function model()
     {
         return User::class;
     }
 
+    public function generateAccessToken(User $user): string
+    {
+        return $user->createToken('authToken')->accessToken;
+    }
+
     public function allVendor()
     {
-        $roles = Role::where('slug','=','vendor')->first();
-        return User::where('role_id',$roles->id)->get();
+        $roles = Role::where('slug', '=', 'vendor')->first();
+        return User::where('role_id', $roles->id)->get();
     }
 
     public function allRole()
@@ -43,12 +50,12 @@ class UserRepository extends BaseRepository {
 
     public function allRoleForAdmin()
     {
-        return Role::where('slug','!=','super_admin')->get();
+        return Role::where('slug', '!=', 'super_admin')->get();
     }
 
     public function allRoleForVendor()
     {
-        return Role::where('slug','=','staff')->first();
+        return Role::where('slug', '=', 'staff')->first();
     }
 
     public function findByUser($id)
@@ -56,24 +63,21 @@ class UserRepository extends BaseRepository {
         return Profile::where('user_id', $id)->first();
     }
 
-    public function updateProfileByID($id, array $modelData)
+    public function updateOrNewBy(User $user, array $profileData = []): Profile
     {
-        $profile = Profile::where('user_id', $id)->first();
-         if($profile != null)
-        {
-            $profile->update($modelData);
-        }else{
-            return Profile::create($modelData);
+        if ($profile = $user->profile) {
+            $profile->update($profileData);
+            return $profile->refresh();
         }
+        return $user->profile()->create($profileData);
     }
 
     public function updateOtpByID($id, array $modelData)
     {
         $otp = UserOtp::where('user_id', $id)->first();
-         if($otp != null)
-        {
+        if ($otp != null) {
             $otp->update($modelData);
-        }else{
+        } else {
             return UserOtp::create($modelData);
         }
     }
@@ -81,11 +85,10 @@ class UserRepository extends BaseRepository {
     public function verifyOtpByID($id, $otp, array $modelData)
     {
         $otp = UserOtp::where('user_id', $id)->where('otp', $otp)->first();
-         if($otp != null)
-        {
+        if ($otp != null) {
             $otp->update($modelData);
             notify()->success('You are verify by your OTP.', 'Success');
-        }else{
+        } else {
             notify()->warning('Your OTP is not valid, please resend.', 'Warning');
             return back();
         }
@@ -99,8 +102,7 @@ class UserRepository extends BaseRepository {
     public function updateFile($id)
     {
         $userImage = Profile::where('user_id', $id)->first();
-        if($userImage)
-        {
+        if ($userImage) {
             Storage::delete($userImage->image);
         }
     }

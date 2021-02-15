@@ -3,91 +3,91 @@
 namespace App\Http\Controllers\API\UserManagement;
 
 use Illuminate\Http\Request;
-use App\Helpers\API\ApiHelpers;
 use Illuminate\Support\Facades\DB;
+use Repository\User\OtpRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\QueryException;
-use App\Http\Resources\Auth\AuthResource;
 use App\Notifications\RegisteredUserMail;
+use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
-use App\Http\Requests\API\Staff\SignInRequest;
-use App\Http\Requests\API\Staff\SignUpRequest;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Http\Requests\API\User\SignInRequest;
+use App\Http\Requests\API\User\SignUpRequest;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
 {
-    public $authRepo;
+    use JsonResponseTrait, ThrottlesLogins;
 
-    public function __construct(UserRepository $authRepository)
+    public $authRepo;
+    public $otpRepo;
+
+    public function __construct(UserRepository $authRepository, OtpRepository $otpRepository)
     {
         $this->authRepo = $authRepository;
+        $this->otpRepo  = $otpRepository;
+    }
+
+    public function username()
+    {
+        return 'email';
     }
 
     public function login(SignInRequest $request)
     {
-        $credentials    = $request->only(['email', 'password']);
-        if(!Auth()->attempt($credentials)){
-            $code       = Response::HTTP_UNAUTHORIZED;
-            $message    = "Credentials does not matches.";
-            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null,null);
-            return new JsonResponse($response);
-        }else{
-            $token      = Auth()->user()->createToken('authToken')->accessToken;
-            $code       = Response::HTTP_OK;
-            $message    = "Welcome To ENSWADESH.";
-            $response   = ApiHelpers::createAPIResponse(false, $code, $message, null,$token);
-            return new JsonResponse($response);
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
         }
+
+        if (Auth::attempt($request->only(['email', 'password']))) {
+            $user = auth()->user();
+            return $this->json('Login successfully', [
+                'access_token'  => $this->authRepo->generateAccessToken($user),
+                'access_type'   => 'Bearer'
+            ]);
+        }
+
+        return $this->bad('Invalid Credentials');
     }
 
     public function register(SignUpRequest $request)
     {
-        $user = null;
-        DB::beginTransaction();
-        try {
-            $user = $this->authRepo->create($request->except('role_id','password') + [
-                'role_id'       =>5,
-                'password'      => Hash::make($request->password),
-            ]);
-            $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
-                'user_id'       => $user->id
-            ]);
-            $user_verification= $this->authRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
-                'user_id'       => $user->id,
-                'otp'           => rand(1000, 9999),
-                'access_token'  => $user->createToken('authToken')->accessToken,
-            ]);
-            $token      = $user->createToken('authToken')->accessToken;
-            $code       = Response::HTTP_CREATED;
-            $message    = "user Successfully Registered.";
-            $response   = ApiHelpers::createAPIResponse(false, $code, $message, new AuthResource($user),$token);
-            Notification::send($user, new RegisteredUserMail());
-            DB::commit();
-        } catch (QueryException $exception) {
-            DB::rollback();
-            $message = $exception->getMessage();
-            $code = $exception->getCode();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
-        }
-        return new JsonResponse($response, $user ? Response::HTTP_CREATED : Response::HTTP_INTERNAL_SERVER_ERROR);
+        $user = DB::transaction(function () use ($request) {
+            $user = $this->authRepo->create($request->all());
+            $this->authRepo->updateOrNewBy($user);
+            $userOtp = $this->otpRepo->generateOtpForUser($user);
+            return compact('user', 'userOtp');
+        });
+
+        Notification::send($user['user'], new RegisteredUserMail($user['userOtp']));
+
+        return $this->json('User registered successfully. Please check your email or phone to active account', [
+            'token' => $user['userOtp']['token'],
+            'otp'   => $user['userOtp']['otp']
+        ]);
+
     }
 
-    public function dusers(){
-        try {
-            $user       = Auth::user();
-            $code       = Response::HTTP_FOUND;
-            $message    = "Welcome ".$user->name. " in ENSWADESH";
-            $response   = ApiHelpers::createAPIResponse(false, $code, $message, $user);
-        } catch (QueryException $exception) {
-            $code       = $exception->getCode();
-            $message    = $exception->getMessage();
-            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null);
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|exists:user_otps',
+            'otp'   => 'required|min:4'
+        ]);
+
+        if ($userOtp = $this->otpRepo->verifyOtp($request->token, $request->otp)) {
+            return $this->json('Otp verifyed successfully', [
+                'access_token'  => $this->authRepo->generateAccessToken($userOtp->user),
+                'access_type'   => 'Bearer'
+            ]);
         }
-        return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
+
+        return $this->bad('Invalid OTP');
     }
 
+    public function getAuthUser()
+    {
+        return $this->json('Auth user info', auth()->user());
+    }
 }

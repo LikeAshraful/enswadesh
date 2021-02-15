@@ -2,18 +2,21 @@
 
 namespace App\Notifications;
 
+use App\Models\UserOtp;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class RegisteredUserMail extends Notification
 {
     use Queueable;
 
-    public function __construct()
-    {
+    public $userOtp;
 
+    public function __construct(UserOtp $userOtp)
+    {
+        $this->userOtp = $userOtp;
     }
 
     public function via($notifiable)
@@ -24,9 +27,9 @@ class RegisteredUserMail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Thank you '.$notifiable->name.' notification.')
+                    ->line('Thank you ' . $notifiable->name . ' notification.')
                     ->action('Notification Action', url('/login'))
-                    ->line('Your OTP is '.$notifiable->userOtpByID->otp)
+                    ->line('Your OTP is '. $this->userOtp->otp )
                     ->line('Thank you for using our application!');
     }
 
