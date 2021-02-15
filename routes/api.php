@@ -31,12 +31,12 @@ Route::get('menus', [AppMenuController::class, 'index']);;
 Route::get('areas', [AreaController::class, 'index']);
 Route::get('areas-by-city/{id}', [AreaController::class, 'areaByCity']);
 
-Route::prefix('cities')->namespace('City')->group(function(){
+Route::prefix('cities')->namespace('City')->group(function () {
     Route::get('', [CityController::class, 'index']);
     Route::get('{id}/markets', [CityController::class, 'cityMarkets']);
 });
 
-Route::prefix('markets')->namespace('Market')->group(function(){
+Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('', [MarketController::class, 'index']);
     Route::get('all-market-by-city/{id}', [MarketController::class, 'allMarketsByCity']);
     Route::get('top-market-by-city/{id}', [MarketController::class, 'topMarketsByCity']);
@@ -48,7 +48,7 @@ Route::prefix('markets')->namespace('Market')->group(function(){
 Route::get('floors', [FloorController::class, 'index']);
 
 // shop related
-Route::prefix('shops')->namespace('Shop')->group(function(){
+Route::prefix('shops')->namespace('Shop')->group(function () {
     Route::get('shop-types', [ShopTypeController::class, 'index']);
     Route::get('all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
     Route::get('{id}', [ShopController::class, 'show']);
@@ -60,8 +60,7 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::group(['middleware' => 'auth:api'], function () {
-
-    Route::get('users', [AuthController::class, 'dusers']);
+    Route::get('user', [AuthController::class, 'getAuthUser']);
     Route::get('staffs', [VendorController::class, 'index']);
     Route::post('staffs', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);
@@ -69,7 +68,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
 
     // my shop related
-    Route::prefix('my-shops')->namespace('Shop')->group(function(){
+    Route::prefix('my-shops')->namespace('Shop')->group(function () {
         Route::get('', [ShopController::class, 'index']);
         Route::post('', [ShopController::class, 'store']);
         Route::get('{id}/edit', [ShopController::class, 'edit']);
@@ -86,7 +85,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('weights', [WeightController::class, 'index']);
 
     //Product
-    Route::prefix('products')->namespace('Product')->group(function(){
+    Route::prefix('products')->namespace('Product')->group(function () {
         Route::get('', [ProductController::class, 'index']);
         Route::get('self/{id}', [ProductController::class, 'selfProduct']);
         Route::post('', [ProductController::class, 'store']);
@@ -95,26 +94,26 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // oder related
-    Route::prefix('orders')->namespace('Order')->group(function(){
+    Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
         Route::get('self/{id}', [OrderController::class, 'selfOrder']);
         Route::get('{id}', [OrderController::class, 'show']);
         Route::post('', [OrderController::class, 'store']);
     });
 
-    Route::prefix('templates')->namespace('Template')->group(function(){
+    Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);
         Route::post('/create', [InteractionController::class, 'storeTemplate']);
     });
 
-    Route::prefix('videos')->namespace('Video')->group(function(){
+    Route::prefix('videos')->namespace('Video')->group(function () {
         Route::get('', [InteractionController::class, 'videos']);
         Route::post('/create', [InteractionController::class, 'storeVideo']);
         Route::get('/{id}', [InteractionController::class, 'showVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
     });
 
-    Route::prefix('comments')->namespace('Comment')->group(function(){
+    Route::prefix('comments')->namespace('Comment')->group(function () {
         Route::get('', [CommentController::class, 'index']);
         Route::get('/{interaction_id}', [CommentController::class, 'show']);
         Route::post('/create', [CommentController::class, 'store']);
@@ -122,15 +121,14 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/delete/{id}', [CommentController::class, 'destroy']);
     });
 
-    Route::prefix('likes')->namespace('Like')->group(function(){
+    Route::prefix('likes')->namespace('Like')->group(function () {
         Route::get('/{interaction_id}', [LikeController::class, 'getLikes']);
         Route::post('/create', [LikeController::class, 'store']);
         Route::get('/delete/{id}', [LikeController::class, 'destroy']);
     });
 
-    Route::prefix('shares')->namespace('Share')->group(function(){
+    Route::prefix('shares')->namespace('Share')->group(function () {
         Route::get('/{interaction_id}', [ShareController::class, 'getShares']);
         Route::post('/create', [ShareController::class, 'store']);
     });
-
 });
