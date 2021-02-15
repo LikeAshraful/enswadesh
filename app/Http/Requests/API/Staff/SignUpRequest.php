@@ -84,7 +84,8 @@ class SignUpRequest extends FormRequest
     {
         $code       = Response::HTTP_UNPROCESSABLE_ENTITY;
         $message    = "Registration Failed!";
-        $response   = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(),$token);
+        $token      = "";
+        $response   = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(), $token);
         throw new HttpResponseException(new JsonResponse($response, $code));
     }
 }

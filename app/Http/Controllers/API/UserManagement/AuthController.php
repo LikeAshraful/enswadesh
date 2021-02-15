@@ -71,7 +71,7 @@ class AuthController extends Controller
             DB::rollback();
             $message = $exception->getMessage();
             $code = $exception->getCode();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $response = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
         }
         return new JsonResponse($response, $user ? Response::HTTP_CREATED : Response::HTTP_INTERNAL_SERVER_ERROR);
     }

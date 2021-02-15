@@ -30,14 +30,14 @@ class VendorController extends Controller
     public function index()
     {
         try {
-            $users = $this->vendorRepo->findByID(Auth::id());
-            $code = Response::HTTP_FOUND;
-            $message = $users->staffs->count() ." Staff Found!";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::make($users));
+            $users      = $this->vendorRepo->findByID(Auth::id());
+            $code       = Response::HTTP_FOUND;
+            $message    = $users->staffs->count() ." Staff Found!";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::make($users), null);
         } catch (QueryException $exception) {
-            $code = $exception->getCode();
-            $message = $exception->getMessage();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $code       = $exception->getCode();
+            $message    = $exception->getMessage();
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
         }
         return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }
@@ -54,17 +54,23 @@ class VendorController extends Controller
             $this->vendorRepo->updateProfileByID($user->id,$request->except('user_id') + [
                 'user_id'       => $user->id
             ]);
+            $user_verification= $this->vendorRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
+                'user_id'       => $user->id,
+                'otp'           => rand(1000, 9999),
+                'access_token'  => $user->createToken('authToken')->accessToken,
+            ]);
             $this->vendorRepo->staffVendorByID($user->id);
-            $code = Response::HTTP_CREATED;
-            $message = "user Successfully Registered.";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, new VendorResource($user));
+            $token      = $user->createToken('authToken')->accessToken;
+            $code       = Response::HTTP_CREATED;
+            $message    = "user Successfully Registered.";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, new VendorResource($user), $token);
             Notification::send($user, new RegisteredUserMail());
             DB::commit();
         } catch (QueryException $exception) {
             DB::rollback();
-            $message = $exception->getMessage();
-            $code = $exception->getCode();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $message    = $exception->getMessage();
+            $code       = $exception->getCode();
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
         }
         return new JsonResponse($response, $user ? Response::HTTP_CREATED : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -72,14 +78,14 @@ class VendorController extends Controller
     public function show($id)
     {
         try {
-            $user = $this->vendorRepo->findByID($id);
-            $code = Response::HTTP_FOUND;
-            $message = $user->name." Hello!";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, $user);
+            $user       = $this->vendorRepo->findByID($id);
+            $code       = Response::HTTP_FOUND;
+            $message    = $user->name." Hello!";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, $user, null);
         } catch (QueryException $exception) {
-            $code = $exception->getCode();
-            $message = $exception->getMessage();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $code       = $exception->getCode();
+            $message    = $exception->getMessage();
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
         }
         return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }
@@ -91,13 +97,13 @@ class VendorController extends Controller
             $user  = $this->vendorRepo->updateByID($id,$request->except('password') + [
                 'password'  => Hash::make($request->password),
             ]);
-            $code = Response::HTTP_FOUND;
-            $message = " Edit Your Information!";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, $user);
+            $code       = Response::HTTP_FOUND;
+            $message    = " Edit Your Information!";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, $user, null);
         } catch (QueryException $exception) {
-            $code = $exception->getCode();
-            $message = $exception->getMessage();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $code       = $exception->getCode();
+            $message    = $exception->getMessage();
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
         }
         return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }
@@ -105,14 +111,14 @@ class VendorController extends Controller
     public function destroy($id)
     {
         try {
-            $user = $this->vendorRepo->deleteByID($id);
-            $code = Response::HTTP_FOUND;
-            $message =" Staff Deleted!";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::collection($user));
+            $user       = $this->vendorRepo->deleteByID($id);
+            $code       = Response::HTTP_FOUND;
+            $message    =" Staff Deleted!";
+            $response   = ApiHelpers::createAPIResponse(false, $code, $message, VendorResource::collection($user), null);
         } catch (QueryException $exception) {
-            $code = $exception->getCode();
-            $message = $exception->getMessage();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+            $code       = $exception->getCode();
+            $message    = $exception->getMessage();
+            $response   = ApiHelpers::createAPIResponse(true, $code, $message, null, null);
         }
         return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
     }

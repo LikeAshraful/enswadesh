@@ -36,9 +36,10 @@ class SignInRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        $code = Response::HTTP_UNPROCESSABLE_ENTITY;
-        $message = "Login Failed!";
-        $response = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(),$token);
+        $code       = Response::HTTP_UNPROCESSABLE_ENTITY;
+        $message    = "Login Failed!";
+        $token      = "";
+        $response   = ApiHelpers::createAPIResponse(true, $code, $message, $validator->errors(), $token);
         throw new HttpResponseException(new JsonResponse($response, $code));
     }
 }
