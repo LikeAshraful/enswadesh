@@ -35,7 +35,7 @@ class VendorController extends Controller
 
     public function index()
     {
-        $users = $this->vendorRepo->findByID(Auth::id());
+        $users  = $this->vendorRepo->findByID(Auth::id());
         $staffs = $users->staffs->count() ." Staff Found!";
         return $this->json('Staff list', [
                 'staffs'  => $staffs
@@ -56,6 +56,7 @@ class VendorController extends Controller
             'token' => $user['userOtp']['token'],
             'otp'   => $user['userOtp']['otp']
         ]);
+        return $this->bad('Invalid Credentials');
     }
 
     public function show($id)
