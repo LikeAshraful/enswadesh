@@ -47,7 +47,6 @@ class AuthController extends Controller
                 'access_type'   => 'Bearer'
             ]);
         }
-
         return $this->bad('Invalid Credentials');
     }
 

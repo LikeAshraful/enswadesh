@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\UserManagement;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Repository\Role\RoleRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -17,10 +18,12 @@ use App\Http\Requests\Users\UpdateUserRequest;
 class SuperAdminController extends Controller
 {
     protected $superAdminRepo;
+    protected $roleRepo;
 
-    public function __construct(UserRepository $superAdmin, )
+    public function __construct(UserRepository $superAdmin, RoleRepository $roleRepository)
     {
-        $this->superAdminRepo=$superAdmin;
+        $this->superAdminRepo = $superAdmin;
+        $this->roleRepo = $roleRepository;
     }
 
     public function index()
@@ -33,29 +36,19 @@ class SuperAdminController extends Controller
     public function create()
     {
         Gate::authorize('backend.super-admin.create');
-        $roles = $this->superAdminRepo->allRole();
+        $roles = $this->roleRepo->getAll();
         return view('backend.user_management.super_admin.form', compact('roles'));
     }
 
     public function store(StoreUserRequest $request)
     {
         Gate::authorize('backend.super-admin.create');
-        DB::beginTransaction();
-        try {
-            $user = $this->superAdminRepo->create($request->except('role_id','password') + [
-                'role_id'   =>  $request->role,
-                'password'  => Hash::make($request->password),
+        $user = DB::transaction(function () use ($request){
+            $user = $this->superAdminRepo->create($request->except('role_id') + [
+                'role_id'   =>  $request->role
             ]);
-            $this->superAdminRepo->updateProfileByID($user->id,$request->except('user_id') + [
-                'user_id'       => $user->id
-            ]);
-            Notification::send($user, new RegisteredUserMail());
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            notify()->error($e);
-            return redirect()->route('backend.super-admin.index');
-        }
+            $this->superAdminRepo->updateOrNewBy($user);
+        });
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('backend.super-admin.index');
     }
@@ -69,7 +62,7 @@ class SuperAdminController extends Controller
     public function edit($id)
     {
         Gate::authorize('backend.super-admin.edit');
-        $roles  = $this->superAdminRepo->allRole();
+        $roles  = $this->roleRepo->getAll();
         $user   = $this->superAdminRepo->findByID($id);
         return view('backend.user_management.super_admin.form', compact('roles','user'));
     }
@@ -77,10 +70,9 @@ class SuperAdminController extends Controller
     public function update($id, UpdateUserRequest $request)
     {
         Gate::authorize('backend.super-admin.edit');
-        $user       = $this->superAdminRepo->findByID($id);
-        $user  = $this->superAdminRepo->updateByID($id,$request->except('role_id','password') + [
-            'role_id'   =>  $request->role,
-            'password'  => Hash::make($request->password),
+        $user  = $this->superAdminRepo->findByID($id);
+        $user  = $this->superAdminRepo->updateByID($id,$request->except('role_id') + [
+            'role_id'   =>  $request->role
         ]);
         notify()->success('User Successfully Updated.', 'Updated');
         return redirect()->route('backend.super-admin.index');

@@ -35,11 +35,6 @@ class UserRepository extends BaseRepository
         return User::where('role_id', $roles->id)->get();
     }
 
-    public function allRole()
-    {
-        return Role::get();
-    }
-
     public function staffVendorByID($id)
     {
         return VendorStaff::create([
@@ -65,6 +60,7 @@ class UserRepository extends BaseRepository
 
     public function updateOrNewBy(User $user, array $profileData = []): Profile
     {
+        dd($user);
         if ($profile = $user->profile) {
             $profile->update($profileData);
             return $profile->refresh();
