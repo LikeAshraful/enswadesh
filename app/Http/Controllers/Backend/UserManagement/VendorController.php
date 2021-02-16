@@ -45,11 +45,9 @@ class VendorController extends Controller
                 'role_id'   =>  $request->role,
                 'password'  => Hash::make($request->password),
             ]);
-            $this->vendorRepo->updateProfileByID($user->id,$request->except('user_id') + [
-                'user_id'       => $user->id
-            ]);
+            $this->vendorRepo->updateOrNewBy($user);
             $this->vendorRepo->staffVendorByID($user->id);
-            Notification::send($user, new RegisteredUserMail());
+            // Notification::send($user, new RegisteredUserMail());
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
