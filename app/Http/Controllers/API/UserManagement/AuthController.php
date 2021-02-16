@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\UserManagement;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Repository\User\OtpRepository;
 use Repository\User\UserRepository;
@@ -66,7 +67,6 @@ class AuthController extends Controller
             'token' => $user['userOtp']['token'],
             'otp'   => $user['userOtp']['otp']
         ]);
-
     }
 
     public function verifyOtp(Request $request)
@@ -89,5 +89,10 @@ class AuthController extends Controller
     public function getAuthUser()
     {
         return $this->json('Auth user info', auth()->user());
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
     }
 }
