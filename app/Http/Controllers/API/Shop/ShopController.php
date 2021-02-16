@@ -182,7 +182,7 @@ class ShopController extends Controller
 
     public function shopByMarket($id)
     {
-        $shops = $this->shopRepo->shopByMarketId($id, 2);
+        $shops = $this->shopRepo->shopByMarketId($id, 4);
         return $this->json(
             'Shop list',
             ShopResource::collection($shops)->response()->getData(true)

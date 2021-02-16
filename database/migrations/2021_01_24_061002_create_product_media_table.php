@@ -15,7 +15,7 @@ class CreateProductMediaTable extends Migration
     {
         Schema::create('product_media', function (Blueprint $table) {
             $table->id();
-            $table->string('src');
+            $table->string('src')->nullable();
             $table->unsignedBigInteger('product_id')->constrained('products');
             $table->enum('type', [
                'image', 'audio', 'video'
