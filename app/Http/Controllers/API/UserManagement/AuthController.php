@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Repository\User\OtpRepository;
+use Repository\Role\RoleRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,16 +23,18 @@ class AuthController extends Controller
 
     public $authRepo;
     public $otpRepo;
+    public $roleRepo;
 
-    public function __construct(UserRepository $authRepository, OtpRepository $otpRepository)
+    public function __construct(UserRepository $authRepository, OtpRepository $otpRepository, RoleRepository $roleRepository)
     {
         $this->authRepo = $authRepository;
         $this->otpRepo  = $otpRepository;
+        $this->roleRepo  = $roleRepository;
     }
 
     public function username()
     {
-        return 'email';
+        return 'phone_number';
     }
 
     public function login(SignInRequest $request)
@@ -41,21 +44,22 @@ class AuthController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if (Auth::attempt($request->only(['email', 'password']))) {
+        if (Auth::attempt($request->only(['phone_number', 'password']))) {
             $user = auth()->user();
             return $this->json('Login successfully', [
                 'access_token'  => $this->authRepo->generateAccessToken($user),
                 'access_type'   => 'Bearer'
             ]);
         }
-
         return $this->bad('Invalid Credentials');
     }
 
     public function register(SignUpRequest $request)
     {
         $user = DB::transaction(function () use ($request) {
-            $user = $this->authRepo->create($request->all());
+            $user = $this->authRepo->create($request->all() + [
+                'role_id'   =>  $this->roleRepo->getAllRoleForCustomer()->id
+            ]);
             $this->authRepo->updateOrNewBy($user);
             $userOtp = $this->otpRepo->generateOtpForUser($user);
             return compact('user', 'userOtp');
