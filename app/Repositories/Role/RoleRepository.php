@@ -21,12 +21,17 @@ class RoleRepository extends BaseRepository {
 
     public function getAllRoleForAdmin()
     {
-        return Role::where('slug', '!=', 'super_admin')->get();
+        return $this->model()::where('slug', '!=', 'super_admin')->get();
     }
 
     public function getAllRoleForVendor()
     {
-        return Role::where('slug', '=', 'staff')->first();
+        return $this->model()::where('slug', '=', 'staff')->first();
+    }
+
+    public function getAllRoleForCustomer()
+    {
+        return $this->model()::where('slug', '=', 'customer')->first();
     }
 
     public function updateByID($id, array $modelData)
