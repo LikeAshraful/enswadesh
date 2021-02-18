@@ -1,8 +1,9 @@
 <?php
 
 namespace Repository\Role;
+
 use App\Models\Role;
-use App\Models\Module;
+use App\Models\User;
 use Repository\BaseRepository;
 
 class RoleRepository extends BaseRepository {
@@ -12,9 +13,20 @@ class RoleRepository extends BaseRepository {
         return Role::class;
     }
 
-    public function allModules()
+    public function getAllVendors()
     {
-        return Module::get();
+        $roles = Role::where('slug', '=', 'vendor')->first();
+        return User::where('role_id', $roles->id)->get();
+    }
+
+    public function getAllRoleForAdmin()
+    {
+        return Role::where('slug', '!=', 'super_admin')->get();
+    }
+
+    public function getAllRoleForVendor()
+    {
+        return Role::where('slug', '=', 'staff')->first();
     }
 
     public function updateByID($id, array $modelData)

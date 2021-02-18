@@ -3,12 +3,6 @@
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-
-<style>
-.dropify-wrapper .dropify-message p {
-    font-size: initial;
-}
-</style>
 @endpush
 @section('content')
 <div class="app-page-title">

@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\Backend\UserManagement;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Repository\Role\RoleRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
-use App\Notifications\RegisteredUserMail;
-use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 
@@ -88,7 +84,7 @@ class SuperAdminController extends Controller
 
     public function vendorList()
     {
-        $vendors    = $this->superAdminRepo->allVendor();
+        $vendors    = $this->roleRepo->getAllVendors();
         return view('backend.user_management.super_admin.vendorList',compact('vendors'));
     }
 
