@@ -34,5 +34,4 @@ class SignUpRequest extends FormRequest
             'password.min'          => 'The password length must be at least 6 characters',
         ];
     }
-
 }

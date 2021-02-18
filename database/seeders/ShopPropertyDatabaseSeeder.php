@@ -37,10 +37,7 @@ class ShopPropertyDatabaseSeeder extends Seeder
         // shop create seeder for database insert
         $user = Auth::user();
         // shoptype create seeder for database insert
-        $shoptype = ShopType::updateOrCreate(['name' => 'Grocery', 'description' => 'Grocery Shop', 'slug' => 'grocery']);
-        Shop::updateOrCreate(['shop_owner_id' => 1, 'city_id' => $city->id, 'area_id' => $area->id, 'market_id' => $market->id, 'floor_no' => 'Ground Floor', 'shop_type_id' => $shoptype->id, 'shop_no' => '23432','name' => 'Rahat Cosmetics', 'phone' => '016542645', 'email' => 'shop@gmail.com', 'fax' => '02454864', 'slug' => 'rahat-cosmetics', 'cover_image' => 'Image', 'logo' => 'Icon', 'status' => 1, 'description' => 'This shop is good']);
-
-        Shop::updateOrCreate(['shop_owner_id' => 1, 'city_id' => $city->id, 'area_id' => $area->id, 'market_id' => $market->id, 'floor_no' => '2nd Floor', 'shop_type_id' => $shoptype->id, 'shop_no' => '3254','name' => 'Polas Cosmetics', 'phone' => '016542645', 'email' => 'shop@gmail.com', 'fax' => '02454864', 'slug' => 'polas-cosmetics', 'cover_image' => 'Image', 'logo' => 'Icon', 'status' => 1, 'description' => 'This shop is good']);
+        $shoptype = ShopType::updateOrCreate(['name' => 'Grocery', 'description' => 'Grocery Shop', 'slug' => 'grocery']);      
 
             $area = Area::updateOrCreate(['name' => 'Dhaka South', 'city_id' => $city->id, 'description' => 'Dhaka South','slug' => 'dhaka-south']);
                 //$thana = Thana::updateOrCreate(['thana_name' => 'Tejgaon', 'area_id' => $area->id, 'thana_description' => 'Dhaka South Thana','thana_slug' => 'tejgaon']);
@@ -50,7 +47,7 @@ class ShopPropertyDatabaseSeeder extends Seeder
         $city = City::updateOrCreate(['name' => 'Rajshahi','description' => 'Rajshahi','slug' => 'rajshahi']);
             $area = Area::updateOrCreate(['name' => 'Rajshahi East', 'city_id' => $city->id, 'description' => 'Rajshahi East','slug' => 'rajshahi-east']);
                 //$thana = Thana::updateOrCreate(['thana_name' => 'Paba', 'area_id' => $area->id, 'thana_description' => 'Paba','thana_slug' => 'paba']);
-                    $market = Market::updateOrCreate(['city_id' => $city->id, 'area_id' => $area->id, 'name' => 'RDA Market', 'address' => 'Zero Point, Rajshahi','description' => 'Zero Point, Rajshahi', 'slug' => 'rda-market', 'total_floor' => 6]);
+                    $market = Market::updateOrCreate(['city_id' => $city->id, 'area_id' => $area->id, 'name' => 'RDA Market', 'address' => 'Zero Point, Rajshahi','description' => 'Zero Point, Rajshahi', 'slug' => 'rda-market', 'total_floor' => 6, 'icon' => null]);
                      //Floor::updateOrCreate(['market_id' => $market->id, 'floor_no' => '2','floor_note' => '2rd Floor']);
 
             $area = Area::updateOrCreate(['name' => 'Rajshahi West', 'city_id' => $city->id, 'description' => 'Rajshahi West','slug' => 'rajshahi-west']);
