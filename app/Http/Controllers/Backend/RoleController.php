@@ -6,17 +6,19 @@ use Illuminate\Http\Request;
 use Repository\Role\RoleRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Repository\module\ModuleRepository;
 use App\Http\Requests\Roles\StoreRoleRequest;
 use App\Http\Requests\Roles\UpdateRoleRequest;
 
 class RoleController extends Controller
 {
     protected $roleRepo;
+    protected $moduleRepo;
 
-    public function __construct(RoleRepository $roles)
+    public function __construct(RoleRepository $roleRepository, ModuleRepository $moduleRepository)
     {
-        $this->roleRepo=$roles;
-
+        $this->roleRepo     =   $roleRepository;
+        $this->moduleRepo   =   $moduleRepository;
     }
 
     public function index()
@@ -29,7 +31,7 @@ class RoleController extends Controller
     public function create()
     {
         Gate::authorize('backend.roles.create');
-        $modules = $this->roleRepo->allModules();
+        $modules = $this->moduleRepo->getAll();
         return view('backend.roles.form',compact('modules'));
     }
 
@@ -43,8 +45,8 @@ class RoleController extends Controller
     public function edit($id)
     {
         Gate::authorize('backend.roles.edit');
-        $role = $this->roleRepo->findByID($id);
-        $modules = $this->roleRepo->allModules();
+        $role     = $this->roleRepo->findByID($id);
+        $modules  = $this->moduleRepo->getAll();
         return view('backend.roles.form',compact('role','modules'));
     }
 
