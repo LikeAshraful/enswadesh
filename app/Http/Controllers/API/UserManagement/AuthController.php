@@ -34,7 +34,11 @@ class AuthController extends Controller
 
     public function username()
     {
-        return 'phone_number';
+         $login = request()->input('phone_number');
+
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
+        request()->merge([$field => $login]);
+        return $field;
     }
 
     public function login(SignInRequest $request)
@@ -43,8 +47,7 @@ class AuthController extends Controller
             $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
-
-        if (Auth::attempt($request->only(['phone_number', 'password']))) {
+        if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
             $user = auth()->user();
             return $this->json('Login successfully', [
                 'access_token'  => $this->authRepo->generateAccessToken($user),
