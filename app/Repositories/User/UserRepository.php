@@ -46,6 +46,18 @@ class UserRepository extends BaseRepository
         return $user->profile()->create($profileData);
     }
 
+    public function updateProfileByID($id, array $modelData)
+    {
+        $profile = Profile::where('user_id', $id)->first();
+         if($profile != null)
+        {
+            $profile->update($modelData);
+        }else{
+            return Profile::create($modelData);
+        }
+    }
+
+
     public function updateOtpByID($id, array $modelData)
     {
         $otp = UserOtp::where('user_id', $id)->first();

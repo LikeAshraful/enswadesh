@@ -49,10 +49,12 @@ class AuthController extends Controller
         }
         if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
             $user = auth()->user();
-            return $this->json('Login successfully', [
-                'access_token'  => $this->authRepo->generateAccessToken($user),
-                'access_type'   => 'Bearer'
-            ]);
+            if ($user->owner_id == 1) {
+                return $this->json('Login successfully', [
+                    'access_token'  => $this->authRepo->generateAccessToken($user),
+                    'access_type'   => 'Bearer'
+                ]);
+            }
         }
         return $this->bad('Invalid Credentials');
     }
