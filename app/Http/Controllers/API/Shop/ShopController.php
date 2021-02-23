@@ -97,12 +97,25 @@ class ShopController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function myShop()
+    public function myShops()
     {
         $myShops = $this->shopRepo->getAllByUserID('shop_owner_id', Auth::id());
         return $this->json(
             'My Shop list',
             ShopResource::collection($myShops)
+        );
+    }
+
+    /**
+     * show authenticated user's single shop
+     */
+    public function myShop($id)
+    {
+        $myShop = $this->shopRepo->findOrFailByUserID(Auth::id(), $id);
+
+        return $this->json(
+            'My Shop',
+            new ShopResource($myShop)
         );
     }
 
