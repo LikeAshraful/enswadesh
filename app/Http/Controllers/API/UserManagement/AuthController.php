@@ -44,27 +44,27 @@ class AuthController extends Controller
     public function login(SignInRequest $request)
     {
         $user = $this->authRepo->model()::where($this->username(), $request->phone_number)->first();
-        if($user->role_id == $this->roleRepo->getRoleForVendor()->id && $user->status == 0){
-            return $this->bad('You are not approved for vendor');
-        }
-        if($user->role_id == $this->roleRepo->getRoleForVendor()->id || $user->role_id == $this->roleRepo->getRoleForStaff()->id || $user->role_id == $this->roleRepo->getRoleForCustomer()->id){
-            if ($this->hasTooManyLoginAttempts($request)) {
-                $this->fireLockoutEvent($request);
-                return $this->sendLockoutResponse($request);
+        if(!empty($user)){
+            if($user->role_id == $this->roleRepo->getRoleForVendor()->id && $user->status == 0){
+                return $this->bad('You are not approved for vendor');
             }
-            if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
-                $user = auth()->user();
-                if ($user->status == 1) {
+            if($user->role_id == $this->roleRepo->getRoleForVendor()->id || $user->role_id == $this->roleRepo->getRoleForStaff()->id || $user->role_id == $this->roleRepo->getRoleForCustomer()->id){
+                if ($this->hasTooManyLoginAttempts($request)) {
+                    $this->fireLockoutEvent($request);
+                    return $this->sendLockoutResponse($request);
+                }
+                if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
+                    $user = auth()->user();
                     return $this->json('Login successfully', [
                         'access_token'  => $this->authRepo->generateAccessToken($user),
                         'access_type'   => 'Bearer'
                     ]);
                 }
+                return $this->bad('Invalid Credentials');
             }
-            return $this->bad('Invalid Credentials');
+            return $this->bad('Authentication process will be valid for customer, staff and vendor');
         }
-        return $this->bad('Authentication process will be valid for customer, staff and vendor');
-
+        return $this->bad('Invalid Credentials');
     }
 
     public function register(SignUpRequest $request)
