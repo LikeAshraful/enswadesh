@@ -19,6 +19,10 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
+    public function getAllUsersForAdmin($id)
+    {
+        return $this->model()::where('role_id', '!=', $id)->get();
+    }
     public function generateAccessToken(User $user): string
     {
         return $user->createToken('authToken')->accessToken;
