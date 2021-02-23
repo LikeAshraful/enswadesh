@@ -25,7 +25,7 @@ class AdminController extends Controller
     public function index()
     {
         Gate::authorize('backend.admin.index');
-        $users = $this->adminRepo->getAll();
+        $users = $this->adminRepo->getAllUsersForAdmin($this->roleRepo->getAllRoleForSuperAdmin()->id);
         return view('backend.user_management.admin.index',compact('users'));
     }
 

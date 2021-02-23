@@ -53,7 +53,7 @@ class RegisterController extends Controller
                 'otp'           => rand(1000, 9999),
                 'access_token'  => $user->createToken('authToken')->accessToken,
             ]);
-            Notification::send($user, new RegisteredUserMail());
+            Notification::send($user, new RegisteredUserMail($user_verification));
             DB::commit();
             // return redirect()->route('otp-verify',$access_token)->with($user_verification);
             return view('auth.otp',compact('user_verification'));

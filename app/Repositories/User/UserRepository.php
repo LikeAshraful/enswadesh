@@ -19,6 +19,10 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
+    public function getAllUsersForAdmin($id)
+    {
+        return $this->model()::where('role_id', '!=', $id)->get();
+    }
     public function generateAccessToken(User $user): string
     {
         return $user->createToken('authToken')->accessToken;
@@ -45,6 +49,18 @@ class UserRepository extends BaseRepository
         }
         return $user->profile()->create($profileData);
     }
+
+    public function updateProfileByID($id, array $modelData)
+    {
+        $profile = Profile::where('user_id', $id)->first();
+         if($profile != null)
+        {
+            $profile->update($modelData);
+        }else{
+            return Profile::create($modelData);
+        }
+    }
+
 
     public function updateOtpByID($id, array $modelData)
     {

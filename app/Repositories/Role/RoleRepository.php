@@ -23,13 +23,22 @@ class RoleRepository extends BaseRepository {
     {
         return $this->model()::where('slug', '!=', 'super_admin')->get();
     }
+    public function getAllRoleForSuperAdmin()
+    {
+        return $this->model()::where('slug', '=', 'super_admin')->first();
+    }
 
-    public function getAllRoleForVendor()
+    public function getRoleForVendor()
+    {
+        return $this->model()::where('slug', '=', 'vendor')->first();
+    }
+
+    public function getRoleForStaff()
     {
         return $this->model()::where('slug', '=', 'staff')->first();
     }
 
-    public function getAllRoleForCustomer()
+    public function getRoleForCustomer()
     {
         return $this->model()::where('slug', '=', 'customer')->first();
     }
