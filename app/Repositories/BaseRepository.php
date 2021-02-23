@@ -56,4 +56,5 @@ Abstract class BaseRepository {
     {
         return $this->model()::where($field, $id)->get();
     }
+
 }

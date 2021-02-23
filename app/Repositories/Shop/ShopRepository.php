@@ -36,7 +36,7 @@ class ShopRepository extends BaseRepository
         $shop = $this->model()::where('market_id', $id);
         if($per_page != null)
             return $shop->paginate($per_page);
-        
+
         return $shop->get();
     }
 
@@ -70,5 +70,10 @@ class ShopRepository extends BaseRepository
         Storage::delete($shop->cover_image);
         Storage::delete($shop->meta_og_image);
         $shop->delete();
+    }
+
+    public function findOrFailByUserID($user_id, $id): Model
+    {
+        return $this->model()::where('shop_owner_id', $user_id )->findOrFail($id);
     }
 }

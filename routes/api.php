@@ -73,7 +73,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('', [ShopController::class, 'index']);
         Route::post('', [ShopController::class, 'store']);
         Route::get('{id}/edit', [ShopController::class, 'edit']);
-        Route::get('self', [ShopController::class, 'myShop']);
+        Route::get('self', [ShopController::class, 'myShops']);
+        Route::get('{id}', [ShopController::class, 'myShop']);
         Route::post('update/{id}', [ShopController::class, 'update']);
     });
 

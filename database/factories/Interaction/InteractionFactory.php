@@ -26,7 +26,7 @@ class InteractionFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence(10);
-        $slug = Str::of($title)->slug('_');
+        $slug = Str::of($title)->slug('-');
 
         return [
             'title' => $title,
