@@ -17,8 +17,10 @@ class CreateProductWeightsTable extends Migration
             $table->id();
             $table->unsignedInteger('product_id')->constrained('products');
             $table->unsignedInteger('weight_id')->constrained('weights');
-            $table->decimal('price', 8,2)->nullable();
-            $table->unsignedInteger('stocks')->nullable();
+            $table->decimal('price', 8,2)->nullable()->default(0);
+            $table->decimal('sale_price', 8,2)->nullable()->default(0);
+            $table->integer('discount')->nullable()->default(0);
+            $table->unsignedInteger('stocks')->nullable()->default(0);
             $table->timestamps();
         });
     }
