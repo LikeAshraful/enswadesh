@@ -19,8 +19,10 @@ class CreateProductColorsTable extends Migration
             $table->unsignedBigInteger('color_id')->constrained('colors');
             $table->unsignedBigInteger('media_id')->nullable();
             $table->boolean('has_size')->default(false);
-            $table->unsignedBigInteger('stocks')->nullable();
-            $table->decimal('price', 8,2)->nullable();
+            $table->decimal('price', 8,2)->nullable()->default(0);
+            $table->decimal('sale_price', 8,2)->nullable()->default(0);
+            $table->integer('discount')->nullable()->default(0);
+            $table->unsignedBigInteger('stocks')->nullable()->default(0);
             $table->timestamps();
         });
     }
