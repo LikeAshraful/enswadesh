@@ -43,27 +43,35 @@ class AuthController extends Controller
 
     public function login(SignInRequest $request)
     {
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-            return $this->sendLockoutResponse($request);
+        $user = $this->authRepo->model()::where($this->username(), $request->phone_number)->first();
+        if($user->role_id == $this->roleRepo->getRoleForVendor()->id && $user->status == 0){
+            return $this->bad('You are not approved for vendor');
         }
-        if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
-            $user = auth()->user();
-            if ($user->owner_id == 1) {
-                return $this->json('Login successfully', [
-                    'access_token'  => $this->authRepo->generateAccessToken($user),
-                    'access_type'   => 'Bearer'
-                ]);
+        if($user->role_id == $this->roleRepo->getRoleForVendor()->id || $user->role_id == $this->roleRepo->getRoleForStaff()->id || $user->role_id == $this->roleRepo->getRoleForCustomer()->id){
+            if ($this->hasTooManyLoginAttempts($request)) {
+                $this->fireLockoutEvent($request);
+                return $this->sendLockoutResponse($request);
             }
+            if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
+                $user = auth()->user();
+                if ($user->status == 1) {
+                    return $this->json('Login successfully', [
+                        'access_token'  => $this->authRepo->generateAccessToken($user),
+                        'access_type'   => 'Bearer'
+                    ]);
+                }
+            }
+            return $this->bad('Invalid Credentials');
         }
-        return $this->bad('Invalid Credentials');
+        return $this->bad('Authentication process will be valid for customer, staff and vendor');
+
     }
 
     public function register(SignUpRequest $request)
     {
         $user = DB::transaction(function () use ($request) {
             $user = $this->authRepo->create($request->all() + [
-                'role_id'   =>  $this->roleRepo->getAllRoleForCustomer()->id
+                'role_id'   =>  $this->roleRepo->getRoleForCustomer()->id
             ]);
             $this->authRepo->updateOrNewBy($user);
             $userOtp = $this->otpRepo->generateOtpForUser($user);

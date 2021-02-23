@@ -36,7 +36,7 @@ class VendorController extends Controller
     public function create()
     {
         Gate::authorize('backend.vendor.create');
-        $role = $this->roleRepo->getAllRoleForVendor();
+        $role = $this->roleRepo->getRoleForStaff();
         return view('backend.user_management.vendor.form', compact('role'));
     }
 
@@ -62,7 +62,7 @@ class VendorController extends Controller
     public function edit($id)
     {
         Gate::authorize('backend.vendor.edit');
-        $role   = $this->roleRepo->getAllRoleForVendor();
+        $role   = $this->roleRepo->getRoleForStaff();
         $user   = $this->vendorRepo->findByID($id);
         return view('backend.user_management.vendor.form', compact('role','user'));
     }
