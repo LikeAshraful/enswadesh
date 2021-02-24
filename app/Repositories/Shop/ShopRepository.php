@@ -5,6 +5,7 @@ namespace Repository\Shop;
 
 
 use App\Models\Shop\Shop;
+use App\Models\Shop\ShopMedia;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,32 @@ class ShopRepository extends BaseRepository
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/shops', $file);
+    }
+
+    public function storeFileShopMedia(UploadedFile $file)
+    {
+        return Storage::put('fileuploads/shops/media', $file);
+    }
+
+    public function shopGallery($images, $id)
+    {
+
+        $shopGallery = ShopMedia::where('shop_id', $id)->get();
+        foreach ($images as $key => $image) {
+            $shopMedia = $this->storeFileShopMedia($image);
+            if (count($shopGallery) == 0) {
+                ShopMedia::create([
+                    'shop_id'        => $id,
+                    'image'          => $shopMedia
+                ]);
+            } else {
+                $shopGallery->update([
+                    'shop_id'        => $id,
+                    'image'          => $shopGallery->image
+                ]);
+            }
+
+        }
     }
 
     public function updateByShopOwner($id)

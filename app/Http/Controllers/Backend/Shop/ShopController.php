@@ -65,15 +65,14 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
             'shop_no' => 'required',
             'logo' => 'nullable|mimes:jpeg,jpg,png|max:5000',
             'cover_image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
             'meta_og_image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
+            //'image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
         ]);
-            // dd($request->all());
         $logo = $request->hasFile('logo') ? $this->shopRepo->storeFile($request->file('logo')) : null;
         $cover_image = $request->hasFile('cover_image') ? $this->shopRepo->storeFile($request->file('cover_image')) : null;
         $meta_og_image = $request->hasFile('meta_og_image') ? $this->shopRepo->storeFile($request->file('meta_og_image')) : null;
@@ -85,6 +84,7 @@ class ShopController extends Controller
                 'cover_image'      => $cover_image,
                 'meta_og_image'    => $meta_og_image
             ]);
+        $this->shopRepo->shopGallery($request->hasFile('image') ? $request->file('image') : null, $shop->id);
 
         notify()->success('shop Successfully Added.', 'Added');
         return redirect()->route('backend.shops.index');
@@ -171,8 +171,8 @@ class ShopController extends Controller
     public function destroy($id)
     {
         $this->shopRepo->deleteShops($id);
-        notify()->warning('Shop Successfully Deleted.', 'Deleted');
-        return redirect()->route('backend.shop.shops.index');
+        notify()->success('Shop Successfully Deleted.', 'Deleted');
+        return redirect()->route('backend.shops.index');
     }
 
 }

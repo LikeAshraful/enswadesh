@@ -63,7 +63,7 @@
                                 <td>{{ $shop->slug }}</td>
                                 <td>{{ $shop->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/' . $shop->logo)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset('storage/' . $shop->logo)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> |

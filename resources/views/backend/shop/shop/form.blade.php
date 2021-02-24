@@ -310,6 +310,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            <div class="form-group">
+            <label for='image'>Shop Media</label>
+            <input type="file" id="image[]" name="image[]" multiple class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->image): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->image): '' }}" />
+            @error('image')
+            <span class="invalid-feedback image-display-error-message" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        </div>
     </div>
     <div class="pb-3">
         <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
@@ -328,10 +339,6 @@
 $(document).ready(function() {
     // Dropify
     $('.dropify').dropify();
-    // Select2
-    $('.select').each(function() {
-        $(this).select2();
-    });
 });
 </script>
 @endpush
