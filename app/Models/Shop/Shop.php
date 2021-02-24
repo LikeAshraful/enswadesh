@@ -55,4 +55,8 @@ class Shop extends Model
         return $this->belongsTo(ShopType::class, 'shop_type_id', 'id');
     }
 
+    public function shopMedia() {
+        return $this->hasMany(ShopMedia::class,'shop_owner_id');
+    }
+
 }
