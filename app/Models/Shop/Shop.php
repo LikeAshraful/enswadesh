@@ -56,7 +56,7 @@ class Shop extends Model
     }
 
     public function shopMedia() {
-        return $this->hasMany(ShopMedia::class,'shop_owner_id');
+        return $this->hasMany(ShopMedia::class);
     }
 
 }

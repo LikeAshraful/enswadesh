@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Repository\Location\AreaRepository;
 use Repository\Location\CityRepository;
 use Repository\Shop\ShopTypeRepository;
+use Repository\Shop\ShopMediaRepository;
 use Repository\Location\MarketRepository;
 use App\Http\Controllers\JsonResponseTrait;
 
@@ -25,14 +26,22 @@ class ShopController extends Controller
     public $marketRepo;
     public $shopTypeRepo;
     public $shopRepo;
+    public $shopMediaRepo;
 
-    public function __construct(CityRepository $cityRepository, AreaRepository $areaRepository, MarketRepository $marketRepository, ShopTypeRepository $shopTypeRepository, ShopRepository $shopRepository)
+    public function __construct(
+        CityRepository $cityRepository,
+        AreaRepository $areaRepository,
+        MarketRepository $marketRepository,
+        ShopTypeRepository $shopTypeRepository,
+        ShopRepository $shopRepository,
+        ShopMediaRepository $shopMediaRepository)
     {
-        $this->cityRepo = $cityRepository;
-        $this->areaRepo = $areaRepository;
-        $this->marketRepo = $marketRepository;
+        $this->cityRepo     = $cityRepository;
+        $this->areaRepo     = $areaRepository;
+        $this->marketRepo   = $marketRepository;
         $this->shopTypeRepo = $shopTypeRepository;
-        $this->shopRepo = $shopRepository;
+        $this->shopRepo     = $shopRepository;
+        $this->shopMediaRepo= $shopMediaRepository;
     }
 
     /**
@@ -84,8 +93,8 @@ class ShopController extends Controller
                 'cover_image'      => $cover_image,
                 'meta_og_image'    => $meta_og_image
             ]);
-        $this->shopRepo->shopGallery($request->hasFile('image') ? $request->file('image') : null, $shop->id);
 
+        $this->shopMediaRepo->shopGallery($request->hasFile('image') ? $request->file('image') : null, $shop->id);
         notify()->success('shop Successfully Added.', 'Added');
         return redirect()->route('backend.shops.index');
     }
@@ -107,11 +116,11 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
-        $cities = $this->cityRepo->getAll();
-        $areas = $this->areaRepo->getAll();
-        $markets = $this->marketRepo->getAll();
-        $shoptypes = ShopType::all();
-        $shop = Shop::find($id);
+        $cities     = $this->cityRepo->getAll();
+        $areas      = $this->areaRepo->getAll();
+        $markets    = $this->marketRepo->getAll();
+        $shoptypes  = ShopType::all();
+        $shop       = Shop::find($id);
         return view('backend.shop.shop.form', compact('cities','areas', 'markets', 'shoptypes', 'shop'));
     }
 
@@ -132,9 +141,9 @@ class ShopController extends Controller
             );
         }
 
-        $shopLogo = $request->hasFile('logo');
+        $shopLogo       = $request->hasFile('logo');
         $shopCoverImage = $request->hasFile('cover_image');
-        $metaImageShop = $request->hasFile('meta_og_image');
+        $metaImageShop  = $request->hasFile('meta_og_image');
 
         $logo = $shopLogo ? $this->shopRepo->storeFile($request->file('logo')) : $shop->logo;
         $cover_image = $shopCoverImage ? $this->shopRepo->storeFile($request->file('cover_image')) : $shop->cover_image;
@@ -158,6 +167,7 @@ class ShopController extends Controller
                 'cover_image' => $cover_image,
                 'meta_og_image' => $meta_og_image
             ]);
+        $this->shopMediaRepo->shopGalleryUpdate($request->hasFile('image') ? $request->file('image') : $shop->shopMedia, $id);
 
         notify()->success('Shop Successfully Updated.', 'Updated');
         return redirect()->route('backend.shops.index');
@@ -173,6 +183,14 @@ class ShopController extends Controller
         $this->shopRepo->deleteShops($id);
         notify()->success('Shop Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.shops.index');
+    }
+
+    public function removeShopMedia($id)
+    {
+        $this->shopMediaRepo->deletedByID($id);
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 
 }
