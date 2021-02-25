@@ -13,8 +13,8 @@ class ProductSeeder extends Seeder
      * @return void
      */
     public function run()
-    {       
-        Product::factory()->count(150)->hasProductImage(3)
+    {
+        Product::factory()->count(150)->hasProductImage(3)->hasProductCategory(1)
         ->create();
     }
 }
