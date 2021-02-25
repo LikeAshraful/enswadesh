@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Repository\Location\AreaRepository;
 use Repository\Location\CityRepository;
+use App\Http\Requests\Location\Area\StoreAreaRequest;
+use App\Http\Requests\Location\Area\UpdateAreaRequest;
 
 class AreaController extends Controller
 {
@@ -48,13 +50,8 @@ class AreaController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(StoreAreaRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
 
         $icon = $request->hasFile('icon') ? $this->areaRepo->storeFile($request->file('icon')) : null;
         $this->areaRepo->create($request->except('icon') +
@@ -97,7 +94,7 @@ class AreaController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAreaRequest $request, $id)
     {
         $area = $this->areaRepo->findByID($id);
 

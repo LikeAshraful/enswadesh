@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Backend\General\Menu;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Repository\General\AppMenuRepository;
+use App\Http\Requests\General\Menu\StoreAppMenuRequest;
+use App\Http\Requests\General\Menu\UpdateAppMenuRequest;
 
 class AppMenuController extends Controller
 {
@@ -39,14 +41,8 @@ class AppMenuController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(StoreAppMenuRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
-
         $icon = $request->hasFile('icon') ? $this->appMenuRepo->storeFile($request->file('icon')) : null;
         $this->appMenuRepo->create($request->except('icon') +
             [
@@ -80,7 +76,7 @@ class AppMenuController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAppMenuRequest $request, $id)
     {
 
         $data = $this->appMenuRepo->findByID($id);

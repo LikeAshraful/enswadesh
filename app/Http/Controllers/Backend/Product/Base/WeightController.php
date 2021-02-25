@@ -43,12 +43,8 @@ class WeightController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreWeightRequest $request)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
-
         $this->weightRepo->create($request->except('user_id') +
             [
                 'user_id' => Auth::id()
@@ -88,7 +84,7 @@ class WeightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateWeightRequest $request, $id)
     {
         $this->weightRepo->updateByID($id, $request->except('user_id') +
             [
