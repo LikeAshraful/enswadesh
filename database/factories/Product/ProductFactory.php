@@ -25,7 +25,7 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->sentence(10);
+        $title = $this->faker->sentence(4);
         $slug = Str::of($title)->slug('-');
 
         return [

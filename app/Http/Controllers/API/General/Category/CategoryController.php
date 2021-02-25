@@ -35,6 +35,22 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show the all Categories by level
+     */
+    public function baseCategories()
+    {
+        $categories = $this->categoryRepo->getAllCategoriesByLevel();
+        if($categories != null){
+            return $this->json(
+                'Category List',
+                CategoryResource::collection($categories)
+            );
+        }
+
+        return $this->bad('Something Wrong to Get categories!');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <style>
 .dropify-wrapper .dropify-message p {
     font-size: initial;
@@ -176,7 +176,7 @@
                     </div>
                     <div class="form-group">
                         <label for='logo'>Shop Logo</label>
-                        <input type="file" id="logo" name="logo" class="dropify" data-default-file="{{ isset($shop) ? asset('/'. $shop->logo): '' }}" data-height="220" value="{{ isset($shop) ? asset('/'. $shop->logo): '' }}" />
+                        <input type="file" id="logo" name="logo" class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->logo): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->logo): '' }}" />
                         @error('logo')
                         <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
@@ -240,7 +240,7 @@
                     </div>
                     <div class="form-group">
                     <label for='cover_image'>Shop Cover Image</label>
-                    <input type="file" id="cover_image" name="cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('/'. $shop->cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('/'. $shop->cover_image): '' }}" />
+                    <input type="file" id="cover_image" name="cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->cover_image): '' }}" />
                     @error('cover_image')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
@@ -300,7 +300,7 @@
                     </div> --}}
                     <div class="form-group">
                     <label for='meta_og_image'>Meta OG Image</label>
-                    <input type="file" id="meta_og_image" name="meta_og_image" class="dropify" data-default-file="{{ isset($shop) ? asset('/'. $shop->meta_og_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('/'. $shop->meta_og_image): '' }}" />
+                    <input type="file" id="meta_og_image" name="meta_og_image" class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->meta_og_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->meta_og_image): '' }}" />
                     @error('meta_og_image')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
@@ -311,23 +311,54 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="form-group">
-            <label for='image'>Shop Media</label>
-            <input type="file" id="image[]" name="image[]" multiple class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->image): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->image): '' }}" />
-            @error('image')
-            <span class="invalid-feedback image-display-error-message" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
+            <div class="input-group control-group increment" >
+                <input type="file" name="image[]" class="form-control" required>
+                <div class="input-group-btn">
+                    <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                </div>
+            </div>
+            <div class="clone hide">
+                <div class="control-group input-group" style="margin-top:10px">
+                    <input type="file" name="image[]" class="form-control">
+                    <div class="input-group-btn">
+                    <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                    </div>
+                </div>
+                </div>
         </div>
-        </div>
-    </div>
+    </div><br>
+
+  @if(isset($shop))
+   <table class="table table-bordered table-hover table-striped">
+    <thead>
+    <tr>
+        <th>Picture</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach($shop->shopMedia as $image)
+        <tr>
+            <td>
+                <img src="{{ asset('storage/'.$image->image) }}" style="height:50px; width:60px"/>
+            </td>
+            <td>
+                <a style="cursor: pointer" class="btn btn-sm btn-danger removeImage" data-id="{{$image->id}}" href="javascript:void(0)">Remove</a>
+            </td>
+        </tr>
+
+        @endforeach
+    </tbody>
+   </table>
+   @endif
+
+
     <div class="pb-3">
-        <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
+        <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i> Reset</button>
         @isset($shop)
         <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
         @else
-        <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
+        <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i> Create</button>
         @endisset
     </div>
 </form>
@@ -339,6 +370,29 @@
 $(document).ready(function() {
     // Dropify
     $('.dropify').dropify();
+
+    $(".btn-success").click(function(){
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+      $("body").on("click",".btn-danger",function(){
+          $(this).parents(".control-group").remove();
+      });
+
+      $(".removeImage").click(function(){
+        var id = $(this).attr('data-id');
+        //  alert(id)
+        $.ajax(
+        {
+            type: 'get',
+            url: "/backend/media-image/"+id,
+            success: function (){
+                console.log("it Works");
+            }
+        });
+
+      });
+
 });
 </script>
 @endpush
