@@ -4,7 +4,6 @@ namespace App\Models\General\Category;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

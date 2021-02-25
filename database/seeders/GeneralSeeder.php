@@ -93,5 +93,36 @@ class GeneralSeeder extends Seeder
             'shop_id'       =>0,
             'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
+
+            Category::updateOrCreate([
+                'parent_id'     => 0,
+                'name'          => 'Health & Beauty',
+                'slug'          => 'health-beauty',
+                'status'        => 1,
+                'shop_id'       =>0,
+                'user_id'       => 1,
+                'level'         =>1,
+                'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            ]);
+            Category::updateOrCreate([
+                'parent_id'     => 0,
+                'name'          => 'Babies & Toys',
+                'slug'          => 'babies-toys',
+                'status'        => 1,
+                'shop_id'       =>0,
+                'user_id'       => 1,
+                'level'         =>1,
+                'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            ]);
+            Category::updateOrCreate([
+                'parent_id'     => 0,
+                'name'          => 'Fashions',
+                'slug'          => 'fashions',
+                'status'        => 1,
+                'shop_id'       =>0,
+                'user_id'       => 1,
+                'level'         =>1,
+                'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            ]);
     }
 }

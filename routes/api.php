@@ -58,7 +58,11 @@ Route::prefix('shops')->namespace('Shop')->group(function () {
 
 Route::get('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
 Route::get('products/{id}', [ProductController::class, 'show']);
-Route::get('categories', [CategoryController::class, 'index']);
+
+Route::prefix('categories')->namespace('Category')->group(function () {
+    Route::get('', [CategoryController::class, 'index']);
+    Route::get('base', [CategoryController::class, 'baseCategories']);
+});
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
