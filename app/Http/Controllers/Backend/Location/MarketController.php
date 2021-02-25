@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Repository\Location\AreaRepository;
 use Repository\Location\CityRepository;
 use Repository\Location\MarketRepository;
+use App\Http\Requests\Location\Market\StoreMarketRequest;
+use App\Http\Requests\Location\Market\UpdateMarketRequest;
 
 class MarketController extends Controller
 {
@@ -47,15 +49,8 @@ class MarketController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(StoreMarketRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'description' => 'required',
-            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
-
         $icon = $request->hasFile('icon') ? $this->marketRepo->storeFile($request->file('icon')) : null;
         $this->marketRepo->create($request->except('icon') +
             [
@@ -95,7 +90,7 @@ class MarketController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMarketRequest $request, $id)
     {
         $market = $this->marketRepo->findByID($id);
 

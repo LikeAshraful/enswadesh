@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Illuminate\Http\Request;
-use App\Models\Location\Area;
 use App\Http\Controllers\Controller;
+use App\Models\Location\Area;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Repository\Location\CityRepository;
+use App\Http\Requests\Location\City\StoreCityRequest;
+use App\Http\Requests\Location\City\UpdateCityRequest;
 
 class CityController extends Controller
 {
@@ -50,14 +52,8 @@ class CityController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(StoreCityRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'icon' => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
-
         $icon = $request->hasFile('icon') ? $this->cityRepo->storeFile($request->file('icon')) : null;
         $this->cityRepo->create($request->except('icon') +
             [
@@ -98,7 +94,7 @@ class CityController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCityRequest $request, $id)
     {
         $city = $this->cityRepo->findByID($id);
 
