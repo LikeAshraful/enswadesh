@@ -28,6 +28,16 @@ class RoleRepository extends BaseRepository {
         return $this->model()::where('slug', '=', 'super_admin')->first();
     }
 
+    public function getRoleForAdmin()
+    {
+        return $this->model()::where('slug', '=', 'admin')->first();
+    }
+
+    public function getRoleForManager()
+    {
+        return $this->model()::where('slug', '=', 'manager')->first();
+    }
+
     public function getRoleForVendor()
     {
         return $this->model()::where('slug', '=', 'vendor')->first();
