@@ -84,24 +84,24 @@ class PermissionSeeder extends Seeder
         ]);
 
         // User management(Vendor)
-        $moduleAppAdmin = Module::updateOrCreate(['name' => 'Vendor Management']);
+        $moduleAppVendor = Module::updateOrCreate(['name' => 'Vendor Management']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppAdmin->id,
+            'module_id' => $moduleAppVendor->id,
             'name' => 'Access Vendor',
             'slug' => 'backend.vendor.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppAdmin->id,
+            'module_id' => $moduleAppVendor->id,
             'name' => 'Create Vendor',
             'slug' => 'backend.vendor.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppAdmin->id,
+            'module_id' => $moduleAppVendor->id,
             'name' => 'Edit Vendor',
             'slug' => 'backend.vendor.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppAdmin->id,
+            'module_id' => $moduleAppVendor->id,
             'name' => 'Delete Vendor',
             'slug' => 'backend.vendor.destroy',
         ]);
@@ -137,96 +137,187 @@ class PermissionSeeder extends Seeder
             'slug' => 'backend.profile.password',
         ]);
         // Product Property management(Category)
-        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management(Category)']);
+        $moduleAppCategory = Module::updateOrCreate(['name' => 'Product Property Management(Category)']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCategory->id,
             'name' => 'Access Category',
             'slug' => 'backend.category.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCategory->id,
             'name' => 'Create Category',
             'slug' => 'backend.category.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCategory->id,
             'name' => 'Edit Category',
             'slug' => 'backend.category.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCategory->id,
             'name' => 'Delete Category',
             'slug' => 'backend.category.destroy',
         ]);
 
         // Product Property management(Brand)
-        $moduleAppUser = Module::updateOrCreate(['name' => 'Product Property Management(Brand)']);
+        $moduleAppBrand = Module::updateOrCreate(['name' => 'Product Property Management(Brand)']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppBrand->id,
             'name' => 'Access Brand',
             'slug' => 'backend.brand.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppBrand->id,
             'name' => 'Create Brand',
             'slug' => 'backend.brand.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppBrand->id,
             'name' => 'Edit Brand',
             'slug' => 'backend.brand.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppBrand->id,
             'name' => 'Delete Brand',
             'slug' => 'backend.brand.destroy',
         ]);
 
         // Shop Property Management(Cities)
-        $moduleAppUser = Module::updateOrCreate(['name' => 'Shop Property Management(Cities)']);
+        $moduleAppCity = Module::updateOrCreate(['name' => 'Shop Property Management(Cities)']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCity->id,
             'name' => 'Access City',
             'slug' => 'backend.cities.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCity->id,
             'name' => 'Create City',
             'slug' => 'backend.cities.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCity->id,
             'name' => 'Edit City',
             'slug' => 'backend.cities.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppCity->id,
             'name' => 'Delete City',
             'slug' => 'backend.cities.destroy',
         ]);
 
         // Shop Property Management(Area)
-        $moduleAppUser = Module::updateOrCreate(['name' => 'Shop Property Management(Area)']);
+        $moduleAppArea = Module::updateOrCreate(['name' => 'Shop Property Management(Area)']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppArea->id,
             'name' => 'Access Area',
             'slug' => 'backend.areas.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppArea->id,
             'name' => 'Create Area',
             'slug' => 'backend.areas.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppArea->id,
             'name' => 'Edit Area',
             'slug' => 'backend.areas.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppUser->id,
+            'module_id' => $moduleAppArea->id,
             'name' => 'Delete Area',
             'slug' => 'backend.areas.destroy',
         ]);
 
+        // Shop Property Management(menu)
+        $moduleAppMenu = Module::updateOrCreate(['name' => 'Shop Property Management(Menu)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Access Menu',
+            'slug' => 'backend.menus.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Create Menu',
+            'slug' => 'backend.menus.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Edit Menu',
+            'slug' => 'backend.menus.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Delete Menu',
+            'slug' => 'backend.menus.destroy',
+        ]);
+
+        // Shop Property Management(market)
+        $moduleAppMarket = Module::updateOrCreate(['name' => 'Shop Property Management(Market)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMarket->id,
+            'name' => 'Access Market',
+            'slug' => 'backend.markets.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMarket->id,
+            'name' => 'Create Market',
+            'slug' => 'backend.markets.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMarket->id,
+            'name' => 'Edit Market',
+            'slug' => 'backend.markets.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMarket->id,
+            'name' => 'Delete Market',
+            'slug' => 'backend.markets.destroy',
+        ]);
+
+        // Shop Property Management(shop type)
+        $moduleAppShopType = Module::updateOrCreate(['name' => 'Shop Property Management(Shop Type)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Access Shop Type',
+            'slug' => 'backend.shoptypes.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Create Shop Type',
+            'slug' => 'backend.shoptypes.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Edit Shop Type',
+            'slug' => 'backend.shoptypes.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Delete Shop Type',
+            'slug' => 'backend.shoptypes.destroy',
+        ]);
+
+        // Shop Property Management(shop)
+        $moduleAppShopType = Module::updateOrCreate(['name' => 'Shop Property Management(Shop)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Access Shop',
+            'slug' => 'backend.shops.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Create Shop',
+            'slug' => 'backend.shops.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Edit Shop',
+            'slug' => 'backend.shops.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppShopType->id,
+            'name' => 'Delete Shop',
+            'slug' => 'backend.shops.destroy',
+        ]);
     }
 }

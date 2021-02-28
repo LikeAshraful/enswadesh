@@ -72,7 +72,7 @@
                                     Users
                                 </a>
                             </li>
-                            @elsecanany('backend.vendor.index')
+                        @elsecanany('backend.vendor.index')
                             <li>
                                 <a href="{{route('backend.vendor.index')}}"
                                     class="{{ Route::is('backend.vendor.index*') ? 'mm-active' : '' }}">
@@ -100,12 +100,14 @@
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        <li>
-                            <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                App Menus
-                            </a>
-                        </li>
+                        @canany('backend.menus.index')
+                            <li>
+                                <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    App Menus
+                                </a>
+                            </li>
+                        @endcanany
                         @canany('backend.cities.index')
                             <li>
                                 <a href="{{route('backend.cities.index')}}" class="{{ Route::is('backend.cities.index*') ? 'mm-active' : '' }}">
@@ -122,24 +124,30 @@
                                 </a>
                             </li>
                         @endcanany
-                        <li>
-                            <a href="{{route('backend.markets.index')}}" class="{{ Route::is('backend.markets.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Market
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.shoptypes.index')}}" class="{{ Route::is('backend.shoptypes.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Shop Type
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.shops.index')}}" class="{{ Route::is('backend.shops.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                Shops
-                            </a>
-                        </li>
+                        @canany('backend.markets.index')
+                            <li>
+                                <a href="{{route('backend.markets.index')}}" class="{{ Route::is('backend.markets.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Market
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.shoptypes.index')
+                            <li>
+                                <a href="{{route('backend.shoptypes.index')}}" class="{{ Route::is('backend.shoptypes.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Shop Type
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.shops.index')
+                            <li>
+                                <a href="{{route('backend.shops.index')}}" class="{{ Route::is('backend.shops.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Shops
+                                </a>
+                            </li>
+                        @endcanany
                     </ul>
                 </li>
                 <li class="app-sidebar__heading">Shop Product</li>
