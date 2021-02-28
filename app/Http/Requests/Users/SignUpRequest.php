@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\API\User;
+namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -31,7 +31,7 @@ class SignUpRequest extends FormRequest
             'email.unique'          => 'The email has already been taken.',
             'password.required'     => 'The password filed is required.',
             'password.confirmed'    => 'Password does not match with confirm password.',
-            'password.min'          => 'The password length must be at least 6 characters',
+            'password.min'          => 'The password length must be at least 8 characters',
         ];
     }
 }

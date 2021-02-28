@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\API\User;
+namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +23,7 @@ class SignInRequest extends FormRequest
         return [
             'email_or_phone.required' => 'The email field is required.',
             'password.required'       => 'The password filed is required.',
-            'password.min'            => 'The password length must be at least 6 characters',
+            'password.min'            => 'The password length must be at least 8 characters',
         ];
     }
 }

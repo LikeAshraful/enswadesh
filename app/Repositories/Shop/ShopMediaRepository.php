@@ -35,8 +35,8 @@ class ShopMediaRepository extends BaseRepository
 
     public function shopGalleryUpdate($images, $id)
     {
-        $tt = is_array($images);
-        if($tt == false) {
+        $check_type = is_array($images);
+        if($check_type == false) {
             $data = array();
             foreach ($images as $key => $value) {
                array_push($data, $value->id);
