@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\RegisteredUserMail;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
-use App\Http\Requests\API\User\SignInRequest;
-use App\Http\Requests\API\User\SignUpRequest;
+use App\Http\Requests\Users\SignInRequest;
+use App\Http\Requests\Users\SignUpRequest;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
