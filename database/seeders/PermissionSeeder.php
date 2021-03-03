@@ -298,26 +298,141 @@ class PermissionSeeder extends Seeder
         ]);
 
         // Shop Property Management(shop)
-        $moduleAppShopType = Module::updateOrCreate(['name' => 'Shop Property Management(Shop)']);
+        $moduleAppShop = Module::updateOrCreate(['name' => 'Shop Property Management(Shop)']);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppShopType->id,
+            'module_id' => $moduleAppShop->id,
             'name' => 'Access Shop',
             'slug' => 'backend.shops.index',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppShopType->id,
+            'module_id' => $moduleAppShop->id,
             'name' => 'Create Shop',
             'slug' => 'backend.shops.create',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppShopType->id,
+            'module_id' => $moduleAppShop->id,
             'name' => 'Edit Shop',
             'slug' => 'backend.shops.edit',
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleAppShopType->id,
+            'module_id' => $moduleAppShop->id,
             'name' => 'Delete Shop',
             'slug' => 'backend.shops.destroy',
+        ]);
+
+        // Product Property Management(color)
+        $moduleAppColor = Module::updateOrCreate(['name' => 'Product Property Management(Color)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppColor->id,
+            'name' => 'Access Colors',
+            'slug' => 'backend.colors.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppColor->id,
+            'name' => 'Create Colors',
+            'slug' => 'backend.colors.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppColor->id,
+            'name' => 'Edit Colors',
+            'slug' => 'backend.colors.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppColor->id,
+            'name' => 'Delete Colors',
+            'slug' => 'backend.colors.destroy',
+        ]);
+
+        // Product Property Management(size)
+        $moduleAppSize = Module::updateOrCreate(['name' => 'Product Property Management(Size)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSize->id,
+            'name' => 'Access Size',
+            'slug' => 'backend.size.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSize->id,
+            'name' => 'Create Size',
+            'slug' => 'backend.size.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSize->id,
+            'name' => 'Edit Size',
+            'slug' => 'backend.size.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSize->id,
+            'name' => 'Delete Size',
+            'slug' => 'backend.size.destroy',
+        ]);
+
+        // Product Property Management(weight)
+        $moduleAppWeight = Module::updateOrCreate(['name' => 'Product Property Management(Weight)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppWeight->id,
+            'name' => 'Access Weights',
+            'slug' => 'backend.weights.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppWeight->id,
+            'name' => 'Create Weights',
+            'slug' => 'backend.weights.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppWeight->id,
+            'name' => 'Edit Weights',
+            'slug' => 'backend.weights.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppWeight->id,
+            'name' => 'Delete Weights',
+            'slug' => 'backend.weights.destroy',
+        ]);
+
+        // Product Property Management(product)
+        $moduleAppProduct = Module::updateOrCreate(['name' => 'Product Property Management(Product)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProduct->id,
+            'name' => 'Access Products',
+            'slug' => 'backend.products.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProduct->id,
+            'name' => 'Create Products',
+            'slug' => 'backend.products.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProduct->id,
+            'name' => 'Edit Products',
+            'slug' => 'backend.products.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProduct->id,
+            'name' => 'Delete Products',
+            'slug' => 'backend.products.destroy',
+        ]);
+
+        // Order Management(order)
+        $moduleAppOrder = Module::updateOrCreate(['name' => 'Order Management(Order)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppOrder->id,
+            'name' => 'Access Order',
+            'slug' => 'backend.orders.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppOrder->id,
+            'name' => 'Create Order',
+            'slug' => 'backend.orders.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppOrder->id,
+            'name' => 'Edit Order',
+            'slug' => 'backend.orders.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppOrder->id,
+            'name' => 'Delete Order',
+            'slug' => 'backend.orders.destroy',
         ]);
     }
 }
