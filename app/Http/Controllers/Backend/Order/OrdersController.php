@@ -52,6 +52,7 @@ class OrdersController extends Controller
 
     public function show($id)
     {
+        Gate::authorize('backend.orders.index');
         $order = Order::find($id);
         $items = OrderItem::where('order_id', $id)->get();
         return view('backend.order.invoice')->with(compact('order', 'items'));
@@ -64,6 +65,7 @@ class OrdersController extends Controller
 
     public function update(Request $request, $id)
     {
+        Gate::authorize('backend.orders.edit');
         $order = Order::find($id);
         $order->order_status = $request->order_status;
         $order->update();

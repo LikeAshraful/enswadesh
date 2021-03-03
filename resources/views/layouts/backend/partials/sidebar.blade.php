@@ -220,14 +220,14 @@
                         </li>
                     </ul>
                 </li>
-                @canany('backend.orders.index')
-                    <li class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
-                        <a href="#">
-                        <i class="metismenu-icon pe-7s-diamond"></i>
-                            Order Management
-                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                        </a>
-                        <ul>
+                <li class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
+                    <a href="#">
+                    <i class="metismenu-icon pe-7s-diamond"></i>
+                        Order Management
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        @canany('backend.orders.index')
                             <li>
                                 <a class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}" href="{{route('backend.orders.index')}}">
                                     <i class="metismenu-icon"></i>
@@ -247,9 +247,9 @@
                                     Cancel Orders
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-                @endcanany
+                        @endcanany
+                    </ul>
+                </li>
                 <li class="app-sidebar__heading">Customer Interaction</li>
                 <li class="{{ Route::is('backend.topics.index*') || Route::is('backend.videos.index*') || Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
                     <a href="#">

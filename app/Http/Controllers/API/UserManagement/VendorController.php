@@ -8,8 +8,8 @@ use Repository\User\OtpRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Users\SignUpRequest;
 use App\Http\Controllers\JsonResponseTrait;
-use App\Http\Requests\API\User\SignUpRequest;
 use App\Http\Resources\Vendor\VendorResource;
 
 class VendorController extends Controller
@@ -28,6 +28,7 @@ class VendorController extends Controller
     public function index()
     {
         $users  = $this->vendorRepo->findByID(Auth::id());
+        // dd($users->staffs[1]->user->name);
         $staffs = $users->staffs->count() ." Staff Found!";
         return $this->json('Staff list', [
                 'staffs'  => $staffs
@@ -40,7 +41,7 @@ class VendorController extends Controller
             $user = $this->vendorRepo->create($request->all());
             $this->vendorRepo->updateOrNewBy($user);
             $userOtp = $this->otpRepo->generateOtpForUser($user);
-            $this->vendorRepo->staffVendorByID($user->id);
+            $this->vendorRepo->createStaffByVendorID($user->id);
             return compact('user', 'userOtp');
         });
 
