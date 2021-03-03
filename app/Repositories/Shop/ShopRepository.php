@@ -21,6 +21,16 @@ class ShopRepository extends BaseRepository
         return Shop::class;
     }
 
+    public function allShop()
+    {
+        return $this->model()::where('status', 1)->get();
+    }
+
+    public function getAllUserID($field, $id)
+    {
+        return $this->model()::where($field, $id)->where('status', 1)->get();
+    }
+
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/shops', $file);
@@ -34,7 +44,7 @@ class ShopRepository extends BaseRepository
     public function shopByMarketId($id, $per_page = null)
     {
         $shop = $this->model()::where('market_id', $id);
-        if($per_page != null)
+        if ($per_page != null)
             return $shop->paginate($per_page);
 
         return $shop->get();
@@ -74,6 +84,11 @@ class ShopRepository extends BaseRepository
 
     public function findOrFailByUserID($user_id, $id): Model
     {
-        return $this->model()::where('shop_owner_id', $user_id )->findOrFail($id);
+        return $this->model()::where('shop_owner_id', $user_id)->where('status', 1)->findOrFail($id);
+    }
+
+    public function checkApproveShop($user_id, $id): Model
+    {
+        return $this->model()::where('shop_owner_id', $user_id)->where('status', 0)->findOrFail($id);
     }
 }
