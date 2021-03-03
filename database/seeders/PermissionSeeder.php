@@ -434,5 +434,28 @@ class PermissionSeeder extends Seeder
             'name' => 'Delete Order',
             'slug' => 'backend.orders.destroy',
         ]);
+
+        // Topic Management(topic)
+        $moduleAppTopic = Module::updateOrCreate(['name' => 'Topic Management(topic)']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppTopic->id,
+            'name' => 'Access Topic',
+            'slug' => 'backend.topics.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppTopic->id,
+            'name' => 'Create Topic',
+            'slug' => 'backend.topics.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppTopic->id,
+            'name' => 'Edit Topic',
+            'slug' => 'backend.topics.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppTopic->id,
+            'name' => 'Delete Topic',
+            'slug' => 'backend.topics.destroy',
+        ]);
     }
 }
