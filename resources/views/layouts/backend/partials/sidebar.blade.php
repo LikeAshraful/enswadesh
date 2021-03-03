@@ -176,28 +176,32 @@
                             </a>
                         </li>
                         @endcanany
-                        <li>
-                            <a href="{{route('backend.colors.index')}}"
-                                class="{{ Route::is('backend.colors.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                    Colors
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.size.index')}}"
-                                class="{{ Route::is('backend.size.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                    Size
-                            </a>
-                        </li>
-                        @canany('backend.brand.index')
-                        <li>
-                            <a href="{{route('backend.weights.index')}}"
-                                class="{{ Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
-                                <i class="metismenu-icon"></i>
-                                    Weights
-                            </a>
-                        </li>
+                        @canany('backend.colors.index')
+                            <li>
+                                <a href="{{route('backend.colors.index')}}"
+                                    class="{{ Route::is('backend.colors.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                        Colors
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.size.index')
+                            <li>
+                                <a href="{{route('backend.size.index')}}"
+                                    class="{{ Route::is('backend.size.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                        Size
+                                </a>
+                            </li>
+                        @endcanany
+                        @canany('backend.weights.index')
+                            <li>
+                                <a href="{{route('backend.weights.index')}}"
+                                    class="{{ Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                        Weights
+                                </a>
+                            </li>
                         @endcanany
                     </ul>
                 </li>
@@ -216,34 +220,36 @@
                         </li>
                     </ul>
                 </li>
-                <li class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
-                    <a href="#">
-                    <i class="metismenu-icon pe-7s-diamond"></i>
-                        Order Management
-                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                    </a>
-                    <ul>
-                        <li>
-                            <a class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}" href="{{route('backend.orders.index')}}">
-                                <i class="metismenu-icon"></i>
-                                    Orders
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.orders.index')}}?order_status=5">
-                                <i class="metismenu-icon"></i>
-                                  Refund Orders
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.orders.index')}}?order_status=0"
-                                class="">
-                                <i class="metismenu-icon"></i>
-                                   Cancel Orders
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @canany('backend.orders.index')
+                    <li class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}">
+                        <a href="#">
+                        <i class="metismenu-icon pe-7s-diamond"></i>
+                            Order Management
+                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a class="{{ Route::is('backend.orders.index*') ? 'mm-active' : '' }}" href="{{route('backend.orders.index')}}">
+                                    <i class="metismenu-icon"></i>
+                                        Orders
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('backend.orders.index')}}?order_status=5">
+                                    <i class="metismenu-icon"></i>
+                                    Refund Orders
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('backend.orders.index')}}?order_status=0"
+                                    class="">
+                                    <i class="metismenu-icon"></i>
+                                    Cancel Orders
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcanany
                 <li class="app-sidebar__heading">Customer Interaction</li>
                 <li class="{{ Route::is('backend.topics.index*') || Route::is('backend.videos.index*') || Route::is('backend.templates.index*') ? 'mm-active' : '' }}">
                     <a href="#">

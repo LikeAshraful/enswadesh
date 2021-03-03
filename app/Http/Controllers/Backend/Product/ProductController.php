@@ -9,6 +9,7 @@ use Repository\Shop\ShopRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Product\ProductMedia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Repository\Brand\BrandRepository;
 use Repository\Product\ProductRepository;
 use Repository\Category\CategoryRepository;
@@ -34,24 +35,16 @@ class ProductController extends Controller
         $this->productRepo = $productRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        Gate::authorize('backend.products.index');
         $products = $this->productRepo->getAll();
         return view('backend.product.product.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        Gate::authorize('backend.products.create');
         $shops = $this->shopRepo->getAll();
         $categories = $this->categoryRepo->getAll();
         $brands = $this->brandRepo->getAll();
@@ -59,12 +52,6 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -79,52 +66,28 @@ class ProductController extends Controller
             [
                 'user_id'         => Auth::id()
             ]);
-
-
             $this->proMediaRepo->create($request->except('src', 'product_id', 'type') +
                 [
                     'src'        => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
                     'product_id' => $product->id,
                     'type' => 'image'
                 ]);
-
             $this->proCaregoryRepo->create($request->except('product_id') +
                 [
                     'product_id' => $product->id,
                 ]);
-
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
         }
-
         notify()->success('Product Successfully Added.', 'Added');
         return redirect()->route('backend.products.index');
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        Gate::authorize('backend.products.edit');
         $product = Product::with('category')->find($id);
         $shops = $this->shopRepo->getAll();
         $categories = $this->categoryRepo->getAll();
@@ -132,23 +95,14 @@ class ProductController extends Controller
         return view('backend.product.product.form', compact('product', 'shops', 'categories', 'brands'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
             try {
-                //product update
             $this->productRepo->updateByID($id, $request->except('user_id') +
                 [
                     'user_id'         => Auth::id()
                 ]);
-            //product media update
             $productMedida = $this->proMediaRepo->updateProductMediaById($id);
             $srcImage = $request->hasFile('src');
             $src = $srcImage ? $this->proMediaRepo->storeFile($request->file('src')) : $productMedida->src;
@@ -161,30 +115,22 @@ class ProductController extends Controller
                         'product_id' => $id,
                         'type' => 'image'
                     ]);
-            //catetory update updateProductCategoryById
             $this->proCaregoryRepo->updateProductCategoryById($id, $request->except('product_id') +
                 [
                     'product_id' => $id,
                 ]);
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
         }
-
         notify()->success('Product Successfully Updated.', 'Updated');
         return redirect()->route('backend.products.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        Gate::authorize('backend.products.destroy');
         $this->productRepo->deleteProduct($id);
         notify()->warning('Product Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.products.index');

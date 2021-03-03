@@ -20,14 +20,14 @@ class SizeController extends Controller
 
     public function index()
     {
-        // Gate::authorize('backend.size.index');
+        Gate::authorize('backend.size.index');
         $sizes = $this->sizeRepo->getAll();
         return view('backend.product.base.size.index',compact('sizes'));
     }
 
     public function create()
     {
-        // Gate::authorize('backend.size.create');
+        Gate::authorize('backend.size.create');
         return view('backend.product.base.size.form');
     }
 
@@ -47,7 +47,7 @@ class SizeController extends Controller
 
     public function edit($id)
     {
-        // Gate::authorize('backend.size.edit');
+        Gate::authorize('backend.size.edit');
         $size = $this->sizeRepo->findByID($id);
         return view('backend.product.base.size.form',compact('size'));
     }
@@ -64,7 +64,7 @@ class SizeController extends Controller
 
     public function destroy($id)
     {
-        // Gate::authorize('backend.size.destroy');
+        Gate::authorize('backend.size.destroy');
         $size   = $this->sizeRepo->findByID($id);
         $size->delete();
         notify()->success("Product Size Successfully Deleted", "Deleted");
