@@ -31,7 +31,6 @@ class ShopFactory extends Factory
     {
         $title = $this->faker->sentence(10);
         $slug = Str::of($title)->slug('-');
-
         return [
             'shop_owner_id' => User::all()->random()->id,
             'name' => $title,
@@ -45,6 +44,7 @@ class ShopFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'fax' => $this->faker->phoneNumber,
+            'floor_no' => $this->faker->randomElement(['1st Floor', '2nd Floor', '3rd Floor', '4th Floor', '5th Floor', '6th Floor', '7th Floor']),
             // 'logo' => Storage::disk('local')->put('fileuploads/shops', $file)
         ];
     }

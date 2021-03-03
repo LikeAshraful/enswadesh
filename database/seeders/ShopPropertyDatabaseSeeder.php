@@ -37,7 +37,7 @@ class ShopPropertyDatabaseSeeder extends Seeder
         // shop create seeder for database insert
         $user = Auth::user();
         // shoptype create seeder for database insert
-        $shoptype = ShopType::updateOrCreate(['name' => 'Grocery', 'description' => 'Grocery Shop', 'slug' => 'grocery']);      
+        $shoptype = ShopType::updateOrCreate(['name' => 'Grocery', 'description' => 'Grocery Shop', 'slug' => 'grocery']);
 
             $area = Area::updateOrCreate(['name' => 'Dhaka South', 'city_id' => $city->id, 'description' => 'Dhaka South','slug' => 'dhaka-south']);
                 //$thana = Thana::updateOrCreate(['thana_name' => 'Tejgaon', 'area_id' => $area->id, 'thana_description' => 'Dhaka South Thana','thana_slug' => 'tejgaon']);
@@ -54,6 +54,11 @@ class ShopPropertyDatabaseSeeder extends Seeder
                 //$thana = Thana::updateOrCreate(['thana_name' => 'Shahmukhdum', 'area_id' => $area->id, 'thana_description' => 'Shahmukhdum','thana_slug' => 'shahmukhdum']);
                     $market = Market::updateOrCreate(['city_id' => $city->id, 'area_id' => $area->id, 'name' => 'New Market', 'address' => 'Shahmukhdum, Rajshahi','description' => 'Shahmukhdum, Rajshahi', 'slug' => 'new-market', 'total_floor' => 3]);
                         //Floor::updateOrCreate(['market_id' => $market->id, 'floor_no' => '5','floor_note' => '5rd Floor']);
+
+
+        $city = City::updateOrCreate(['name' => 'Rangpur','description' => 'Rangpur','slug' => 'rangpur']);
+        $city = City::updateOrCreate(['name' => 'Mymensingh','description' => 'Mymensingh','slug' => 'mymensingh']);
+        $city = City::updateOrCreate(['name' => 'Barishal','description' => 'Barishal','slug' => 'barishal']);
 
 
         Model::unguard();
