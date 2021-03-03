@@ -17,6 +17,8 @@ use Repository\Shop\ShopTypeRepository;
 use Repository\Shop\ShopMediaRepository;
 use Repository\Location\MarketRepository;
 use App\Http\Controllers\JsonResponseTrait;
+use App\Http\Requests\Shop\StoreShopRequest;
+use App\Http\Requests\Shop\UpdateShopRequest;
 
 class ShopController extends Controller
 {
@@ -35,14 +37,14 @@ class ShopController extends Controller
         MarketRepository $marketRepository,
         ShopTypeRepository $shopTypeRepository,
         ShopRepository $shopRepository,
-        ShopMediaRepository $shopMediaRepository)
-    {
+        ShopMediaRepository $shopMediaRepository
+    ) {
         $this->cityRepo     = $cityRepository;
         $this->areaRepo     = $areaRepository;
         $this->marketRepo   = $marketRepository;
         $this->shopTypeRepo = $shopTypeRepository;
         $this->shopRepo     = $shopRepository;
-        $this->shopMediaRepo= $shopMediaRepository;
+        $this->shopMediaRepo = $shopMediaRepository;
     }
 
     public function index()
@@ -59,19 +61,11 @@ class ShopController extends Controller
         $areas = $this->areaRepo->getAll();
         $markets = $this->marketRepo->getAll();
         $shoptypes = ShopType::all();
-        return view('backend.shop.shop.form', compact('cities','areas' ,'markets', 'shoptypes'));
+        return view('backend.shop.shop.form', compact('cities', 'areas', 'markets', 'shoptypes'));
     }
 
-    public function store(Request $request)
+    public function store(StoreShopRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'shop_no' => 'required',
-            'logo' => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            'cover_image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            'meta_og_image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
-            //'image' => 'nullable|mimes:jpeg,jpg,png|max:5000',
-        ]);
         $logo = $request->hasFile('logo') ? $this->shopRepo->storeFile($request->file('logo')) : null;
         $cover_image = $request->hasFile('cover_image') ? $this->shopRepo->storeFile($request->file('cover_image')) : null;
         $meta_og_image = $request->hasFile('meta_og_image') ? $this->shopRepo->storeFile($request->file('meta_og_image')) : null;
@@ -102,10 +96,10 @@ class ShopController extends Controller
         $markets    = $this->marketRepo->getAll();
         $shoptypes  = ShopType::all();
         $shop       = Shop::find($id);
-        return view('backend.shop.shop.form', compact('cities','areas', 'markets', 'shoptypes', 'shop'));
+        return view('backend.shop.shop.form', compact('cities', 'areas', 'markets', 'shoptypes', 'shop'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateShopRequest $request, $id)
     {
         $shop = $this->shopRepo->updateByShopOwner($id);
         if ($shop == null) {
@@ -157,5 +151,4 @@ class ShopController extends Controller
             'success' => 'Record deleted successfully!'
         ]);
     }
-
 }

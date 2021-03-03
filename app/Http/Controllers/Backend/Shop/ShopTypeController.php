@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Shop;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Repository\Shop\ShopTypeRepository;
+use App\Http\Requests\Shop\StoreShopTypeRequest;
+use App\Http\Requests\Shop\UpdateShopTypeRequest;
 
 class ShopTypeController extends Controller
 {
@@ -29,12 +30,8 @@ class ShopTypeController extends Controller
         return view('backend.shop.shoptype.form');
     }
 
-    public function store(Request $request)
+    public function store(StoreShopTypeRequest $request)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
-
         $this->shopTypeRepo->create($request->all());
         notify()->success('Shop type Successfully Added.', 'Added');
         return redirect()->route('backend.shoptypes.index');
@@ -52,7 +49,7 @@ class ShopTypeController extends Controller
         return view('backend.shop.shoptype.form', compact('shoptype'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateShopTypeRequest $request, $id)
     {
         $this->shopTypeRepo->updateByID($id, $request->all());
         notify()->success('Shop type Successfully Updated.', 'Updated');
