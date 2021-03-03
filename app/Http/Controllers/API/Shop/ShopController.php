@@ -29,7 +29,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $allShops = $this->shopRepo->allShop();
+        $allShops = $this->shopRepo->getAll();
         return $this->json(
             'Shop list',
             ShopResource::collection($allShops)
@@ -99,7 +99,7 @@ class ShopController extends Controller
      */
     public function myShops()
     {
-        $myShops = $this->shopRepo->getAllUserID('shop_owner_id', Auth::id());
+        $myShops = $this->shopRepo->getAllByUserID('shop_owner_id', Auth::id());
         return $this->json(
             'My Shop list',
             ShopResource::collection($myShops)
@@ -216,7 +216,7 @@ class ShopController extends Controller
         $shop = $this->shopRepo->checkApproveShop(Auth::id(), $id);
         return $this->json(
             'Pending shop',
-            $shop
+            new ShopResource($shop)
         );
     }
 }
