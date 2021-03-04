@@ -44,7 +44,7 @@ class ShopFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'fax' => $this->faker->phoneNumber,
-            'floor_no' => $this->faker->randomElement(['1st Floor', '2nd Floor', '3rd Floor', '4th Floor', '5th Floor', '6th Floor', '7th Floor']),
+            'floor_no' => $this->faker->randomElement(['Ground Floor', '1st Floor', '2nd Floor', '3rd Floor', '4th Floor', '5th Floor', '6th Floor', '7th Floor']),
             // 'logo' => Storage::disk('local')->put('fileuploads/shops', $file)
         ];
     }
