@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('self', [ShopController::class, 'myShops']);
         Route::get('{id}', [ShopController::class, 'myShop']);
         Route::post('update/{id}', [ShopController::class, 'update']);
+        Route::get('delete/{id}', [ShopController::class, 'destroy']);
     });
 
     // general topic

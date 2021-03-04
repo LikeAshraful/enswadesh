@@ -13,8 +13,9 @@ class CreatePrductUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('prduct_units', function (Blueprint $table) {
+        Schema::create('product_units', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreatePrductUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prduct_units');
+        Schema::dropIfExists('product_units');
     }
 }
