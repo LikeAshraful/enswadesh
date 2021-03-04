@@ -52,7 +52,7 @@ class ShopRepository extends BaseRepository
 
     public function shopByMarketByFloorNo($id)
     {
-        return DB::select("SELECT floor_no, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_no ORDER BY 'ASC'");
+        return DB::select("SELECT floor_no, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_id ORDER BY 'ASC'");
     }
 
     public function updateShopsLogo($id)

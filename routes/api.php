@@ -4,7 +4,6 @@ use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
-use App\Http\Controllers\API\UserManagement\VerificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
