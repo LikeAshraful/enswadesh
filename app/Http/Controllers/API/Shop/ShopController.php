@@ -190,6 +190,9 @@ class ShopController extends Controller
     public function destroy($id)
     {
         $this->shopRepo->deleteShops($id);
+        return $this->json(
+            'Shop Deleted Successfully'
+        );
     }
 
 
