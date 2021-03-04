@@ -26,6 +26,7 @@ class CreateShopsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('fax')->nullable();
+            $table->string('block', 20)->nullable();
             $table->string('slug')->nullable();
             $table->string('cover_image')->nullable();
             $table->string('logo')->nullable();
