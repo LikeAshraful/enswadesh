@@ -27,6 +27,7 @@ class ShopResource extends JsonResource
             'phone'                => $this->phone,
             'email'                => $this->email,
             'fax'                  => $this->fax,
+            'block'                => $this->block,
             'slug'                 => $this->slug,
             'cover_image'          => $this->cover_image,
             'logo'                 => $this->logo,
