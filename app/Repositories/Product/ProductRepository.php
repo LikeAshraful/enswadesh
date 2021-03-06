@@ -20,7 +20,16 @@ class ProductRepository extends BaseRepository {
            return $products->paginate($per_page);
 
         return $products->get();
-        
+
+    }
+
+    public function productSearch($shop_id, $keyword, $per_page = null)
+    {
+        $products = $this->model()::where('shop_id', $shop_id)->where('name', 'LIKE','%'.$keyword.'%');
+        if($products != null)
+           return $products->paginate($per_page);
+
+        return $products->get();
     }
 
     public function deleteProduct($id)

@@ -4,12 +4,13 @@ namespace App\Http\Controllers\API\Shop;
 
 use App\Models\Shop\Shop;
 use Illuminate\Http\Request;
+use App\Models\Product\Product;
 use Illuminate\Routing\Controller;
 use Repository\Shop\ShopRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Shop\ShopResource;
-use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Controllers\JsonResponseTrait;
+use App\Http\Resources\Shop\ShopCollection;
 use Illuminate\Contracts\Support\Renderable;
 
 class ShopController extends Controller
