@@ -53,34 +53,34 @@ class ShopRepository extends BaseRepository
 
     public function shopByMarketByFloorNo($id)
     {
-        $floors = Floor::all();
+        // $floors = Floor::all();
         //return $floor;
-        //return DB::select("SELECT floor_id, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_id ORDER BY 'ASC'");
+        return DB::select("SELECT floor_id, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_id ORDER BY 'ASC'");
         //$count = DB::select("SELECT floor_id, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_id ORDER BY floor_id");
-        $count = DB::table('shops')
-            ->where('market_id', $id)
-            ->select('floor_id', DB::raw('count(*) as shop_count'))
-            ->groupBy('floor_id')
-            ->orderBy('floor_id')
-            ->get()->toArray();
-        $fff =  collect($floors)->toArray();
-        $ccc =  collect($count)->toArray();
-        //dd($arr->toArray());
-        $result = [];
-        //$array = array_unique(array_merge($fff, $ccc), SORT_REGULAR);
-        //dd($array);
-        foreach ($fff as $key1 => $value1) {
-            foreach ($ccc as $key2 => $value2) {
-                //dd($value2);
-                // dd($value1['id']);
-                //return $value2->floor_id;
-                if ($value1['id'] == $value2->floor_id) {
-                    $result[$value1] = $value2 + $value1;
-                }
-            }
-        }
-        dd($result);
-        //return $array;
+        // $count = DB::table('shops')
+        //     ->where('market_id', $id)
+        //     ->select('floor_id', DB::raw('count(*) as shop_count'))
+        //     ->groupBy('floor_id')
+        //     ->orderBy('floor_id')
+        //     ->get()->toArray();
+        // $fff =  collect($floors)->toArray();
+        // $ccc =  collect($count)->toArray();
+        // dd($arr->toArray());
+        // $result = [];
+        // $array = array_unique(array_merge($fff, $ccc), SORT_REGULAR);
+        // dd($array);
+        // foreach ($fff as $key1 => $value1) {
+        //     foreach ($ccc as $key2 => $value2) {
+        //         dd($value2);
+        //         dd($value1['id']);
+        //         return $value2->floor_id;
+        //         if ($value1['id'] == $value2->floor_id) {
+        //             $result[$value1] = $value2 + $value1;
+        //         }
+        //     }
+        // }
+        // dd($result);
+        // return $array;
     }
 
     public function updateShopsLogo($id)
