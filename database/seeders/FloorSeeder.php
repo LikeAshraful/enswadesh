@@ -1,7 +1,8 @@
 <?php
 
-floorspace Database\Seeders;
+namespace Database\Seeders;
 
+use App\Models\Location\Floor;
 use Illuminate\Database\Seeder;
 
 class FloorSeeder extends Seeder
