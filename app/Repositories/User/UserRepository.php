@@ -9,6 +9,7 @@ use App\Models\VendorStaff;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserRepository extends BaseRepository
@@ -103,9 +104,8 @@ class UserRepository extends BaseRepository
         if (Hash::check($id['current_password'], $hashedPassword)) {
             if (!Hash::check($id['password'], $hashedPassword)) {
                 Auth::user()->update([
-                    'password' => Hash::make($id['password'])
+                    'password' => $id['password']
                 ]);
-                Auth::logout();
                 notify()->success('Password Successfully Changed.', 'Success');
                 return redirect()->route('login');
             } else {

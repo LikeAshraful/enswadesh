@@ -4,7 +4,6 @@ use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
-use App\Http\Controllers\API\UserManagement\VerificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
@@ -21,8 +20,10 @@ use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Api\UserManagement\VendorController;
+use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\UserManagement\VerificationController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -66,6 +67,8 @@ Route::prefix('categories')->namespace('Category')->group(function () {
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
+    Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::get('staffs', [VendorController::class, 'index']);
     Route::post('staffs', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);
