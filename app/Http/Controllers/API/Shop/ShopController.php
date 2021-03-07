@@ -206,9 +206,9 @@ class ShopController extends Controller
         );
     }
 
-    public function shopByMarketByFloor($id)
+    public function getShopCountByMarketFloor($id)
     {
-        $shops = $this->shopRepo->shopByMarketByFloorNo($id);
+        $shops = $this->shopRepo->getShopCountByMarketFloor($id);
         return $this->json(
             'Shop count list by floor',
             $shops
