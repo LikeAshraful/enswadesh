@@ -47,9 +47,15 @@ class ProductController extends Controller
         return $this->json('Product List', ProductResource::collection($products)->response()->getData(true));
     }
 
+    public function productsByShopByCategory($shop_id, $cate_id)
+    {
+        $productId = $this->proCategoryRepo->productIdByCategoryId($cate_id);
+        $products = $this->productRepo->getAllByShopByCategory($shop_id, $productId, 4);
+        return $this->json('Product List', ProductResource::collection($products)->response()->getData(true));
+    }
+
     public function searchProducts(Request $request)
     {
-        //return response()->json($request->params['keyword']);
         $products = $this->productRepo->productSearch($request->params['id'], $request->params['keyword'], 4);
         return $this->json('Products By Search List', ProductResource::collection($products)->response()->getData(true));
     }

@@ -56,6 +56,7 @@ Route::prefix('shops')->namespace('Shop')->group(function () {
 });
 
 Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
+Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::class, 'productsByShopByCategory']);
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
 

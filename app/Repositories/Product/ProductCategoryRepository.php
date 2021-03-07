@@ -20,4 +20,9 @@ class ProductCategoryRepository extends BaseRepository {
             return $this->model()::create($modelData);
         }
     }
+
+    public function productIdByCategoryId($id)
+    {
+        return $this->model()::where('category_id', $id)->pluck('product_id');
+    }
 }
