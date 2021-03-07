@@ -53,6 +53,7 @@ Route::prefix('shops')->namespace('Shop')->group(function () {
     Route::get('all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
     Route::get('{id}', [ShopController::class, 'show']);
     Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
+    Route::post('search/shops-by-market', [ShopController::class, 'searchShopByMarket']);
 });
 
 Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);

@@ -119,4 +119,13 @@ class ShopRepository extends BaseRepository
     {
         return $this->model()::where('shop_owner_id', $user_id)->where('status', 0)->findOrFail($id);
     }
+
+    public function searchShopByMarket($marketId, $keyword, $per_page = null)
+    {
+        $shops = $this->model()::where('market_id', $marketId)->where('name', 'LIKE','%'.$keyword.'%');
+        if($shops != null)
+           return $shops->paginate($per_page);
+
+        return $shops->get();
+    }
 }
