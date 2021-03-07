@@ -223,4 +223,13 @@ class ShopController extends Controller
             new ShopResource($shop)
         );
     }
+
+    public function searchShopByMarket(Request $request)
+    {
+        $shops = $this->shopRepo->searchShopByMarket($request->params['id'], $request->params['keyword'], 4);
+        return $this->json(
+            'Search Shop list',
+            ShopResource::collection($shops)->response()->getData(true)
+        );
+    }
 }
