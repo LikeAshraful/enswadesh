@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Location\Area;
 use App\Models\Location\City;
 use App\Models\Shop\ShopType;
+use App\Models\Location\Floor;
 use App\Models\Location\Market;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -44,7 +45,7 @@ class ShopFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'fax' => $this->faker->phoneNumber,
-            'floor_no' => $this->faker->randomElement(['Ground Floor', '1st Floor', '2nd Floor', '3rd Floor', '4th Floor', '5th Floor', '6th Floor', '7th Floor']),
+            'floor_id' => Floor::all()->random()->id,
             // 'logo' => Storage::disk('local')->put('fileuploads/shops', $file)
         ];
     }

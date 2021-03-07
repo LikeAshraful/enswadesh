@@ -19,15 +19,18 @@ class Market extends Model
         $this->attributes['slug'] = Str::of($value)->slug('-');
     }
 
-    public function city() {
+    public function city()
+    {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
 
-    public function areas() {
+    public function areas()
+    {
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }
 
-    public function shops() {
+    public function shops()
+    {
         return $this->hasMany(Shop::class, 'market_id');
     }
 
@@ -38,6 +41,6 @@ class Market extends Model
 
     public function getShopsFloorAttribute()
     {
-        return $this->shops()->groupBY('floor_no')->count();
+        return $this->shops()->groupBY('floor_id')->count();
     }
 }

@@ -4,7 +4,6 @@ use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
-use App\Http\Controllers\API\UserManagement\VerificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
@@ -57,6 +56,7 @@ Route::prefix('shops')->namespace('Shop')->group(function () {
 });
 
 Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
+Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::class, 'productsByShopByCategory']);
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
 
