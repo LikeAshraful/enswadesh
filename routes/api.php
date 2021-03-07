@@ -23,7 +23,6 @@ use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
-use App\Http\Controllers\API\UserManagement\VerificationController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
