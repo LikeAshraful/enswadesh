@@ -53,7 +53,7 @@ class ShopRepository extends BaseRepository
 
     public function getShopCountByMarketFloor($marketId)
     {
-        return DB::select("SELECT COUNT(*) shop_count, fl.id id, fl.floor floor FROM floors fl INNER  JOIN shops sh ON sh.floor_id = fl.id WHERE sh.market_id = '$marketId' GROUP BY sh.floor_id ORDER BY sh.floor_id;");
+        return DB::select("SELECT COUNT(*) as shop_count, fl.id as id, fl.floor as floor FROM floors fl INNER  JOIN shops sh ON sh.floor_id = fl.id WHERE sh.market_id = '$marketId' GROUP BY sh.floor_id ORDER BY sh.floor_id;");
     }
 
     public function updateShopsLogo($id)
