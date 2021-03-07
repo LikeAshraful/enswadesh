@@ -54,7 +54,7 @@
                                     src="/{{ $topic->thumbnail }}" width="50" height="50"
                                     alt="">
                             </td>
-                            <td><div class="badge {{ $topic->status == 'Pending' ? 'badge-warning' : ($topic->status == 'Approved' ? 'badge-primary' : 'badge-danger') }}">{{ $topic->status }}</div></td>
+                            <td><div class="badge {{ $topic->status == 0 ? 'badge-warning' :  'badge-primary' }}">{{ $topic->status == 0 ? 'InActive' : 'Active' }}</div></td>
                             <td>
                                 <a class="fa-edit-style" href="{{ route('backend.topics.edit', $topic->id) }}"><i
                                         class="fas fa-edit"></i></a> |

@@ -15,7 +15,7 @@ class InteractionCategorySeeder extends Seeder
      */
     public function run()
     {
-        $titles = array('Video', 'Templates' , 'Real Experiences', 'Memes', 'Stories');
+        $titles = array('Video', 'Template' , 'Real Experience', 'Meme', 'Story');
 
         foreach($titles as $title)
         {

@@ -46,7 +46,7 @@
                 @method('PUT')
                 @endif
                 <div class="card-body">
-                    <h5 class="card-title">Manage Product topic</h5>
+                    <h5 class="card-title">Manage User Interaction Topic/Questions</h5>
                     <div class="form-group">
                         <Label for='title'>Topic Name</Label>
                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
@@ -69,6 +69,15 @@
                         </span>
                         @enderror
                     </div>
+                    @if (isset($topic))
+                    <div class="form-group">
+                        <Label for='status'>Select Status</Label>
+                        <select class="form-control-sm form-control" name="status" id="status">
+                            <option value="0" {{ $topic->status == 0 ? 'selected' : '' }} >InActive</option>
+                            <option value="1" {{ $topic->status == 1 ? 'selected' : '' }}>Active</option>
+                        </select>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label for='thumbnail'>Topic Thumbnail</label>
 

@@ -1,10 +1,8 @@
 <?php
 
-use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
-use App\Http\Controllers\API\UserManagement\VerificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
@@ -46,6 +44,10 @@ Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
+Route::prefix('videos')->namespace('Video')->group(function () {
+    Route::get('', [InteractionController::class, 'videos']);
+});
+
 Route::get('floors', [FloorController::class, 'index']);
 
 // shop related
@@ -65,6 +67,7 @@ Route::prefix('categories')->namespace('Category')->group(function () {
     Route::get('base', [CategoryController::class, 'baseCategories']);
 });
 
+//For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
     Route::get('staffs', [VendorController::class, 'index']);
@@ -116,7 +119,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::prefix('videos')->namespace('Video')->group(function () {
-        Route::get('', [InteractionController::class, 'videos']);
         Route::post('/create', [InteractionController::class, 'storeVideo']);
         Route::get('/{id}', [InteractionController::class, 'showVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
