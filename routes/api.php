@@ -52,7 +52,7 @@ Route::prefix('shops')->namespace('Shop')->group(function () {
     Route::get('shop-types', [ShopTypeController::class, 'index']);
     Route::get('all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
     Route::get('{id}', [ShopController::class, 'show']);
-    Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
+    Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'getShopCountByMarketFloor']);
     Route::post('search/shops-by-market', [ShopController::class, 'searchShopByMarket']);
 });
 
