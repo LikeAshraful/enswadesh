@@ -206,9 +206,9 @@ class ShopController extends Controller
         );
     }
 
-    public function shopByMarketByFloor($id)
+    public function getShopCountByMarketFloor($id)
     {
-        $shops = $this->shopRepo->shopByMarketByFloorNo($id);
+        $shops = $this->shopRepo->getShopCountByMarketFloor($id);
         return $this->json(
             'Shop count list by floor',
             $shops
@@ -221,6 +221,15 @@ class ShopController extends Controller
         return $this->json(
             'Pending shop',
             new ShopResource($shop)
+        );
+    }
+
+    public function searchShopByMarket(Request $request)
+    {
+        $shops = $this->shopRepo->searchShopByMarket($request->params['id'], $request->params['keyword'], 4);
+        return $this->json(
+            'Search Shop list',
+            ShopResource::collection($shops)->response()->getData(true)
         );
     }
 }

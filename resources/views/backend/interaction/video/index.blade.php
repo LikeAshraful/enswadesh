@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 <img class="img-fluid img-thumbnail"
-                                    src="/{{ $video->thumbnail }}" width="50" height="50"
+                                    src="{{$video->thumbnail ? '/storage/' . $video->thumbnail : '' }}" width="50" height="50"
                                     alt="">
                             </td>
                             <td>{{ $video->user ? $video->user->name : 'Not found' }}</td>
@@ -96,9 +96,6 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Datatable
-    $("#datatableBrand").DataTable();
-
     //Change video status
     $('select.changeStatus').change(function(){
 
@@ -118,6 +115,9 @@ $(document).ready(function() {
         });
 
     });
+
+    // Datatable
+    $("#datatableBrand").DataTable();
 });
 </script>
 @endpush

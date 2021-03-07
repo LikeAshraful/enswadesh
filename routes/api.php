@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
@@ -46,6 +45,10 @@ Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
+Route::prefix('videos')->namespace('Video')->group(function () {
+    Route::get('', [InteractionController::class, 'videos']);
+});
+
 Route::get('floors', [FloorController::class, 'index']);
 
 // shop related
@@ -53,10 +56,12 @@ Route::prefix('shops')->namespace('Shop')->group(function () {
     Route::get('shop-types', [ShopTypeController::class, 'index']);
     Route::get('all-shops-by-market/{id}', [ShopController::class, 'shopByMarket']);
     Route::get('{id}', [ShopController::class, 'show']);
-    Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'shopByMarketByFloor']);
+    Route::get('shops-by-market-by-floor/{id}', [ShopController::class, 'getShopCountByMarketFloor']);
+    Route::post('search/shops-by-market', [ShopController::class, 'searchShopByMarket']);
 });
 
 Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByShop']);
+Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::class, 'productsByShopByCategory']);
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
 
@@ -65,6 +70,7 @@ Route::prefix('categories')->namespace('Category')->group(function () {
     Route::get('base', [CategoryController::class, 'baseCategories']);
 });
 
+//For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
     Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
@@ -118,7 +124,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::prefix('videos')->namespace('Video')->group(function () {
-        Route::get('', [InteractionController::class, 'videos']);
         Route::post('/create', [InteractionController::class, 'storeVideo']);
         Route::get('/{id}', [InteractionController::class, 'showVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);

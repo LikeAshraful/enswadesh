@@ -22,6 +22,12 @@ class InteractionRepository extends BaseRepository
         return $this->model()::where('interaction_category_id', $category_id)->get();
     }
 
+    //get all Approved interaction category wise / all videos.
+    public function getApprovedInteractionsByCategoryID($category_id)
+    {
+        return $this->model()::where('interaction_category_id', $category_id)->where('status', 'Approved')->get();
+    }
+
     public function storeFile(UploadedFile $file, $path)
     {
         return Storage::put('uploads/interaction/' . $path, $file);

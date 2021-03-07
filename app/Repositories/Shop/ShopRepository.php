@@ -5,6 +5,7 @@ namespace Repository\Shop;
 
 
 use App\Models\Shop\Shop;
+use App\Models\Location\Floor;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -50,9 +51,9 @@ class ShopRepository extends BaseRepository
         return $shop->get();
     }
 
-    public function shopByMarketByFloorNo($id)
+    public function getShopCountByMarketFloor($marketId)
     {
-        return DB::select("SELECT floor_no, COUNT(1) shop_count FROM `shops` WHERE market_id = '$id' GROUP BY floor_no ORDER BY 'ASC'");
+        return DB::select("SELECT COUNT(*) shop_count, fl.id id, fl.floor floor FROM floors fl INNER  JOIN shops sh ON sh.floor_id = fl.id WHERE sh.market_id = '$marketId' GROUP BY sh.floor_id ORDER BY sh.floor_id;");
     }
 
     public function updateShopsLogo($id)
@@ -90,5 +91,14 @@ class ShopRepository extends BaseRepository
     public function checkApproveShop($user_id, $id): Model
     {
         return $this->model()::where('shop_owner_id', $user_id)->where('status', 0)->findOrFail($id);
+    }
+
+    public function searchShopByMarket($marketId, $keyword, $per_page = null)
+    {
+        $shops = $this->model()::where('market_id', $marketId)->where('name', 'LIKE','%'.$keyword.'%');
+        if($shops != null)
+           return $shops->paginate($per_page);
+
+        return $shops->get();
     }
 }

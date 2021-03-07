@@ -140,6 +140,14 @@
                                 </a>
                             </li>
                         @endcanany
+                        @canany('backend.shoptypes.index')
+                            <li>
+                                <a href="{{route('backend.floors.index')}}" class="{{ Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
+                                    <i class="metismenu-icon"></i>
+                                    Floor
+                                </a>
+                            </li>
+                        @endcanany
                         @canany('backend.shops.index')
                             <li>
                                 <a href="{{route('backend.shops.index')}}" class="{{ Route::is('backend.shops.index*') ? 'mm-active' : '' }}">
