@@ -25,7 +25,7 @@ class InteractionFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->sentence(10);
+        $title = $this->faker->sentence(5);
         $slug = Str::of($title)->slug('-');
 
         return [
@@ -35,7 +35,8 @@ class InteractionFactory extends Factory
             'user_id' => User::all()->random()->id,
             'status' => $this->faker->randomElement(['Pending' ,'Approved', 'Declined']),
             'topic_id' => InteractionTopic::all()->random()->id,
-            'interaction_category_id' => InteractionCategory::all()->random()->id
+            // 'interaction_category_id' => InteractionCategory::all()->random()->id,
+            'interaction_category_id' => $this->faker->randomElement([1,2])
         ];
     }
 }

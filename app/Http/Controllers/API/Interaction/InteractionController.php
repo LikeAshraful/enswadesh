@@ -25,7 +25,7 @@ class InteractionController extends Controller
 
     public function videos()
     {
-        $videos = $this->interactionRepo->getInteractionsByCategoryID(1);
+        $videos = $this->interactionRepo->getApprovedInteractionsByCategoryID(1);
 
         return $this->json(
             'Video List',
@@ -56,6 +56,7 @@ class InteractionController extends Controller
                 'thumbnail' => $image,
                 'user_id' => Auth::id()
             ]);
+            //save video file
             InteractionFile::create([
                 'interaction_id' => $video->id,
                 'file_path' => $videoFile,
@@ -110,6 +111,7 @@ class InteractionController extends Controller
         }
 
         $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'video') : $video->thumbnail;
+
         if ($videoFile = $request->hasFile('video')){
             $this->interactionRepo->storeFile($request->file('video'), 'video');
         }
