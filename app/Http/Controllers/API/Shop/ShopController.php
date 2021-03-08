@@ -199,7 +199,17 @@ class ShopController extends Controller
 
     public function shopByMarket($id)
     {
-        $shops = $this->shopRepo->shopByMarketId($id, 4);
+        $shops = $this->shopRepo->shopByMarketId($id);
+        return $this->json(
+            'Shop list',
+            ShopResource::collection($shops)->response()->getData(true)
+        );
+    }
+
+
+    public function shopByMarketFloor($markeId, $floorId)
+    {
+        $shops = $this->shopRepo->shopByMarketFloor($markeId, $floorId);
         return $this->json(
             'Shop list',
             ShopResource::collection($shops)->response()->getData(true)
@@ -226,7 +236,7 @@ class ShopController extends Controller
 
     public function searchShopByMarket(Request $request)
     {
-        $shops = $this->shopRepo->searchShopByMarket($request->params['id'], $request->params['keyword'], 4);
+        $shops = $this->shopRepo->searchShopByMarket($request->params['id'], $request->params['keyword']);
         return $this->json(
             'Search Shop list',
             ShopResource::collection($shops)->response()->getData(true)
