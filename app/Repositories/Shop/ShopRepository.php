@@ -42,12 +42,15 @@ class ShopRepository extends BaseRepository
         return $this->model()::where('shop_owner_id', Auth::id())->find($id);
     }
 
-    public function shopByMarketId($id, $per_page = null)
+    public function shopByMarketId($id)
     {
         $shop = $this->model()::where('market_id', $id);
-        if ($per_page != null)
-            return $shop->paginate($per_page);
+        return $shop->get();
+    }
 
+    public function shopByMarketFloor($markeId, $floorId)
+    {
+        $shop = $this->model()::where('market_id', $markeId)->where('floor_id', $floorId);
         return $shop->get();
     }
 
@@ -93,12 +96,9 @@ class ShopRepository extends BaseRepository
         return $this->model()::where('shop_owner_id', $user_id)->where('status', 0)->findOrFail($id);
     }
 
-    public function searchShopByMarket($marketId, $keyword, $per_page = null)
+    public function searchShopByMarket($marketId, $keyword)
     {
         $shops = $this->model()::where('market_id', $marketId)->where('name', 'LIKE','%'.$keyword.'%');
-        if($shops != null)
-           return $shops->paginate($per_page);
-
         return $shops->get();
     }
 }
