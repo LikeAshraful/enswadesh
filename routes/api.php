@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\ShopingFriend\ShopingFriendController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -80,6 +81,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
+
+    //Shoping Friend
+    Route::get('index', [ShopingFriendController::class, 'index']);
+    Route::post('create', [ShopingFriendController::class, 'store']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
