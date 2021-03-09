@@ -12,9 +12,13 @@ class ShopingFriendRepository extends BaseRepository
         return ShopingFriend::class;
     }
 
-    public function generateToken(): string
+    public function getFollowers()
     {
-        $token = openssl_random_pseudo_bytes(16);
-        return $token = bin2hex($token);
+        return $this->model()::where('user_to',auth()->user()->id)->get();
+    }
+
+    public function getFollowing()
+    {
+        return $this->model()::where('user_id',auth()->user()->id)->get();
     }
 }

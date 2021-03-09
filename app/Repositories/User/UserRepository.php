@@ -176,4 +176,9 @@ class UserRepository extends BaseRepository
         }
         notify()->success($message);
     }
+
+    public function getUserBySearch($data)
+    {
+        return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
+    }
 }

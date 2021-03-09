@@ -62,6 +62,7 @@ class RegisterController extends Controller
             DB::rollback();
             $message = $exception->getMessage();
         }
+
         notify()->warning($message);
         return redirect()->route('login');
     }

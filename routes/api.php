@@ -85,7 +85,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //Shoping Friend
     Route::get('index', [ShopingFriendController::class, 'index']);
-    Route::post('create', [ShopingFriendController::class, 'store']);
+    Route::post('friend-request', [ShopingFriendController::class, 'sentShopingFriendRequest']);
+    Route::post('invite-request', [ShopingFriendController::class, 'sentShopingFriendInvitation']);
+    Route::any('search/shoping-friend', [ShopingFriendController::class, 'shopingFriendSearch']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
