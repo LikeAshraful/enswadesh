@@ -17,14 +17,4 @@ class InviteFriend extends Model
     {
         return $this->referral_link = route('register', ['ref' => $this->token]);
     }
-
-    public function referrer()
-    {
-        return $this->belongsTo(ShopingFriend::class, 'user_id', 'id');
-    }
-
-    public function referrals()
-    {
-        return $this->hasMany(ShopingFriend::class, 'user_id', 'id');
-    }
 }

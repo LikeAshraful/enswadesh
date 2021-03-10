@@ -18,5 +18,10 @@ class ShopingInviteFriendRepository extends BaseRepository
         return $token = bin2hex($token);
     }
 
+    public function getShopingFriendIDByToken($token)
+    {
+        return $this->model()::where('token', $token)->first();
+    }
+
 
 }

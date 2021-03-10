@@ -17,14 +17,22 @@ use App\Notifications\RegisteredUserMail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Repository\ShopingFriend\ShopingFriendRepository;
+use Repository\ShopingFriend\ShopingInviteFriendRepository;
 
 class RegisterController extends Controller
 {
     public $authRepo;
+    public $shopingInviteFriendRepo;
+    public $shopingFriendRepo;
 
-    public function __construct(UserRepository $authRepository)
+    public function __construct(UserRepository $authRepository,
+                                ShopingInviteFriendRepository $shopingInviteFriendRepository,
+                                ShopingFriendRepository $shopingFriendRepository)
     {
         $this->authRepo = $authRepository;
+        $this->shopingInviteFriendRepo  = $shopingInviteFriendRepository;
+        $this->shopingFriendRepo = $shopingFriendRepository;
         $this->middleware('guest');
     }
 
@@ -38,33 +46,70 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
-        DB::beginTransaction();
-        try {
-            $user = $this->authRepo->create($request->except('role_id','password') + [
-                'role_id'       =>5,
-                'password'      => Hash::make($request->password),
-            ]);
-            $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
-                'user_id'       => $user->id
-            ]);
-            $user_verification= $this->authRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
-                'user_id'       => $user->id,
-                'otp'           => rand(1000, 9999),
-                'access_token'  => $user->createToken('authToken')->accessToken,
-            ]);
-            Notification::send($user, new RegisteredUserMail($user_verification));
-            DB::commit();
-            // return redirect()->route('otp-verify',$access_token)->with($user_verification);
-            return view('auth.otp',compact('user_verification'));
+        if(empty($request->token))
+        {
+            $this->validator($request->all())->validate();
+            DB::beginTransaction();
+            try {
+                $user = $this->authRepo->create($request->except('role_id','password') + [
+                    'role_id'       =>5,
+                    'password'      => Hash::make($request->password),
+                ]);
+                $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
+                    'user_id'       => $user->id
+                ]);
+                $user_verification= $this->authRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
+                    'user_id'       => $user->id,
+                    'otp'           => rand(1000, 9999),
+                    'access_token'  => $user->createToken('authToken')->accessToken,
+                ]);
+                Notification::send($user, new RegisteredUserMail($user_verification));
+                DB::commit();
+                // return redirect()->route('otp-verify',$access_token)->with($user_verification);
+                return view('auth.otp',compact('user_verification'));
 
-        } catch (\Exception $exception) {
-            DB::rollback();
-            $message = $exception->getMessage();
+            } catch (\Exception $exception) {
+                DB::rollback();
+                $message = $exception->getMessage();
+            }
+
+            notify()->warning($message);
+            return redirect()->route('login');
+        }else{
+            $this->validator($request->all())->validate();
+            DB::beginTransaction();
+            try {
+                $user = $this->authRepo->create($request->except('role_id','password') + [
+                    'role_id'       =>5,
+                    'password'      => Hash::make($request->password),
+                ]);
+                $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
+                    'user_id'       => $user->id
+                ]);
+                $user_verification= $this->authRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
+                    'user_id'       => $user->id,
+                    'otp'           => rand(1000, 9999),
+                    'access_token'  => $user->createToken('authToken')->accessToken,
+                ]);
+                $invitefriend = $this->shopingInviteFriendRepo->getShopingFriendIDByToken($request->token);
+                $this->shopingFriendRepo->create([
+                    'user_id'       => $invitefriend->user_id,
+                    'user_to'      => $user->id,
+                ]);
+                Notification::send($user, new RegisteredUserMail($user_verification));
+                DB::commit();
+                // return redirect()->route('otp-verify',$access_token)->with($user_verification);
+                return view('auth.otp',compact('user_verification'));
+
+            } catch (\Exception $exception) {
+                DB::rollback();
+                $message = $exception->getMessage();
+            }
+
+            notify()->warning($message);
+            return redirect()->route('login');
         }
 
-        notify()->warning($message);
-        return redirect()->route('login');
     }
 
     public function otpVerification(Request $request)

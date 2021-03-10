@@ -21,4 +21,5 @@ class ShopingFriendRepository extends BaseRepository
     {
         return $this->model()::where('user_id',auth()->user()->id)->get();
     }
+
 }
