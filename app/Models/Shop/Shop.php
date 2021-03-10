@@ -17,7 +17,7 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_no', 'block', 'shop_no', 'name',
+    protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_no', 'block', 'status', 'shop_no', 'name',
      'phone', 'email', 'fax', 'slug', 'cover_image', 'logo', 'shop_type_id', 'description', 'meta_title',
       'meta_keywords', 'meta_description', 'meta_og_image', 'meta_og_url'];
 
