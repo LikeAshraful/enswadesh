@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // oder related
+    
     Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
         Route::get('self/{id}', [OrderController::class, 'selfOrder']);
@@ -118,6 +119,9 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('', [OrderController::class, 'store']);
     });
 
+    Route::get('/shipping-address', [OrderController::class, 'shippingAddress']);
+
+    
     Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);
         Route::post('/create', [InteractionController::class, 'storeTemplate']);

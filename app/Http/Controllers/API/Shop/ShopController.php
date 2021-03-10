@@ -236,7 +236,7 @@ class ShopController extends Controller
 
     public function searchShopByMarket(Request $request)
     {
-        $shops = $this->shopRepo->searchShopByMarket($request->params['id'], $request->params['keyword']);
+        $shops = $this->shopRepo->searchShopByMarket($request->params['id'], $request->params['keyword'], $request->params['floorId']);
         return $this->json(
             'Search Shop list',
             ShopResource::collection($shops)->response()->getData(true)
