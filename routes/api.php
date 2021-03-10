@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
 use App\Http\Controllers\API\Location\AreaController;
@@ -29,6 +30,7 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::get('menus', [AppMenuController::class, 'index']);;
 Route::get('areas', [AreaController::class, 'index']);
 Route::get('areas-by-city/{id}', [AreaController::class, 'areaByCity']);
+Route::post('search-all-header', [SearchController::class, 'searchAllHeder']);
 
 Route::prefix('cities')->namespace('City')->group(function () {
     Route::get('', [CityController::class, 'index']);

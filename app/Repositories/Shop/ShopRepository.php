@@ -98,7 +98,13 @@ class ShopRepository extends BaseRepository
 
     public function searchShopByMarket($marketId, $keyword)
     {
-        $shops = $this->model()::where('market_id', $marketId)->where('name', 'LIKE','%'.$keyword.'%');
+        $shops = $this->model()::where('market_id', $marketId)->where('name', 'LIKE', '%' . $keyword . '%');
+        return $shops->get();
+    }
+
+    public function mainSearchShops($keyword)
+    {
+        $shops = $this->model()::where('name', 'LIKE', '%' . $keyword . '%');
         return $shops->get();
     }
 }
