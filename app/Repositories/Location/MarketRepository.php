@@ -42,6 +42,12 @@ class MarketRepository extends BaseRepository
         return $this->model()::where('area_id', $id)->withCount('shops')->orderBy('shops_count', 'desc')->limit(8)->get();
     }
 
+    public function mainSearchMarkets($keyword)
+    {
+        $markets = $this->model()::where('name', 'LIKE', '%' . $keyword . '%');
+        return $markets->get();
+    }
+
     public function storeFile(UploadedFile $file)
     {
         return Storage::put('fileuploads/market', $file);
