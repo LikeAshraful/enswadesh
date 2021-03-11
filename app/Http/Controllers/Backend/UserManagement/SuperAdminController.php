@@ -16,10 +16,11 @@ class SuperAdminController extends Controller
     protected $superAdminRepo;
     protected $roleRepo;
 
-    public function __construct(UserRepository $superAdmin, RoleRepository $roleRepository)
+    public function __construct(UserRepository $superAdmin,
+                                RoleRepository $roleRepository)
     {
-        $this->superAdminRepo = $superAdmin;
-        $this->roleRepo = $roleRepository;
+        $this->superAdminRepo   = $superAdmin;
+        $this->roleRepo         = $roleRepository;
     }
 
     public function index()
@@ -103,4 +104,5 @@ class SuperAdminController extends Controller
         $showOwner = $this->superAdminRepo->showOwnerByID($id);
         return back();
     }
+
 }

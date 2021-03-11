@@ -20,8 +20,11 @@ use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
 use App\Http\Controllers\Api\UserManagement\VendorController;
+use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\ShopingFriend\ShopingFriendController;
+use App\Http\Controllers\API\ShopSubscribe\ShopingSubscribeController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -75,11 +78,23 @@ Route::prefix('categories')->namespace('Category')->group(function () {
 //For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
+    Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::get('staffs', [VendorController::class, 'index']);
     Route::post('staffs', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
+
+    //Shoping Friend
+    Route::get('index', [ShopingFriendController::class, 'index']);
+    Route::post('friend-request', [ShopingFriendController::class, 'sentShopingFriendRequest']);
+    Route::post('invite-request', [ShopingFriendController::class, 'sentShopingFriendInvitation']);
+    Route::any('search/shoping-friend', [ShopingFriendController::class, 'shopingFriendSearch']);
+
+    //Shop Subscribe
+    Route::get('index', [ShopingSubscribeController::class, 'index']);
+    Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
