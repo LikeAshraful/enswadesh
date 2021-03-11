@@ -128,9 +128,10 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productRepo->findOrFailByID($id);
+
         return $this->json(
             'Single Product',
-            $product
+            new ProductResource($product)
         );
     }
 
