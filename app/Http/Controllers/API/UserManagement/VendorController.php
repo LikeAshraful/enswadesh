@@ -30,9 +30,7 @@ class VendorController extends Controller
         $users  = $this->vendorRepo->findByID(Auth::id());
         // dd($users->staffs[1]->user->name);
         $staffs = $users->staffs->count() ." Staff Found!";
-        return $this->json('Staff list', [
-                'staffs'  => $staffs
-            ]);
+        return $this->json('Staff list', ['staffs'  => $staffs]);
     }
 
     public function store(SignUpRequest $request)
