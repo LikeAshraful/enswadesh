@@ -49,6 +49,9 @@ Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
+//Shop Subscribe 
+Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::class, 'countByShop']);
+
 Route::prefix('videos')->namespace('Video')->group(function () {
     Route::get('', [InteractionController::class, 'videos']);
 });
@@ -95,6 +98,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Shop Subscribe
     Route::get('index', [ShopingSubscribeController::class, 'index']);
     Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
+    Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
