@@ -11,11 +11,13 @@ class ShopingFriend extends Model
 
     protected $fillable = ['user_id','user_to','status'];
 
-    public function follower(){
+    public function follower()
+    {
         return $this->belongsTo(User::class,'user_id','id');
     }
 
-    public function following(){
+    public function following()
+    {
         return $this->belongsTo(User::class,'user_to','id');
     }
 
