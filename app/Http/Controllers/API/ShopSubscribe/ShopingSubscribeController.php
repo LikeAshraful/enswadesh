@@ -29,11 +29,23 @@ class ShopingSubscribeController extends Controller
 
     public function sentShopSubscribeRequest(Request $request)
     {
-        $user = $this->shopSubscribeRepo->create($request->except('user_id') + [
+        $user = $this->shopSubscribeRepo->createSubscribe($request->all() + [
                 'user_id'      =>  Auth::id()
             ]);
-        return $this->json('Request sent',[
-            'user_id'       =>  $user['user_id'],
-            ]);
+        return $this->json('Request sent', $user);
+    }
+
+    public function checkByShop($shopId)
+    {
+        $check = $this->shopSubscribeRepo->checkByShop($shopId);
+
+         return $this->json('Subscribe Check', $check);
+    }
+
+    public function countByShop($shopId)
+    {
+        $count = $this->shopSubscribeRepo->getCountByShop($shopId);
+
+         return $this->json('Subscribe Count', $count);
     }
 }
