@@ -114,12 +114,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     
     Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
+        Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
         Route::get('self/{id}', [OrderController::class, 'selfOrder']);
         Route::get('{id}', [OrderController::class, 'show']);
         Route::post('', [OrderController::class, 'store']);
     });
 
-    Route::get('/shipping-address', [OrderController::class, 'shippingAddress']);
 
     
     Route::prefix('templates')->namespace('Template')->group(function () {

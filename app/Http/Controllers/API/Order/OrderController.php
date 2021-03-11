@@ -30,16 +30,6 @@ class OrderController extends Controller
         );
     }
 
-
-    public function shippingAddress()
-    {
-        $address = $this->orderRepo->shippingAddress(Auth::id());
-        return $this->json(
-            "Order Addrss",
-            $address
-        );
-    }
-
     public function store(Request $request)
     {
         $order = $this->orderRepo->create($request->except('order_no') + [
@@ -84,6 +74,16 @@ class OrderController extends Controller
         return $this->json(
             "My Order List",
             OrderResource::collection($selfOrders)
+        );
+    }
+
+    public function shippingAddress()
+    {
+        //return 'ok';
+        $address = $this->orderRepo->shippingAddress(Auth::id());
+        return $this->json(
+            "Order Addrss",
+            $address
         );
     }
 }
