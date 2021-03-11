@@ -87,30 +87,29 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $product = $this->productRepo->create($request->except('user_id') +
-            [
-                'user_id' => Auth::id()
-            ]);
+                [
+                    'user_id' => Auth::id()
+                ]);
 
             //product media store
             $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
-            [
-                'src' => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
-                'product_id' => $product->id,
-                'type' => 'image'
-            ]);
+                [
+                    'src' => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
+                    'product_id' => $product->id,
+                    'type' => 'image'
+                ]);
 
             //product category store
             $this->proCategoryRepo->create($request->except('product_id') +
-            [
-                'product_id' => $product->id,
-            ]);
+                [
+                    'product_id' => $product->id,
+                ]);
 
-        DB::commit();
-
+            DB::commit();
         } catch (\Exception $e) {
 
-        DB::rollback();
-            return $this->json('something wrong',$e);
+            DB::rollback();
+            return $this->json('something wrong', $e);
         }
 
         return $this->json(
@@ -157,8 +156,8 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-                //product update
-           $product = $this->productRepo->updateByID($id, $request->except('user_id') +
+            //product update
+            $product = $this->productRepo->updateByID($id, $request->except('user_id') +
                 [
                     'user_id' => Auth::id()
                 ]);
@@ -181,7 +180,6 @@ class ProductController extends Controller
                     'product_id' => $id,
                 ]);
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
@@ -190,7 +188,6 @@ class ProductController extends Controller
             "Product Updated Sucessfully",
             $product
         );
-
     }
 
     /**
