@@ -15,6 +15,7 @@ class CreateSubscribeShposTable extends Migration
     {
         Schema::create('subscribe_shpos', function (Blueprint $table) {
             $table->id();
+            $table->string('nickname')->unique();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('shop_id')->constrained('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('status', ['Pending' ,'Approved', 'Declined'])->nullable();
