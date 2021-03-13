@@ -38,6 +38,9 @@ class ShopPropertyDatabaseSeeder extends Seeder
         $user = Auth::user();
         // shoptype create seeder for database insert
         $shoptype = ShopType::updateOrCreate(['name' => 'Grocery', 'description' => 'Grocery Shop', 'slug' => 'grocery']);
+        ShopType::updateOrCreate(['name' => 'Electronics', 'description' => 'Electronics Shop', 'slug' => 'electronics']);
+        ShopType::updateOrCreate(['name' => 'Fashions', 'description' => 'Fashions Shop', 'slug' => 'fashions']);
+
 
         $area = Area::updateOrCreate(['name' => 'Dhaka South', 'city_id' => $city->id, 'description' => 'Dhaka South', 'slug' => 'dhaka-south']);
         //$thana = Thana::updateOrCreate(['thana_name' => 'Tejgaon', 'area_id' => $area->id, 'thana_description' => 'Dhaka South Thana','thana_slug' => 'tejgaon']);

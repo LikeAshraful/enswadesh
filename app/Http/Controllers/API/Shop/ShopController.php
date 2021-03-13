@@ -8,6 +8,7 @@ use App\Models\Product\Product;
 use Illuminate\Routing\Controller;
 use Repository\Shop\ShopRepository;
 use Illuminate\Support\Facades\Auth;
+use Repository\Shop\ShopMediaRepository;
 use App\Http\Resources\Shop\ShopResource;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Shop\ShopCollection;
@@ -19,9 +20,10 @@ class ShopController extends Controller
 
     public $shopRepo;
 
-    public function __construct(ShopRepository $shopRepository)
+    public function __construct(ShopRepository $shopRepository, ShopMediaRepository $shopMediaRepository)
     {
         $this->shopRepo = $shopRepository;
+        $this->shopMediaRepo = $shopMediaRepository;
     }
 
     /**
@@ -112,6 +114,7 @@ class ShopController extends Controller
      */
     public function myShop($id)
     {
+
         $myShop = $this->shopRepo->findOrFailByUserID(Auth::id(), $id);
 
         return $this->json(
@@ -176,6 +179,9 @@ class ShopController extends Controller
                 'cover_image' => $cover_image,
                 'meta_og_image' => $meta_og_image
             ]);
+
+        //update shop images to shop media table
+        $this->shopMediaRepo->shopGalleryUpdate($request->hasFile('image') ? $request->file('image') : $shop->shopMedia, $id);
 
         return $this->json(
             'Shop updated successfully',

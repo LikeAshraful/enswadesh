@@ -132,6 +132,7 @@ class ShopController extends Controller
                 'meta_og_image' => $meta_og_image
             ]);
         $this->shopMediaRepo->shopGalleryUpdate($request->hasFile('image') ? $request->file('image') : $shop->shopMedia, $id);
+        
         notify()->success('Shop Successfully Updated.', 'Updated');
         return redirect()->route('backend.shops.index');
     }
