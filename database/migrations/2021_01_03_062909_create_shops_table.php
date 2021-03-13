@@ -23,11 +23,12 @@ class CreateShopsTable extends Migration
             $table->unsignedBigInteger('shop_type_id')->nullable();
             $table->string('shop_no')->nullable();
             $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('fax')->nullable();
             $table->string('block', 20)->nullable();
-            $table->string('slug')->nullable();
+            $table->string('subscription_note',)->nullable();
             $table->string('cover_image')->nullable();
             $table->string('logo')->nullable();
             $table->integer('status')->default(0)->nullable();
@@ -38,6 +39,7 @@ class CreateShopsTable extends Migration
             $table->string('meta_og_image')->nullable();
             $table->string('meta_og_url')->nullable();
             $table->timestamps();
+
             $table->foreign('shop_owner_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
