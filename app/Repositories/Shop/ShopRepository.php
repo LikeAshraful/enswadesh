@@ -96,9 +96,9 @@ class ShopRepository extends BaseRepository
         return $this->model()::where('shop_owner_id', $user_id)->where('status', 0)->findOrFail($id);
     }
 
-    public function searchShopByMarket($marketId, $keyword)
+    public function searchShopByMarket($marketId, $keyword, $floorId)
     {
-        $shops = $this->model()::where('market_id', $marketId)->where('name', 'LIKE', '%' . $keyword . '%');
+        $shops = $this->model()::where('market_id', $marketId)->where('floor_id', $floorId)->where('name', 'LIKE', '%' . $keyword . '%');
         return $shops->get();
     }
 

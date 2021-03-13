@@ -49,6 +49,9 @@ Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
+//Shop Subscribe 
+Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::class, 'countByShop']);
+
 Route::prefix('videos')->namespace('Video')->group(function () {
     Route::get('', [InteractionController::class, 'videos']);
 });
@@ -95,6 +98,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Shop Subscribe
     Route::get('index', [ShopingSubscribeController::class, 'index']);
     Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
+    Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
@@ -126,13 +130,17 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // oder related
+    
     Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
+        Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
         Route::get('self/{id}', [OrderController::class, 'selfOrder']);
         Route::get('{id}', [OrderController::class, 'show']);
         Route::post('', [OrderController::class, 'store']);
     });
 
+
+    
     Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);
         Route::post('/create', [InteractionController::class, 'storeTemplate']);
