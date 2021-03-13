@@ -49,7 +49,7 @@ Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
-//Shop Subscribe 
+//Shop Subscribe
 Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::class, 'countByShop']);
 
 Route::prefix('videos')->namespace('Video')->group(function () {
@@ -130,7 +130,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // oder related
-    
+
     Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
         Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
@@ -140,7 +140,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
 
-    
+
     Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);
         Route::post('/create', [InteractionController::class, 'storeTemplate']);
