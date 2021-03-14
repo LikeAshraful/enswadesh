@@ -11,7 +11,7 @@ class SubscribeShpos extends Model
 
     protected $fillable = ['nickname','user_id','shop_id','status'];
 
-    public function subscribers()
+    public function subscriber()
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
