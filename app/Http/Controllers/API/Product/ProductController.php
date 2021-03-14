@@ -79,20 +79,19 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequesst $request)
     {
-        $product = DB::transaction(function() use ($request) {
-            if ($request->fileHas('thumbnail')) {
-                $thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
-                $request->request->add(['thumbnail_id' => $thumbnail->id]);
-            }
+        if ($request->hasFile('thumbnail')) {
+            $request->thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
+        }
 
+        $product = DB::transaction(function() use ($request) {
             $product = $this->productRepo->store(
                 $request->shop_id,
-                $request->except('thumbnail', 'images', 'sizes', 'weights', 'features'),
+                $request->except( 'images', 'sizes', 'weights', 'features'),
                 1
             );
 
             if ($request->images && sizeof($request->images) > 0) {
-                $this->productMediaRepo->storeFile($product, $this->images);
+                $this->productMediaRepo->storeImages($product, $request->images);
             }
 
             if ($request->has('sizes') && sizeof($request->sizes) > 0) {

@@ -107,4 +107,16 @@ class ShopRepository extends BaseRepository
         $shops = $this->model()::where('name', 'LIKE', '%' . $keyword . '%');
         return $shops->get();
     }
+
+    public function getNameAndCity($shopID)
+    {
+        return $this->model()::select('id', 'name', 'city_id', 'market_id',)
+            ->with(['city' => function($city) {
+                $city->select('id', 'name');
+            }])
+            ->with(['market' => function($city) {
+                $city->select('id', 'name');
+            }])
+            ->firstOrFail($shopID);
+    }
 }

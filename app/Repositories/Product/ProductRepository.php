@@ -7,6 +7,7 @@ use App\Models\Product\Product;
 use App\Models\Product\ProductCategory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Repository\Shop\ShopRepository;
 
 class ProductRepository extends BaseRepository
 {
@@ -22,7 +23,7 @@ class ProductRepository extends BaseRepository
             'shop_id' => $shopID,
             'user_id' => $userID,
             'brand_id' => $productData['brand_id'] ?? null,
-            'ref' => $productData['ref'] ?? $this->generateUniqueRef(),
+            'ref' => $productData['ref'] ?? $this->generateUniqueRef($shopID),
             'name' => $productData['title'] ?? null,
             'description' => $productData['description'] ?? null,
             'can_bargain' => $productData['can_bargain'] ?? null,
@@ -35,7 +36,7 @@ class ProductRepository extends BaseRepository
             'stocks' => $productData['stocks'] ?? null,
             'vat' => $productData['vat'] ?? null,
             'discount' => $productData['discount'] ?? null,
-            ''
+            'thumbnail' => $productData['thumbnail'] ?? null
         ]);
     }
 
@@ -77,5 +78,24 @@ class ProductRepository extends BaseRepository
         $product = $this->findById($id);
         Storage::delete($product->icon);
         $product->delete();
+    }
+
+    public function generateUniqueRef($shopID): string
+    {
+        $refCode = $this->generateRef($shopID);
+        if (!$this->model()::where('ref', $refCode)->first()) {
+            return $refCode;
+        }
+        return $this->generateUniqueRef($shopID);
+    }
+
+    private function generateRef($shopID): string
+    {
+       $shop = (new ShopRepository())->getNameAndCity($shopID);
+       $shopCode = substr($shop->name, 0, 1);
+       $cityCode = substr(optional($shop->city)->name, 0, 2);
+       $marketCode = substr(optional($shop->market)->name, 0, 2);
+
+       return $cityCode . $marketCode . $shopCode . '-' . rand(111111, 999999);
     }
 }

@@ -14,11 +14,6 @@ class ProductMediaRepository extends BaseRepository {
         return ProductMedia::class;
     }
 
-    public function storeFile(UploadedFile $file)
-    {
-        return Storage::put('products/thumbnail', $file);
-    }
-
     public function storeImages(Product $product, array $images)
     {
         if (sizeof($images) == 0) return;
@@ -28,7 +23,7 @@ class ProductMediaRepository extends BaseRepository {
                 'product_id' => $product->id,
                 'type' => 'image'
             ];
-        }, $this->images));
+        }, $images));
     }
 
     public function updateProductMediaById($id)
@@ -46,5 +41,10 @@ class ProductMediaRepository extends BaseRepository {
     {
         $productMedia = $this->model()::where('product_id', $id)->first();
         return $productMedia->update($modelData);
+    }
+
+    public function storeFile(UploadedFile $file)
+    {
+        return Storage::put('products/thumbnail', $file);
     }
 }

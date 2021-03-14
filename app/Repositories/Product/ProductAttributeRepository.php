@@ -5,6 +5,7 @@ namespace Repository\Product;
 
 
 use App\Models\Product\Product;
+use App\Models\Product\ProductFeature;
 
 class ProductAttributeRepository
 {
@@ -13,9 +14,10 @@ class ProductAttributeRepository
         if (sizeof($productSizes) == 0) return ;
         $formattedSizes = [];
         foreach ($productSizes as $productSize) {
-            $formattedSizes[$productSize->size_id] = [
-                'price' => $productSize->price,
-                'stocks' => $productSize->stocks
+            if (!$productSize) continue;
+            $formattedSizes[$productSize['size_id']] = [
+                'price' => $productSize['price'],
+                'stocks' => $productSize['stocks']
             ];
         }
         return $product->sizes()->attach($formattedSizes);
@@ -27,9 +29,10 @@ class ProductAttributeRepository
         $formattedWeights = [];
         foreach ($productWeights as $productWeight)
         {
-            $formattedWeights[$productWeight->weight_id] = [
-                'price' => $productWeight->price,
-                'stocks' => $productWeight->stocks,
+            if (!$productWeight) continue;
+            $formattedWeights[$productWeight['weight_id']] = [
+                'price' => $productWeight['price'],
+                'stocks' => $productWeight['stocks'],
             ];
         }
         return $product->weights()->attach($formattedWeights);
@@ -39,7 +42,9 @@ class ProductAttributeRepository
     {
         if (sizeof($features) == 0) return ;
 
-        return $product->features()->saveMany($features);
+        return $product->features()->saveMany(array_map(function($feature) {
+            return new ProductFeature($feature);
+        }, $features));
     }
 
 }
