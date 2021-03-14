@@ -19,7 +19,6 @@ class ShopSubscribeRepository extends BaseRepository
 
     public function createSubscribe(array $modelData)
     {
-    	//$checkSub = $this->model()::where('user_id', auth()->user()->id)->where('shop_id', $shopId)->first();
         return $this->model()::create($modelData);
     }
 
@@ -28,7 +27,7 @@ class ShopSubscribeRepository extends BaseRepository
         return $this->model()::where('user_id', auth()->user()->id)->where('shop_id', $shopId)->first();
     }
 
-    public function getCountByShop($shopId)
+    public function getCountSubscribersByShopID($shopId)
     {
         $shops = $this->model()::where('shop_id', $shopId)->get();
         return $shops->count();

@@ -13,6 +13,7 @@ use App\Http\Controllers\API\Product\ProductController;
 use App\Http\Controllers\API\Interaction\LikeController;
 use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
+use App\Http\Controllers\API\Rating\ShopRatingController;
 use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\Interaction\CommentController;
@@ -49,8 +50,12 @@ Route::prefix('markets')->namespace('Market')->group(function () {
     Route::get('{id}', [MarketController::class, 'singleMarket']);
 });
 
-//Shop Subscribe 
-Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::class, 'countByShop']);
+//Shop Subscribe
+Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::class, 'countSubscribersByShopID']);
+
+//Rating
+Route::get('rate-count-by-shop/{shopId}', [ShopRatingController::class, 'countRatingByShopID']);
+
 
 Route::prefix('videos')->namespace('Video')->group(function () {
     Route::get('', [InteractionController::class, 'videos']);
@@ -88,6 +93,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
+
+    //Rating
+    Route::post('shop-rating',[ShopRatingController::class,'sentShopRating']);
 
     //Shoping Friend
     Route::get('index', [ShopingFriendController::class, 'index']);
@@ -130,7 +138,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // oder related
-    
+
     Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
         Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
@@ -140,7 +148,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
 
-    
+
     Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);
         Route::post('/create', [InteractionController::class, 'storeTemplate']);
