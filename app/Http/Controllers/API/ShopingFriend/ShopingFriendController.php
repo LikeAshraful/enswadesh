@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\ShopingFriendRequestInvitation;
 use Repository\ShopingFriend\ShopingFriendRepository;
+use App\Notifications\Shop\ShopingFriendRequestInvitation;
 use Repository\ShopingFriend\ShopingInviteFriendRepository;
 
 class ShopingFriendController extends Controller

@@ -79,7 +79,6 @@ class OrderController extends Controller
 
     public function shippingAddress()
     {
-        //return 'ok';
         $address = $this->orderRepo->shippingAddress(Auth::id());
         return $this->json(
             "Order Addrss",
