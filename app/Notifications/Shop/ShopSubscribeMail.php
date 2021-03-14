@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Shop;
 
-use App\Models\InviteFriend;
 use Illuminate\Bus\Queueable;
+use App\Models\SubscribeShpos;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ShopingFriendRequestInvitation extends Notification
+class ShopSubscribeMail extends Notification
 {
     use Queueable;
-    public $referral_link;
 
-    public function __construct(InviteFriend $InviteFriend)
+    public $subscribeShop;
+
+    public function __construct(SubscribeShpos $SubscribeShpos)
     {
-        $this->referral_link = $InviteFriend;
+        $this->subscribeShop = $SubscribeShpos;
     }
 
     public function via($notifiable)
@@ -27,8 +28,7 @@ class ShopingFriendRequestInvitation extends Notification
     {
         return (new MailMessage)
                     ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Register link :'. $this->referral_link->referral_link)
+                    ->line('Hello '.$this->subscribeShop->subscriber->name)
                     ->line('Thank you for using our application!');
     }
 

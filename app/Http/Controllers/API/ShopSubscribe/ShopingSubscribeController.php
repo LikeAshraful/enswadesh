@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\JsonResponseTrait;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Shop\ShopSubscribeMail;
 use Repository\ShopSubscribe\ShopSubscribeRepository;
 
 class ShopingSubscribeController extends Controller
@@ -32,7 +34,10 @@ class ShopingSubscribeController extends Controller
         $user = $this->shopSubscribeRepo->createSubscribe($request->all() + [
                 'user_id'      =>  Auth::id()
             ]);
-        return $this->json('Request sent', $user);
+
+        Notification::route('mail', $user->subscriber->email,$user)->notify(new ShopSubscribeMail($user));
+
+        return $this->json('Subscribe request sent', $user);
     }
 
     public function checkByShop($shopId)
@@ -42,10 +47,9 @@ class ShopingSubscribeController extends Controller
          return $this->json('Subscribe Check', $check);
     }
 
-    public function countByShop($shopId)
+    public function countSubscribersByShopID($shopId)
     {
-        $count = $this->shopSubscribeRepo->getCountByShop($shopId);
-
+        $count = $this->shopSubscribeRepo->getCountSubscribersByShopID($shopId);
          return $this->json('Subscribe Count', $count);
     }
 }
