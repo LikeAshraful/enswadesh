@@ -9,6 +9,7 @@ use App\Models\Location\City;
 use App\Models\Shop\ShopType;
 use App\Models\Location\Floor;
 use App\Models\Location\Thana;
+use App\Models\SubscribeShpos;
 use App\Models\Location\Market;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,5 +59,12 @@ class Shop extends Model
     public function shopMedia() {
         return $this->hasMany(ShopMedia::class);
     }
+
+    public function subscribeShops() {
+        return $this->hasMany(SubscribeShpos::class);
+    }
+
+
+
 
 }

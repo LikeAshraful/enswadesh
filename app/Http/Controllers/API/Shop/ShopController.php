@@ -91,7 +91,7 @@ class ShopController extends Controller
         $shop = $this->shopRepo->findOrFailByID($id);
         return $this->json(
             'Single Shop',
-            $shop
+            new ShopResource($shop)
         );
     }
 
@@ -211,7 +211,6 @@ class ShopController extends Controller
             ShopResource::collection($shops)->response()->getData(true)
         );
     }
-
 
     public function shopByMarketFloor($markeId, $floorId)
     {
