@@ -30,7 +30,7 @@ class ShopFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->sentence(10);
+        $title = $this->faker->sentence(5);
         $slug = Str::of($title)->slug('-');
         return [
             'shop_owner_id' => User::all()->random()->id,

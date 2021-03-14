@@ -3,7 +3,6 @@
 /public/storage
 /storage
 /vendor
-/bootstrap/cache
 .env
 .env.*
 .env.backup
@@ -16,3 +15,5 @@ yarn-error.log
 storage
 /public/fileuploads
 /public/uploads
+.idea
+.vscode
