@@ -132,7 +132,7 @@ class ShopController extends Controller
                 'meta_og_image' => $meta_og_image
             ]);
         $this->shopMediaRepo->shopGalleryUpdate($request->hasFile('image') ? $request->file('image') : $shop->shopMedia, $id);
-        
+
         notify()->success('Shop Successfully Updated.', 'Updated');
         return redirect()->route('backend.shops.index');
     }
@@ -143,6 +143,13 @@ class ShopController extends Controller
         $this->shopRepo->deleteShops($id);
         notify()->success('Shop Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.shops.index');
+    }
+
+    public function statusUpdate(Request $request, $id)
+    {
+        $this->shopRepo->updateByID($id, $request->all());
+
+        notify()->success('Status Successfully Updated.', 'Updated');
     }
 
     public function removeShopMedia($id)

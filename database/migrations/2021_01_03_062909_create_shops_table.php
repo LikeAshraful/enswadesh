@@ -31,7 +31,7 @@ class CreateShopsTable extends Migration
             $table->string('subscription_note',)->nullable();
             $table->string('cover_image')->nullable();
             $table->string('logo')->nullable();
-            $table->integer('status')->default(0)->nullable();
+            $table->enum('status', ['Pending' ,'Approved', 'Declined'])->nullable();
             $table->text('description')->nullable();
             $table->string('meta_title')->nullable();
             $table->text('meta_keywords')->nullable();
