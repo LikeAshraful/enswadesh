@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubscribeShposTable extends Migration
+class CreateShopSubscribesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSubscribeShposTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscribe_shpos', function (Blueprint $table) {
+        Schema::create('shop_subscribes', function (Blueprint $table) {
             $table->id();
             $table->string('nickname');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
@@ -30,6 +30,6 @@ class CreateSubscribeShposTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscribe_shpos');
+        Schema::dropIfExists('shop_subscribes');
     }
 }

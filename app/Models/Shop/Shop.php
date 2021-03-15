@@ -7,9 +7,9 @@ use Illuminate\Support\Str;
 use App\Models\Location\Area;
 use App\Models\Location\City;
 use App\Models\Shop\ShopType;
+use App\Models\ShopSubscribe;
 use App\Models\Location\Floor;
 use App\Models\Location\Thana;
-use App\Models\SubscribeShpos;
 use App\Models\Location\Market;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -61,7 +61,7 @@ class Shop extends Model
     }
 
     public function subscribeShops() {
-        return $this->hasMany(SubscribeShpos::class);
+        return $this->hasMany(ShopSubscribe::class);
     }
 
 

@@ -2,8 +2,8 @@
 
 namespace App\Notifications\Shop;
 
+use App\Models\ShopSubscribe;
 use Illuminate\Bus\Queueable;
-use App\Models\SubscribeShpos;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -14,7 +14,7 @@ class ShopSubscribeMail extends Notification
 
     public $subscribeShop;
 
-    public function __construct(SubscribeShpos $SubscribeShpos)
+    public function __construct(ShopSubscribe $SubscribeShpos)
     {
         $this->subscribeShop = $SubscribeShpos;
     }
