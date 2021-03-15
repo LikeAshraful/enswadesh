@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Shop\Shop;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ShopSubscribe extends Model
 {
@@ -14,5 +15,10 @@ class ShopSubscribe extends Model
     public function subscriber()
     {
         return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function subscribeShop()
+    {
+        return $this->belongsTo(Shop::class,'shop_id','id');
     }
 }
