@@ -2,14 +2,14 @@
 
 namespace Repository\ShopSubscribe;
 
-use App\Models\SubscribeShpos;
+use App\Models\ShopSubscribe;
 use Repository\BaseRepository;
 
 class ShopSubscribeRepository extends BaseRepository
 {
     public function model()
     {
-        return SubscribeShpos::class;
+        return ShopSubscribe::class;
     }
 
     public function getSubscribes()
