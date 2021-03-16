@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Shop;
 
 use Image;
 use Storage;
+use App\Models\User;
 use App\Models\Shop\Shop;
 use Illuminate\Http\Request;
 use App\Models\Shop\ShopType;
@@ -18,7 +19,9 @@ use Repository\Shop\ShopMediaRepository;
 use Repository\Location\MarketRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Requests\Shop\StoreShopRequest;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\Shop\UpdateShopRequest;
+use App\Notifications\ShopVerifyNotification;
 
 class ShopController extends Controller
 {
@@ -148,6 +151,22 @@ class ShopController extends Controller
     public function statusUpdate(Request $request, $id)
     {
         $this->shopRepo->updateByID($id, $request->all());
+
+        $shop = $this->shopRepo->findOrFailByID($id);
+
+        $userSchema = User::find($shop->shop_owner_id);
+        $verifyData = [
+            'title' => 'Your Shop ' . $shop->name . ' is Verified By Swadesh Team',
+            'body' => 'Your shop is verified by our team. you can now setup the shop and upload the products',
+            'thanks' => 'Thank you',
+            'action_button' => 'Setup Shop',
+            'action_url' => '/shop/setup/' . $shop->id,
+            'shop_id' => $id
+        ];
+
+        //sent notification while shop approved
+        if($shop->status == 'Approved')
+            Notification::send($userSchema, new ShopVerifyNotification($verifyData));
 
         notify()->success('Status Successfully Updated.', 'Updated');
     }

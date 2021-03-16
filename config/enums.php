@@ -5,5 +5,5 @@ return [
         'size_base',
         'weight_base',
         'feature_base'
-    ]
+    ],
 ];
