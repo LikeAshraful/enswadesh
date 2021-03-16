@@ -14,7 +14,7 @@ class ShopSubscribeRepository extends BaseRepository
 
     public function getSubscribes()
     {
-        return $this->model()::where('user_id', auth()->user()->id)->get();
+        return $this->model()::with('subscribeShop')->where('user_id', auth()->user()->id)->get();
     }
 
     public function createSubscribe(array $modelData)
