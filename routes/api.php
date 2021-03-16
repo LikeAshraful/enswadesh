@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::any('search/shoping-friend', [ShopingFriendController::class, 'shopingFriendSearch']);
 
     //Shop Subscribe
-    Route::get('index', [ShopingSubscribeController::class, 'index']);
+    Route::get('subscribe-list', [ShopingSubscribeController::class, 'index']);
     Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
     Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
 
