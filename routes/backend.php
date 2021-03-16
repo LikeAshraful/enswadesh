@@ -66,6 +66,7 @@ use App\Http\Controllers\Backend\UserManagement\SuperAdminController;
     Route::resource('floors', FloorController::class);
     Route::resource('shoptypes', ShopTypeController::class);
     Route::resource('shops', ShopController::class);
+    Route::post('shops/status-update/{id}', [ShopController::class, 'statusUpdate'])->name('shop.status-update');
     Route::get('media-image/{id}', [ShopController::class, 'removeShopMedia'])->name('shopMedia.remove');
 
     Route::resource('category', CategoryController::class);

@@ -46,6 +46,7 @@ class ShopFactory extends Factory
             'email' => $this->faker->email,
             'fax' => $this->faker->phoneNumber,
             'floor_id' => Floor::all()->random()->id,
+            'status' => $this->faker->randomElement(['Pending' ,'Approved', 'Declined']),
             // 'logo' => Storage::disk('local')->put('fileuploads/shops', $file)
         ];
     }
