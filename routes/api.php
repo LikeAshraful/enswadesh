@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\ShopingFriend\ShopingFriendController;
 use App\Http\Controllers\API\ShopSubscribe\ShopingSubscribeController;
 
@@ -93,6 +94,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
+
+    //Notifications
+    Route::prefix('notifications')->group(function () {
+        Route::get('', [NotificationController::class, 'index'])->name('notification.index');
+        Route::post('/read', [NotificationController::class, 'readNotification'])->name('notification.read');
+    });
 
     //Rating
     Route::post('shop-rating',[ShopRatingController::class,'sentShopRating']);

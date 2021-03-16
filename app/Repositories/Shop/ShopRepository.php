@@ -88,12 +88,12 @@ class ShopRepository extends BaseRepository
 
     public function findOrFailByUserID($user_id, $id): Model
     {
-        return $this->model()::where('shop_owner_id', $user_id)->where('status', 1)->withCount('subscribeShops')->findOrFail($id);
+        return $this->model()::where('shop_owner_id', $user_id)->where('status', 'Approved')->withCount('subscribeShops')->findOrFail($id);
     }
 
     public function checkApproveShop($user_id, $id): Model
     {
-        return $this->model()::where('shop_owner_id', $user_id)->where('status', 0)->findOrFail($id);
+        return $this->model()::where('shop_owner_id', $user_id)->where('status', 'Pending')->findOrFail($id);
     }
 
     public function searchShopByMarket($marketId, $keyword, $floorId)
