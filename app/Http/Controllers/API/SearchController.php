@@ -45,9 +45,15 @@ class SearchController extends Controller
             $products = $this->productRepo->mainSearchProducts($request->params['keyword']);
             return $this->json('Products By Search List', ProductResource::collection($products)->response()->getData(true));
         } else {
-            $alls = array('title' => 'Market', 'title' => 'Shops', 'title' => 'Products');
-            return $this->json(
-                'All list',
+            $markets = $this->marketRepo->mainSearchMarkets($request->params['keyword']);
+            $markets = MarketResource::collection($markets)->response()->getData(true);
+            $shops = $this->shopRepo->mainSearchShops($request->params['keyword']);
+            $shops = ShopResource::collection($shops)->response()->getData(true);
+            $products = $this->productRepo->mainSearchProducts($request->params['keyword']);
+            $products = ProductResource::collection($products)->response()->getData(true);
+            $alls = array();
+            array_push($alls, $markets, $shops, $products);
+            return response()->json(
                 $alls
             );
         }
