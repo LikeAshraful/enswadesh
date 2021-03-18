@@ -28,9 +28,9 @@ class ProductStoreRequesst extends FormRequest
             'similar_to' => 'nullable|exists:product.ref,id',
             'ref' => 'nullable',
 
-            'title' => 'required|max:191',
+            'name' => 'required|max:191',
             'description' => 'nullable',
-            'can_bargain' => 'boolean|required',
+            'can_bargain' => 'required',
             'product_type' => ['nullable', Rule::in(config('enums.product_types'))],
             'refund_policy' => 'nullable',
             'service_policy' => 'nullable',
