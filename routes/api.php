@@ -119,12 +119,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
         Route::get('', [ShopController::class, 'index']);
         Route::post('', [ShopController::class, 'store']);
-        Route::get('pending/{id}', [ShopController::class, 'checkApproveShop']);
         Route::get('{id}/edit', [ShopController::class, 'edit']);
         Route::get('self', [ShopController::class, 'myShops']);
         Route::get('{id}', [ShopController::class, 'myShop']);
         Route::post('update/{id}', [ShopController::class, 'update']);
         Route::get('delete/{id}', [ShopController::class, 'destroy']);
+        Route::get('pending/{id}', [ShopController::class, 'checkApproveShop']);
         Route::get('media-image/{id}', [ShopController::class, 'removeShopMedia']);
     });
 
