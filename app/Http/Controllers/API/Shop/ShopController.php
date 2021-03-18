@@ -26,10 +26,7 @@ class ShopController extends Controller
         $this->shopMediaRepo = $shopMediaRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+
     public function index()
     {
         $allShops = $this->shopRepo->getAll();
@@ -39,20 +36,11 @@ class ShopController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
         return view('shopproperty::create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -81,11 +69,6 @@ class ShopController extends Controller
         );
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         $shop = $this->shopRepo->findOrFailByID($id);
@@ -95,11 +78,6 @@ class ShopController extends Controller
         );
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function myShops()
     {
         $myShops = $this->shopRepo->getAllByUserID('shop_owner_id', Auth::id());
@@ -123,11 +101,6 @@ class ShopController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
         $shop = $this->shopRepo->findOrFailByID($id);
@@ -137,12 +110,6 @@ class ShopController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
         $shop = $this->shopRepo->updateByShopOwner($id);
@@ -189,11 +156,14 @@ class ShopController extends Controller
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
+    public function removeShopMedia($id)
+    {
+        $this->shopMediaRepo->deletedByID($id);
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
+    }
+
     public function destroy($id)
     {
         $this->shopRepo->deleteShops($id);

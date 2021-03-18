@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('{id}', [ShopController::class, 'myShop']);
         Route::post('update/{id}', [ShopController::class, 'update']);
         Route::get('delete/{id}', [ShopController::class, 'destroy']);
+        Route::get('media-image/{id}', [ShopController::class, 'removeShopMedia']);
     });
 
     // general topic
