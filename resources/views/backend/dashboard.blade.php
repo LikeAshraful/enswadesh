@@ -90,7 +90,7 @@
                                                 class="fas fa-eye"></i>
                                             <span>Details</span>
                                         </a>
-                                    @elsecan('backend.super-admin.index')
+                                    @elsecan('backend.admin.index')
                                         <a class="btn btn-info btn-sm" href="{{ route('backend.admin.show',Auth::user()->id) }}"><i
                                                 class="fas fa-eye"></i>
                                             <span>Details</span>

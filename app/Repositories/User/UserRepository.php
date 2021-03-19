@@ -1,39 +1,35 @@
 <?php
 
 namespace Repository\User;
-use App\Models\Role;
+
 use App\Models\User;
-use App\Models\Module;
 use App\Models\Profile;
 use App\Models\UserOtp;
-use App\Models\Permission;
 use App\Models\VendorStaff;
 use Repository\BaseRepository;
-use App\Models\PermissionStaff;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class UserRepository extends BaseRepository {
+class UserRepository extends BaseRepository
+{
 
     public function model()
     {
         return User::class;
     }
 
-    public function allVendor()
+    public function getAllUsersForAdmin($id)
     {
-        $roles = Role::where('slug','=','vendor')->first();
-        return User::where('role_id',$roles->id)->get();
+        return $this->model()::where('role_id', '!=', $id)->get();
+    }
+    public function generateAccessToken(User $user): string
+    {
+        return $user->createToken('authToken')->accessToken;
     }
 
-    public function allRole()
-    {
-        return Role::get();
-    }
-
-    public function staffVendorByID($id)
+    public function createStaffByVendorID($id)
     {
         return VendorStaff::create([
             'user_id'       => $id,
@@ -41,19 +37,18 @@ class UserRepository extends BaseRepository {
         ]);
     }
 
-    public function allRoleForAdmin()
-    {
-        return Role::where('slug','!=','super_admin')->get();
-    }
-
-    public function allRoleForVendor()
-    {
-        return Role::where('slug','=','staff')->first();
-    }
-
     public function findByUser($id)
     {
         return Profile::where('user_id', $id)->first();
+    }
+
+    public function updateOrNewBy(User $user, array $profileData = []): Profile
+    {
+        if ($profile = $user->profile) {
+            $profile->update($profileData);
+            return $profile->refresh();
+        }
+        return $user->profile()->create($profileData);
     }
 
     public function updateProfileByID($id, array $modelData)
@@ -67,13 +62,13 @@ class UserRepository extends BaseRepository {
         }
     }
 
+
     public function updateOtpByID($id, array $modelData)
     {
         $otp = UserOtp::where('user_id', $id)->first();
-         if($otp != null)
-        {
+        if ($otp != null) {
             $otp->update($modelData);
-        }else{
+        } else {
             return UserOtp::create($modelData);
         }
     }
@@ -81,11 +76,10 @@ class UserRepository extends BaseRepository {
     public function verifyOtpByID($id, $otp, array $modelData)
     {
         $otp = UserOtp::where('user_id', $id)->where('otp', $otp)->first();
-         if($otp != null)
-        {
+        if ($otp != null) {
             $otp->update($modelData);
             notify()->success('You are verify by your OTP.', 'Success');
-        }else{
+        } else {
             notify()->warning('Your OTP is not valid, please resend.', 'Warning');
             return back();
         }
@@ -99,8 +93,7 @@ class UserRepository extends BaseRepository {
     public function updateFile($id)
     {
         $userImage = Profile::where('user_id', $id)->first();
-        if($userImage)
-        {
+        if ($userImage) {
             Storage::delete($userImage->image);
         }
     }
@@ -111,9 +104,8 @@ class UserRepository extends BaseRepository {
         if (Hash::check($id['current_password'], $hashedPassword)) {
             if (!Hash::check($id['password'], $hashedPassword)) {
                 Auth::user()->update([
-                    'password' => Hash::make($id['password'])
+                    'password' => $id['password']
                 ]);
-                Auth::logout();
                 notify()->success('Password Successfully Changed.', 'Success');
                 return redirect()->route('login');
             } else {
@@ -183,5 +175,10 @@ class UserRepository extends BaseRepository {
             $message = $exception->getMessage();
         }
         notify()->success($message);
+    }
+
+    public function getUserBySearch($data)
+    {
+        return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
     }
 }

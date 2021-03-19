@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('shop_id')->constrained('shops');
             $table->unsignedBigInteger('user_id')->constrained('users');
             $table->unsignedBigInteger('brand_id')->constrained('brands');
-            $table->unsignedBigInteger('thumbnail_id')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->boolean('can_bargain')->default(false);
             $table->enum('product_type', config('enums.product_types'))->nullable();
             $table->text('refund_policy')->nullable();
@@ -29,12 +29,14 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->text('offers')->nullable();
             $table->text('tag')->nullable();
-            $table->float('price', 8,2)->default(0);
+            $table->decimal('price', 8,2)->nullable()->default(0);
+            $table->decimal('sale_price', 8,2)->nullable()->default(0);
+            $table->integer('discount')->nullable()->default(0);
+            $table->unsignedBigInteger('stocks')->nullable()->default(0);
             $table->unsignedBigInteger('total_stocks')->default(0);
+            $table->integer('vat')->nullable()->default(0);
+            $table->integer('alert')->nullable()->default(0);
             $table->timestamps();
-
-            $table->foreign('thumbnail_id')
-                ->references('id')->on('product_media');
         });
     }
 

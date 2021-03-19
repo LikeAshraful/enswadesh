@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Location\Area;
 use App\Models\Location\City;
 use App\Models\Shop\ShopType;
+use App\Models\ShopSubscribe;
 use App\Models\Location\Floor;
 use App\Models\Location\Thana;
 use App\Models\Location\Market;
@@ -17,8 +18,8 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_no', 'shop_no', 'name',
-     'phone', 'email', 'fax', 'slug', 'cover_image', 'logo', 'shop_type_id', 'description', 'meta_title',
+    protected $fillable = ['shop_owner_id', 'city_id', 'area_id', 'thana_id', 'market_id', 'floor_id', 'block', 'status', 'shop_no', 'name',
+     'phone', 'email', 'fax', 'slug', 'cover_image', 'logo', 'shop_type_id', 'description', 'subscription_note', 'meta_title',
       'meta_keywords', 'meta_description', 'meta_og_image', 'meta_og_url'];
 
     public function setNameAttribute($value)
@@ -54,5 +55,16 @@ class Shop extends Model
     public function shopType() {
         return $this->belongsTo(ShopType::class, 'shop_type_id', 'id');
     }
+
+    public function shopMedia() {
+        return $this->hasMany(ShopMedia::class);
+    }
+
+    public function subscribeShops() {
+        return $this->hasMany(ShopSubscribe::class);
+    }
+
+
+
 
 }

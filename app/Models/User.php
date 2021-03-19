@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,11 +20,10 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
 
     protected $fillable = [
-        'role_id',
         'name',
+        'role_id',
         'phone_number',
         'email',
-        'otp',
         'password',
         'status',
         'suspend',
@@ -62,5 +61,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasPermission($permission): bool
     {
         return $this->role->permissions()->where('slug', $permission)->first() ? true : false;
+    }
+
+
+    /**
+     * Mutations
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

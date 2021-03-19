@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\UserManagement;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Repository\Role\RoleRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,12 @@ use App\Http\Requests\Users\UpdateUserRequest;
 class VendorController extends Controller
 {
     protected $vendorRepo;
+    protected $roleRepo;
 
-    public function __construct(UserRepository $vendor)
+    public function __construct(UserRepository $vendorRepository, RoleRepository $roleRepository)
     {
-        $this->vendorRepo=$vendor;
+        $this->vendorRepo = $vendorRepository;
+        $this->roleRepo   = $roleRepository;
     }
 
     public function index()
@@ -33,29 +36,19 @@ class VendorController extends Controller
     public function create()
     {
         Gate::authorize('backend.vendor.create');
-        $role = $this->vendorRepo->allRoleForVendor();
+        $role = $this->roleRepo->getRoleForStaff();
         return view('backend.user_management.vendor.form', compact('role'));
     }
 
     public function store(StoreUserRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $user = $this->vendorRepo->create($request->except('role_id','password') + [
-                'role_id'   =>  $request->role,
-                'password'  => Hash::make($request->password),
+        $user = DB::transaction(function () use ($request){
+            $user = $this->vendorRepo->create($request->except('role_id') + [
+                'role_id'   =>  $request->role
             ]);
-            $this->vendorRepo->updateProfileByID($user->id,$request->except('user_id') + [
-                'user_id'       => $user->id
-            ]);
-            $this->vendorRepo->staffVendorByID($user->id);
-            Notification::send($user, new RegisteredUserMail());
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            notify()->error($e);
-            return redirect()->route('backend.vendor.index');
-        }
+            $this->vendorRepo->updateOrNewBy($user);
+            $this->vendorRepo->createStaffByVendorID($user->id);
+        });
         notify()->success('Vendor Successfully Added.', 'Added');
         return redirect()->route('backend.vendor.index');
     }
@@ -69,7 +62,7 @@ class VendorController extends Controller
     public function edit($id)
     {
         Gate::authorize('backend.vendor.edit');
-        $role   = $this->vendorRepo->allRoleForVendor();
+        $role   = $this->roleRepo->getRoleForStaff();
         $user   = $this->vendorRepo->findByID($id);
         return view('backend.user_management.vendor.form', compact('role','user'));
     }
@@ -77,9 +70,8 @@ class VendorController extends Controller
     public function update($id, UpdateUserRequest $request)
     {
         $user  = $this->vendorRepo->findByID($id);
-        $user  = $this->vendorRepo->updateByID($id,$request->except('role_id','password') + [
-            'role_id'   =>  $request->role,
-            'password'  => Hash::make($request->password),
+        $user  = $this->vendorRepo->updateByID($id,$request->except('role_id') + [
+            'role_id'   =>  $request->role
         ]);
         notify()->success('User Successfully Updated.', 'Updated');
         return redirect()->route('backend.vendor.index');

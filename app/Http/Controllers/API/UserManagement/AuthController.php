@@ -3,91 +3,113 @@
 namespace App\Http\Controllers\API\UserManagement;
 
 use Illuminate\Http\Request;
-use App\Helpers\API\ApiHelpers;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Repository\User\OtpRepository;
+use Repository\Role\RoleRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\QueryException;
-use App\Http\Resources\Auth\AuthResource;
 use App\Notifications\RegisteredUserMail;
 use App\Http\Controllers\JsonResponseTrait;
 use Illuminate\Support\Facades\Notification;
-use App\Http\Requests\API\Staff\SignUpRequest;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Users\SignInRequest;
+use App\Http\Requests\Users\SignUpRequest;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
 {
-    use JsonResponseTrait;
+    use JsonResponseTrait, ThrottlesLogins;
 
     public $authRepo;
+    public $otpRepo;
+    public $roleRepo;
 
-    public function __construct(UserRepository $authRepository)
+    public function __construct(UserRepository $authRepository, OtpRepository $otpRepository, RoleRepository $roleRepository)
     {
         $this->authRepo = $authRepository;
+        $this->otpRepo  = $otpRepository;
+        $this->roleRepo  = $roleRepository;
     }
 
-    public function login(Request $request)
+    public function username()
     {
-        $loginData = $request->validate([
-            'email'     => 'email|required',
-            'password'  => 'required'
-        ]);
-        if(!Auth()->attempt($loginData)){
-            return $this->bad('UnAuthorised Action', 403);
+         $login = request()->input('phone_number');
+
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
+        request()->merge([$field => $login]);
+        return $field;
+    }
+
+    public function login(SignInRequest $request)
+    {
+        $user = $this->authRepo->model()::where($this->username(), $request->phone_number)->first();
+        if(!empty($user)){
+            if($user->role_id == $this->roleRepo->getRoleForVendor()->id && $user->status == 0){
+                return $this->bad('You are not approved for vendor');
+            }
+            if($user->role_id == $this->roleRepo->getRoleForVendor()->id || $user->role_id == $this->roleRepo->getRoleForStaff()->id || $user->role_id == $this->roleRepo->getRoleForCustomer()->id){
+                if ($this->hasTooManyLoginAttempts($request)) {
+                    $this->fireLockoutEvent($request);
+                    return $this->sendLockoutResponse($request);
+                }
+                if (Auth::attempt(([$this->username()=>$request->phone_number, 'password'=>$request->password]))) {
+                    $user = auth()->user();
+                    return $this->json('Login successfully', [
+                        'access_token'  => $this->authRepo->generateAccessToken($user),
+                        'access_type'   => 'Bearer'
+                    ]);
+                }
+                return $this->bad('Invalid Credentials');
+            }
+            return $this->bad('Authentication process will be valid for customer, staff and vendor');
         }
-        $accessToken = Auth()->user()->createToken('authToken')->accessToken;
-        return $this->json(
-            "Successfully Login",
-            ['user' => Auth()->user(), 'access_token' => $accessToken]
-        );
+        return $this->bad('Invalid Credentials');
     }
 
     public function register(SignUpRequest $request)
     {
-        $user = null;
-        DB::beginTransaction();
-        try {
-            $user = $this->authRepo->create($request->except('role_id','password') + [
-                'role_id'       =>5,
-                'password'      => Hash::make($request->password),
+        $user = DB::transaction(function () use ($request) {
+            $user = $this->authRepo->create($request->all() + [
+                'role_id'   =>  $this->roleRepo->getRoleForCustomer()->id
             ]);
-            $this->authRepo->updateProfileByID($user->id,$request->except('user_id') + [
-                'user_id'       => $user->id
-            ]);
-            $user_verification= $this->authRepo->updateOtpByID($user->id,$request->except('user_id','otp','access_token') + [
-                'user_id'       => $user->id,
-                'otp'           => rand(1000, 9999),
-                'access_token'  => $user->createToken('authToken')->accessToken,
-            ]);
-            $code = Response::HTTP_CREATED;
-            $message = "user Successfully Registered.";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, new AuthResource($user));
-            Notification::send($user, new RegisteredUserMail());
-            DB::commit();
-        } catch (QueryException $exception) {
-            DB::rollback();
-            $message = $exception->getMessage();
-            $code = $exception->getCode();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
-        }
-        return new JsonResponse($response, $user ? Response::HTTP_CREATED : Response::HTTP_INTERNAL_SERVER_ERROR);
+            $this->authRepo->updateOrNewBy($user);
+            $userOtp = $this->otpRepo->generateOtpForUser($user);
+            return compact('user', 'userOtp');
+        });
+
+        Notification::send($user['user'], new RegisteredUserMail($user['userOtp']));
+
+        return $this->json('User registered successfully. Please check your email or phone to active account', [
+            'token' => $user['userOtp']['token'],
+            'otp'   => $user['userOtp']['otp']
+        ]);
     }
 
-    public function dusers(){
-        try {
-            $user = Auth::user();
-            $code = Response::HTTP_FOUND;
-            $message = "Welcome ".$user->name. " in ENSWADESH";
-            $response = ApiHelpers::createAPIResponse(false, $code, $message, $user);
-        } catch (QueryException $exception) {
-            $code = $exception->getCode();
-            $message = $exception->getMessage();
-            $response = ApiHelpers::createAPIResponse(true, $code, $message, null);
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|exists:user_otps',
+            'otp'   => 'required|min:4'
+        ]);
+
+        if ($userOtp = $this->otpRepo->verifyOtp($request->token, $request->otp)) {
+            return $this->json('Otp verifyed successfully', [
+                'access_token'  => $this->authRepo->generateAccessToken($userOtp->user),
+                'access_type'   => 'Bearer'
+            ]);
         }
-        return new JsonResponse($response, $code == Response::HTTP_FOUND ? Response::HTTP_FOUND : Response::HTTP_NO_CONTENT);
+
+        return $this->bad('Invalid OTP');
     }
 
+    public function getAuthUser()
+    {
+        return $this->json('Auth user info', auth()->user());
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+    }
 }

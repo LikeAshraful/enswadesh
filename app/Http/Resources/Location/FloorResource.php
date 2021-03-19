@@ -17,7 +17,7 @@ class FloorResource extends JsonResource
         return [
             'id'                => $this->id,
             'floor_no'          => $this->floor_no,
-            'floor_note'        => $this->floor_note,
+            'floor'             => $this->floor,
             'market'            => $this->markets,
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,

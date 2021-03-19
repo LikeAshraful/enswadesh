@@ -1,9 +1,7 @@
 <?php
 
 namespace Repository\Category;
-use Image;
 use Storage;
-use Illuminate\Support\Str;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +23,11 @@ class CategoryRepository extends BaseRepository {
     {
         $categoryIcon = $this->findByID($id);
         Storage::delete($categoryIcon->icon);
+    }
+
+    public function getAllCategoriesByLevel($level = 1)
+    {
+        return $this->model()::where('level', $level)->get();
     }
 
     public function storeCategory(array $data, $icon)

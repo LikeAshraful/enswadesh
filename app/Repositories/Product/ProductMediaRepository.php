@@ -1,6 +1,7 @@
 <?php
 
 namespace Repository\Product;
+use App\Models\Product\Product;
 use Repository\BaseRepository;
 use Illuminate\Http\UploadedFile;
 use App\Models\Product\ProductMedia;
@@ -13,9 +14,16 @@ class ProductMediaRepository extends BaseRepository {
         return ProductMedia::class;
     }
 
-    public function storeFile(UploadedFile $file)
+    public function storeImages(Product $product, array $images)
     {
-        return Storage::put('fileuploads/products', $file);
+        if (sizeof($images) == 0) return;
+        return $this->model()::insert(array_map(function($image) use ($product) {
+            return [
+                'src' => $this->storeFile($image),
+                'product_id' => $product->id,
+                'type' => 'image'
+            ];
+        }, $images));
     }
 
     public function updateProductMediaById($id)
@@ -33,5 +41,10 @@ class ProductMediaRepository extends BaseRepository {
     {
         $productMedia = $this->model()::where('product_id', $id)->first();
         return $productMedia->update($modelData);
+    }
+
+    public function storeFile(UploadedFile $file)
+    {
+        return Storage::put('products/thumbnail', $file);
     }
 }

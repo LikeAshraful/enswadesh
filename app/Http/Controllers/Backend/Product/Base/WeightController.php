@@ -16,97 +16,49 @@ class WeightController extends Controller
         $this->weightRepo = $weightRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        Gate::authorize('backend.Weights.index');
         $weights = $this->weightRepo->getAll();
         return view('backend.product.base.weight.index',  compact('weights'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        Gate::authorize('backend.Weights.create');
         return view('backend.product.base.weight.form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreWeightRequest $request)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
-
         $this->weightRepo->create($request->except('user_id') +
             [
                 'user_id' => Auth::id()
             ]);
-
         notify()->success('Weight Successfully Added.', 'Added');
         return redirect()->route('backend.weights.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        Gate::authorize('backend.Weights.edit');
         $weight = $this->weightRepo->findByID($id);
         return view('backend.product.base.weight.form', compact('weight'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateWeightRequest $request, $id)
     {
         $this->weightRepo->updateByID($id, $request->except('user_id') +
             [
                 'user_id' => Auth::id()
             ]);
-
         notify()->success('Weight Successfully Updated.', 'Updated');
         return redirect()->route('backend.weights.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        Gate::authorize('backend.Weights.destroy');
         $this->weightRepo->deletedByID($id);
         notify()->success('Weight Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.weights.index');

@@ -153,7 +153,7 @@
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="number" step="any" min="0" max="100" id="price" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ isset($product) ? $product->price : '' }}" placeholder="Total stocks">
+                        <input type="number" step="any" min="0" max="100" id="price" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ isset($product) ? $product->price : '' }}" placeholder="Price">
                         @error('price')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

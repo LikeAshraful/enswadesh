@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API\Product;
 
+use App\Http\Requests\Api\Product\ProductStoreRequesst;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Repository\Product\ProductAttributeRepository;
 use Repository\Product\ProductRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use Repository\Product\ProductMediaRepository;
@@ -17,12 +19,12 @@ class ProductController extends Controller
     use JsonResponseTrait;
 
     public $productRepo;
-    public $proMediaRepo;
+    public $productMediaRepo;
     public $proCategoryRepo;
     public function __construct(ProductRepository $productRepository,  ProductMediaRepository $productMediaRepository, ProductCategoryRepository $productCategoryRepository)
     {
         $this->productRepo = $productRepository;
-        $this->proMediaRepo = $productMediaRepository;
+        $this->productMediaRepo = $productMediaRepository;
         $this->proCategoryRepo = $productCategoryRepository;
     }
 
@@ -43,12 +45,21 @@ class ProductController extends Controller
 
     public function productsByShop($shop_id)
     {
-        $products = $this->productRepo->getAllByShopID($shop_id);
-        return $this->json(
-            "Product List",
-            ProductResource::collection($products)
-        );
+        $products = $this->productRepo->getAllByShopID($shop_id, 4);
+        return $this->json('Product List', ProductResource::collection($products)->response()->getData(true));
+    }
 
+    public function productsByShopByCategory($shop_id, $cate_id)
+    {
+        $productId = $this->proCategoryRepo->productIdByCategoryId($cate_id);
+        $products = $this->productRepo->getAllByShopByCategory($shop_id, $productId, 4);
+        return $this->json('Product List', ProductResource::collection($products)->response()->getData(true));
+    }
+
+    public function searchProducts(Request $request)
+    {
+        $products = $this->productRepo->productSearch($request->params['id'], $request->params['keyword'], 4);
+        return $this->json('Products By Search List', ProductResource::collection($products)->response()->getData(true));
     }
 
     /**
@@ -65,49 +76,40 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequesst $request)
     {
-        $request->validate([
-            'name'           => 'required',
-            'shop_id'        => 'required',
-            'src' => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
-
-        DB::beginTransaction();
-        try {
-            $product = $this->productRepo->create($request->except('user_id') +
-            [
-                'user_id' => Auth::id()
-            ]);
-
-            //product media store
-            $this->proMediaRepo->create($request->except('src', 'product_id', 'image') +
-            [
-                'src' => $request->hasFile('src') ? $this->proMediaRepo->storeFile($request->file('src')) : null,
-                'product_id' => $product->id,
-                'type' => 'image'
-            ]);
-
-            //product category store
-            $this->proCategoryRepo->create($request->except('product_id') +
-            [
-                'product_id' => $product->id,
-            ]);
-
-        DB::commit();
-
-        } catch (\Exception $e) {
-
-        DB::rollback();
-            return $this->json('something wrong',$e);
+        if ($request->hasFile('thumbnail')) {
+            $request->thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
         }
 
-        return $this->json(
-            "Product Created Sucessfully",
-            $product
-        );
+        $product = DB::transaction(function() use ($request) {
+            $product = $this->productRepo->store(
+                $request->shop_id,
+                $request->except( 'images', 'sizes', 'weights', 'features'),
+                1
+            );
+
+            if ($request->images && sizeof($request->images) > 0) {
+                $this->productMediaRepo->storeImages($product, $request->images);
+            }
+
+            if ($request->has('sizes') && sizeof($request->sizes) > 0) {
+                ProductAttributeRepository::storeSizes($product, $request->sizes);
+            }
+
+            if ($request->has('weights') && sizeof($request->weights) > 0) {
+                ProductAttributeRepository::storeWeights($product, $request->weights);
+            }
+
+            if ($request->has('features') && sizeof($request->features) > 0) {
+                ProductAttributeRepository::storeFeatures($product, $request->features);
+            }
+
+            return $product;
+        });
+
+        return $this->json("Product create successfully", $product);
     }
 
     /**
@@ -119,9 +121,10 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productRepo->findOrFailByID($id);
+
         return $this->json(
             'Single Product',
-            $product
+            new ProductResource($product)
         );
     }
 
@@ -147,19 +150,19 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-                //product update
-           $product = $this->productRepo->updateByID($id, $request->except('user_id') +
+            //product update
+            $product = $this->productRepo->updateByID($id, $request->except('user_id') +
                 [
                     'user_id' => Auth::id()
                 ]);
             //product media update
-            $productMedida = $this->proMediaRepo->updateProductMediaById($id);
+            $productMedida = $this->productMediaRepo->updateProductMediaById($id);
             $srcImage = $request->hasFile('src');
-            $src = $srcImage ? $this->proMediaRepo->storeFile($request->file('src')) : $productMedida->src;
+            $src = $srcImage ? $this->productMediaRepo->storeFile($request->file('src')) : $productMedida->src;
             if ($srcImage) {
-                $this->proMediaRepo->updateProductMedia($id);
+                $this->productMediaRepo->updateProductMedia($id);
             }
-            $this->proMediaRepo->productMediaUpdateByID($id, $request->except('src', 'product_id', 'type') +
+            $this->productMediaRepo->productMediaUpdateByID($id, $request->except('src', 'product_id', 'type') +
                 [
                     'src'        => $src,
                     'product_id' => $id,
@@ -171,7 +174,6 @@ class ProductController extends Controller
                     'product_id' => $id,
                 ]);
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json($e);
@@ -180,7 +182,6 @@ class ProductController extends Controller
             "Product Updated Sucessfully",
             $product
         );
-
     }
 
     /**

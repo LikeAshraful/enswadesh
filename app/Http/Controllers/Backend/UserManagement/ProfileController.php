@@ -17,7 +17,6 @@ class ProfileController extends Controller
     public function __construct(UserRepository $userProfile)
     {
         $this->userProfileRepo=$userProfile;
-
     }
 
     public function index()
