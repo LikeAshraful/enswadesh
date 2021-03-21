@@ -19,11 +19,15 @@ class GeneralSeeder extends Seeder
         $brand = Brand::updateOrCreate([
             'name'          => 'Asus',
             'slug'          => 'asus',
+            'shop_id'       => 1,
+            'user_id'       => 4,
             'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ]);
         $brand = Brand::updateOrCreate([
             'name'          => 'Dell',
             'slug'          => 'dell',
+            'shop_id'       => 2,
+            'user_id'       => 4,
             'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ]);
 

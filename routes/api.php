@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\Shop\ShopController;
 use App\Http\Controllers\API\Order\OrderController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\Location\AreaController;
 use App\Http\Controllers\API\Location\CityController;
 use App\Http\Controllers\API\Shop\ShopTypeController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\API\Product\ProductController;
 use App\Http\Controllers\API\Interaction\LikeController;
 use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
+use App\Http\Controllers\API\Product\Base\UnitController;
 use App\Http\Controllers\API\Rating\ShopRatingController;
 use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\General\Brand\BrandController;
@@ -24,7 +26,6 @@ use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
-use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\ShopingFriend\ShopingFriendController;
 use App\Http\Controllers\API\ShopSubscribe\ShopingSubscribeController;
 
@@ -135,6 +136,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('colors', [ColorController::class, 'index']);
     Route::get('sizes', [SizeController::class, 'index']);
     Route::get('weights', [WeightController::class, 'index']);
+    Route::get('units',[UnitController::class,'index']);
 
     //Product
     Route::prefix('products')->namespace('Product')->group(function () {
