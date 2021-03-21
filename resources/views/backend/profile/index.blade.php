@@ -79,6 +79,21 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="blood_group" class="col-md-3 col-form-label text-md-right">{{ __('Blood Group') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="blood_group" type="text" class="form-control @error('blood_group') is-invalid @enderror"
+                                name="blood_group" value="{{ Auth::user()->profile->blood_group ?? old('blood_group') }}" required autocomplete="blood_group"
+                                autofocus>
+
+                            @error('blood_group')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="nid" class="col-md-3 col-form-label text-md-right">{{ __('NID') }}</label>
 
                         <div class="col-md-6">

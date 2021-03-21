@@ -37,6 +37,10 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function getUserInfo()
+    {
+        return $this->model()::with('profile')->find(Auth::id());
+    }
     public function findByUser($id)
     {
         return Profile::where('user_id', $id)->first();
