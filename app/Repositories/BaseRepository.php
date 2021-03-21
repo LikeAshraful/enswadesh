@@ -52,9 +52,9 @@ Abstract class BaseRepository {
         return $model->reload();
     }
 
-    public function getAllByUserID($field, $id)
+    public function getAllByUserID($field, $id, $status="Approved")
     {
-        return $this->model()::where($field, $id)->get();
+        return $this->model()::where($field, $id)->where('status', $status)->get();
     }
 
 }
