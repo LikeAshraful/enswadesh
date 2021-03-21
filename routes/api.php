@@ -80,11 +80,6 @@ Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
 
-Route::prefix('categories')->namespace('Category')->group(function () {
-    Route::get('', [CategoryController::class, 'index']);
-    Route::get('base', [CategoryController::class, 'baseCategories']);
-});
-
 //For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
@@ -95,6 +90,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);
+
 
     //Notifications
     Route::prefix('notifications')->group(function () {
@@ -130,7 +126,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // general topic
-    Route::get('brands', [BrandController::class, 'index']);
+    Route::prefix('brands')->namespace('Brand')->group(function(){
+        Route::get('', [BrandController::class, 'index']);
+        Route::post('create', [BrandController::class, 'store']);
+    });
 
     // product related
     Route::get('colors', [ColorController::class, 'index']);
@@ -145,6 +144,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('', [ProductController::class, 'store']);
         Route::post('update/{id}', [ProductController::class, 'update']);
         Route::get('delete/{id}', [ProductController::class, 'destroy']);
+    });
+
+    Route::prefix('categories')->namespace('Category')->group(function () {
+        Route::get('', [CategoryController::class, 'index']);
+        Route::get('base', [CategoryController::class, 'baseCategories']);
+        Route::post('create',[CategoryController::class,'store']);
     });
 
     // oder related
