@@ -203,10 +203,26 @@ class ShopController extends Controller
     public function checkApproveShop($id)
     {
         $shop = $this->shopRepo->checkApproveShop(Auth::id(), $id);
-        return $this->json(
-            'Pending shop',
-            new ShopResource($shop)
-        );
+
+        if($shop->status == 'Approved')
+        {
+            return $this->json(
+                'Your Shop is already Approved',
+                new ShopResource($shop)
+            );
+        } elseif($shop->status == 'Declined')
+        {
+            return $this->json(
+                'Your Shop is Declined',
+                new ShopResource($shop)
+            );
+        }else
+        {
+            return $this->json(
+                'Your Shop is in Pending',
+                new ShopResource($shop)
+            );
+        }
     }
 
     public function searchShopByMarket(Request $request)
