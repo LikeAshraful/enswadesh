@@ -145,6 +145,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('', [ProductController::class, 'store']);
         Route::post('update/{id}', [ProductController::class, 'update']);
         Route::get('delete/{id}', [ProductController::class, 'destroy']);
+        Route::get('similar-product/{shopId}', [ProductController::class, 'similarProduct']);
+        Route::get('similar-by-product/{productId}/{shopId}', [ProductController::class, 'similarProductByProduct']);
     });
 
     // oder related
