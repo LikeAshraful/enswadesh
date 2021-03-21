@@ -19,20 +19,26 @@ class ProfileController extends Controller
         $this->userProfileRepo=$userProfile;
     }
 
-    public function update(UpdateProfileRequest $request)
+    public function update(Request $request)
     {
-        $user       = $this->userProfileRepo->findByUser(Auth::id());
-        $userImage  = $request->hasFile('image');
-        $image      = $userImage ? $this->userProfileRepo->storeFile($request->file('image')) : $user->image;
-        if($userImage)
+        if($request->model == "Profile")
         {
-            $this->userProfileRepo->updateFile(Auth::id());
+            $user       = $this->userProfileRepo->findByUser(Auth::id());
+            $userImage  = $request->hasFile('image');
+            $image      = $userImage ? $this->userProfileRepo->storeFile($request->file('image')) : $user->image;
+            if($userImage)
+            {
+                $this->userProfileRepo->updateFile(Auth::id());
+            }
+            $user  = $this->userProfileRepo->updateProfileByID(Auth::id(),$request->except('social_link','image') + [
+                'user_id'       => Auth::id(),
+                'image'         => $image,
+                'social_link'   => $request->social_link
+            ]);
+        }else {
+            return $this->userProfileRepo->updateByID(Auth::id(), $request->all());
         }
-        $user  = $this->userProfileRepo->updateProfileByID(Auth::id(),$request->except('social_link','image') + [
-            'user_id'       => Auth::id(),
-            'image'         => $image,
-            'social_link'   => implode(',' , $request->social_link)
-        ]);
+
         return $this->json('Profile Update successfully');
     }
 

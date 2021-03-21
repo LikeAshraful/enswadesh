@@ -87,7 +87,7 @@ Route::prefix('categories')->namespace('Category')->group(function () {
 //For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
-    Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('user-info-update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::get('staffs', [VendorController::class, 'index']);
     Route::post('staffs', [VendorController::class, 'store']);
