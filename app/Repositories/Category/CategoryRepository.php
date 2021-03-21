@@ -25,9 +25,9 @@ class CategoryRepository extends BaseRepository {
         Storage::delete($categoryIcon->icon);
     }
 
-    public function getAllCategoriesByLevel($level = 1)
+    public function getAllCategoriesByLevel($level_one = 1, $level_two=2)
     {
-        return $this->model()::where('level', $level)->get();
+        return $this->model()::where('level', $level_one)->orWhere('level', $level_two)->get();
     }
 
     public function storeCategory(array $data, $icon)

@@ -98,4 +98,14 @@ class ProductRepository extends BaseRepository
 
        return $cityCode . $marketCode . $shopCode . '-' . rand(111111, 999999);
     }
+
+    public function similarProduct($shop_id)
+    {
+        return $this->model()::where('shop_id', $shop_id)->get();
+    }
+
+    public function similarProductByProduct($productId, $shop_id)
+    {
+        return $this->model()::where('id', $productId)->where('shop_id', $shop_id)->first();
+    }  
 }

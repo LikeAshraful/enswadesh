@@ -184,12 +184,21 @@ class ProductController extends Controller
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function similarProduct($shopId)
+    {
+        $products = $this->productRepo->similarProduct($shopId);
+        return $this->json('Similar Products List', ProductResource::collection($products)->response()->getData(true));
+    }
+
+    public function similarProductByProduct($productId, $shopId)
+    {
+        $product = $this->productRepo->similarProductByProduct($productId, $shopId);
+        return $this->json(
+            'Similar Product Show',
+            new ProductResource($product)
+        );
+    }
+
     public function destroy($id)
     {
         $this->productRepo->deleteProduct($id);
