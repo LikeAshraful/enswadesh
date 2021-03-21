@@ -28,14 +28,15 @@ class BrandController extends Controller
         );
     }
 
-    public function create()
-    {
-
-    }
-
     public function store(Request $request)
     {
-
+        $icon = $request->hasFile('icon') ? $this->brandRepo->storeFile($request->file('icon')) : null;
+        $brand = $this->brandRepo->create($request->except('icon') + [
+            'icon' => $icon
+        ]);
+        return $this->json('Brand create successfully.', [
+            'brand' => $brand
+        ]);
     }
 
     public function show($id)
