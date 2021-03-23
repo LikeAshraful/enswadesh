@@ -24,17 +24,29 @@ class ProfileController extends Controller
         if($request->model == "Profile")
         {
             $user       = $this->userProfileRepo->findByUser(Auth::id());
-            $userImage  = $request->hasFile('image');
-            $image      = $userImage ? $this->userProfileRepo->storeFile($request->file('image')) : $user->image;
-            if($userImage)
+            if($user != null)
             {
-                $this->userProfileRepo->updateFile(Auth::id());
+                $userImage  = $request->hasFile('image');
+                $image      = $userImage ? $this->userProfileRepo->storeFile($request->file('image')) : $user->image;
+                if($userImage)
+                {
+                    $this->userProfileRepo->updateFile(Auth::id());
+                }
+                $user  = $this->userProfileRepo->updateProfileByID(Auth::id(),$request->except('social_link','image') + [
+                    'user_id'       => Auth::id(),
+                    'image'         => $image,
+                    'social_link'   => $request->social_link
+                ]);
+            }else{
+                $userImage  = $request->hasFile('image');
+                $image      = $userImage ? $this->userProfileRepo->storeFile($request->file('image')) : null;
+                $user  = $this->userProfileRepo->updateProfileByID(Auth::id(),$request->except('social_link','image') + [
+                    'user_id'       => Auth::id(),
+                    'image'         => $image,
+                    'social_link'   => $request->social_link
+                ]);
             }
-            $user  = $this->userProfileRepo->updateProfileByID(Auth::id(),$request->except('social_link','image') + [
-                'user_id'       => Auth::id(),
-                'image'         => $image,
-                'social_link'   => $request->social_link
-            ]);
+
         }else {
             return $this->userProfileRepo->updateByID(Auth::id(), $request->all());
         }

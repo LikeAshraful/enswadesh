@@ -10,6 +10,9 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->string('region')            ->nullable();
+            $table->string('city')              ->nullable();
+            $table->string('area')              ->nullable();
             $table->text('address')             ->nullable();
             $table->text('bio')                 ->nullable();
             $table->date('dob')                 ->nullable();
