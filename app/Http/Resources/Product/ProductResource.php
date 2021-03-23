@@ -30,7 +30,7 @@ class ProductResource extends JsonResource
             'video_url' => $this->video_url,
             'can_bargain' => $this->can_bargain,
             'product_type' => $this->product_type,
-            'warrenty' => $this->warrenty,
+            'warranty' => $this->warranty,
             'guarantee' => $this->guarantee,
             'return_policy' => $this->return_policy,
             'discount_type' => $this->discount_type,
