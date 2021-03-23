@@ -1,9 +1,8 @@
 <?php
 return [
     'product_types' => [
-        'color_base',
+        'simple',
         'size_base',
-        'weight_base',
-        'feature_base'
+        'weight_base'
     ],
 ];

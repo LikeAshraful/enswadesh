@@ -2,26 +2,30 @@
 
 namespace App\Models\Product;
 
-use App\Models\Product\Base\Size;
-use App\Models\Product\Base\Weight;
 use App\Models\User;
 use App\Models\Shop\Shop;
 use Illuminate\Support\Str;
+use App\Models\Product\Base\Size;
 use App\Models\General\Brand\Brand;
+use App\Models\Product\Base\Weight;
 use App\Models\Product\ProductMedia;
 use App\Models\Product\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\General\Category\Category;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
-        'ref', 'name', 'slug', 'shop_id', 'user_id', 'brand_id', 'thumbnail_id',
-        'can_bargain', 'product_type', 'refund_policy', 'service_policy', 'description',
-        'offers', 'price', 'total_stocks', 'tag',
+        'ref', 'name', 'slug', 'sku', 'shop_id', 'user_id', 'brand_id', 'thumbnail_id',
+        'can_bargain', 'product_type', 'return_policy', 'warrenty', 'guarantee', 'currency_type', 'discount', 'discount_type', 'description',
+        'offers', 'price', 'stocks', 'total_stocks', 'tag', 'alert', 'video_url',
     ];
+    protected $dates = ['deleted_at'];
 
     public function setNameAttribute($value)
     {

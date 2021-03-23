@@ -76,7 +76,7 @@ class ProductRepository extends BaseRepository
     public function deleteProduct($id)
     {
         $product = $this->findById($id);
-        Storage::delete($product->icon);
+        // Storage::delete($product->icon);
         $product->delete();
     }
 
@@ -107,5 +107,5 @@ class ProductRepository extends BaseRepository
     public function similarProductByProduct($productId, $shop_id)
     {
         return $this->model()::where('id', $productId)->where('shop_id', $shop_id)->first();
-    }  
+    }
 }
