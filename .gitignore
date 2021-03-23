@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
 /public/storage
-/storage
 /vendor
 /bootstrap/cache
 .env
@@ -18,4 +17,3 @@ yarn-error.log
 /public/uploads
 .idea
 /.vscode
-/node_modules
