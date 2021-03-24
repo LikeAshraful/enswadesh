@@ -60,7 +60,7 @@ class Product extends Model
 
     public function productImage()
     {
-        return $this->hasOne(ProductMedia::class);
+        return $this->hasMany(ProductMedia::class);
     }
 
     public function sizes()
@@ -80,6 +80,16 @@ class Product extends Model
     public function features()
     {
         return $this->hasMany(ProductFeature::class);
+    }
+
+    public function discountPrice()
+    {
+        if ($this->discount_type === 'Percent') {
+            $dis = $this->price - ($this->price * $this->discount) / 100;
+            return round($dis, 2);
+        } else {
+            return $this->price - $this->discount;
+        }
     }
 
 }
