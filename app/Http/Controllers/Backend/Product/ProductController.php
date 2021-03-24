@@ -21,7 +21,7 @@ class ProductController extends Controller
     public $shopRepo;
     public $categoryRepo;
     public $brandRepo;
-    public $proCaregoryRepo;
+    public $proCategoryRepo;
     public $proMediaRepo;
     public $productRepo;
 
@@ -30,7 +30,7 @@ class ProductController extends Controller
         $this->shopRepo = $shopRepository;
         $this->categoryRepo = $categoryRepository;
         $this->brandRepo = $brandRepository;
-        $this->proCaregoryRepo = $productCategoryRepository;
+        $this->proCategoryRepo = $productCategoryRepository;
         $this->proMediaRepo = $productMediaRepository;
         $this->productRepo = $productRepository;
     }
@@ -72,7 +72,7 @@ class ProductController extends Controller
                     'product_id' => $product->id,
                     'type' => 'image'
                 ]);
-            $this->proCaregoryRepo->create($request->except('product_id') +
+            $this->proCategoryRepo->create($request->except('product_id') +
                 [
                     'product_id' => $product->id,
                 ]);
@@ -115,7 +115,7 @@ class ProductController extends Controller
                         'product_id' => $id,
                         'type' => 'image'
                     ]);
-            $this->proCaregoryRepo->updateProductCategoryById($id, $request->except('product_id') +
+            $this->proCategoryRepo->updateProductCategoryById($id, $request->except('product_id') +
                 [
                     'product_id' => $id,
                 ]);

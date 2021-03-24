@@ -3,6 +3,7 @@
 namespace App\Models\General\Brand;
 
 use App\Models\User;
+use App\Models\Shop\Shop;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -15,29 +16,20 @@ class Brand extends Model
         'name',
         'description',
         'slug',
-        'icon'
+        'icon',
+        'user_id',
+        'shop_id'
     ];
 
-    public static function boot()
-    {
-        parent::boot();
 
-        static::creating(function ($model) {
-            $model->created_by = Auth::id();
-        });
-        static::updating(function ($model) {
-            $model->updated_by = Auth::id();
-        });
-        static::deleting(function ($model) {
-            $model->deleted_by = Auth::id();
-            $model->save();
-        });
-
-    }
     public function createdBy(){
-        return $this->belongsTo(User::class,'created_by','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
+    public function shopByID()
+    {
+        return $this->belongsTo(Shop::class,'shop_id','id');
+    }
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\Users\SignInRequest;
 use App\Http\Requests\Users\SignUpRequest;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -105,7 +106,8 @@ class AuthController extends Controller
 
     public function getAuthUser()
     {
-        return $this->json('Auth user info', auth()->user());
+        $userInfo = $this->authRepo->getUserInfo();
+        return $this->json('Auth user info', $userInfo);
     }
 
     public function logout(Request $request)
