@@ -23,7 +23,7 @@ class Product extends Model
     protected $fillable = [
         'ref', 'name', 'slug', 'sku', 'shop_id', 'user_id', 'brand_id', 'thumbnail',
         'can_bargain', 'product_type', 'return_policy', 'warranty', 'guarantee', 'currency_type', 'discount', 'discount_type', 'description',
-        'offers', 'price', 'stocks', 'total_stocks', 'tag', 'alert', 'video_url',
+        'offers', 'price', 'stocks', 'total_stocks', 'tag', 'alert', 'video_url', 'delivery_offer',
     ];
     protected $dates = ['deleted_at'];
 

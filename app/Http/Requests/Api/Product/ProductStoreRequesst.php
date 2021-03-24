@@ -46,19 +46,19 @@ class ProductStoreRequesst extends FormRequest
             'images' => 'nullable|array',
             'images.*' => 'required|mimes:jpeg,jpg,png|max:500',
 
-            //'features' => [Rule::requiredIf($this->product_type == 'feature_base'), 'array'],
+            'features' => [Rule::requiredIf($this->product_type == 'feature_base'), 'array'],
             // 'features.*.title' => 'required|max:191',
             // 'features.*.content' => 'required',
 
             'sizes' => [Rule::requiredIf($this->product_type == 'size_base'), 'array'],
-            'sizes.*.size_id' => 'required|exists:sizes,id',
-            'sizes.*.price' => 'required|numeric|min:0|max:999999.99',
-            'sizes.*.stocks' => 'required|numeric',
+            // 'sizes.*.size_id' => 'required|exists:sizes,id',
+            // 'sizes.*.price' => 'required|numeric|min:0|max:999999.99',
+            // 'sizes.*.stocks' => 'required|numeric',
 
             'weights' => [Rule::requiredIf($this->product_type == 'weight_base'), 'array'],
-            'weights.*.weight_id' => 'required|exists:weights,id',
-            'weights.*.price' => 'required|numeric|min:0|max:999999.99',
-            'weights.*.stocks' => 'required|numeric',
+            // 'weights.*.weight_id' => 'required|exists:weights,id',
+            // 'weights.*.price' => 'required|numeric|min:0|max:999999.99',
+            // 'weights.*.stocks' => 'required|numeric',
 
             'audio_file' => 'nullable|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav|max:20000',
             'video_file' => 'nullable|mimes:mp4,mov,ogg,qt|max:20000',
