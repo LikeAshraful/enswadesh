@@ -42,9 +42,20 @@ class ProductAttributeRepository
     {
         if (sizeof($features) == 0) return ;
 
-        return $product->features()->saveMany(array_map(function($feature) {
-            return new ProductFeature($feature);
-        }, $features));
+        foreach ($features as $feature)
+        {
+            if (!$feature) continue;
+            $featureData = new ProductFeature;
+            $featureData->product_id = $product->id;
+            $featureData->title = $feature['title'];
+            $featureData->feature = $feature['feature'];
+            $featureData->save();
+        }
+        return $product;
+
+        // return $product->features()->saveMany(array_map(function($feature) {
+        //     return new ProductFeature($feature);
+        // }, $features));
     }
 
 }
