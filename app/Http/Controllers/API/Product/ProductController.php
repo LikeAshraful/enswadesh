@@ -75,20 +75,27 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request ProductStoreRequesst
      */
     public function store(ProductStoreRequesst $request)
     {
         if ($request->hasFile('thumbnail')) {
             $request->thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
         }
+        
 
         $product = DB::transaction(function() use ($request) {
             $product = $this->productRepo->store(
                 $request->shop_id,
+                $request->thumbnail,
                 $request->except( 'images', 'sizes', 'weights', 'features'),
-                1
+                Auth::id()
             );
+
+            $this->proCategoryRepo->create($request->except('product_id') +
+                [
+                    'product_id' => $product->id,
+                ]);
 
             if ($request->images && sizeof($request->images) > 0) {
                 $this->productMediaRepo->storeImages($product, $request->images);

@@ -48,7 +48,7 @@ class ProductFactory extends Factory
             'stocks' => $this->faker->randomDigit,
             'total_stocks' => $this->faker->randomDigit,
             'return_policy' => $this->faker->sentence(10),
-            'warrenty' => $this->faker->sentence(10),
+            'warranty' => $this->faker->sentence(10),
             'offers' => $this->faker->sentence(10)
         ];
     }

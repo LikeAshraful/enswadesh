@@ -46,9 +46,9 @@ class ProductStoreRequesst extends FormRequest
             'images' => 'nullable|array',
             'images.*' => 'required|mimes:jpeg,jpg,png|max:500',
 
-            'features' => [Rule::requiredIf($this->product_type == 'feature_base'), 'array'],
-            'features.*.title' => 'required|max:191',
-            'features.*.content' => 'required',
+            //'features' => [Rule::requiredIf($this->product_type == 'feature_base'), 'array'],
+            // 'features.*.title' => 'required|max:191',
+            // 'features.*.content' => 'required',
 
             'sizes' => [Rule::requiredIf($this->product_type == 'size_base'), 'array'],
             'sizes.*.size_id' => 'required|exists:sizes,id',

@@ -17,26 +17,30 @@ class ProductRepository extends BaseRepository
         return Product::class;
     }
 
-    public function store(int $shopID, array $productData,  int $userID = null): Product
+    public function store(int $shopID, string $thumbnail, array $productData,  int $userID = null)
     {
         return $this->model()::create([
             'shop_id' => $shopID,
             'user_id' => $userID,
             'brand_id' => $productData['brand_id'] ?? null,
             'ref' => $productData['ref'] ?? $this->generateUniqueRef($shopID),
-            'name' => $productData['title'] ?? null,
+            'name' => $productData['name'] ?? null,
+            'sku' => $productData['sku'] ?? null,
             'description' => $productData['description'] ?? null,
             'can_bargain' => $productData['can_bargain'] ?? null,
             'product_type' => $productData['product_type'] ?? null,
-            'refund_policy' => $productData['refund_policy'] ?? null,
-            'service_policy' => $productData['service_policy'] ?? null,
+            'return_policy' => $productData['return_policy'] ?? null,
+            'warranty' => $productData['warranty'] ?? null,
+            'guarantee' => $productData['guarantee'] ?? null,
             'offers' => $productData['offers'] ?? null,
             'tags' => $productData['tags'] ?? null,
             'price' => $productData['price'] ?? null,
+            'currency_type' => $productData['currency_type'] ?? null,
+            'discount' => $productData['discount'] ?? null,
+            'discount_type' => $productData['discount_type'] ?? null,
             'stocks' => $productData['stocks'] ?? null,
             'vat' => $productData['vat'] ?? null,
-            'discount' => $productData['discount'] ?? null,
-            'thumbnail' => $productData['thumbnail'] ?? null
+            'thumbnail' => $thumbnail ?? null
         ]);
     }
 

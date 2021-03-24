@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->boolean('can_bargain')->default(false);
             $table->enum('product_type', config('enums.product_types'))->default('simple');
             $table->text('return_policy')->nullable();
-            $table->text('warrenty')->nullable();
+            $table->text('warranty')->nullable();
             $table->text('guarantee')->nullable();
             $table->text('description')->nullable();
             $table->text('offers')->nullable();

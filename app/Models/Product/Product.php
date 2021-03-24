@@ -21,8 +21,8 @@ class Product extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'ref', 'name', 'slug', 'sku', 'shop_id', 'user_id', 'brand_id', 'thumbnail_id',
-        'can_bargain', 'product_type', 'return_policy', 'warrenty', 'guarantee', 'currency_type', 'discount', 'discount_type', 'description',
+        'ref', 'name', 'slug', 'sku', 'shop_id', 'user_id', 'brand_id', 'thumbnail',
+        'can_bargain', 'product_type', 'return_policy', 'warranty', 'guarantee', 'currency_type', 'discount', 'discount_type', 'description',
         'offers', 'price', 'stocks', 'total_stocks', 'tag', 'alert', 'video_url',
     ];
     protected $dates = ['deleted_at'];
@@ -45,7 +45,7 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
     public function category()
