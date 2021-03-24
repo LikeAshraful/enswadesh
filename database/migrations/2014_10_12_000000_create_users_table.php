@@ -16,9 +16,9 @@ class CreateUsersTable extends Migration
             $table->string('email')                     ->unique();
             $table->timestamp('email_verified_at')      ->nullable();
             $table->string('password')                  ->nullable();
+            $table->integer('shop_member_permission')   ->default(0);
             $table->boolean('status')                   ->default(false);
             $table->boolean('suspend')                  ->default(false);
-            $table->unsignedBigInteger('owner_id')      ->nullable();
             $table->rememberToken();
             $table->timestamp('last_login_at')          ->nullable();
             $table->timestamps();

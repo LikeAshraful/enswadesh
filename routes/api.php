@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('user-info-update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::get('staffs', [VendorController::class, 'index']);
-    Route::post('staffs', [VendorController::class, 'store']);
+    Route::post('staff-create', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
     Route::post('staff/{id}', [VendorController::class, 'destroy']);

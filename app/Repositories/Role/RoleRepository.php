@@ -53,6 +53,11 @@ class RoleRepository extends BaseRepository {
         return $this->model()::where('slug', '=', 'customer')->first();
     }
 
+    public function getRoleForShopMember()
+    {
+        return $this->model()::where('slug', '=', 'staff')->first();
+    }
+
     public function updateByID($id, array $modelData)
     {
         $model = $this->findOrFailByID($id);

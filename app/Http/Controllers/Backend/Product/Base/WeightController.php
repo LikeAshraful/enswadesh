@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Product\Base;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Repository\Product\Base\WeightRepository;
 
 class WeightController extends Controller
@@ -18,14 +19,14 @@ class WeightController extends Controller
 
     public function index()
     {
-        Gate::authorize('backend.Weights.index');
+        Gate::authorize('backend.weights.index');
         $weights = $this->weightRepo->getAll();
         return view('backend.product.base.weight.index',  compact('weights'));
     }
 
     public function create()
     {
-        Gate::authorize('backend.Weights.create');
+        Gate::authorize('backend.weights.create');
         return view('backend.product.base.weight.form');
     }
 
@@ -41,7 +42,7 @@ class WeightController extends Controller
 
     public function edit($id)
     {
-        Gate::authorize('backend.Weights.edit');
+        Gate::authorize('backend.weights.edit');
         $weight = $this->weightRepo->findByID($id);
         return view('backend.product.base.weight.form', compact('weight'));
     }
@@ -58,7 +59,7 @@ class WeightController extends Controller
 
     public function destroy($id)
     {
-        Gate::authorize('backend.Weights.destroy');
+        Gate::authorize('backend.weights.destroy');
         $this->weightRepo->deletedByID($id);
         notify()->success('Weight Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.weights.index');

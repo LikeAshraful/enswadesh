@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\UserManagement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Repository\User\OtpRepository;
+use Repository\Role\RoleRepository;
 use Repository\User\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,28 +19,30 @@ class VendorController extends Controller
 
     public $vendorRepo;
     public $otpRepo;
+    public $roleRepo;
 
-    public function __construct(UserRepository $vendorRepository, OtpRepository $otpRepository)
+    public function __construct(UserRepository $vendorRepository, OtpRepository $otpRepository, RoleRepository $roleRepository)
     {
         $this->vendorRepo = $vendorRepository;
         $this->otpRepo  = $otpRepository;
+        $this->roleRepo  = $roleRepository;
     }
 
     public function index()
     {
-        $users  = $this->vendorRepo->findByID(Auth::id());
-        // dd($users->staffs[1]->user->name);
-        $staffs = $users->staffs->count() ." Staff Found!";
-        return $this->json('Staff list', ['staffs'  => $staffs]);
+        $staffs  = $this->vendorRepo->findStaffByVendor(Auth::id());
+        return $this->json('Staff list', $staffs);
     }
 
-    public function store(SignUpRequest $request)
+    public function store(Request $request)
     {
         $user = DB::transaction(function () use ($request) {
-            $user = $this->vendorRepo->create($request->all());
+            $user = $this->vendorRepo->create($request->all()+ [
+                'role_id'   =>  $this->roleRepo->getRoleForShopMember()->id
+            ]);
             $this->vendorRepo->updateOrNewBy($user);
             $userOtp = $this->otpRepo->generateOtpForUser($user);
-            $this->vendorRepo->createStaffByVendorID($user->id);
+            $this->vendorRepo->createStaffByVendorID($user->id,$request->all());
             return compact('user', 'userOtp');
         });
 
