@@ -15,6 +15,9 @@ class CreateVendorStaffTable extends Migration
     {
         Schema::create('vendor_staff', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('owner_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

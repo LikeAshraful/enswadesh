@@ -29,11 +29,14 @@ class UserRepository extends BaseRepository
         return $user->createToken('authToken')->accessToken;
     }
 
-    public function createStaffByVendorID($id)
+    public function createStaffByVendorID($id, $modelData)
     {
         return VendorStaff::create([
             'user_id'       => $id,
             'owner_id'      => Auth::id(),
+            'title'         => $modelData['title'],
+            'start_time'    => $modelData['start_time'],
+            'end_time'      => $modelData['end_time'],
         ]);
     }
 
@@ -184,5 +187,10 @@ class UserRepository extends BaseRepository
     public function getUserBySearch($data)
     {
         return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
+    }
+
+    public function findStaffByVendor($id)
+    {
+        return $this->model()::with('staffs.user')->find($id);
     }
 }
