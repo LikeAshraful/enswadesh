@@ -17,7 +17,7 @@ class ProductRepository extends BaseRepository
         return Product::class;
     }
 
-    public function store(int $shopID, $thumbnail, array $productData,  int $userID = null): Product
+    public function store(int $shopID, string $thumbnail, array $productData,  int $userID = null)
     {
         return $this->model()::create([
             'shop_id' => $shopID,

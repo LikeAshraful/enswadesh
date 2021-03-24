@@ -77,21 +77,19 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request ProductStoreRequesst
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequesst $request)
     {
-        // return $request->all();
         if ($request->hasFile('thumbnail')) {
             $request->thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
         }
         
 
         $product = DB::transaction(function() use ($request) {
-            return $request->thumbnail->data;
             $product = $this->productRepo->store(
                 $request->shop_id,
                 $request->thumbnail,
                 $request->except( 'images', 'sizes', 'weights', 'features'),
-                1
+                Auth::id()
             );
 
             $this->proCategoryRepo->create($request->except('product_id') +
