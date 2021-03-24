@@ -41,6 +41,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('total_stocks')->default(0);
             $table->integer('vat')->nullable()->default(0);
             $table->integer('alert')->nullable()->default(0);
+            $table->text('delivery_offer')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

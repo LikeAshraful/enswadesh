@@ -40,7 +40,9 @@ class ProductRepository extends BaseRepository
             'discount_type' => $productData['discount_type'] ?? null,
             'stocks' => $productData['stocks'] ?? null,
             'vat' => $productData['vat'] ?? null,
-            'thumbnail' => $thumbnail ?? null
+            'thumbnail' => $thumbnail ?? null,
+            'video_url' => $productData['video_url'] ?? null,
+            'delivery_offer' => $productData['delivery_offer'] ?? null,
         ]);
     }
 

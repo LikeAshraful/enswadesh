@@ -41,6 +41,7 @@ class ProductResource extends JsonResource
             'offers' => $this->offers,
             'tag' => $this->tag,
             'stocks' => $this->stocks,
+            'delivery_offer' => $this->delivery_offer,
             'total_stocks' => $this->total_stocks,
             'features' => $this->features,
             'created_at' => $this->created_at->diffForHumans()
