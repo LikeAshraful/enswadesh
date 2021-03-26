@@ -101,11 +101,11 @@ class ProductController extends Controller
                 $this->productMediaRepo->storeImages($product, $request->images);
             }
 
-            if ($request->has('sizes') && sizeof($request->sizes) > 0) {
+            if ($request->has('sizes') && sizeof($request->sizes) > 0 && $request->sizes[0]['size'] != null) {
                 ProductAttributeRepository::storeSizes($product, $request->sizes);
             }
 
-            if ($request->has('weights') && sizeof($request->weights) > 0) {
+            if ($request->has('weights') && sizeof($request->weights) > 0 && $request->weights[0]['weight'] != null) {
                 ProductAttributeRepository::storeWeights($product, $request->weights);
             }
 

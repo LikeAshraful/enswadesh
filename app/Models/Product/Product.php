@@ -77,6 +77,16 @@ class Product extends Model
             ->withTimestamps();
     }
 
+    public function productSizes()
+    {
+        return $this->hasMany(ProductSize::class);
+    }
+
+    public function productWeights()
+    {
+        return $this->hasMany(ProductWeight::class);
+    }
+
     public function features()
     {
         return $this->hasMany(ProductFeature::class);

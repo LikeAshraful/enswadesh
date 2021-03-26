@@ -34,6 +34,8 @@ class ProductResource extends JsonResource
             'product_type' => $this->product_type,
             'warranty' => $this->warranty,
             'guarantee' => $this->guarantee,
+            'sizes' => $this->productSizes,
+            'weights' => $this->productWeights,
             'return_policy' => $this->return_policy,
             'discount' => $this->discount,
             'discount_type' => $this->discount_type,
