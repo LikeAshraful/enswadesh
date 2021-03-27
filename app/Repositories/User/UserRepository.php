@@ -189,6 +189,11 @@ class UserRepository extends BaseRepository
         return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
     }
 
+    public function getSearchMember($data)
+    {
+        return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
+    }
+
     public function findStaffByVendor($id)
     {
         return $this->model()::with('staffs.user')->find($id);
