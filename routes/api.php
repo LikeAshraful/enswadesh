@@ -65,6 +65,8 @@ Route::prefix('videos')->namespace('Video')->group(function () {
 
 Route::get('floors', [FloorController::class, 'index']);
 
+Route::get('base/categories', [CategoryController::class, 'baseCategories']);
+
 // shop related
 Route::prefix('shops')->namespace('Shop')->group(function () {
     Route::get('shop-types', [ShopTypeController::class, 'index']);
