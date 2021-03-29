@@ -16,6 +16,7 @@ use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
 use App\Http\Controllers\API\Product\Base\UnitController;
 use App\Http\Controllers\API\Rating\ShopRatingController;
+use App\Http\Controllers\API\Wishlist\WishlistController;
 use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\Interaction\CommentController;
@@ -115,6 +116,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('subscribe-list', [ShopingSubscribeController::class, 'index']);
     Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
     Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
+
+    //Shop wish list
+    Route::get('wishlist-request/{id}', [WishlistController::class, 'sentWishlistRequest']);
+    Route::get('wishlist-check-by-product/{productId}', [WishlistController::class, 'checkWishList']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
