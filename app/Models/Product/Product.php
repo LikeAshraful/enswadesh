@@ -86,6 +86,18 @@ class Product extends Model
         return $this->hasOne(ProductSize::class)->orderBy('price', 'asc');
     }
 
+    public function highSizePrice(){
+        return $this->hasOne(ProductSize::class)->orderBy('price', 'desc');
+    }
+
+    public function lowWeightPrice(){
+        return $this->hasOne(ProductWeight::class)->orderBy('price', 'asc');
+    }
+
+    public function highWeightPrice(){
+        return $this->hasOne(ProductWeight::class)->orderBy('price', 'desc');
+    }
+
     public function productWeights()
     {
         return $this->hasMany(ProductWeight::class);
