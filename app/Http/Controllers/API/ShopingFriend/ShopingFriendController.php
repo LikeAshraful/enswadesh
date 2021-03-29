@@ -43,10 +43,8 @@ class ShopingFriendController extends Controller
 
     public function shopingFriendSearch(Request $request)
     {
-        $user = $this->userRepo->getUserBySearch($request->keyword);
-        return $this->json('User Found',[
-            'data'  =>  $user
-        ]);
+        $user = $this->userRepo->getUserBySearch($request['keyword']);
+        return $this->json('User Friend', $user);
     }
 
     public function sentShopingFriendRequest(Request $request)

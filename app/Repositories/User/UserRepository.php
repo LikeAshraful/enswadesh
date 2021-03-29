@@ -40,6 +40,12 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function deleteByID($id)
+    {
+        $staff = VendorStaff::where('owner_id', Auth::id())->where('user_id', $id)->first();
+        $staff->delete();
+    }
+
     public function getUserInfo()
     {
         return $this->model()::with('profile')->find(Auth::id());
@@ -123,13 +129,6 @@ class UserRepository extends BaseRepository
         }
     }
 
-    public function deleteByID($id)
-    {
-        $userImage = $this->findByID($id);
-        Storage::delete($userImage->image);
-        $userImage->delete();
-    }
-
     public function publishByID($id)
     {
         try {
@@ -185,6 +184,11 @@ class UserRepository extends BaseRepository
     }
 
     public function getUserBySearch($data)
+    {
+        return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
+    }
+
+    public function getSearchMember($data)
     {
         return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
     }
