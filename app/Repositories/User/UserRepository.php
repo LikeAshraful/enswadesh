@@ -40,6 +40,12 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function deleteByID($id)
+    {
+        $staff = VendorStaff::where('owner_id', Auth::id())->where('user_id', $id)->first();
+        $staff->delete();
+    }
+
     public function getUserInfo()
     {
         return $this->model()::with('profile')->find(Auth::id());
@@ -121,13 +127,6 @@ class UserRepository extends BaseRepository
         } else {
             notify()->error('Current password not match.', 'Error');
         }
-    }
-
-    public function deleteByID($id)
-    {
-        $userImage = $this->findByID($id);
-        Storage::delete($userImage->image);
-        $userImage->delete();
     }
 
     public function publishByID($id)

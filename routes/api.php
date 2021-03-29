@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('staff-create', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
-    Route::post('staff/{id}', [VendorController::class, 'destroy']);
+    Route::get('staff/{id}', [VendorController::class, 'destroy']);
     Route::post('search/shop/member', [VendorController::class, 'searchMember']);
 
 

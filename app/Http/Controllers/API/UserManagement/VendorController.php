@@ -39,7 +39,7 @@ class VendorController extends Controller
         $user = DB::transaction(function () use ($request) {
             if($this->vendorRepo->model()::where('phone_number', '=', $request->phone_number)->exists())
             {
-                $this->vendorRepo->createStaffByVendorID(Auth::id(),$request->all());
+                $this->vendorRepo->createStaffByVendorID($request->user_id,$request->all());
             }
             else
             {
@@ -51,9 +51,8 @@ class VendorController extends Controller
                 $this->vendorRepo->createStaffByVendorID($user->id,$request->all());
                 return compact('user', 'userOtp');
             }
+            return $this->json('User registered successfully. Please check your email or phone to active account');
         });
-
-        return $this->json('User registered successfully. Please check your email or phone to active account');
     }
 
     public function show($id)
@@ -79,6 +78,6 @@ class VendorController extends Controller
     {
         $user       = $this->vendorRepo->deleteByID($id);
         $message    =" Staff Deleted!";
-        return $this->json($message, [VendorResource::make($user)]);
+        return $this->json($message, $user);
     }
 }
