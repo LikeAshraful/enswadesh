@@ -43,7 +43,6 @@ class ShopingSubscribeController extends Controller
     public function checkByShop($shopId)
     {
         $check = $this->shopSubscribeRepo->checkByShop($shopId);
-
          return $this->json('Subscribe Check', $check);
     }
 
