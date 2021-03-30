@@ -120,6 +120,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Shop wish list
     Route::get('wishlist-request/{id}', [WishlistController::class, 'sentWishlistRequest']);
     Route::get('wishlist-check-by-product/{productId}', [WishlistController::class, 'checkWishList']);
+    Route::get('wishlists', [WishlistController::class, 'index']);
+    Route::get('wishlist/{id}', [WishlistController::class, 'destroy']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
