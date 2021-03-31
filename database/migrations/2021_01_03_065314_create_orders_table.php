@@ -23,17 +23,20 @@ class CreateOrdersTable extends Migration
             $table->float('total_price', 8,2)->nullable();
             $table->integer('order_status')->default(1);
             $table->text('order_note')->nullable();
+            $table->string('shipping_fee')->nullable();
             $table->string('shipping_email')->nullable();
+            $table->string('shipping_phone')->nullable();
             $table->string('shipping_name')->nullable();
             $table->string('shipping_address')->nullable();
             $table->string('shipping_city')->nullable();
-            $table->string('shipping_phone')->nullable();
+            $table->string('shipping_area')->nullable();
             $table->string('billing_email')->nullable();
+            $table->string('billing_phone')->nullable();
             $table->string('billing_name')->nullable();
             $table->string('billing_address')->nullable();
             $table->string('billing_city')->nullable();
-            $table->string('billing_phone')->nullable();
-            $table->string('payment_gateway')->default('stripe');
+            $table->string('billing_area')->nullable();
+            $table->string('payment_gateway')->default('cod');
             $table->timestamps();
         });
     }
