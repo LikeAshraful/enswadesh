@@ -21,7 +21,10 @@ class WishlistController extends Controller
 
     public function index()
     {
-
+        $wishlists = $this->wishlistRepo->getWishlists();
+        return $this->json('Wishlist',
+            $wishlists
+        );
     }
 
     public function sentWishlistRequest($product_id)
@@ -39,6 +42,8 @@ class WishlistController extends Controller
 
     public function destroy($id)
     {
-
+        $wishlist   = $this->wishlistRepo->deleteByID($id);
+        $message    =" Wishlist Deleted!";
+        return $this->json($message, $wishlist);
     }
 }

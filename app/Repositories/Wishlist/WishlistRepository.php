@@ -12,6 +12,18 @@ class WishlistRepository extends BaseRepository
     {
         return Wishlist::class;
     }
+
+    public function getWishlists()
+    {
+        return $this->model()::with('productOfWishlist')->where('user_id', auth()->user()->id)->get();
+    }
+
+    public function deleteByID($id)
+    {
+        $wishlist = $this->model()::where('user_id', Auth::id())->where('user_id', $id)->first();
+        $wishlist->delete();
+    }
+
     public function createWishlist($product_id, $user_id)
     {
         $wish = new Wishlist();
