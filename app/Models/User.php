@@ -41,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function staffs()
     {
-        return $this->hasMany(VendorStaff::class, 'owner_id');
+        return $this->hasMany(VendorStaff::class,'owner_id');
     }
 
     public function userOtpByID()

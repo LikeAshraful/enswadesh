@@ -28,9 +28,9 @@ class VendorController extends Controller
         $this->roleRepo  = $roleRepository;
     }
 
-    public function index()
+    public function index($shop_id)
     {
-        $staffs  = $this->vendorRepo->findStaffByVendor(Auth::id());
+        $staffs  = $this->vendorRepo->findStaffByVendor(Auth::id(),$shop_id);
         return $this->json('Staff list', $staffs);
     }
 
