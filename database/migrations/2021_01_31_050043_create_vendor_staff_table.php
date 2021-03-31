@@ -20,6 +20,7 @@ class CreateVendorStaffTable extends Migration
             $table->time('end_time')->nullable();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('owner_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
