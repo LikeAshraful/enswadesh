@@ -22,4 +22,28 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
+
+    public function orderStatus()
+    {
+        switch ($this->order_status) {
+            case 0:
+                return 'Canceled';
+                break;
+            case 1:
+                return 'Pending';
+                break;
+            case 2:
+                return 'Processing';
+                break;
+            case 3:
+                return 'Delivery';
+                break;
+            case 4:
+                return 'Complete';
+                break;
+            case 5:
+                return 'Refund';
+                break;
+          }
+    }
 }

@@ -17,6 +17,11 @@ class OrderRepository extends BaseRepository
     	return $this->model()::with('customer', 'orderItems')->where('customer_id', $userId)->first();
     }
 
+    public function getLastOrder($userId)
+    {
+        return $this->model()::where('customer_id', $userId)->latest()->first();
+    }
+
 
 }
 

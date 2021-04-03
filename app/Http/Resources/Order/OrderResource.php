@@ -18,11 +18,13 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'order_no' => $this->order_no,
             'customer' => $this->customer,
+            'order_items' =>OrderItemResource::collection($this->orderItems),
             'total_quantity' => $this->total_quantity,
             'total_discount' => $this->total_discount,
             'total_vat' => $this->total_vat,
+            'sub_total_price' => $this->sub_total_price,
             'total_price' => $this->total_price,
-            'order_status' => $this->order_status,
+            'status' => $this->orderStatus(),
             'shipping_fee' => $this->shipping_fee,
             'total_quantity' => $this->total_quantity,
             'shipping_phone' => $this->shipping_phone,
@@ -38,7 +40,7 @@ class OrderResource extends JsonResource
             'billing_city' => $this->billing_city,
             'billing_area' => $this->billing_area,
             'payment_gateway' => $this->payment_gateway,
-            'created_at' => (string) $this->created_at,
+            'created_at' => $this->created_at->format('M d, Y'),
             'updated_at' => (string) $this->updated_at,
           ];
     }
