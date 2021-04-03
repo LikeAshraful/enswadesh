@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\API\Order;
 
 use Illuminate\Http\Request;
+use App\Models\Order\OrderItem;
+use App\Models\Product\Product;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product\ProductSize;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product\ProductWeight;
 use Repository\Order\OrderRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Order\OrderResource;
-use App\Models\Order\OrderItem;
 
 class OrderController extends Controller
 {
@@ -34,14 +37,14 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+
         $order = DB::transaction(function() use ($request) {
-            return $request->products;
+
             $order = $this->orderRepo->create($request->except('order_no') + [
                 'order_no' => GenerateOrderNumber()
             ]);
 
             if ($request->has('products') && sizeof($request->products) > 0) {
-
                 foreach ($request->products as $product)
                 {
                     if (!$product) continue;
@@ -50,13 +53,33 @@ class OrderController extends Controller
                     $orderItemData->product_id = $product['id'];
                     $orderItemData->quantity = $product['count'];
                     $orderItemData->price = $product['count'] * $product['price'];
-                    // $orderItemData->size = $product['size'];
-                    // $orderItemData->weight = $product['weight'];
+                    $orderItemData->size = $product['size'] ?? NULL;
+                    $orderItemData->weight = $product['weight'] ?? NULL;
                     $orderItemData->save();
+
+                    if ($product['product_type'] == 'simple' )
+                    {
+                        $productData = Product::find($orderItemData->product_id);
+                        $productData->stocks = $product['stocks'] - $product['count'];
+                        $productData->update();
+                    }
+
+                    if($product['product_type'] == 'size_base')
+                    {
+                        $productSize = ProductSize::where('product_id', $orderItemData->product_id)->where('size', $orderItemData->size)->first();
+                        $productSize->stocks = $product['stocks'] - $product['count'];
+                        $productSize->update();
+                    }
+
+                    if($product['product_type'] == 'weight_base')
+                    {
+                        $productWeight = ProductWeight::where('product_id', $orderItemData->product_id)->where('weight', $orderItemData->weight)->first();
+                        $productWeight->stocks = $product['stocks'] - $product['count'];
+                        $productWeight->update();
+                    }
                 }
             }
 
-            return $order;
         });
 
         return $this->json(
@@ -97,6 +120,15 @@ class OrderController extends Controller
         return $this->json(
             "My Order List",
             OrderResource::collection($selfOrders)
+        );
+    }
+
+    public function lastOrder()
+    {
+        $lastOrder = $this->orderRepo->getLastOrder(Auth::id());
+        return $this->json(
+            "Thank you for your Order",
+            new OrderResource($lastOrder)
         );
     }
 

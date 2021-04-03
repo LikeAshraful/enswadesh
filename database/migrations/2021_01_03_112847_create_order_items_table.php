@@ -17,8 +17,8 @@ class CreateOrderItemsTable extends Migration
             $table->id();
             $table->integer('order_id');
             $table->bigInteger('product_id');
-            $table->string('size');
-            $table->string('weight');
+            $table->string('size')->nullable();
+            $table->string('weight')->nullable();
             $table->integer('quantity');
             $table->float('discount', 8,2)->nullable();
             $table->float('vat', 8,2)->nullable();
