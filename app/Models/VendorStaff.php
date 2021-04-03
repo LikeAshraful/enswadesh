@@ -12,9 +12,13 @@ class VendorStaff extends Model
 
     protected $fillable = [
         'user_id',
-        'owner_id'
+        'owner_id',
+        'shop_id',
+        'title',
+        'start_time',
+        'end_time'
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

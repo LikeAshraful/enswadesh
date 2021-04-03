@@ -15,9 +15,13 @@ class ProductAttributeRepository
         $formattedSizes = [];
         foreach ($productSizes as $productSize) {
             if (!$productSize) continue;
-            $formattedSizes[$productSize['size_id']] = [
+            $formattedSizes[$productSize['size']] = [
+                'size' => $productSize['size'],
                 'price' => $productSize['price'],
-                'stocks' => $productSize['stocks']
+                'discount' => $productSize['discount'],
+                'discount_type' => $productSize['discount_type'],
+                'stocks' => $productSize['stocks'],
+                'offer' => $productSize['offer'],
             ];
         }
         return $product->sizes()->attach($formattedSizes);
@@ -30,9 +34,13 @@ class ProductAttributeRepository
         foreach ($productWeights as $productWeight)
         {
             if (!$productWeight) continue;
-            $formattedWeights[$productWeight['weight_id']] = [
+            $formattedWeights[$productWeight['weight']] = [
+                'weight' => $productWeight['weight'],
                 'price' => $productWeight['price'],
+                'discount' => $productWeight['discount'],
+                'discount_type' => $productWeight['discount_type'],
                 'stocks' => $productWeight['stocks'],
+                'offer' => $productWeight['offer'],
             ];
         }
         return $product->weights()->attach($formattedWeights);
@@ -42,9 +50,20 @@ class ProductAttributeRepository
     {
         if (sizeof($features) == 0) return ;
 
-        return $product->features()->saveMany(array_map(function($feature) {
-            return new ProductFeature($feature);
-        }, $features));
+        foreach ($features as $feature)
+        {
+            if (!$feature) continue;
+            $featureData = new ProductFeature;
+            $featureData->product_id = $product->id;
+            $featureData->title = $feature['title'];
+            $featureData->feature = $feature['feature'];
+            $featureData->save();
+        }
+        return $product;
+
+        // return $product->features()->saveMany(array_map(function($feature) {
+        //     return new ProductFeature($feature);
+        // }, $features));
     }
 
 }

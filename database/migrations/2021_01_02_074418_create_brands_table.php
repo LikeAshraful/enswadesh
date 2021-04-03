@@ -19,9 +19,8 @@ class CreateBrandsTable extends Migration
             $table->string('description')       ->nullable();
             $table->string('slug')              ->index();
             $table->string('icon')              ->nullable();
-            $table->integer('created_by')       ->unsigned()->nullable();
-            $table->integer('updated_by')       ->unsigned()->nullable();
-            $table->integer('deleted_by')       ->unsigned()->nullable();
+            $table->unsignedBigInteger('user_id')->constrained('users');
+            $table->unsignedBigInteger('shop_id')->constrained('shops');
             $table->timestamps();
         });
     }

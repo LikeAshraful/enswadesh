@@ -75,7 +75,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request ProductStoreRequesst
      */
     public function store(ProductStoreRequesst $request)
     {
@@ -86,19 +86,25 @@ class ProductController extends Controller
         $product = DB::transaction(function() use ($request) {
             $product = $this->productRepo->store(
                 $request->shop_id,
+                $request->thumbnail,
                 $request->except( 'images', 'sizes', 'weights', 'features'),
-                1
+                Auth::id()
             );
+
+            $this->proCategoryRepo->create($request->except('product_id') +
+                [
+                    'product_id' => $product->id,
+                ]);
 
             if ($request->images && sizeof($request->images) > 0) {
                 $this->productMediaRepo->storeImages($product, $request->images);
             }
 
-            if ($request->has('sizes') && sizeof($request->sizes) > 0) {
+            if ($request->has('sizes') && sizeof($request->sizes) > 0 && $request->sizes[0]['size'] != null) {
                 ProductAttributeRepository::storeSizes($product, $request->sizes);
             }
 
-            if ($request->has('weights') && sizeof($request->weights) > 0) {
+            if ($request->has('weights') && sizeof($request->weights) > 0 && $request->weights[0]['weight'] != null) {
                 ProductAttributeRepository::storeWeights($product, $request->weights);
             }
 
@@ -184,12 +190,21 @@ class ProductController extends Controller
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function similarProduct($shopId)
+    {
+        $products = $this->productRepo->similarProduct($shopId);
+        return $this->json('Similar Products List', ProductResource::collection($products)->response()->getData(true));
+    }
+
+    public function similarProductByProduct($productId, $shopId)
+    {
+        $product = $this->productRepo->similarProductByProduct($productId, $shopId);
+        return $this->json(
+            'Similar Product Show',
+            new ProductResource($product)
+        );
+    }
+
     public function destroy($id)
     {
         $this->productRepo->deleteProduct($id);

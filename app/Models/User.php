@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'email',
         'password',
+        'shop_member_permission',
         'status',
         'suspend',
         'last_login_at'
@@ -40,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function staffs()
     {
-        return $this->hasMany(VendorStaff::class, 'owner_id');
+        return $this->hasMany(VendorStaff::class,'owner_id');
     }
 
     public function userOtpByID()

@@ -2,26 +2,30 @@
 
 namespace App\Models\Product;
 
-use App\Models\Product\Base\Size;
-use App\Models\Product\Base\Weight;
 use App\Models\User;
 use App\Models\Shop\Shop;
 use Illuminate\Support\Str;
+use App\Models\Product\Base\Size;
 use App\Models\General\Brand\Brand;
+use App\Models\Product\Base\Weight;
 use App\Models\Product\ProductMedia;
 use App\Models\Product\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\General\Category\Category;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
-        'ref', 'name', 'slug', 'shop_id', 'user_id', 'brand_id', 'thumbnail_id',
-        'can_bargain', 'product_type', 'refund_policy', 'service_policy', 'description',
-        'offers', 'price', 'total_stocks', 'tag',
+        'ref', 'name', 'slug', 'sku', 'shop_id', 'user_id', 'brand_id', 'thumbnail',
+        'can_bargain', 'product_type', 'return_policy', 'warranty', 'guarantee', 'currency_type', 'discount', 'discount_type', 'description',
+        'offers', 'price', 'stocks', 'total_stocks', 'tag', 'alert', 'video_url', 'delivery_offer',
     ];
+    protected $dates = ['deleted_at'];
 
     public function setNameAttribute($value)
     {
@@ -41,7 +45,7 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
     public function category()
@@ -56,7 +60,7 @@ class Product extends Model
 
     public function productImage()
     {
-        return $this->hasOne(ProductMedia::class);
+        return $this->hasMany(ProductMedia::class);
     }
 
     public function sizes()
@@ -73,9 +77,45 @@ class Product extends Model
             ->withTimestamps();
     }
 
+    public function productSizes()
+    {
+        return $this->hasMany(ProductSize::class);
+    }
+
+    public function lowSizePrice(){
+        return $this->hasOne(ProductSize::class)->orderBy('price', 'asc');
+    }
+
+    public function highSizePrice(){
+        return $this->hasOne(ProductSize::class)->orderBy('price', 'desc');
+    }
+
+    public function lowWeightPrice(){
+        return $this->hasOne(ProductWeight::class)->orderBy('price', 'asc');
+    }
+
+    public function highWeightPrice(){
+        return $this->hasOne(ProductWeight::class)->orderBy('price', 'desc');
+    }
+
+    public function productWeights()
+    {
+        return $this->hasMany(ProductWeight::class);
+    }
+
     public function features()
     {
         return $this->hasMany(ProductFeature::class);
+    }
+
+    public function discountPrice()
+    {
+        if ($this->discount_type === 'Percent') {
+            $dis = $this->price - ($this->price * $this->discount) / 100;
+            return round($dis, 2);
+        } else {
+            return $this->price - $this->discount;
+        }
     }
 
 }

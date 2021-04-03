@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ProductWeight extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['product_id', 'weight_id', 'price', 'stocks'];
+    
+    protected $fillable = ['product_id', 'weight_id', 'weight', 'price', 'discount', 'discount_type', 'stocks', 'offer',];
 }
