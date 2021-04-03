@@ -12,8 +12,16 @@ class OrderRepository extends BaseRepository
         return Order::class;
     }
 
-    public function shippingAddress($userId) 
+    public function shippingAddress($userId)
     {
     	return $this->model()::with('customer', 'orderItems')->where('customer_id', $userId)->first();
     }
+
+    public function getLastOrder($userId)
+    {
+        return $this->model()::where('customer_id', $userId)->latest()->first();
+    }
+
+
 }
+

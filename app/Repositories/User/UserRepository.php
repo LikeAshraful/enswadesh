@@ -34,10 +34,17 @@ class UserRepository extends BaseRepository
         return VendorStaff::create([
             'user_id'       => $id,
             'owner_id'      => Auth::id(),
+            'shop_id'       => $modelData['shop_id'],
             'title'         => $modelData['title'],
             'start_time'    => $modelData['start_time'],
             'end_time'      => $modelData['end_time'],
         ]);
+    }
+
+    public function deleteByID($id)
+    {
+        $staff = VendorStaff::where('owner_id', Auth::id())->where('user_id', $id)->first();
+        $staff->delete();
     }
 
     public function getUserInfo()
@@ -123,13 +130,6 @@ class UserRepository extends BaseRepository
         }
     }
 
-    public function deleteByID($id)
-    {
-        $userImage = $this->findByID($id);
-        Storage::delete($userImage->image);
-        $userImage->delete();
-    }
-
     public function publishByID($id)
     {
         try {
@@ -189,8 +189,14 @@ class UserRepository extends BaseRepository
         return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
     }
 
-    public function findStaffByVendor($id)
+    public function getSearchMember($data)
     {
-        return $this->model()::with('staffs.user')->find($id);
+        return $this->model()::where('phone_number', 'like', '%'. $data .'%')->orWhere('email', 'like', '%'. $data .'%')->get();
+    }
+
+    public function findStaffByVendor($id,$shop_id)
+    {
+        $vendor = VendorStaff::with('user')->where('shop_id',$shop_id)->where('owner_id',$id)->get();
+        return $vendor;
     }
 }

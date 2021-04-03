@@ -37,7 +37,7 @@ class ProductFactory extends Factory
             'user_id' => User::all()->random()->id,
             'shop_id' => Shop::all()->random()->id,
             'brand_id' => Brand::all()->random()->id,
-            'price' => $this->faker->randomDigit,
+            'price' => $this->faker->numberBetween(50,1500),
             'currency_type' => 'BDT',
             'sale_price' => $this->faker->randomDigit,
             'discount' => $this->faker->randomDigit,

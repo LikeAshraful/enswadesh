@@ -16,6 +16,7 @@ use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
 use App\Http\Controllers\API\Product\Base\UnitController;
 use App\Http\Controllers\API\Rating\ShopRatingController;
+use App\Http\Controllers\API\Wishlist\WishlistController;
 use App\Http\Controllers\API\Product\Base\ColorController;
 use App\Http\Controllers\API\General\Brand\BrandController;
 use App\Http\Controllers\API\Interaction\CommentController;
@@ -87,11 +88,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [AuthController::class, 'getAuthUser']);
     Route::post('user-info-update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
-    Route::get('staffs', [VendorController::class, 'index']);
+    Route::get('staffs/{id}', [VendorController::class, 'index']);
     Route::post('staff-create', [VendorController::class, 'store']);
     Route::get('staff/{id}', [VendorController::class, 'show']);
     Route::post('staff/update/{id}', [VendorController::class, 'update']);
-    Route::post('staff/{id}', [VendorController::class, 'destroy']);
+    Route::get('staff/{id}', [VendorController::class, 'destroy']);
+    Route::post('search/shop/member', [VendorController::class, 'searchMember']);
+
 
 
     //Notifications
@@ -113,6 +116,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('subscribe-list', [ShopingSubscribeController::class, 'index']);
     Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
     Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
+
+    //Shop wish list
+    Route::get('wishlist-request/{id}', [WishlistController::class, 'sentWishlistRequest']);
+    Route::get('wishlist-check-by-product/{productId}', [WishlistController::class, 'checkWishList']);
+    Route::get('wishlists', [WishlistController::class, 'index']);
+    Route::get('wishlist/{id}', [WishlistController::class, 'destroy']);
 
     // my shop related
     Route::prefix('my-shops')->namespace('Shop')->group(function () {
@@ -157,16 +166,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // oder related
-
     Route::prefix('orders')->namespace('Order')->group(function () {
         Route::get('', [OrderController::class, 'index']);
+        Route::get('last-order', [OrderController::class, 'lastOrder']);
         Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
         Route::get('self/{id}', [OrderController::class, 'selfOrder']);
         Route::get('{id}', [OrderController::class, 'show']);
         Route::post('', [OrderController::class, 'store']);
     });
-
-
 
     Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);

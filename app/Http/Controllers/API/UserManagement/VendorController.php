@@ -28,28 +28,31 @@ class VendorController extends Controller
         $this->roleRepo  = $roleRepository;
     }
 
-    public function index()
+    public function index($shop_id)
     {
-        $staffs  = $this->vendorRepo->findStaffByVendor(Auth::id());
+        $staffs  = $this->vendorRepo->findStaffByVendor(Auth::id(),$shop_id);
         return $this->json('Staff list', $staffs);
     }
 
     public function store(Request $request)
     {
         $user = DB::transaction(function () use ($request) {
-            $user = $this->vendorRepo->create($request->all()+ [
-                'role_id'   =>  $this->roleRepo->getRoleForShopMember()->id
-            ]);
-            $this->vendorRepo->updateOrNewBy($user);
-            $userOtp = $this->otpRepo->generateOtpForUser($user);
-            $this->vendorRepo->createStaffByVendorID($user->id,$request->all());
-            return compact('user', 'userOtp');
+            if($this->vendorRepo->model()::where('phone_number', '=', $request->phone_number)->exists())
+            {
+                $this->vendorRepo->createStaffByVendorID($request->user_id,$request->all());
+            }
+            else
+            {
+                $user = $this->vendorRepo->create($request->all()+ [
+                    'role_id'   =>  $this->roleRepo->getRoleForShopMember()->id
+                ]);
+                $this->vendorRepo->updateOrNewBy($user);
+                $userOtp = $this->otpRepo->generateOtpForUser($user);
+                $this->vendorRepo->createStaffByVendorID($user->id,$request->all());
+                return compact('user', 'userOtp');
+            }
+            return $this->json('User registered successfully. Please check your email or phone to active account');
         });
-
-        return $this->json('User registered successfully. Please check your email or phone to active account', [
-            'token' => $user['userOtp']['token'],
-            'otp'   => $user['userOtp']['otp']
-        ]);
     }
 
     public function show($id)
@@ -66,10 +69,15 @@ class VendorController extends Controller
         return $this->json('Updated You Info',[VendorResource::make($user)]);
     }
 
+    public function searchMember(Request $request) {
+        $member = $this->vendorRepo->getSearchMember($request['keyword']);
+        return $this->json('User Member', $member);
+    }
+
     public function destroy($id)
     {
         $user       = $this->vendorRepo->deleteByID($id);
         $message    =" Staff Deleted!";
-        return $this->json($message, [VendorResource::make($user)]);
+        return $this->json($message, $user);
     }
 }

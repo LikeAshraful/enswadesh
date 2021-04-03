@@ -16,10 +16,10 @@ class CreateOrderItemsTable extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
-            $table->integer('product_id');
-            $table->integer('color_id');
-            $table->integer('size_id');
-            $table->integer('order_quantity');
+            $table->bigInteger('product_id');
+            $table->string('size')->nullable();
+            $table->string('weight')->nullable();
+            $table->integer('quantity');
             $table->float('discount', 8,2)->nullable();
             $table->float('vat', 8,2)->nullable();
             $table->float('price', 8,2);

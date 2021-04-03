@@ -61,8 +61,7 @@ class OrderPropertySeeder extends Seeder
         $orderItem = OrderItem::updateOrCreate([
             'order_id' => $order->id,
             'product_id' => 3,
-            'color_id' => 2,
-            'size_id' => 3,
+            'size' => 'M',
             'order_quantity' => 1,
             'discount' => 0,
             'vat' => 15,
@@ -73,7 +72,6 @@ class OrderPropertySeeder extends Seeder
         $orderItem = OrderItem::updateOrCreate([
             'order_id' => $order2->id,
             'product_id' => 2,
-            'color_id' => 2,
             'size_id' => 3,
             'order_quantity' => 2,
             'discount' => 30,
@@ -85,7 +83,6 @@ class OrderPropertySeeder extends Seeder
         $orderItem = OrderItem::updateOrCreate([
             'order_id' => $order2->id,
             'product_id' => 5,
-            'color_id' => 2,
             'size_id' => 3,
             'order_quantity' => 1,
             'discount' => 0,
