@@ -82,7 +82,6 @@ class ProductController extends Controller
         if ($request->hasFile('thumbnail')) {
             $request->thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
         }
-        
 
         $product = DB::transaction(function() use ($request) {
             $product = $this->productRepo->store(
