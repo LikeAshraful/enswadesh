@@ -43,9 +43,8 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left mr-3">
                                             <div class="widget-content-left">
-                                                <img class="img-fluid img-thumbnail"
-                                                    src="{{$vendor->profile ? asset('storage/'.$vendor->profile->image) : asset('users/user.png') }}" width="50"
-                                                    height="50" alt="" alt="{{ $vendor->name}}">
+                                                <img class="img-fluid img-thumbnail" src="{{ $vendor->profile && $vendor->profile->image ? asset('storage/'. $vendor->profile->image) : asset('default-images/user.png') }}" width="50"
+                                                    height="50" alt="{{ $vendor->name}}">
                                             </div>
                                         </div>
                                         <div class="widget-content-left flex2">
