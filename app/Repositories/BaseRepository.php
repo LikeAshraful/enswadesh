@@ -52,11 +52,14 @@ Abstract class BaseRepository {
         return $model->reload();
     }
 
-    public function getAllByUserID($field, $id, $limit=null, $status="Approved")
+    public function getAllByUserID($field, $id, $limit=NULL, $status = NULL)
     {
-        $data = $this->model()::where($field, $id)->where('status', $status)->latest();
+        $data = $this->model()::where($field, $id)->latest();
 
-        if($limit != null)
+        if($status != NULL)
+            $data->where('status', $status);
+
+        if($limit != NULL)
             return $data->limit($limit)->get();
 
         return $data->get();

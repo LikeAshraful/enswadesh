@@ -170,7 +170,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('', [OrderController::class, 'index']);
         Route::get('last-order', [OrderController::class, 'lastOrder']);
         Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
-        Route::get('self/{id}', [OrderController::class, 'selfOrder']);
+        Route::get('self', [OrderController::class, 'selfOrder']);
         Route::get('{id}', [OrderController::class, 'show']);
         Route::post('', [OrderController::class, 'store']);
     });
