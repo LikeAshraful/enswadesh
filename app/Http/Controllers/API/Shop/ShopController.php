@@ -80,7 +80,7 @@ class ShopController extends Controller
 
     public function myShops()
     {
-        $myShops = $this->shopRepo->getAllByUserID('shop_owner_id', Auth::id());
+        $myShops = $this->shopRepo->getAllByUserID('shop_owner_id', Auth::id(), NULL, 'Approved');
         return $this->json(
             'My Shop list',
             ShopResource::collection($myShops)
