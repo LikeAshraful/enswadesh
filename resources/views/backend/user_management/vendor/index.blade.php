@@ -56,7 +56,7 @@
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left mr-3">
                                             <div class="widget-content-left">
-                                                <img class="img-fluid img-thumbnail" src="{{ $user->profile && $user->profile->image ? asset('storage/'.$user->profile->image) : asset('default-images/user.png') }}" width="50"
+                                                <img class="img-fluid img-thumbnail" src="{{ $user->profile && $user->profile->image ? asset('storage/'. $user->profile->image) : asset('default-images/user.png') }}" width="50"
                                                     height="50" alt="{{ $user->name}}">
                                             </div>
                                         </div>
