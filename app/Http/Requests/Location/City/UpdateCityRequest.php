@@ -24,7 +24,7 @@ class UpdateCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:cities|min:3',
             'description' => 'required',
             'icon' => 'nullable|mimes:jpeg,jpg,png|max:500',
         ];

@@ -15,7 +15,7 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('name')          ->nullable();
+            $table->string('name')          ->unique();
             $table->string('icon')          ->nullable();
             $table->text('description')     ->nullable();
             $table->string('slug')          ->nullable();

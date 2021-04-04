@@ -101,12 +101,12 @@
                     </a>
                     <ul>
                         @canany('backend.menus.index')
-                            <li>
+                            {{-- <li>
                                 <a href="{{route('backend.menus.index')}}" class="{{ Route::is('backend.menus.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                     App Menus
                                 </a>
-                            </li>
+                            </li> --}}
                         @endcanany
                         @canany('backend.cities.index')
                             <li>
@@ -141,12 +141,12 @@
                             </li>
                         @endcanany
                         @canany('backend.shoptypes.index')
-                            <li>
+                            {{-- <li>
                                 <a href="{{route('backend.floors.index')}}" class="{{ Route::is('backend.floors.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                     Floor
                                 </a>
-                            </li>
+                            </li> --}}
                         @endcanany
                         @canany('backend.shops.index')
                             <li>
@@ -185,31 +185,31 @@
                         </li>
                         @endcanany
                         @canany('backend.colors.index')
-                            <li>
+                            {{-- <li>
                                 <a href="{{route('backend.colors.index')}}"
                                     class="{{ Route::is('backend.colors.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                         Colors
                                 </a>
-                            </li>
+                            </li> --}}
                         @endcanany
                         @canany('backend.size.index')
-                            <li>
+                            {{-- <li>
                                 <a href="{{route('backend.size.index')}}"
                                     class="{{ Route::is('backend.size.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                         Size
                                 </a>
-                            </li>
+                            </li> --}}
                         @endcanany
                         @canany('backend.weights.index')
-                            <li>
+                            {{-- <li>
                                 <a href="{{route('backend.weights.index')}}"
                                     class="{{ Route::is('backend.weights.index*') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon"></i>
                                         Weights
                                 </a>
-                            </li>
+                            </li> --}}
                         @endcanany
                     </ul>
                 </li>

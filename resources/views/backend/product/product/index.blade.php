@@ -16,7 +16,7 @@
                 </div>
                 <div>{{ __('Product') }}</div>
             </div>
-            <div class="page-title-actions">
+            {{-- <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
                     <a href="{{ route('backend.products.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
@@ -25,7 +25,7 @@
                         {{ __('Create') }}
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="row">
@@ -70,7 +70,7 @@
                                 <td>{{ $product->slug }}</td>
                                 <td>{{ $product->description }}</td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.products.edit', $product->id) }}"><i class="fas fa-edit"></i></a> |
+                                    {{-- <a class="fa-edit-style" href="{{ route('backend.products.edit', $product->id) }}"><i class="fas fa-edit"></i></a> | --}}
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $product->id }})">
                                         <i class="fas fa-trash-alt"></i>
