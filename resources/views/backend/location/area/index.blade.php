@@ -55,7 +55,7 @@
                                 <td>{{ $area->slug }}</td>
                                 <td>{{ $area->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset($area->icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{ $area->icon ? asset('storage/'. $area->icon) : asset('default-images/img_default_division_or_city.png')}}" width="50" height="50" alt="{{ $area->cities ? $area->cities->name : 'Not Found'  }}">
                                 </td>
                                 <td>
                                     @canany('backend.areas.edit')

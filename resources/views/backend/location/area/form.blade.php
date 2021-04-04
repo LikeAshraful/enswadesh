@@ -88,11 +88,11 @@
                     </span>
                     @enderror
                     </div>
-                    <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
+                    <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i> Reset</button>
                     @isset($area)
-                    <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
+                    <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i> Update</button>
                     @else
-                    <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
+                    <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i> Create</button>
                     @endisset
                 </form>
             </div>
