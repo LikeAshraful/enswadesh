@@ -87,14 +87,14 @@
                     <div class="form-group">
                     <label for="area_id">Area</label>
                     @if(isset($market))
-                    <select name="area_id" id="area_id" class="form-control">
+                    <select name="area_id" id="area_id" class="form-control" required>
                         <option value="">Select One</option>
                         @foreach($areas as $area)
                             <option value="{{ $area->id }}" {{ $market->area_id == $area->id ? 'selected' : ''}}>{{ $area->name }}</option>
                         @endforeach
                     </select>
                     @else
-                    <select name="area_id" id="area_id" class="form-control">
+                    <select name="area_id" id="area_id" class="form-control" required>
                         <option value="">Select One</option>
                         @foreach($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -120,11 +120,11 @@
                     </span>
                     @enderror
                     </div>
-                    <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
+                    <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i> Reset</button>
                     @isset($market)
-                    <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
+                    <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i> Update</button>
                     @else
-                    <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
+                    <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i> Create</button>
                     @endisset
                 </form>
             </div>

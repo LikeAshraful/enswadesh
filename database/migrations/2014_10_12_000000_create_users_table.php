@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')      ->nullable();
             $table->string('password')                  ->nullable();
             $table->integer('shop_member_permission')   ->default(0);
+            $table->boolean('owner_id')                 ->default(false);
             $table->boolean('status')                   ->default(false);
             $table->boolean('suspend')                  ->default(false);
             $table->rememberToken();

@@ -16,7 +16,7 @@
                 </div>
                 <div>{{ __('Shop') }}</div>
             </div>
-            <div class="page-title-actions">
+            {{-- <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
                     <a href="{{ route('backend.shops.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
@@ -25,7 +25,7 @@
                         {{ __('Create') }}
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="row">
@@ -52,7 +52,8 @@
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('storage/' . $shop->logo)}}" width="50" height="50" alt="">
+                                    <img width="50" height="50" class="img-fluid img-thumbnail"
+                                                         src="{{ $shop->logo ? asset('storage/'. $shop->logo ) : asset('default-images/img_default_shop_thumbnail-1.png') }}" alt="{{ $shop->name }}">
                                 </td>
                                 <td>{{ $shop->name }}</td>
                                 <td>{{ $shop->shop_no }}</td>
@@ -72,7 +73,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> |
+                                    {{-- <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> | --}}
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $shop->id }})">
                                         <i class="fas fa-trash-alt"></i>
