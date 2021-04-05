@@ -53,7 +53,7 @@
                                 <td>{{ $city->slug }}</td>
                                 <td>{{ $city->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset($city->icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{ $city->icon ? asset('storage/'. $city->icon) : asset('default-images/img_default_division_or_city.png')}}" width="50" height="50" alt="{{ $city->name }}">
                                 </td>
                                 <td>
                                     @canany('backend.cities.edit')

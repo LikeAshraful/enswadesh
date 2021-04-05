@@ -57,7 +57,7 @@
                                 <td>{{ $market->slug }}</td>
                                 <td>{{ $market->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset($market->icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{ $market->icon ? asset('storage/'.$market->icon) : asset('default-images/img_default_market_list_thumbnail@2x.png') }}" height="50" width="50" alt="{{ $market->name}}">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.markets.edit', $market->id) }}"><i class="fas fa-edit"></i></a> |

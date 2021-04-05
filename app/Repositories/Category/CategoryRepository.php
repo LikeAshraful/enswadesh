@@ -47,6 +47,7 @@ class CategoryRepository extends BaseRepository {
             $category = $this->create([
                 'name'              => $data['name'],
                 'description'       => $data['description'],
+                'shop_id'           => $data['shop_id'],
                 'icon'              => $icon,
                 'user_id'           => Auth::id(),
                 'parent_id'         => $data['parent_id'],
