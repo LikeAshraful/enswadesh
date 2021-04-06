@@ -58,9 +58,19 @@ class Product extends Model
         return $this->hasOne(ProductCategory::class);
     }
 
-    public function productImage()
+    public function productMedia()
     {
         return $this->hasMany(ProductMedia::class);
+    }
+
+    public function productImage()
+    {
+        return $this->productMedia()->where('type', 'ímage');
+    }
+
+    public function productAudio()
+    {
+        return $this->productMedia()->where('type', 'audio');
     }
 
     public function sizes()

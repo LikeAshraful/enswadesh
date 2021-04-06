@@ -80,7 +80,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequesst $request)
     {
         if ($request->hasFile('thumbnail')) {
-            $request->thumbnail = $this->productMediaRepo->storeFile($request->file('thumbnail'));
+            $request->thumbnail = $this->productMediaRepo->storeFile('products/thumbnail', $request->file('thumbnail'));
         }
 
         $product = DB::transaction(function() use ($request) {
@@ -95,6 +95,10 @@ class ProductController extends Controller
                 [
                     'product_id' => $product->id,
                 ]);
+
+            if($request->hasFile('audio')) {
+                $this->productMediaRepo->storeAudio($product, $request->audio);
+            }
 
             if ($request->images && sizeof($request->images) > 0) {
                 $this->productMediaRepo->storeImages($product, $request->images);
@@ -164,7 +168,7 @@ class ProductController extends Controller
             //product media update
             $productMedida = $this->productMediaRepo->updateProductMediaById($id);
             $srcImage = $request->hasFile('src');
-            $src = $srcImage ? $this->productMediaRepo->storeFile($request->file('src')) : $productMedida->src;
+            $src = $srcImage ? $this->productMediaRepo->storeFile('products/thumbnail', $request->file('src')) : $productMedida->src;
             if ($srcImage) {
                 $this->productMediaRepo->updateProductMedia($id);
             }
