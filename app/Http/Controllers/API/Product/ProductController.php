@@ -83,11 +83,11 @@ class ProductController extends Controller
             $request->thumbnail = $this->productMediaRepo->storeFile('products/thumbnail', $request->file('thumbnail'));
         }
 
-        $product = DB::transaction(function() use ($request) {
+        $product = DB::transaction(function () use ($request) {
             $product = $this->productRepo->store(
                 $request->shop_id,
                 $request->thumbnail,
-                $request->except( 'images', 'sizes', 'weights', 'features'),
+                $request->except('images', 'sizes', 'weights', 'features'),
                 Auth::id()
             );
 
@@ -96,7 +96,7 @@ class ProductController extends Controller
                     'product_id' => $product->id,
                 ]);
 
-            if($request->hasFile('audio')) {
+            if ($request->hasFile('audio')) {
                 $this->productMediaRepo->storeAudio($product, $request->audio);
             }
 

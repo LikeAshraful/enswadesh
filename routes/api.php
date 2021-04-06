@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     //Rating
-    Route::post('shop-rating',[ShopRatingController::class,'sentShopRating']);
+    Route::post('shop-rating', [ShopRatingController::class, 'sentShopRating']);
 
     //Shoping Friend
     Route::get('index', [ShopingFriendController::class, 'index']);
@@ -137,7 +137,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // general topic
-    Route::prefix('brands')->namespace('Brand')->group(function(){
+    Route::prefix('brands')->namespace('Brand')->group(function () {
         Route::get('', [BrandController::class, 'index']);
         Route::post('create', [BrandController::class, 'store']);
     });
@@ -146,7 +146,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('colors', [ColorController::class, 'index']);
     Route::get('sizes', [SizeController::class, 'index']);
     Route::get('weights', [WeightController::class, 'index']);
-    Route::get('units',[UnitController::class,'index']);
+    Route::get('units', [UnitController::class, 'index']);
 
     //Product
     Route::prefix('products')->namespace('Product')->group(function () {
@@ -162,7 +162,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::prefix('categories')->namespace('Category')->group(function () {
         Route::get('', [CategoryController::class, 'index']);
         Route::get('base', [CategoryController::class, 'baseCategories']);
-        Route::post('create',[CategoryController::class,'store']);
+        Route::post('create', [CategoryController::class, 'store']);
     });
 
     // oder related
