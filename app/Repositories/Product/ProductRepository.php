@@ -27,7 +27,7 @@ class ProductRepository extends BaseRepository
             'name' => $productData['name'] ?? null,
             'sku' => $productData['sku'] ?? null,
             'description' => $productData['description'] ?? null,
-            'can_bargain' => $productData['can_bargain'] ?? null,
+            'can_bargain' => $productData['can_bargain'] ?? 0,
             'product_type' => $productData['product_type'] ?? null,
             'return_policy' => $productData['return_policy'] ?? null,
             'warranty' => $productData['warranty'] ?? null,
@@ -97,12 +97,12 @@ class ProductRepository extends BaseRepository
 
     private function generateRef($shopID): string
     {
-       $shop = (new ShopRepository())->getNameAndCity($shopID);
-       $shopCode = substr($shop->name, 0, 1);
-       $cityCode = substr(optional($shop->city)->name, 0, 2);
-       $marketCode = substr(optional($shop->market)->name, 0, 2);
+        $shop = (new ShopRepository())->getNameAndCity($shopID);
+        $shopCode = substr($shop->name, 0, 1);
+        $cityCode = substr(optional($shop->city)->name, 0, 2);
+        $marketCode = substr(optional($shop->market)->name, 0, 2);
 
-       return $cityCode . $marketCode . $shopCode . '-' . rand(111111, 999999);
+        return $cityCode . $marketCode . $shopCode . '-' . rand(111111, 999999);
     }
 
     public function similarProduct($shop_id)
