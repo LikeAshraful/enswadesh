@@ -19,7 +19,7 @@ class ProductMediaRepository extends BaseRepository {
         if (sizeof($images) == 0) return;
         return $this->model()::insert(array_map(function($image) use ($product) {
             return [
-                'src' => $this->storeFile($image),
+                'src' => $this->storeFile('products/thumbnail', $image),
                 'product_id' => $product->id,
                 'type' => 'image'
             ];
@@ -43,8 +43,17 @@ class ProductMediaRepository extends BaseRepository {
         return $productMedia->update($modelData);
     }
 
-    public function storeFile(UploadedFile $file)
+    public function storeFile($path, UploadedFile $file)
     {
-        return Storage::put('products/thumbnail', $file);
+        return Storage::put($path, $file);
+    }
+
+    public function storeAudio(Product $product, $audio)
+    {
+        return $this->model()::insert([
+            'src' => $this->storeFile('products/audio', $audio),
+            'product_id' => $product->id,
+            'type' => 'audio'
+        ]);
     }
 }
