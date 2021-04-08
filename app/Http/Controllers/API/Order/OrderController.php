@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\Order;
 
+use Carbon\Carbon;
+use App\Models\Order\Order;
 use Illuminate\Http\Request;
 use App\Models\Order\OrderItem;
 use App\Models\Product\Product;
@@ -32,6 +34,28 @@ class OrderController extends Controller
         return $this->json(
             "Order List",
             OrderResource::collection($allOrder)
+        );
+    }
+
+    public function ordersByShop($shop_id)
+    {
+        $orders = $this->orderRepo->getAllByShopID($shop_id);
+        return $this->json(
+            "Order List",
+            OrderResource::collection($orders)
+        );
+    }
+
+    public function salesReport($shop_id)
+    {   $sales_report = [];
+        $todays_order = Order::where('shop_id', $shop_id)->where('customer_id', Auth::id())->whereDate('created_at', Carbon::today());
+        $sales_report['todays_sales'] = $todays_order->get()->sum('total_price');
+        $sales_report['todays_orders'] = $todays_order->get()->count();
+        $sales_report['todays_delivery'] = $todays_order->where('order_status', 3)->get()->count();
+
+        return $this->json(
+            "Sales Report",
+            $sales_report
         );
     }
 

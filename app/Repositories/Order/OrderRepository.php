@@ -23,5 +23,18 @@ class OrderRepository extends BaseRepository
     }
 
 
+    public function getAllByShopID($shop_id, $status = NULL, $limit = NULL)
+    {
+        $data = $this->model()::where('shop_id', $shop_id)->latest();
+
+        if($status != NULL)
+            $data->where('status', $status);
+
+        if($limit != NULL)
+            return $data->limit($limit)->get();
+
+        return $data->get();
+    }
+
 }
 
