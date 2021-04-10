@@ -36,5 +36,15 @@ class OrderRepository extends BaseRepository
         return $data->get();
     }
 
+    public function selfOrderBystatus($status, $user_id, $limit = NULL)
+    {
+        $data = $this->model()::where('order_status', $status)->where('customer_id', $user_id)->latest();
+
+        if($limit != NULL)
+            return $data->limit($limit)->get();
+
+        return $data->get();
+    }
+
 }
 

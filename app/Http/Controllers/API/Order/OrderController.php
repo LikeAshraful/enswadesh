@@ -147,6 +147,15 @@ class OrderController extends Controller
         );
     }
 
+    public function selfOrderBystatus($status)
+    {
+        $selfOrdersStatus = $this->orderRepo->selfOrderBystatus($status, Auth::id());
+        return $this->json(
+            "My Order List By Status",
+            OrderResource::collection($selfOrdersStatus)
+        );
+    }
+
     public function lastOrder()
     {
         $lastOrder = $this->orderRepo->getLastOrder(Auth::id());
