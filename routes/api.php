@@ -153,10 +153,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('', [ProductController::class, 'index']);
         Route::get('self/{id}', [ProductController::class, 'selfProduct']);
         Route::post('', [ProductController::class, 'store']);
+        Route::get('{id}/edit', [ProductController::class, 'edit']);
         Route::post('update/{id}', [ProductController::class, 'update']);
         Route::get('delete/{id}', [ProductController::class, 'destroy']);
         Route::get('similar-product/{shopId}', [ProductController::class, 'similarProduct']);
         Route::get('similar-by-product/{productId}/{shopId}', [ProductController::class, 'similarProductByProduct']);
+        Route::get('remove-image-gallery/{id}', [ProductController::class, 'productImageGalleryRemove']);
     });
 
     Route::prefix('categories')->namespace('Category')->group(function () {
