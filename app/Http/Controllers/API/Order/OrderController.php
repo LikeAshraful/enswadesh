@@ -127,9 +127,16 @@ class OrderController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function statusUpdate($status, $id)
     {
-        //
+        $order = $this->orderRepo->findOrFailByID($id);
+        $order->order_status = $status;
+        $order->update();
+
+        return $this->json(
+            "Order Updated Sucessfully",
+            $order
+        );
     }
 
 

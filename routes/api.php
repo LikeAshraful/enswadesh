@@ -176,6 +176,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('shop/{id}', [OrderController::class, 'ordersByShop']);
         Route::get('shop/{id}/sales-report', [OrderController::class, 'salesReport']);
 
+        Route::get('status-update/{status}/{id}', [OrderController::class, 'statusUpdate']);
         Route::post('', [OrderController::class, 'store']);
     });
 
