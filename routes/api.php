@@ -15,6 +15,7 @@ use App\Http\Controllers\API\Interaction\LikeController;
 use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
 use App\Http\Controllers\API\Product\Base\UnitController;
+use App\Http\Controllers\API\Product\FlashsaleController;
 use App\Http\Controllers\API\Rating\ShopRatingController;
 use App\Http\Controllers\API\Wishlist\WishlistController;
 use App\Http\Controllers\API\Product\Base\ColorController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\API\Interaction\CommentController;
 use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
+use App\Http\Controllers\API\Product\FestivalSaleController;
 use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
@@ -82,6 +84,11 @@ Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByS
 Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::class, 'productsByShopByCategory']);
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
+
+Route::get('/flash-sale', [FlashsaleController::class, 'index']);
+Route::get('/festival-sale', [FestivalSaleController::class, 'index']);
+
+
 
 //For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
@@ -159,6 +166,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('similar-product/{shopId}', [ProductController::class, 'similarProduct']);
         Route::get('similar-by-product/{productId}/{shopId}', [ProductController::class, 'similarProductByProduct']);
         Route::get('remove-image-gallery/{id}', [ProductController::class, 'productImageGalleryRemove']);
+        Route::post('add-to-flash', [FlashsaleController::class, 'addToFlashSale']);
+        Route::post('add-to-festival', [FestivalSaleController::class, 'addToFestivalSale']);
     });
 
     Route::prefix('categories')->namespace('Category')->group(function () {
