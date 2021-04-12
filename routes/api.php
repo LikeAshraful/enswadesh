@@ -61,9 +61,9 @@ Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::clas
 //Rating
 Route::get('rate-count-by-shop/{shopId}', [ShopRatingController::class, 'countRatingByShopID']);
 
-
 Route::prefix('videos')->namespace('Video')->group(function () {
     Route::get('', [InteractionController::class, 'videos']);
+    Route::get('/{id}', [InteractionController::class, 'showVideo']);
 });
 
 Route::get('floors', [FloorController::class, 'index']);
@@ -198,7 +198,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::prefix('videos')->namespace('Video')->group(function () {
         Route::post('/create', [InteractionController::class, 'storeVideo']);
-        Route::get('/{id}', [InteractionController::class, 'showVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
     });
 
