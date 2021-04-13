@@ -159,7 +159,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::prefix('products')->namespace('Product')->group(function () {
         Route::get('', [ProductController::class, 'index']);
         Route::get('self/{id}', [ProductController::class, 'selfProduct']);
-        Route::post('', [ProductController::class, 'store']);
+        Route::post('/productadd', [ProductController::class, 'store']);
         Route::get('{id}/edit', [ProductController::class, 'edit']);
         Route::post('update/{id}', [ProductController::class, 'update']);
         Route::get('delete/{id}', [ProductController::class, 'destroy']);
@@ -188,7 +188,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('shop/{id}/sales-report', [OrderController::class, 'salesReport']);
 
         Route::get('status-update/{status}/{id}', [OrderController::class, 'statusUpdate']);
-        Route::post('', [OrderController::class, 'store']);
+        Route::post('/storeOrder', [OrderController::class, 'store']);
     });
 
     Route::prefix('templates')->namespace('Template')->group(function () {
