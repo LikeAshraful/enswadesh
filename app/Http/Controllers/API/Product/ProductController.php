@@ -28,11 +28,7 @@ class ProductController extends Controller
         $this->proCategoryRepo = $productCategoryRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $products = $this->productRepo->getAll();
@@ -62,21 +58,13 @@ class ProductController extends Controller
         return $this->json('Products By Search List', ProductResource::collection($products)->response()->getData(true));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request ProductStoreRequesst
-     */
+
     public function store(ProductStoreRequesst $request)
     {
         if ($request->hasFile('thumbnail')) {
@@ -122,12 +110,7 @@ class ProductController extends Controller
         return $this->json("Product create successfully", $product);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $product = $this->productRepo->findOrFailByID($id);
@@ -138,12 +121,6 @@ class ProductController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $product = $this->productRepo->findOrFailByID($id);
@@ -162,6 +139,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        return $request;
         DB::beginTransaction();
         try {
             //product update
