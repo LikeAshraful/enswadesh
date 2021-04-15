@@ -128,4 +128,18 @@ class Product extends Model
         }
     }
 
+    public function totalStocks()
+    {
+        if($this->product_type === 'simple')
+        {
+            return $this->stocks;
+
+        } else if($this->product_type == 'size_base')
+        {
+            return $this->productSizes->sum('stocks');
+        }else {
+            return $this->productWeights()->sum('stocks');
+        }
+    }
+
 }
