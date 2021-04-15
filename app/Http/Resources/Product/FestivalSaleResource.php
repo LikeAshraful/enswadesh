@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Product;
 
+use App\Http\Resources\Product\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FestivalSaleResource extends JsonResource
@@ -20,7 +21,7 @@ class FestivalSaleResource extends JsonResource
             'end_date' => $this->end_date,
             'start_time' => $this->start_time,
             'end_time'  => $this->end_time,
-            'product' => $this->product,
+            'product' => new ProductResource($this->product),
             'created_at' => $this->created_at->diffForHumans()
         ];
     }
