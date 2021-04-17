@@ -28,11 +28,7 @@ class ProductController extends Controller
         $this->proCategoryRepo = $productCategoryRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $products = $this->productRepo->getAll();
@@ -62,32 +58,24 @@ class ProductController extends Controller
         return $this->json('Products By Search List', ProductResource::collection($products)->response()->getData(true));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request ProductStoreRequesst
-     */
+
     public function store(ProductStoreRequesst $request)
     {
         if ($request->hasFile('thumbnail')) {
             $request->thumbnail = $this->productMediaRepo->storeFile('products/thumbnail', $request->file('thumbnail'));
         }
 
-        $product = DB::transaction(function() use ($request) {
+        $product = DB::transaction(function () use ($request) {
             $product = $this->productRepo->store(
                 $request->shop_id,
                 $request->thumbnail,
-                $request->except( 'images', 'sizes', 'weights', 'features'),
+                $request->except('images', 'sizes', 'weights', 'features'),
                 Auth::id()
             );
 
@@ -96,7 +84,7 @@ class ProductController extends Controller
                     'product_id' => $product->id,
                 ]);
 
-            if($request->hasFile('audio')) {
+            if ($request->hasFile('audio')) {
                 $this->productMediaRepo->storeAudio($product, $request->audio);
             }
 
@@ -122,12 +110,7 @@ class ProductController extends Controller
         return $this->json("Product create successfully", $product);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $product = $this->productRepo->findOrFailByID($id);
@@ -138,26 +121,25 @@ class ProductController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $product = $this->productRepo->findOrFailByID($id);
+
+        return $this->json(
+            'Single Product',
+            new ProductResource($product)
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function productImageGalleryRemove($id)
+    {
+        $this->productMediaRepo->deletedByID($id);
+        return response()->json("Product Image Deleted from Gallery");
+    }
+
     public function update(Request $request, $id)
     {
+        return $request;
         DB::beginTransaction();
         try {
             //product update

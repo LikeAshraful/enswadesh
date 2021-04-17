@@ -112,9 +112,7 @@ class InteractionController extends Controller
 
         $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'video') : $video->thumbnail;
 
-        if ($videoFile = $request->hasFile('video')){
-            $this->interactionRepo->storeFile($request->file('video'), 'video');
-        }
+        $videoFile = $request->hasFile('video') ?  $this->interactionRepo->storeFile($request->file('video'), 'video') : $video->file;
 
         DB::beginTransaction();
         try {
@@ -122,11 +120,20 @@ class InteractionController extends Controller
                 'thumbnail' => $image,
                 'user_id' => Auth::id()
             ]);
+            if(InteractionFile::where('interaction_id', $id)->exists()) {
+                InteractionFile::where('interaction_id', $id)->update([
+                    'file_path' => $videoFile,
+                    'file_type' => $request->file_type
+                ]);
+            } else {
+                //save video file
+                InteractionFile::create([
+                    'interaction_id' => $video->id,
+                    'file_path' => $videoFile,
+                    'file_type' => $request->file_type
+                ]);
+            }
 
-            InteractionFile::where('interaction_id', $id)->update([
-                'file_path' => $videoFile,
-                'file_type' => $request->file_type
-            ]);
             //save logs
             $this->interactionRepo->storeLog($video->id, 'Video Updated', 'updated');
 

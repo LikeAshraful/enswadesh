@@ -15,6 +15,7 @@ use App\Http\Controllers\API\Interaction\LikeController;
 use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
 use App\Http\Controllers\API\Product\Base\UnitController;
+use App\Http\Controllers\API\Product\FlashsaleController;
 use App\Http\Controllers\API\Rating\ShopRatingController;
 use App\Http\Controllers\API\Wishlist\WishlistController;
 use App\Http\Controllers\API\Product\Base\ColorController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\API\Interaction\CommentController;
 use App\Http\Controllers\API\Product\Base\WeightController;
 use App\Http\Controllers\API\UserManagement\AuthController;
 use App\Http\Controllers\API\General\Menu\AppMenuController;
+use App\Http\Controllers\API\Product\FestivalSaleController;
 use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
@@ -59,9 +61,9 @@ Route::get('subscribe-count-by-shop/{shopId}', [ShopingSubscribeController::clas
 //Rating
 Route::get('rate-count-by-shop/{shopId}', [ShopRatingController::class, 'countRatingByShopID']);
 
-
 Route::prefix('videos')->namespace('Video')->group(function () {
     Route::get('', [InteractionController::class, 'videos']);
+    Route::get('/{id}', [InteractionController::class, 'showVideo']);
 });
 
 Route::get('floors', [FloorController::class, 'index']);
@@ -82,6 +84,11 @@ Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByS
 Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::class, 'productsByShopByCategory']);
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
+
+Route::get('/flash-sale', [FlashsaleController::class, 'index']);
+Route::get('/festival-sale', [FestivalSaleController::class, 'index']);
+
+
 
 //For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {
@@ -104,7 +111,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     //Rating
-    Route::post('shop-rating',[ShopRatingController::class,'sentShopRating']);
+    Route::post('shop-rating', [ShopRatingController::class, 'sentShopRating']);
 
     //Shoping Friend
     Route::get('index', [ShopingFriendController::class, 'index']);
@@ -137,7 +144,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // general topic
-    Route::prefix('brands')->namespace('Brand')->group(function(){
+    Route::prefix('brands')->namespace('Brand')->group(function () {
         Route::get('', [BrandController::class, 'index']);
         Route::post('create', [BrandController::class, 'store']);
     });
@@ -146,23 +153,27 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('colors', [ColorController::class, 'index']);
     Route::get('sizes', [SizeController::class, 'index']);
     Route::get('weights', [WeightController::class, 'index']);
-    Route::get('units',[UnitController::class,'index']);
+    Route::get('units', [UnitController::class, 'index']);
 
     //Product
     Route::prefix('products')->namespace('Product')->group(function () {
         Route::get('', [ProductController::class, 'index']);
         Route::get('self/{id}', [ProductController::class, 'selfProduct']);
-        Route::post('', [ProductController::class, 'store']);
+        Route::post('/productadd', [ProductController::class, 'store']);
+        Route::get('{id}/edit', [ProductController::class, 'edit']);
         Route::post('update/{id}', [ProductController::class, 'update']);
         Route::get('delete/{id}', [ProductController::class, 'destroy']);
         Route::get('similar-product/{shopId}', [ProductController::class, 'similarProduct']);
         Route::get('similar-by-product/{productId}/{shopId}', [ProductController::class, 'similarProductByProduct']);
+        Route::get('remove-image-gallery/{id}', [ProductController::class, 'productImageGalleryRemove']);
+        Route::post('add-to-flash', [FlashsaleController::class, 'addToFlashSale']);
+        Route::post('add-to-festival', [FestivalSaleController::class, 'addToFestivalSale']);
     });
 
     Route::prefix('categories')->namespace('Category')->group(function () {
         Route::get('', [CategoryController::class, 'index']);
         Route::get('base', [CategoryController::class, 'baseCategories']);
-        Route::post('create',[CategoryController::class,'store']);
+        Route::post('create', [CategoryController::class, 'store']);
     });
 
     // oder related
@@ -171,8 +182,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('last-order', [OrderController::class, 'lastOrder']);
         Route::get('shipping-address', [OrderController::class, 'shippingAddress']);
         Route::get('self', [OrderController::class, 'selfOrder']);
+        Route::get('self/{status}', [OrderController::class, 'selfOrderBystatus']);
         Route::get('{id}', [OrderController::class, 'show']);
-        Route::post('', [OrderController::class, 'store']);
+        Route::get('shop/{id}', [OrderController::class, 'ordersByShop']);
+        Route::get('shop/{id}/sales-report', [OrderController::class, 'salesReport']);
+
+        Route::get('status-update/{status}/{id}', [OrderController::class, 'statusUpdate']);
+        Route::post('/storeOrder', [OrderController::class, 'store']);
     });
 
     Route::prefix('templates')->namespace('Template')->group(function () {
@@ -182,7 +198,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::prefix('videos')->namespace('Video')->group(function () {
         Route::post('/create', [InteractionController::class, 'storeVideo']);
-        Route::get('/{id}', [InteractionController::class, 'showVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
     });
 
