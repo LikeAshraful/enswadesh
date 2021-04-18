@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Order;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ShopVerifyNotification extends Notification
+class StatusUpdate extends Notification
 {
     use Queueable;
-    private $shopVerificationData;
+    private $orderData;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($shopVerificationData)
+    public function __construct($orderData)
     {
-        $this->shopVerificationData = $shopVerificationData;
+        $this->orderData = $orderData;
     }
 
     /**
@@ -30,7 +30,7 @@ class ShopVerifyNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -42,9 +42,13 @@ class ShopVerifyNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->markdown('mail.order.status_update', [
+                'name' => $this->orderData['name'],
+                'title' => $this->orderData['title'],
+                'body' => $this->orderData['body'],
+                'action_button' => $this->orderData['action_button'],
+                'action_url' => $this->orderData['action_url']
+            ]);
     }
 
     /**
@@ -56,7 +60,7 @@ class ShopVerifyNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'data' => $this->shopVerificationData
+            'data' => $this->orderData
         ];
     }
 }
