@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Order;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Order\Order;
 use Illuminate\Http\Request;
 use App\Models\Order\OrderItem;
@@ -15,6 +16,9 @@ use App\Models\Product\ProductWeight;
 use Repository\Order\OrderRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use App\Http\Resources\Order\OrderResource;
+use App\Notifications\Order\OrderPlaced;
+use App\Notifications\Order\StatusUpdate;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -61,11 +65,12 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        // return $request;
 
         $order = DB::transaction(function() use ($request) {
-
+            $order_no = GenerateOrderNumber();
             $order = $this->orderRepo->create($request->except('order_no') + [
-                'order_no' => GenerateOrderNumber()
+                'order_no' => $order_no
             ]);
 
             if ($request->has('products') && sizeof($request->products) > 0) {
@@ -102,6 +107,21 @@ class OrderController extends Controller
                         $productWeight->update();
                     }
                 }
+                $userSchema = User::find($request->customer_id);
+                $orderData = [
+                    'title' => 'Your Order ' . $order_no . ' Has been Placed',
+                    'body' => 'Once your order items is shipped, we will send an email with a link to track your order. Your order summary is given below. Thank you again for being with us.',
+                    'thanks' => 'Thank you',
+                    'action_button' => 'View Order',
+                    'action_url' => '/my-account/myorders',
+                    'shop_id' => $request->shop_id,
+                    'name' => $request->shipping_name,
+                ];
+
+                //sent notification & Mail while Order Placed
+                Notification::send($userSchema, new OrderPlaced($orderData));
+                // if($request->shipping_email != null || $request->shipping_email != $userSchema->email)
+                //         Notification::route('mail', $request->shipping_email)->notify(new OrderPlaced($orderData));
             }
 
         });
@@ -133,9 +153,23 @@ class OrderController extends Controller
         $order->order_status = $status;
         $order->update();
 
+        $userSchema = User::find($order->customer_id);
+        $orderData = [
+            'title' => 'Your Order ' . $order->order_no . ' status updated to ' . $order->orderStatus(),
+            'body' => 'For further details stay with us',
+            'action_button' => 'View Order',
+            'action_url' => '/my-account/myorders',
+            'name' => $order->shipping_name,
+        ];
+
+        // sent notification & Mail while Order Placed
+        Notification::send($userSchema, new StatusUpdate($orderData));
+        // if($order->shipping_email != null || $order->shipping_email != $userSchema->email)
+        //     Notification::route('mail', $order->shipping_email)->notify(new StatusUpdate($orderData));
+
         return $this->json(
-            "Order Updated Sucessfully",
-            $order
+            "Order Status Updated Sucessfully",
+            new OrderResource($order)
         );
     }
 
