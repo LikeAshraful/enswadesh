@@ -213,7 +213,7 @@
                         @endcanany
                     </ul>
                 </li>
-                <li class="{{ Route::is('backend.products.index*') ? 'mm-active' : '' }}">
+                <li class="{{ Route::is('backend.products.index*') || Route::is('backend.tutorial.index*') ? 'mm-active' : '' }}">
                     <a href="#">
                     <i class="metismenu-icon pe-7s-diamond"></i>
                         Prduct Management
@@ -224,6 +224,12 @@
                             <a class="{{ Route::is('backend.products.index*') ? 'mm-active' : '' }}" href="{{route('backend.products.index')}}">
                                 <i class="metismenu-icon"></i>
                                     Products
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ Route::is('backend.tutorial.index*') ? 'mm-active' : '' }}" href="{{route('backend.tutorial.index')}}">
+                                <i class="metismenu-icon"></i>
+                                    Tutorial
                             </a>
                         </li>
                     </ul>

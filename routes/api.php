@@ -11,6 +11,7 @@ use App\Http\Controllers\API\Shop\ShopTypeController;
 use App\Http\Controllers\API\Location\FloorController;
 use App\Http\Controllers\API\Location\MarketController;
 use App\Http\Controllers\API\Product\ProductController;
+use App\Http\Controllers\API\General\TutorialController;
 use App\Http\Controllers\API\Interaction\LikeController;
 use App\Http\Controllers\API\Interaction\ShareController;
 use App\Http\Controllers\API\Product\Base\SizeController;
@@ -169,6 +170,9 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('add-to-flash', [FlashsaleController::class, 'addToFlashSale']);
         Route::post('add-to-festival', [FestivalSaleController::class, 'addToFestivalSale']);
     });
+
+    // product tutorial
+    Route::get('product-tutorial', [TutorialController::class, 'index']);
 
     Route::prefix('categories')->namespace('Category')->group(function () {
         Route::get('', [CategoryController::class, 'index']);
