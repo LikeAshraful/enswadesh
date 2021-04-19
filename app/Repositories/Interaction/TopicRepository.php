@@ -19,6 +19,11 @@ class TopicRepository extends BaseRepository
         return Storage::put('uploads/interaction/topic', $file);
     }
 
+    public function getTopicByCategoryID($id)
+    {
+        return $this->model()::where('interaction_category_id', $id)->get();
+    }
+
     public function deleteTopic($id)
     {
         $topic = $this->findById($id);

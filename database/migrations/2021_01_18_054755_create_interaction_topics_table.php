@@ -20,6 +20,7 @@ class CreateInteractionTopicsTable extends Migration
             $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
+            $table->unsignedBigInteger('interaction_category_id')->nullable()->constrained('interaction_categories');
             $table->timestamps();
         });
     }

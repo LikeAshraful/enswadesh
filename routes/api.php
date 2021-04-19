@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\UserManagement\VendorController;
 use App\Http\Controllers\API\UserManagement\ProfileController;
 use App\Http\Controllers\API\Interaction\InteractionController;
 use App\Http\Controllers\API\General\Category\CategoryController;
+use App\Http\Controllers\API\Interaction\InteractionTopicController;
 use App\Http\Controllers\API\ShopingFriend\ShopingFriendController;
 use App\Http\Controllers\API\ShopSubscribe\ShopingSubscribeController;
 
@@ -88,7 +89,10 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::get('/flash-sale', [FlashsaleController::class, 'index']);
 Route::get('/festival-sale', [FestivalSaleController::class, 'index']);
 
-
+Route::prefix('topics')->namespace('Topic')->group(function () {
+    Route::get('', [InteractionTopicController::class, 'index']);
+    Route::get('/category/{category_id}', [InteractionTopicController::class, 'getAllByCategoryID']);
+});
 
 //For Authenticated User
 Route::group(['middleware' => 'auth:api'], function () {

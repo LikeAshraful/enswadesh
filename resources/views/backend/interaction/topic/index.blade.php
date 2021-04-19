@@ -38,6 +38,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Title</th>
                             <th scope="col">Image</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -51,9 +52,10 @@
                             </td>
                             <td>
                                 <img class="img-fluid img-thumbnail"
-                                    src="/{{ $topic->thumbnail }}" width="50" height="50"
+                                    src="/storage/{{ $topic->thumbnail }}" width="50" height="50"
                                     alt="">
                             </td>
+                            <td>{{$topic->interaction_category->title}}</td>
                             <td><div class="badge {{ $topic->status == 0 ? 'badge-warning' :  'badge-primary' }}">{{ $topic->status == 0 ? 'InActive' : 'Active' }}</div></td>
                             <td>
                                 <a class="fa-edit-style" href="{{ route('backend.topics.edit', $topic->id) }}"><i

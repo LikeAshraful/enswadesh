@@ -14,6 +14,6 @@ class InteractionTopicSeeder extends Seeder
      */
     public function run()
     {
-        InteractionTopic::factory()->count(10)->create();
+        InteractionTopic::factory()->count(50)->create();
     }
 }
