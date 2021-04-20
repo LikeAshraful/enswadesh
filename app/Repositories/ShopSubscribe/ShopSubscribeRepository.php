@@ -4,6 +4,7 @@ namespace Repository\ShopSubscribe;
 
 use App\Models\ShopSubscribe;
 use Repository\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 
 class ShopSubscribeRepository extends BaseRepository
 {
@@ -22,6 +23,12 @@ class ShopSubscribeRepository extends BaseRepository
         return $this->model()::create($modelData);
     }
 
+    public function changeNickname($id, array $modelData)
+    {
+        $subscribe = $this->model()::where('user_id', Auth::id())->where('id', $id)->first();
+        return $subscribe->update($modelData);
+    }
+
     public function checkByShop($shopId)
     {
         return $this->model()::where('user_id', auth()->user()->id)->where('shop_id', $shopId)->first();
@@ -31,5 +38,17 @@ class ShopSubscribeRepository extends BaseRepository
     {
         $shops = $this->model()::where('shop_id', $shopId)->get();
         return $shops->count();
+    }
+
+    public function getSubscribesInfo($shopId)
+    {
+        $subscribers = $this->model()::with('subscriber')->where('shop_id', $shopId)->get();
+        return $subscribers;
+    }
+
+    public function deleteByID($id)
+    {
+        $subscribe = $this->model()::where('user_id', Auth::id())->where('id', $id)->first();
+        $subscribe->delete();
     }
 }

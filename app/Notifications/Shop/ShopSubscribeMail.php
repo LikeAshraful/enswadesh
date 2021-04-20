@@ -14,9 +14,9 @@ class ShopSubscribeMail extends Notification
 
     public $subscribeShop;
 
-    public function __construct(ShopSubscribe $SubscribeShpos)
+    public function __construct(ShopSubscribe $subscribeShpos)
     {
-        $this->subscribeShop = $SubscribeShpos;
+        $this->subscribeShop = $subscribeShpos;
     }
 
     public function via($notifiable)

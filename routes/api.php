@@ -112,6 +112,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Notifications
     Route::prefix('notifications')->group(function () {
         Route::get('', [NotificationController::class, 'index'])->name('notification.index');
+        Route::get('product-notification', [NotificationController::class, 'productNotificationByID'])->name('notification.new-product-notification');
         Route::post('/read', [NotificationController::class, 'readNotification'])->name('notification.read');
     });
 
@@ -127,7 +128,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Shop Subscribe
     Route::get('subscribe-list', [ShopingSubscribeController::class, 'index']);
     Route::post('subscribe-request', [ShopingSubscribeController::class, 'sentShopSubscribeRequest']);
+    Route::post('rename-nickname', [ShopingSubscribeController::class, 'renameNickname']);
     Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
+    Route::get('notify-subscribers/{shopId}',[ShopingSubscribeController::class,'notifySubscribers']);
+    Route::get('unsubscribe/{id}',[ShopingSubscribeController::class,'unsubscribe']);
 
     //Shop wish list
     Route::get('wishlist-request/{id}', [WishlistController::class, 'sentWishlistRequest']);
