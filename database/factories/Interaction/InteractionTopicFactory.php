@@ -2,8 +2,9 @@
 
 namespace Database\Factories\Interaction;
 
-use App\Models\Interaction\InteractionTopic;
 use Illuminate\Support\Str;
+use App\Models\Interaction\InteractionTopic;
+use App\Models\Interaction\InteractionCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InteractionTopicFactory extends Factory
@@ -28,7 +29,8 @@ class InteractionTopicFactory extends Factory
         return [
             'title' => $title,
             'description' => $this->faker->paragraph,
-            'slug' => $slug
+            'slug' => $slug,
+            'interaction_category_id' => InteractionCategory::all()->random()->id,
         ];
     }
 }

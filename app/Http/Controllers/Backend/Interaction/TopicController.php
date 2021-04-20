@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Interaction;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Interaction\InteractionCategory;
 use Illuminate\Support\Facades\Gate;
 use Repository\Interaction\TopicRepository;
 
@@ -26,7 +27,8 @@ class TopicController extends Controller
     public function create()
     {
         Gate::authorize('backend.topics.create');
-        return view('backend.interaction.topic.form');
+        $interactionCategories = InteractionCategory::select('title', 'id')->get();
+        return view('backend.interaction.topic.form', compact('interactionCategories'));
     }
 
     public function store(Request $request)
@@ -53,7 +55,8 @@ class TopicController extends Controller
     {
         Gate::authorize('backend.topics.edit');
         $topic = $this->topicRepo->findByID($id);
-        return view('backend.interaction.topic.form',compact('topic'));
+        $interactionCategories = InteractionCategory::select('title', 'id')->get();
+        return view('backend.interaction.topic.form',compact('topic', 'interactionCategories'));
     }
 
     public function update(Request $request, $id)

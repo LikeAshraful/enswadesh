@@ -33,10 +33,10 @@ class InteractionFactory extends Factory
             'description' => $this->faker->paragraph,
             'slug' => $slug,
             'user_id' => User::all()->random()->id,
-            'status' => $this->faker->randomElement(['Pending' ,'Approved', 'Declined']),
+            'status' => 'Approved',
             'topic_id' => InteractionTopic::all()->random()->id,
-            // 'interaction_category_id' => InteractionCategory::all()->random()->id,
-            'interaction_category_id' => $this->faker->randomElement([1,2])
+            'interaction_category_id' => InteractionCategory::all()->random()->id,
+            // 'interaction_category_id' => $this->faker->randomElement([1,2])
         ];
     }
 }

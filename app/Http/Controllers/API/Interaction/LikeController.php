@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Interaction;
 
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Repository\Interaction\LikeRepository;

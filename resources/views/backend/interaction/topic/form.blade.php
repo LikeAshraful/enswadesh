@@ -46,7 +46,7 @@
                 @method('PUT')
                 @endif
                 <div class="card-body">
-                    <h5 class="card-title">Manage User Interaction Topic/Questions</h5>
+                    <h5 class="card-title">Manage User Contribution Topic/Questions</h5>
                     <div class="form-group">
                         <Label for='title'>Topic Name</Label>
                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
@@ -68,6 +68,14 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                    </div>
+                    <div class="form-group">
+                        <Label for='interaction_category'>Select Category</Label>
+                        <select class="form-control-sm form-control" name="interaction_category_id" id="interaction_category">
+                            @foreach ($interactionCategories as $category )
+                                <option value="{{$category->id}}" {{isset($topic) ? ($topic->interaction_category->id == $category->id ? 'selected' : '') : '' }}>{{$category->title}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     @if (isset($topic))
                     <div class="form-group">
