@@ -27,7 +27,39 @@ class SearchController extends Controller
         $this->productRepo = $productRepository;
     }
 
-    public function searchAllHeder(Request $request)
+    public function searchAllHeder($type, $key)
+    {
+        if ($type == 1) {
+            $markets = $this->marketRepo->mainSearchMarkets($key);
+            return $this->json(
+                'Search Markets list',
+                MarketResource::collection($markets)->response()->getData(true)
+            );
+        } elseif ($type == 2) {
+            $shops = $this->shopRepo->mainSearchShops($key);
+            return $this->json(
+                'Search Shop list',
+                ShopResource::collection($shops)->response()->getData(true)
+            );
+        } elseif ($type == 3) {
+            $products = $this->productRepo->mainSearchProducts($key);
+            return $this->json('Products By Search List', ProductResource::collection($products)->response()->getData(true));
+        } else {
+            $markets = $this->marketRepo->mainSearchMarkets($key);
+            $markets = MarketResource::collection($markets)->response()->getData(true);
+            $shops = $this->shopRepo->mainSearchShops($key);
+            $shops = ShopResource::collection($shops)->response()->getData(true);
+            $products = $this->productRepo->mainSearchProducts($key);
+            $products = ProductResource::collection($products)->response()->getData(true);
+            $alls = array();
+            array_push($alls, $markets, $shops, $products);
+            return response()->json(
+                $alls
+            );
+        }
+    }
+
+    public function searchAllHeder1(Request $request)
     {
         if ($request->params['selectType'] == 1) {
             $markets = $this->marketRepo->mainSearchMarkets($request->params['keyword']);
@@ -57,62 +89,5 @@ class SearchController extends Controller
                 $alls
             );
         }
-    }
-
-
-    public function create()
-    {
-        //
-    }
-
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
