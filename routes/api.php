@@ -41,7 +41,8 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::get('menus', [AppMenuController::class, 'index']);;
 Route::get('areas', [AreaController::class, 'index']);
 Route::get('areas-by-city/{id}', [AreaController::class, 'areaByCity']);
-Route::post('search-all-header', [SearchController::class, 'searchAllHeder']);
+// Route::post('search-all-header', [SearchController::class, 'searchAllHeder']);
+Route::get('searchallheader/{type}/{key}', [SearchController::class, 'searchAllHeder']);
 
 Route::prefix('cities')->namespace('City')->group(function () {
     Route::get('', [CityController::class, 'index']);
@@ -180,6 +181,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     // product tutorial
+
     Route::get('product-tutorial', [TutorialController::class, 'index']);
 
     Route::prefix('categories')->namespace('Category')->group(function () {
