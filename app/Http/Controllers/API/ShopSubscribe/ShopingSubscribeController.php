@@ -68,7 +68,8 @@ class ShopingSubscribeController extends Controller
         $subscribers = $this->shopSubscribeRepo->getSubscribesInfo($shopId);
         foreach($subscribers as $key => $subscriber)
         {
-            $userSchema = $this->userRepo->model()::find($subscriber->id);
+
+            $userSchema = $this->userRepo->model()::where('id', $subscriber->user_id)->first();
             $notificationData = [
                     'name' => $userSchema->name,
                     'email'=> $userSchema->email,
