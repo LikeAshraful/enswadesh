@@ -19,10 +19,10 @@ class CreateInteractionsTable extends Migration
             $table->string('slug')->nullable();
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->enum('status', ['Pending' ,'Approved', 'Declined'])->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->enum('status', ['Pending' ,'Approved', 'Declined'])->default('Pending');
+            $table->unsignedBigInteger('user_id')->contstrained('users');
             $table->unsignedBigInteger('interaction_category_id')->nullable()->constrained('interaction_categories');
-            $table->unsignedBigInteger('topic_id')->nullable()->constrained('interaction_topics');
+            $table->unsignedBigInteger('topic_id')->constrained('interaction_topics');
             $table->timestamps();
         });
     }

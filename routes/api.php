@@ -205,12 +205,17 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::prefix('templates')->namespace('Template')->group(function () {
         Route::get('', [InteractionController::class, 'templates']);
-        Route::post('/create', [InteractionController::class, 'storeTemplate']);
+        // Route::post('/create', [InteractionController::class, 'storeTemplate']);
     });
 
     Route::prefix('videos')->namespace('Video')->group(function () {
-        Route::post('/create', [InteractionController::class, 'storeVideo']);
+        // Route::post('/create', [InteractionController::class, 'storeVideo']);
         Route::post('/{id}/update', [InteractionController::class, 'updateVideo']);
+    });
+
+    Route::prefix('interaction')->namespace('interaction')->group(function () {
+        Route::post('/store', [InteractionController::class, 'store']);
+        Route::post('/{id}/update', [InteractionController::class, 'update']);
     });
 
     Route::prefix('comments')->namespace('Comment')->group(function () {

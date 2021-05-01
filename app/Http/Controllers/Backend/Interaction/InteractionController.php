@@ -33,6 +33,22 @@ class InteractionController extends Controller
         return view('backend.interaction.template.index',compact('templates'));
     }
 
+    public function stories()
+    {
+        $stories = $this->interactionRepo->getInteractionsByCategoryID(5);
+        return view('backend.interaction.stories.index',compact('stories'));
+    }
+    public function real_experiences()
+    {
+        $real_experiences = $this->interactionRepo->getInteractionsByCategoryID(3);
+        return view('backend.interaction.real_experiences.index',compact('real_experiences'));
+    }
+    public function memes()
+    {
+        $memes = $this->interactionRepo->getInteractionsByCategoryID(4);
+        return view('backend.interaction.memes.index',compact('memes'));
+    }
+
     public function statusUpdate(Request $request, $id)
     {
         $this->interactionRepo->updateByID($id, $request->all());
