@@ -33,17 +33,15 @@ class ShopingFriendController extends Controller
     public function index()
     {
         $followers = $this->shopingFriendRepo->getFollowers();
-        $following = $this->shopingFriendRepo->getFollowing();
+        // $following = $this->shopingFriendRepo->getFollowing();
 
-        return $this->json('List of followers and following',[
-            'followers' =>  $followers,
-            'following' =>  $following
-        ]);
+        return $this->json('List of followers and following', $followers);
     }
 
-    public function shopingFriendSearch(Request $request)
+    public function shopingFriendSearch($keyword)
     {
-        $user = $this->userRepo->getUserBySearch($request['keyword']);
+        // return $keyword;
+        $user = $this->userRepo->getUserBySearch($keyword);
         return $this->json('User Friend', $user);
     }
 

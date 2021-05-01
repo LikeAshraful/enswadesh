@@ -21,7 +21,7 @@ class NotificationController extends Controller
 
     public function index()
     {
-        $notifications = auth()->user()->unreadNotifications;
+        $notifications = auth()->user()->unreadNotifications->where('type','App\Notifications\ShopVerifyNotification');
 
         return $this->json(
             'Notifications',

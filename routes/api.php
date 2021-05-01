@@ -121,10 +121,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('shop-rating', [ShopRatingController::class, 'sentShopRating']);
 
     //Shoping Friend
-    Route::get('index', [ShopingFriendController::class, 'index']);
+    Route::get('friend-lists', [ShopingFriendController::class, 'index']);
     Route::post('friend-request', [ShopingFriendController::class, 'sentShopingFriendRequest']);
     Route::post('invite-request', [ShopingFriendController::class, 'sentShopingFriendInvitation']);
-    Route::any('search/shoping-friend', [ShopingFriendController::class, 'shopingFriendSearch']);
+    Route::get('search/shoping-friend/{keyword}', [ShopingFriendController::class, 'shopingFriendSearch']);
 
     //Shop Subscribe
     Route::get('subscribe-list', [ShopingSubscribeController::class, 'index']);

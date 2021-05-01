@@ -20,7 +20,7 @@ class ProductNotifyMail extends Notification
 
     public function via()
     {
-        return ['mail','database'];
+        return ['database'];
     }
 
 
