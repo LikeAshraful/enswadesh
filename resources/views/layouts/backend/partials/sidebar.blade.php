@@ -294,6 +294,28 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{route('backend.real_experiences.index')}}"
+                                class="{{ Route::is('backend.real_experiences.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Real Experiences
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.memes.index')}}"
+                                class="{{ Route::is('backend.memes.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                   Memes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.stories.index')}}"
+                                class="{{ Route::is('backend.stories.index*') ? 'mm-active' : '' }}">
+                                <i class="metismenu-icon"></i>
+                                    Stories
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{route('backend.comments.index')}}"
                                 class="{{ Route::is('backend.comments.index*') ? 'mm-active' : '' }}">
                                 <i class="metismenu-icon"></i>

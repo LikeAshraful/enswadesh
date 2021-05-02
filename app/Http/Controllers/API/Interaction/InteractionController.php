@@ -33,37 +33,40 @@ class InteractionController extends Controller
         );
     }
 
-    public function storeVideo(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
             'thumbnail' => 'required|mimes:jpeg,jpg,png|max:500',
-            'status' => 'required|in:Pending,Approved,Declined'
+            'file_path' => 'required_if:file_type,Video|mimes:mp4,flv,mov,avi,wmv|max:20000'
         ]);
 
         if ($validator->fails()) {
             $message = $validator->errors();
-            return response()->json($message);
+            return $this->bad($message);
         }
 
-        $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'video') : null;
-        $videoFile = $request->hasFile('video') ? $this->interactionRepo->storeFile($request->file('video'), 'video') : null;
+        $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'contribution') : null;
+
+        $file = $request->hasFile('file_path') ? $this->interactionRepo->storeFile($request->file('file_path'), 'video') : null;
 
         DB::beginTransaction();
         try {
-            $video = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
+            $interaction = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
                 'thumbnail' => $image,
                 'user_id' => Auth::id()
             ]);
-            //save video file
-            InteractionFile::create([
-                'interaction_id' => $video->id,
-                'file_path' => $videoFile,
-                'file_type' => $request->file_type
-            ]);
+            if($file != null) {
+                //save file
+                InteractionFile::create([
+                    'interaction_id' => $interaction->id,
+                    'file_path' => $file,
+                    'file_type' => $request->file_type
+                ]);
+            }
             //save logs
-            $this->interactionRepo->storeLog($video->id, 'Video Created', 'created');
+            $this->interactionRepo->storeLog($interaction->id, 'New Interaction Created', 'created');
 
             DB::commit();
 
@@ -73,10 +76,55 @@ class InteractionController extends Controller
         }
 
         return $this->json(
-            "Video Created Sucessfully",
-            $video
+            "Your Contribution Uploaded Sucessfully",
+            $interaction
         );
     }
+
+    // public function storeVideo(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'title' => 'required',
+    //         'description' => 'required',
+    //         'thumbnail' => 'required|mimes:jpeg,jpg,png|max:500',
+    //         'status' => 'required|in:Pending,Approved,Declined'
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         $message = $validator->errors();
+    //         return response()->json($message);
+    //     }
+
+    //     $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'video') : null;
+    //     $videoFile = $request->hasFile('video') ? $this->interactionRepo->storeFile($request->file('video'), 'video') : null;
+
+    //     DB::beginTransaction();
+    //     try {
+    //         $video = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
+    //             'thumbnail' => $image,
+    //             'user_id' => Auth::id()
+    //         ]);
+    //         //save video file
+    //         InteractionFile::create([
+    //             'interaction_id' => $video->id,
+    //             'file_path' => $videoFile,
+    //             'file_type' => $request->file_type
+    //         ]);
+    //         //save logs
+    //         $this->interactionRepo->storeLog($video->id, 'Video Created', 'created');
+
+    //         DB::commit();
+
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return response()->json($e);
+    //     }
+
+    //     return $this->json(
+    //         "Video Created Sucessfully",
+    //         $video
+    //     );
+    // }
 
     public function showVideo($id)
     {
@@ -159,43 +207,43 @@ class InteractionController extends Controller
         );
     }
 
-    public function storeTemplate(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'description' => 'required',
-            'thumbnail' => 'required|mimes:jpeg,jpg,png|max:500',
-            'status' => 'required|in:Pending,Approved,Declined'
-        ]);
+    // public function storeTemplate(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'title' => 'required',
+    //         'description' => 'required',
+    //         'thumbnail' => 'required|mimes:jpeg,jpg,png|max:500',
+    //         'status' => 'required|in:Pending,Approved,Declined'
+    //     ]);
 
-        if ($validator->fails()) {
-            $message = $validator->errors();
-            return response()->json($message);
-        }
+    //     if ($validator->fails()) {
+    //         $message = $validator->errors();
+    //         return response()->json($message);
+    //     }
 
-        $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'template') : null;
+    //     $image = $request->hasFile('thumbnail') ? $this->interactionRepo->storeFile($request->file('thumbnail'), 'template') : null;
 
-       DB::beginTransaction();
-       try
-       {
-        $template = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
-            'thumbnail'          => $image,
-            'user_id' => Auth::id()
-        ]);
+    //    DB::beginTransaction();
+    //    try
+    //    {
+    //     $template = $this->interactionRepo->create($request->except(['thumbnail','user_id']) + [
+    //         'thumbnail'          => $image,
+    //         'user_id' => Auth::id()
+    //     ]);
 
-        //save logs
-        $this->interactionRepo->storeLog($template->id, 'Template Created', 'created');
+    //     //save logs
+    //     $this->interactionRepo->storeLog($template->id, 'Template Created', 'created');
 
-        Db::commit();
+    //     Db::commit();
 
-       } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json($e);
-       }
+    //    } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return response()->json($e);
+    //    }
 
-        return $this->json(
-            "Tempalte Created Sucessfully",
-            $template
-        );
-    }
+    //     return $this->json(
+    //         "Tempalte Created Sucessfully",
+    //         $template
+    //     );
+    // }
 }
