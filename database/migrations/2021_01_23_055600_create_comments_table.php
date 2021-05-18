@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->string('file')->nullable();
             $table->string('file_type')->nullable();
             $table->boolean('status')->default(1);
-            $table->foreignId('reply_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignId('reply_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('interaction_id')->constrained('interactions')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

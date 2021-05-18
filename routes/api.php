@@ -87,6 +87,7 @@ Route::any('products-by-shop/{shop_id}', [ProductController::class, 'productsByS
 Route::any('products-by-shop/category/{shop_id}/{cate_id}', [ProductController::class, 'productsByShopByCategory']);
 Route::post('search/products', [ProductController::class, 'searchProducts']);
 Route::get('products/{id}', [ProductController::class, 'show']);
+Route::get('products/similar-product/{shopId}', [ProductController::class, 'similarProduct']);
 
 Route::get('/flash-sale', [FlashsaleController::class, 'index']);
 Route::get('/festival-sale', [FestivalSaleController::class, 'index']);
@@ -173,7 +174,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('{id}/edit', [ProductController::class, 'edit']);
         Route::post('update/{id}', [ProductController::class, 'update']);
         Route::get('delete/{id}', [ProductController::class, 'destroy']);
-        Route::get('similar-product/{shopId}', [ProductController::class, 'similarProduct']);
         Route::get('similar-by-product/{productId}/{shopId}', [ProductController::class, 'similarProductByProduct']);
         Route::get('remove-image-gallery/{id}', [ProductController::class, 'productImageGalleryRemove']);
         Route::post('add-to-flash', [FlashsaleController::class, 'addToFlashSale']);

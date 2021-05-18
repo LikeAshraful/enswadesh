@@ -22,7 +22,7 @@ class CommentResource extends JsonResource
             'interaction'=> $this->interaction,
             'file_type' => $this->file_type,
             'file' => $this->file,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at,
         ];
     }

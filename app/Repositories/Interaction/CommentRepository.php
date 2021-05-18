@@ -21,7 +21,7 @@ class CommentRepository extends BaseRepository
 
     public function getCommentsByInteractionID($id)
     {
-        return $this->model()::where('interaction_id', $id)->get();
+        return $this->model()::where('interaction_id', $id)->where('status', 1)->get();
     }
 
     public function deleteComment($id)

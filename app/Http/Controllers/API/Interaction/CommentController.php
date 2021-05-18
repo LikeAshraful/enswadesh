@@ -49,7 +49,7 @@ class CommentController extends Controller
 
         if ($validator->fails()) {
             $message = $validator->errors();
-            return response()->json($message);
+            return $this->bad($message);
         }
 
         $file = $request->hasFile('file') ? $this->commentRepo->storeFile($request->file('file')) : null;
