@@ -35,7 +35,15 @@ class ShopingFriendController extends Controller
         $followers = $this->shopingFriendRepo->getFollowers();
         // $following = $this->shopingFriendRepo->getFollowing();
 
-        return $this->json('List of followers and following', $followers);
+        return $this->json('List of followers', $followers);
+    }
+
+    public function requestFriend()
+    {
+        $followers = $this->shopingFriendRepo->getFollowers();
+        $following = $this->shopingFriendRepo->getFollowing();
+
+        return $this->json('List of following', $following);
     }
 
     public function shopingFriendSearch($keyword)

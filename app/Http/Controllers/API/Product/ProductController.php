@@ -12,6 +12,7 @@ use Repository\Product\ProductRepository;
 use App\Http\Controllers\JsonResponseTrait;
 use Repository\Product\ProductMediaRepository;
 use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\Rating\ProductRatingResource;
 use Repository\Product\ProductCategoryRepository;
 
 class ProductController extends Controller
@@ -189,6 +190,19 @@ class ProductController extends Controller
             'Similar Product Show',
             new ProductResource($product)
         );
+    }
+
+    public function storeProductRating(Request $request)
+    {
+        $productRating = $this->productRepo->storeProductRating($request->all());
+
+        return $this->json('Product rating',$productRating);
+    }
+
+    public function getRatingAndReview($productId)
+    {
+        $getRatingAndReview = $this->productRepo->getRatingAndReview($productId);
+        return $this->json('Rating and Review List', ProductRatingResource::collection($getRatingAndReview)->response()->getData(true));
     }
 
     public function destroy($id)

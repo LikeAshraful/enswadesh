@@ -15,6 +15,11 @@ class CreateProductRatingsTable extends Migration
     {
         Schema::create('product_ratings', function (Blueprint $table) {
             $table->id();
+            $table->integer('rate')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
+            $table->text('review')->nullable();
             $table->timestamps();
         });
     }
