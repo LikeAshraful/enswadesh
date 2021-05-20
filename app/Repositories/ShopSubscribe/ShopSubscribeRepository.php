@@ -49,6 +49,15 @@ class ShopSubscribeRepository extends BaseRepository
     public function deleteByID($id)
     {
         $subscribe = $this->model()::where('user_id', Auth::id())->where('id', $id)->first();
-        $subscribe->delete();
+        return $subscribe->delete();
+    }
+
+    public function searchSubscribe($key)
+    {
+        return $this->model()::with('subscribeShop')->where('user_id', auth()->user()->id)
+        ->whereHas('subscribeShop', function ($query) use ($key) {
+            $query->where('name', 'like', '%'.$key.'%');
+        })
+        ->get();
     }
 }

@@ -86,4 +86,11 @@ class ShopingSubscribeController extends Controller
         $message    ="Unsubscribe!";
         return $this->json($message, $subscribe);
     }
+
+    public function searchSubscribe($key)
+    {
+        $subscribe   = $this->shopSubscribeRepo->searchSubscribe($key);
+        $message    ="Search Subscribe list!";
+        return $this->json($message, $subscribe);
+    }
 }

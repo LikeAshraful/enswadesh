@@ -4,10 +4,12 @@ namespace Repository\Product;
 
 use Repository\BaseRepository;
 use App\Models\Product\Product;
+use App\Models\Rating\ProductRating;
 use App\Models\Product\ProductCategory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Repository\Shop\ShopRepository;
+use Illuminate\Support\Facades\Auth;
 
 class ProductRepository extends BaseRepository
 {
@@ -114,4 +116,15 @@ class ProductRepository extends BaseRepository
     {
         return $this->model()::where('id', $productId)->where('shop_id', $shop_id)->first();
     }
+
+    public function storeProductRating(array $modelData)
+    {
+        return ProductRating::create($modelData);
+    }
+
+    public function getRatingAndReview($productId)
+    {
+        return ProductRating::where('product_id', $productId)->get();
+    }
 }
+

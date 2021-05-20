@@ -133,6 +133,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('subscribe-check-by-shop-customer/{shopId}', [ShopingSubscribeController::class, 'checkByShop']);
     Route::get('notify-subscribers/{shopId}',[ShopingSubscribeController::class,'notifySubscribers']);
     Route::get('unsubscribe/{id}',[ShopingSubscribeController::class,'unsubscribe']);
+    Route::get('search-subscribe-shop/{key}',[ShopingSubscribeController::class,'searchSubscribe']);
 
     //Shop wish list
     Route::get('wishlist-request/{id}', [WishlistController::class, 'sentWishlistRequest']);
@@ -183,6 +184,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     // product tutorial
 
     Route::get('product-tutorial', [TutorialController::class, 'index']);
+
+    // product-rating part
+
+    Route::post('product-rating', [ProductController::class, 'storeProductRating']);
+    Route::get('product-rating-review/{productId}', [ProductController::class, 'getRatingAndReview']);
 
     Route::prefix('categories')->namespace('Category')->group(function () {
         Route::get('', [CategoryController::class, 'index']);
