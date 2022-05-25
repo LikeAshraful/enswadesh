@@ -46,29 +46,29 @@
                 @method('PUT')
                 @endif
                 <div class="form-group">
-                    <label for="menu_name">Menu Name</label>
-                    <input type="text" id="menu_name" name="menu_name"
-                    class="form-control @error('menu_name') is-invalid @enderror"
-                    value="{{ isset($menu) ? $menu->menu_name : '' }}" placeholder="Menu name">
-                    @error('menu_name')
+                    <label for="name">Menu Name</label>
+                    <input type="text" id="name" name="name"
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ isset($menu) ? $menu->name : '' }}" placeholder="Menu name">
+                    @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="menu_description">Menu Description</label>
-                    <input type="text" id="menu_description" name="menu_description" class="form-control"
-                    value="{{ isset($menu) ? $menu->menu_description : '' }}"
+                    <label for="description">Menu Description</label>
+                    <input type="text" id="description" name="description" class="form-control"
+                    value="{{ isset($menu) ? $menu->description : '' }}"
                     placeholder="Menu Description">
                 </div>
                 <div class="form-group">
-                    <label for='menu_icon'>Menu Icon</label>
-                    <input id="menu_icon" type="file"
-                    class="dropify @error('menu_icon') is-invalid @enderror" name="menu_icon" data-default-file="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'. $menu->menu_icon): '' }}"
+                    <label for='icon'>Menu Icon</label>
+                    <input id="icon" type="file"
+                    class="dropify @error('icon') is-invalid @enderror" name="icon" data-default-file="{{ isset($menu) ? asset($menu->icon) : '' }}"
                     data-height="220"
-                    value="{{ isset($menu) ? asset('/uploads/shopproperty/menus/'.$menu->menu_icon) : '' }}">
-                    @error('menu_icon')
+                    value="{{ isset($menu) ? asset($menu->icon) : '' }}">
+                    @error('icon')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

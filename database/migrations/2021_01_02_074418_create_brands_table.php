@@ -15,14 +15,12 @@ class CreateBrandsTable extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')              ->index()->unique();
             $table->string('description')       ->nullable();
-            $table->string('slug');
+            $table->string('slug')              ->index();
             $table->string('icon')              ->nullable();
-            
-            $table->integer('created_by')       ->unsigned()->nullable();
-            $table->integer('updated_by')       ->unsigned()->nullable();
-            $table->integer('deleted_by')       ->unsigned()->nullable();
+            $table->unsignedBigInteger('user_id')->constrained('users');
+            $table->unsignedBigInteger('shop_id')->constrained('shops');
             $table->timestamps();
         });
     }

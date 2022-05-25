@@ -7,30 +7,21 @@ use Illuminate\Support\Facades\Gate;
 
 class UpdateUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        Gate::authorize('backend.users.edit');
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
+        if(request()->route('admin')){
+            $parameter  = request()->route('admin');
+        }elseif(request()->route('super_admin')){
+            $parameter  = request()->route('super_admin');
+        }elseif(request()->route('vendor')){
+            $parameter  = request()->route('vendor');
+        }
+
         return [
             'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->route()->parameters()['user']],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $parameter],
             'password'  => ['nullable', 'string', 'min:8', 'confirmed'],
             'role'      => ['required'],
-            'image'     => 'nullable|mimes:jpeg,jpg,png|max:500',
         ];
     }
 }

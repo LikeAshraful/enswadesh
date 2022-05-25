@@ -2,136 +2,89 @@
 
 namespace App\Http\Controllers\Backend\Location;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Location\Thana;
-use App\Models\Location\Market;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Repository\Location\AreaRepository;
+use Repository\Location\CityRepository;
+use Repository\Location\MarketRepository;
+use App\Http\Requests\Location\Market\StoreMarketRequest;
+use App\Http\Requests\Location\Market\UpdateMarketRequest;
 
 class MarketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    public $cityRepo;
+    public $areaRepo;
+    public $marketRepo;
+
+    public function __construct(CityRepository $cityRepository, AreaRepository $areaRepository, MarketRepository $marketRepository)
+    {
+        $this->cityRepo     = $cityRepository;
+        $this->areaRepo     = $areaRepository;
+        $this->marketRepo   = $marketRepository;
+    }
+
     public function index()
     {
-        $markets = Market::with('thanaOfMarket')->get();
+        Gate::authorize('backend.markets.index');
+        $markets = $this->marketRepo->getAll();
         return view('backend.location.market.index',  compact('markets'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
-        $thanas = Thana::all();
-        return view('backend.location.market.form', compact('thanas'));
+        Gate::authorize('backend.markets.create');
+        $cities = $this->cityRepo->getAll();
+        $areas  = $this->areaRepo->getAll();
+        return view('backend.location.market.form', compact('cities', 'areas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function store(StoreMarketRequest $request)
     {
-        $request->validate([
-            'market_name' => 'required',
-            'market_address' => 'required',
-            'market_description' => 'required',
-            'market_icon' => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
-
-        if ($market_icon = $request->file('market_icon')) {
-            $filename = rand(10, 100) . time() . '.' . $market_icon->getClientOriginalExtension();
-            $location = public_path('/uploads/shopproperty/market/' . $filename);
-            Image::make($market_icon)->resize(600, 400)->save($location);
-        }
-
-        $slug = Str::of($request->market_name)->slug('_');
-        Market::create($request->except('market_icon', 'market_slug') +
+        $icon = $request->hasFile('icon') ? $this->marketRepo->storeFile($request->file('icon')) : null;
+        $this->marketRepo->create($request->except('icon') +
             [
-                'market_icon' => $filename,
-                'market_slug' => $slug
+                'icon' => $icon
             ]);
-
-        notify()->success('market Successfully Added.', 'Added');
+        notify()->success('Market Successfully Added.', 'Added');
         return redirect()->route('backend.markets.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        $thanas = Thana::all();
-        $market = Market::find($id);
-        return view('backend.location.market.form', compact('market', 'thanas'));
+        Gate::authorize('backend.markets.edit');
+        $cities = $this->cityRepo->getAll();
+        $areas = $this->areaRepo->getAll();
+        $market = $this->marketRepo->findByID($id);
+        return view('backend.location.market.form', compact('market', 'cities', 'areas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateMarketRequest $request, $id)
     {
-        $data = Market::find($id);
-        $market_icon = $data->market_icon;
-        if (!empty($request->market_name)) {
-            $slug = Str::of($request->market_name)->slug('_');
-        } else {
-            $slug = $data->market_slug;
+        $market = $this->marketRepo->findByID($id);
+        $marketIcon = $request->hasFile('icon');
+        $icon = $marketIcon ? $this->marketRepo->storeFile($request->file('icon')) : $market->icon;
+        if ($marketIcon) {
+            $this->marketRepo->updateMarket($id);
         }
-
-        if ($image = $request->file('market_icon')) {
-            $market_icon = rand(10, 100) . time() . '.' . $image->getClientOriginalExtension();
-            $locationc = public_path('/uploads/shopproperty/market/' . $market_icon);
-            Image::make($image)->resize(600, 400)->save($locationc);
-            $oldFilenamec = $data->market_icon;
-            $data->market_icon = $market_icon;
-            Storage::delete('/uploads/shopproperty/market/' . $oldFilenamec);
-        }
-
-        // market info update
-        $data = $data->update($request->except('market_slug', 'market_icon') +
+        $this->marketRepo->updateByID($id, $request->except('icon') +
             [
-                'market_slug' => $slug,
-                'market_icon' => $market_icon
+                'icon' => $icon
             ]);
-
-        notify()->success('market Successfully Updated.', 'Updated');
+        notify()->success('Market Successfully Updated.', 'Updated');
         return redirect()->route('backend.markets.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
-        $data = Market::find($id);
-        $oldFilename = $data->market_icon;
-        Storage::delete('/uploads/shopproperty/market/' . $oldFilename);
-        $data->delete();
+        Gate::authorize('backend.markets.destroy');
+        $this->marketRepo->deleteMarket($id);
+        notify()->warning('Market Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.markets.index');
     }
 }

@@ -15,6 +15,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     @stack('css')
+    @yield('style')
 </head>
 <body>
 <div id="app" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -30,8 +31,8 @@
     </div>
 </div>
 <!-- Scripts -->
+
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/backend.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
 @stack('js')

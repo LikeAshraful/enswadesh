@@ -49,14 +49,14 @@
                     <select name="market_id" id="market_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($markets as $market)
-                            <option value="{{ $market->id }}" {{ $floor->market_id == $market->id ? 'selected' : ''}}>{{ $market->marketname }}</option>
+                            <option value="{{ $market->id }}" {{ $floor->market_id == $market->id ? 'selected' : ''}}>{{ $market->name }}</option>
                         @endforeach
                     </select>
                     @else
                     <select name="market_id" id="market_id" class="form-control">
                         <option value="">Select One</option>
                         @foreach($markets as $market)
-                            <option value="{{ $market->id }}">{{ $market->marketname }}</option>
+                            <option value="{{ $market->id }}">{{ $market->name }}</option>
                         @endforeach
                     </select>
                     @endisset

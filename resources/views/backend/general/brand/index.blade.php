@@ -51,7 +51,7 @@
                             </td>
                             <td>
                                 <img class="img-fluid img-thumbnail"
-                                    src="{{ asset('uploads/products/brandicon/'.$brand->icon) }}" width="50" height="50"
+                                    src="{{ $brand->icon ?  asset('storage/'.$brand->icon) : asset('default-images/img_default_shop_thumbnail@2x.png') }}" width="50" height="50"
                                     alt="" alt="{{ $brand->name}}">
                             </td>
                             <td>{{ $brand->createdBy ? $brand->createdBy->name : 'Not found' }}</td>

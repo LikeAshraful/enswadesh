@@ -16,7 +16,7 @@
                 </div>
                 <div>{{ __('Shop') }}</div>
             </div>
-            <div class="page-title-actions">
+            {{-- <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
                     <a href="{{ route('backend.shops.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
@@ -25,7 +25,7 @@
                         {{ __('Create') }}
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="row">
@@ -36,16 +36,14 @@
                         <thead>
                             <tr>
                             <th scope="col">#</th>
-                            <th scope="col">City</th>
-                            <th scope="col">Area</th>
-                            <th scope="col">Thana</th>
-                            <th scope="col">Market</th>
-                            <th scope="col">Floor</th>
+                            <th scope="col">Logo</th>
                             <th scope="col">Shop</th>
                             <th scope="col">Shop No</th>
-                            <th scope="col">Slug</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Icon</th>
+                            <th scope="col">Owner</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Market</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Change Status</th>
                             <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -53,20 +51,29 @@
                             @foreach($shops as $key => $shop)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $shop->cityOfShop ? $shop->cityOfShop->city_name : 'Not Found' }}</td>
-                                <td>{{ $shop->areaOfShop ? $shop->areaOfShop->area_name : 'Not Found' }}</td>
-                                <td>{{ $shop->thanaOfshop ? $shop->thanaOfshop->thana_name : 'Not Found' }}</td>
-                                <td>{{ $shop->marketOfShop ? $shop->marketOfShop->market_name : 'Not Found' }}</td>
-                                <td>{{ $shop->floorOfShop ? $shop->floorOfShop->floor_note : 'Not Found' }}</td>
-                                <td>{{ $shop->shop_name }}</td>
-                                <td>{{ $shop->shop_no }}</td>
-                                <td>{{ $shop->shop_slug }}</td>
-                                <td>{{ $shop->shop_description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/shop/' . $shop->shop_icon)}}" width="50" height="50" alt="">
+                                    <img width="50" height="50" class="img-fluid img-thumbnail"
+                                                         src="{{ $shop->logo ? asset('storage/'. $shop->logo ) : asset('default-images/img_default_shop_thumbnail-1.png') }}" alt="{{ $shop->name }}">
+                                </td>
+                                <td>{{ $shop->name }}</td>
+                                <td>{{ $shop->shop_no }}</td>
+                                <td>{{ $shop->shopOwner ? $shop->shopOwner->name : 'Not Found' }}</td>
+                                <td>{{ $shop->city ? $shop->city->name : 'Not Found' }}</td>
+                                <td>{{ $shop->market ? $shop->market->name : 'Not Found' }}</td>
+                                <td><div class="badge {{ $shop->status == 'Pending' ? 'badge-warning' : ($shop->status == 'Approved' ? 'badge-primary' : 'badge-danger') }}">{{ $shop->status }}</div></td>
+                                <td>
+                                    <form action="" id="status_form">
+                                        @csrf
+                                        <input type="hidden" id="shop_id_{{ $shop->id }}" class="shop" name="shop_id" value="{{ $shop->id }}">
+                                        <select class="form-control-sm form-control changeStatus" name="status">
+                                            <option value="Pending" {{$shop->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                            <option value="Approved" {{$shop->status == 'Approved' ? 'selected' : '' }}>Approved</option>
+                                            <option value="Declined" {{$shop->status == 'Declined' ? 'selected' : '' }}>Declined</option>
+                                        </select>
+                                    </form>
                                 </td>
                                 <td>
-                                    <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> |
+                                    {{-- <a class="fa-edit-style" href="{{ route('backend.shops.edit', $shop->id) }}"><i class="fas fa-edit"></i></a> | --}}
                                     <button type="submit" class="delete-btn-style"
                                             onclick="deleteData({{ $shop->id }})">
                                         <i class="fas fa-trash-alt"></i>
@@ -93,6 +100,25 @@
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            //Change shop status
+            $('select.changeStatus').change(function(){
+
+                var shopId = $(this).siblings('.shop').val();
+                var getStatus = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/backend/shops/status-update/' + shopId,
+                    data: {
+                        _token:  $('input[name="_token"]').val(),
+                        status: getStatus
+                    },
+                    success: function(data){
+                        // alert('Sucessfully changed status ' + shopId);
+                        window.location.href = "{{ route('backend.shops.index') }}";
+                    }
+                });
+
+            });
             // Datatable
             $("#datatableShop").DataTable();
         });

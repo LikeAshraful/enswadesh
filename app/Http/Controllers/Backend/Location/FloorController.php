@@ -3,19 +3,28 @@
 namespace App\Http\Controllers\Backend\Location;
 
 use Illuminate\Http\Request;
-use App\Models\Location\Floor;
-use App\Models\Location\Market;
 use App\Http\Controllers\Controller;
+use Repository\Location\FloorRepository;
+use Repository\Location\MarketRepository;
 
 class FloorController extends Controller
 {
+    public $floorRepo;
+    public $marketRepo;
+
+    public function __construct(FloorRepository $floorRepository, MarketRepository $marketRepository)
+    {
+        $this->floorRepo = $floorRepository;
+        $this->marketRepo = $marketRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $floors = Floor::with('marketOfFloor')->get();
+        $floors = $this->floorRepo->getAll();
         return view('backend.location.floor.index',  compact('floors'));
     }
 
@@ -25,7 +34,7 @@ class FloorController extends Controller
      */
     public function create()
     {
-        $markets = Market::all();
+        $markets = $this->marketRepo->getAll();
         return view('backend.location.floor.form', compact('markets'));
     }
 
@@ -37,11 +46,12 @@ class FloorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'floor_no' => 'required',
-            'floor_note' => 'required'
+            'market_id'     => 'required',
+            'floor_no'      => 'required',
+            'floor_note'    => 'required'
         ]);
 
-        Floor::create($request->all());
+        $this->floorRepo->create($request->all());
 
         notify()->success('Floor Successfully Added.', 'Added');
         return redirect()->route('backend.floors.index');
@@ -64,8 +74,8 @@ class FloorController extends Controller
      */
     public function edit($id)
     {
-        $markets = Market::all();
-        $floor = Floor::find($id);
+        $markets = $this->marketRepo->getAll();
+        $floor = $this->floorRepo->findByID($id);
         return view('backend.location.floor.form', compact('floor', 'markets'));
     }
 
@@ -77,10 +87,7 @@ class FloorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Floor::find($id);
-
-        // floor info update
-        $data = $data->update($request->all());
+        $this->floorRepo->updateByID($id, $request->all());
 
         notify()->success('Floor Successfully Updated.', 'Updated');
         return redirect()->route('backend.floors.index');
@@ -93,8 +100,8 @@ class FloorController extends Controller
      */
     public function destroy($id)
     {
-        $data = Floor::find($id);
-        $data->delete();
+        $this->floorRepo->deletedByID($id);
+        notify()->warning('Floor Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.floors.index');
     }
 }

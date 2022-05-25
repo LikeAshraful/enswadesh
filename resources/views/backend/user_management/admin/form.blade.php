@@ -1,9 +1,7 @@
 @extends('layouts.backend.app')
-@section('title','Admin')
+@section('title','User')
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
-<link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 
 <style>
@@ -20,7 +18,7 @@
                 <i class="pe-7s-users icon-gradient bg-mean-fruit">
                 </i>
             </div>
-            <div>{{ __((isset($admin) ? 'Edit' : 'Create New') . ' Admin') }}</div>
+            <div>{{ __((isset($user) ? 'Edit' : 'Create New') . ' User') }}</div>
         </div>
         <div class="page-title-actions">
             <div class="d-inline-block dropdown">
@@ -38,10 +36,10 @@
 <div class="row">
     <div class="col-12">
         <form role="form" id="adminFrom" method="POST"
-            action="{{ isset($admin) ? route('backend.admin.update',$user->id) : route('backend.admin.store') }}"
+            action="{{ isset($user) ? route('backend.admin.update',$user->id) : route('backend.admin.store') }}"
             enctype="multipart/form-data" file="true">
             @csrf
-            @if (isset($admin))
+            @if (isset($user))
             @method('PUT')
             @endif
             <div class="row">
@@ -77,9 +75,6 @@
                                 @endforeach
                             </x-forms.select>
 
-                            <x-forms.dropify label="Picture (Only Image are allowed)" name="image"
-                                value="{{ isset($user) ? asset('uploads/users/'.$user->image): '' }}" />
-
                             <x-forms.button label="Reset" class="btn-danger" icon-class="fas fa-redo"
                                 on-click="resetForm('adminFrom')" />
 
@@ -102,9 +97,6 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Dropify
-    $('.dropify').dropify();
-    // Select2
     $('.select').each(function() {
         $(this).select2();
     });

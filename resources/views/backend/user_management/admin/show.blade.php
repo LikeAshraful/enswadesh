@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','User Details')
+@section('title','Admin Details')
 
 @section('content')
     <div class="app-page-title">
@@ -10,7 +10,7 @@
                     <i class="pe-7s-users icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('User Details') }}</div>
+                <div>{{ __('Admin Details') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
@@ -35,7 +35,7 @@
         <div class="col-md-2">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <img src="{{ asset('uploads/users/'.$user->image) }}" class="img-fluid img-thumbnail" alt="avatar">
+                    <img src="{{$user->profile ? asset('storage/'.$user->profile->image) : asset('users/user.png') }}" class="img-fluid img-thumbnail" alt="avatar">
                 </div>
                 <!-- /.card-body -->
             </div>

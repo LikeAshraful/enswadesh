@@ -15,29 +15,35 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->integer('shop_owner_id')        ->nullable();
-            $table->integer('city_id')              ->nullable();
-            $table->integer('area_id')              ->nullable();
-            $table->integer('thana_id')             ->nullable();
-            $table->integer('market_id')            ->nullable();
-            $table->integer('floor_id')             ->nullable();
-            $table->integer('shop_type_id')         ->nullable();
-            $table->string('shop_no')               ->nullable();
-            $table->string('shop_name')             ->nullable();
-            $table->string('shop_phone')            ->nullable();
-            $table->string('shop_email')            ->nullable();
-            $table->string('shop_fax')              ->nullable();
-            $table->string('shop_slug')             ->nullable();
-            $table->string('shop_cover_image')      ->nullable();
-            $table->string('shop_logo')             ->nullable();
-            $table->integer('shop_status')          ->nullable();
-            $table->text('shop_description')        ->nullable();
-            $table->string('meta_title_shop')       ->nullable();
-            $table->text('meta_keywords_shop')      ->nullable();
-            $table->text('meta_description_shop')   ->nullable();
-            $table->string('meta_og_image_shop')    ->nullable();
-            $table->string('meta_og_url_shop')      ->nullable();
+            $table->unsignedBigInteger('shop_owner_id');
+            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('area_id');
+            $table->unsignedBigInteger('market_id');
+            $table->integer('floor_id')->nullable();
+            $table->unsignedBigInteger('shop_type_id')->nullable();
+            $table->string('shop_no')->nullable();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('block', 20)->nullable();
+            $table->string('subscription_note',)->nullable();
+            $table->string('cover_image')->nullable();
+            $table->string('logo')->nullable();
+            $table->enum('status', ['Pending' ,'Approved', 'Declined'])->default('Pending');
+            $table->text('description')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->text('meta_keywords')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->string('meta_og_image')->nullable();
+            $table->string('meta_og_url')->nullable();
             $table->timestamps();
+
+            $table->foreign('shop_owner_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('market_id')->references('id')->onUpdate('cascade')->on('markets')->onDelete('cascade');
         });
     }
 

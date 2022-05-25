@@ -47,11 +47,11 @@
                             @foreach($appmenus as $key => $menu)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $menu->menu_name }}</td>
-                                <td>{{ $menu->menu_slug }}</td>
-                                <td>{{ $menu->menu_description }}</td>
+                                <td>{{ $menu->name }}</td>
+                                <td>{{ $menu->slug }}</td>
+                                <td>{{ $menu->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/menus/' . $menu->menu_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{asset($menu->icon)}}" width="50" height="50" alt="">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.menus.edit', $menu->id) }}"><i class="fas fa-edit"></i></a> |

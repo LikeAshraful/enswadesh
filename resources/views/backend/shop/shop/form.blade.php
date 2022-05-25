@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/dropify.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dropify.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <style>
 .dropify-wrapper .dropify-message p {
     font-size: initial;
@@ -44,19 +44,19 @@
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="area_id">City</label>
+                        <label for="city_id">City</label>
                         @if(isset($shop))
                         <select name="city_id" id="city_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($cities as $city)
-                                <option value="{{ $city->id }}" {{ $shop->city_id == $city->id ? 'selected' : ''}}>{{ $city->city_name }}</option>
+                                <option value="{{ $city->id }}" {{ $shop->city_id == $city->id ? 'selected' : ''}}>{{ $city->name }}</option>
                             @endforeach
                         </select>
                         @else
                         <select name="city_id" id="city_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($cities as $city)
-                                <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
                             @endforeach
                         </select>
                         @endisset
@@ -72,41 +72,18 @@
                         <select name="area_id" id="area_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($areas as $area)
-                                <option value="{{ $area->id }}" {{ $shop->area_id == $area->id ? 'selected' : ''}}>{{ $area->area_name }}</option>
+                                <option value="{{ $area->id }}" {{ $shop->area_id == $area->id ? 'selected' : ''}}>{{ $area->name }}</option>
                             @endforeach
                         </select>
                         @else
                         <select name="area_id" id="area_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($areas as $area)
-                                <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                <option value="{{ $area->id }}">{{ $area->name }}</option>
                             @endforeach
                         </select>
                         @endisset
                         @error('area_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="thana_id">Thana</label>
-                        @if(isset($shop))
-                        <select name="thana_id" id="thana_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($thanas as $thana)
-                                <option value="{{ $thana->id }}" {{ $shop->thana_id == $thana->id ? 'selected' : ''}}>{{ $thana->thana_name }}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select name="thana_id" id="thana_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($thanas as $thana)
-                                <option value="{{ $thana->id }}">{{ $thana->thana_name }}</option>
-                            @endforeach
-                        </select>
-                        @endisset
-                        @error('thana_id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -118,41 +95,18 @@
                         <select name="market_id" id="market_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($markets as $market)
-                                <option value="{{ $market->id }}" {{ $shop->market_id == $market->id ? 'selected' : ''}}>{{ $market->market_name }}</option>
+                                <option value="{{ $market->id }}" {{ $shop->market_id == $market->id ? 'selected' : ''}}>{{ $market->name }}</option>
                             @endforeach
                         </select>
                         @else
                         <select name="market_id" id="market_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($markets as $market)
-                                <option value="{{ $market->id }}">{{ $market->market_name }}</option>
+                                <option value="{{ $market->id }}">{{ $market->name }}</option>
                             @endforeach
                         </select>
                         @endisset
                         @error('market_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="floor_id">Floor</label>
-                        @if(isset($shop))
-                        <select name="floor_id" id="floor_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($floors as $floor)
-                                <option value="{{ $floor->id }}" {{ $shop->floor_id == $floor->id ? 'selected' : ''}}>{{ $floor->floor_note }}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select name="floor_id" id="floor_id" class="form-control">
-                            <option value="">Select One</option>
-                            @foreach($floors as $floor)
-                                <option value="{{ $floor->id }}">{{ $floor->floor_note }}</option>
-                            @endforeach
-                        </select>
-                        @endisset
-                        @error('floor_id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -164,14 +118,14 @@
                         <select name="shop_type_id" id="shop_type_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($shoptypes as $shoptype)
-                                <option value="{{ $shoptype->id }}" {{ $shop->shop_type_id == $shoptype->id ? 'selected' : ''}}>{{ $shoptype->shop_type_name }}</option>
+                                <option value="{{ $shoptype->id }}" {{ $shop->shop_type_id == $shoptype->id ? 'selected' : ''}}>{{ $shoptype->name }}</option>
                             @endforeach
                         </select>
                         @else
                         <select name="shop_type_id" id="shop_type_id" class="form-control">
                             <option value="">Select One</option>
                             @foreach($shoptypes as $shoptype)
-                                <option value="{{ $shoptype->id }}">{{ $shoptype->shop_type_name }}</option>
+                                <option value="{{ $shoptype->id }}">{{ $shoptype->name }}</option>
                             @endforeach
                         </select>
                         @endisset
@@ -182,9 +136,48 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for='shop_icon'>Shop Logo</label>
-                        <input type="file" id="shop_icon" name="shop_icon" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_icon): '' }}" />
-                        @error('shop_icon')
+                        <label for="floor_no">Floor No</label>
+                        @isset($shop->floor_no)
+                        <select name="floor_no" id="floor_no" class="form-control">
+                            <option value="">Select One</option>
+                            <option value="Ground Floor" {{ $shop->floor_no == 'Ground Floor' ? 'selected' : ''}}>Ground Floor</option>
+                            <option value="1st Floor" {{ $shop->floor_no == '1st Floor' ? 'selected' : ''}}>1st Floor</option>
+                            <option value="2nd Floor" {{ $shop->floor_no == '2nd Floor' ? 'selected' : ''}}>2nd Floor</option>
+                            <option value="3rd Floor" {{ $shop->floor_no == '3rd Floor' ? 'selected' : ''}}>3rd Floor</option>
+                            <option value="4th Floor" {{ $shop->floor_no == '4th Floor' ? 'selected' : ''}}>4th Floor</option>
+                            <option value="5th Floor" {{ $shop->floor_no == '5th Floor' ? 'selected' : ''}}>5th Floor</option>
+                            <option value="6th Floor" {{ $shop->floor_no == '6th Floor' ? 'selected' : ''}}>6th Floor</option>
+                            <option value="7th Floor" {{ $shop->floor_no == '7th Floor' ? 'selected' : ''}}>7th Floor</option>
+                            <option value="8th Floor" {{ $shop->floor_no == '8th Floor' ? 'selected' : ''}}>8th Floor</option>
+                            <option value="9th Floor" {{ $shop->floor_no == '9th Floor' ? 'selected' : ''}}>9th Floor</option>
+                            <option value="10th Floor" {{ $shop->floor_no == '10th Floor' ? 'selected' : ''}}>10th Floor</option>
+                        </select>
+                        @else
+                        <select name="floor_no" id="floor_no" class="form-control">
+                            <option value="">Select One</option>
+                            <option value="Ground Floor">Ground Floor</option>
+                            <option value="1st Floor">1st Floor</option>
+                            <option value="2nd Floor">2nd Floor</option>
+                            <option value="3rd Floor">3rd Floor</option>
+                            <option value="4th Floor">4th Floor</option>
+                            <option value="5th Floor">5th Floor</option>
+                            <option value="6th Floor">6th Floor</option>
+                            <option value="7th Floor">7th Floor</option>
+                            <option value="8th Floor">8th Floor</option>
+                            <option value="9th Floor">9th Floor</option>
+                            <option value="10th Floor">10th Floor</option>
+                        </select>
+                        @endisset
+                        @error('floor_no')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for='logo'>Shop Logo</label>
+                        <input type="file" id="logo" name="logo" class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->logo): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->logo): '' }}" />
+                        @error('logo')
                         <span class="invalid-feedback image-display-error-message" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -197,9 +190,9 @@
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="shop_name">Shop Name</label>
-                    <input type="text" id="shop_name" name="shop_name" class="form-control @error('shop_name') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_name : '' }}" holder="Market name">
-                    @error('shop_name')
+                    <label for="name">Shop Name</label>
+                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ isset($shop) ? $shop->name : '' }}" holder="Market name">
+                    @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -207,7 +200,7 @@
                     </div>
                     <div class="form-group">
                     <label for="shop_no">Shop No</label>
-                    <input type="text" id="shop_no" name="shop_no" class="form-control @error('shop_no') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_no : '' }}" holder="Market name">
+                    <input type="no" id="shop_no" name="shop_no" class="form-control @error('shop_no') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_no : '' }}" holder="Market name">
                     @error('shop_no')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -215,40 +208,40 @@
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="shop_phone">Shop Phone</label>
-                    <input type="text" id="shop_phone" name="shop_phone" class="form-control @error('shop_phone') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_phone : '' }}" holder="Market name">
-                    @error('shop_phone')
+                    <label for="phone">Shop Phone</label>
+                    <input type="text" id="phone" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ isset($shop) ? $shop->phone : '' }}" holder="Market name">
+                    @error('phone')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="shop_email">Shop Email</label>
-                    <input type="text" id="shop_email" name="shop_email" class="form-control @error('shop_email') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_email : '' }}" holder="Market name">
-                    @error('shop_email')
+                    <label for="email">Shop Email</label>
+                    <input type="text" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ isset($shop) ? $shop->email : '' }}" holder="Market name">
+                    @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="shop_fax">Shop Fax</label>
-                    <input type="text" id="shop_fax" name="shop_fax" class="form-control @error('shop_fax') is-invalid @enderror" value="{{ isset($shop) ? $shop->shop_fax : '' }}" holder="Market name">
-                    @error('shop_fax')
+                    <label for="fax">Shop Fax</label>
+                    <input type="text" id="fax" name="fax" class="form-control @error('fax') is-invalid @enderror" value="{{ isset($shop) ? $shop->fax : '' }}" holder="Market name">
+                    @error('fax')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="shop_description">Shop Description</label>
-                    <input type="text" id="shop_description" name="shop_description" class="form-control" value="{{ isset($shop) ? $shop->shop_description : '' }}"holder="Market Description">
+                    <label for="description">Shop Description</label>
+                    <input type="text" id="description" name="description" class="form-control" value="{{ isset($shop) ? $shop->description : '' }}"holder="Market Description">
                     </div>
                     <div class="form-group">
-                    <label for='shop_cover_image'>Shop Icon</label>
-                    <input type="file" id="shop_cover_image" name="shop_cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->shop_cover_image): '' }}" />
-                    @error('shop_cover_image')
+                    <label for='cover_image'>Shop Cover Image</label>
+                    <input type="file" id="cover_image" name="cover_image" class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->cover_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->cover_image): '' }}" />
+                    @error('cover_image')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -261,54 +254,54 @@
             <div class="main-card mb-3 card">
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="meta_title_shop">Meta Title</label>
-                    <input type="text" id="meta_title_shop" name="meta_title_shop" class="form-control @error('meta_title_shop') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_title_shop : '' }}" holder="Market name">
-                    @error('meta_title_shop')
+                    <label for="meta_title">Meta Title</label>
+                    <input type="text" id="meta_title" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_title : '' }}" holder="Market name">
+                    @error('meta_title')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="meta_keywords_shop">Meta Keyword</label>
-                    <input type="text" id="meta_keywords_shop" name="meta_keywords_shop" class="form-control @error('meta_keywords_shop') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_keywords_shop : '' }}" holder="Market Address">
-                    @error('meta_keywords_shop')
+                    <label for="meta_keywords">Meta Keyword</label>
+                    <input type="text" id="meta_keywords" name="meta_keywords" class="form-control @error('meta_keywords') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_keywords : '' }}" holder="Market Address">
+                    @error('meta_keywords')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="meta_description_shop">Meta Description</label>
-                    <input type="text" id="meta_description_shop" name="meta_description_shop" class="form-control @error('meta_description_shop') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_description_shop : '' }}" holder="Market Address">
-                    @error('meta_description_shop')
+                    <label for="meta_description">Meta Description</label>
+                    <input type="text" id="meta_description" name="meta_description" class="form-control @error('meta_description') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_description : '' }}" holder="Market Address">
+                    @error('meta_description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     <div class="form-group">
-                    <label for="meta_og_image_shop">Meta OG URL</label>
-                    <input type="text" id="meta_og_url_shop" name="meta_og_url_shop" class="form-control @error('meta_og_url_shop') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_og_url_shop : '' }}" holder="Market Address">
-                    @error('meta_og_url_shop')
+                    <label for="meta_og_image">Meta OG URL</label>
+                    <input type="text" id="meta_og_url" name="meta_og_url" class="form-control @error('meta_og_url') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_og_url : '' }}" holder="Market Address">
+                    @error('meta_og_url')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div>
                     {{-- <div class="form-group">
-                    <label for="meta_og_image_shop">Meta OG Image</label>
-                    <input type="text" id="meta_og_image_shop" name="meta_og_image_shop" class="form-control @error('meta_og_image_shop') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_og_image_shop : '' }}" holder="Market Address">
-                    @error('meta_og_image_shop')
+                    <label for="meta_og_image">Meta OG Image</label>
+                    <input type="text" id="meta_og_image" name="meta_og_image" class="form-control @error('meta_og_image') is-invalid @enderror" value="{{ isset($shop) ? $shop->meta_og_image : '' }}" holder="Market Address">
+                    @error('meta_og_image')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                     </div> --}}
                     <div class="form-group">
-                    <label for='meta_og_image_shop'>Meta OG Image</label>
-                    <input type="file" id="meta_og_image_shop" name="meta_og_image_shop" class="dropify" data-default-file="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->meta_og_image_shop): '' }}" data-height="220" value="{{ isset($shop) ? asset('/uploads/shopproperty/shop/'. $shop->meta_og_image_shop): '' }}" />
-                    @error('meta_og_image_shop')
+                    <label for='meta_og_image'>Meta OG Image</label>
+                    <input type="file" id="meta_og_image" name="meta_og_image" class="dropify" data-default-file="{{ isset($shop) ? asset('storage/'. $shop->meta_og_image): '' }}" data-height="220" value="{{ isset($shop) ? asset('storage/'. $shop->meta_og_image): '' }}" />
+                    @error('meta_og_image')
                     <span class="invalid-feedback image-display-error-message" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -317,13 +310,55 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-12">
+            <div class="input-group control-group increment" >
+                <input type="file" name="image[]" class="form-control" required>
+                <div class="input-group-btn">
+                    <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                </div>
+            </div>
+            <div class="clone hide">
+                <div class="control-group input-group" style="margin-top:10px">
+                    <input type="file" name="image[]" class="form-control">
+                    <div class="input-group-btn">
+                    <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div><br>
+
+  @if(isset($shop))
+   <table class="table table-bordered table-hover table-striped">
+    <thead>
+    <tr>
+        <th>Picture</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach($shop->shopMedia as $image)
+        <tr>
+            <td>
+                <img src="{{ asset('storage/'.$image->image) }}" style="height:50px; width:60px"/>
+            </td>
+            <td>
+                <a style="cursor: pointer" class="btn btn-sm btn-danger removeImage" data-id="{{$image->id}}" href="javascript:void(0)">Remove</a>
+            </td>
+        </tr>
+
+        @endforeach
+    </tbody>
+   </table>
+   @endif
+
+
     <div class="pb-3">
-        <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i>Reset</button>
+        <button class="btn btn-danger" on-click="resetForm('userFrom')"><i class="fas fa-redo"></i> Reset</button>
         @isset($shop)
         <button type="submit" class="btn btn-info"><i class="fas fa-arrow-circle-up"></i>Update</button>
         @else
-        <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i>Create</button>
+        <button type="submit" class="btn btn-info"><i class="fas fa-plus-circle"></i> Create</button>
         @endisset
     </div>
 </form>
@@ -335,10 +370,29 @@
 $(document).ready(function() {
     // Dropify
     $('.dropify').dropify();
-    // Select2
-    $('.select').each(function() {
-        $(this).select2();
-    });
+
+    $(".btn-success").click(function(){
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+      $("body").on("click",".btn-danger",function(){
+          $(this).parents(".control-group").remove();
+      });
+
+      $(".removeImage").click(function(){
+        var id = $(this).attr('data-id');
+        //  alert(id)
+        $.ajax(
+        {
+            type: 'get',
+            url: "/backend/media-image/"+id,
+            success: function (){
+                console.log("it Works");
+            }
+        });
+
+      });
+
 });
 </script>
 @endpush

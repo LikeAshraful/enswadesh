@@ -36,7 +36,8 @@
                         <thead>
                             <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Thana</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Area</th>
                             <th scope="col">Market Name</th>
                             <th scope="col">Address</th>
                             <th scope="col">Slug</th>
@@ -49,13 +50,14 @@
                             @foreach($markets as $key => $market)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $market->thanaOfMarket ? $market->thanaOfMarket->thana_name : 'Not Found' }}</td>
-                                <td>{{ $market->market_name }}</td>
-                                <td>{{ $market->market_address }}</td>
-                                <td>{{ $market->market_slug }}</td>
-                                <td>{{ $market->market_description }}</td>
+                                <td>{{ $market->city ? $market->city->name : 'Not Found' }}</td>
+                                <td>{{ $market->areas ? $market->areas->name : 'Not Found' }}</td>
+                                <td>{{ $market->name }}</td>
+                                <td>{{ $market->address }}</td>
+                                <td>{{ $market->slug }}</td>
+                                <td>{{ $market->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/market/' . $market->market_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{ $market->icon ? asset('storage/'.$market->icon) : asset('default-images/img_default_market_list_thumbnail@2x.png') }}" height="50" width="50" alt="{{ $market->name}}">
                                 </td>
                                 <td>
                                     <a class="fa-edit-style" href="{{ route('backend.markets.edit', $market->id) }}"><i class="fas fa-edit"></i></a> |

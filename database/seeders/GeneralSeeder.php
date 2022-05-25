@@ -15,22 +15,24 @@ class GeneralSeeder extends Seeder
      */
     public function run()
     {
-         //Brand
-         $brand = Brand::updateOrCreate([
+        //Brand
+        $brand = Brand::updateOrCreate([
             'name'          => 'Asus',
             'slug'          => 'asus',
-            'description'   => 'This is description part',
-            'icon'          => '1.jpg'
+            'shop_id'       => 1,
+            'user_id'       => 4,
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ]);
         $brand = Brand::updateOrCreate([
             'name'          => 'Dell',
             'slug'          => 'dell',
-            'description'   => 'This is description part',
-            'icon'          => '1.jpg'
+            'shop_id'       => 2,
+            'user_id'       => 4,
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ]);
 
 
-        
+
         // Category
         $category = Category::updateOrCreate([
             'parent_id'     => 0,
@@ -38,9 +40,9 @@ class GeneralSeeder extends Seeder
             'slug'          => 'electronic',
             'status'        => 1,
             'shop_id'       =>0,
+            'user_id'       => 1,
             'level'         =>1,
-            'icon'          => '1.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
 
         $category_one = Category::updateOrCreate([
@@ -49,9 +51,9 @@ class GeneralSeeder extends Seeder
             'slug'          => 'laptop',
             'status'        => 1,
             'shop_id'       =>0,
+            'user_id'       => 1,
             'level'         =>$category->level+1,
-            'icon'          => '2.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
 
         $category_two = Category::updateOrCreate([
@@ -59,10 +61,10 @@ class GeneralSeeder extends Seeder
             'name'          => 'Asus',
             'slug'          => 'asus',
             'status'        => 1,
+            'user_id'       => 1,
             'shop_id'       =>0,
             'level'         =>$category_one->level+1,
-            'icon'          => '3.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
 
         $category = Category::updateOrCreate([
@@ -72,28 +74,59 @@ class GeneralSeeder extends Seeder
             'status'        => 1,
             'shop_id'       =>0,
             'level'         =>1,
-            'icon'          => '4.jpg',
-            'description'   => 'This is description part'
+            'user_id'       => 1,
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
         $category_one = Category::updateOrCreate([
             'parent_id'     => $category->id,
             'name'          => 'Fish',
             'slug'          => 'fish',
             'status'        => 1,
+            'user_id'       => 1,
             'level'         =>$category->level+1,
             'shop_id'       =>0,
-            'icon'          => '1.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
         $category_two = Category::updateOrCreate([
             'parent_id'     => $category->id,
             'name'          => 'Hilsha',
             'slug'          => 'hilsha',
             'status'        => 1,
+            'user_id'       => 1,
             'level'         =>$category_one->level+1,
             'shop_id'       =>0,
-            'icon'          => '1.jpg',
-            'description'   => 'This is description part'
+            'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            ]);
+
+            Category::updateOrCreate([
+                'parent_id'     => 0,
+                'name'          => 'Health & Beauty',
+                'slug'          => 'health-beauty',
+                'status'        => 1,
+                'shop_id'       =>0,
+                'user_id'       => 1,
+                'level'         =>1,
+                'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            ]);
+            Category::updateOrCreate([
+                'parent_id'     => 0,
+                'name'          => 'Babies & Toys',
+                'slug'          => 'babies-toys',
+                'status'        => 1,
+                'shop_id'       =>0,
+                'user_id'       => 1,
+                'level'         =>1,
+                'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            ]);
+            Category::updateOrCreate([
+                'parent_id'     => 0,
+                'name'          => 'Fashions',
+                'slug'          => 'fashions',
+                'status'        => 1,
+                'shop_id'       =>0,
+                'user_id'       => 1,
+                'level'         =>1,
+                'description'   => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]);
     }
 }

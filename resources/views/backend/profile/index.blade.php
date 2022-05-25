@@ -30,9 +30,7 @@
                     <div class="form-row">
                         <div class="col-6 mx-auto">
                             <div class="position-relative form-group">
-                                
-                                <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{ asset('uploads/users/'. Auth::user()->image) }}" />
-                                
+                                <x-forms.dropify label="Picture (Only Image are allowed)" name="image" value="{{Auth::user()->profile ? asset('storage/'. Auth::user()->profile->image) : '' }}" />
                                 @error('avatar')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -47,35 +45,93 @@
 
         <div class="col-12">
             <div class="main-card mb-3 card">
-                <div class="card-header">CONTACT INFORMATION</div>
+                <div class="card-header">USER INFORMATION</div>
 
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                        <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Address') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                name="name" value="{{ Auth::user()->name ?? old('name') }}" required autocomplete="name"
+                            <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
+                                name="address" value="{{ Auth::user()->profile->address ?? old('address') }}" required autocomplete="address"
                                 autofocus>
 
-                            @error('name')
+                            @error('address')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
                     </div>
-
                     <div class="form-group row">
-                        <label for="email"
-                            class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        <label for="bio" class="col-md-3 col-form-label text-md-right">{{ __('Bio') }}</label>
 
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ Auth::user()->email ?? old('email') }}" required
-                                autocomplete="email">
+                            <textarea id="bio" type="text" class="form-control @error('bio') is-invalid @enderror"
+                                name="bio" required autocomplete="address"
+                                autofocus>{{ Auth::user()->profile->bio ?? old('bio') }}</textarea>
 
-                            @error('email')
+                            @error('bio')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="blood_group" class="col-md-3 col-form-label text-md-right">{{ __('Blood Group') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="blood_group" type="text" class="form-control @error('blood_group') is-invalid @enderror"
+                                name="blood_group" value="{{ Auth::user()->profile->blood_group ?? old('blood_group') }}" required autocomplete="blood_group"
+                                autofocus>
+
+                            @error('blood_group')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nid" class="col-md-3 col-form-label text-md-right">{{ __('NID') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="nid" type="text" class="form-control @error('nid') is-invalid @enderror"
+                                name="nid" value="{{ Auth::user()->profile->nid ?? old('nid') }}" required autocomplete="nid"
+                                autofocus>
+
+                            @error('nid')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="passport_id" class="col-md-3 col-form-label text-md-right">{{ __('Passport ID') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="passport_id" type="text" class="form-control @error('passport_id') is-invalid @enderror"
+                                name="passport_id" value="{{ Auth::user()->profile->passport_id ?? old('passport_id') }}" required autocomplete="passport_id"
+                                autofocus>
+
+                            @error('passport_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="driving_license" class="col-md-3 col-form-label text-md-right">{{ __('Driving License') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="driving_license" type="text" class="form-control @error('driving_license') is-invalid @enderror"
+                                name="driving_license" value="{{ Auth::user()->profile->driving_license ?? old('driving_license') }}" required autocomplete="driving_license"
+                                autofocus>
+
+                            @error('driving_license')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -84,7 +140,7 @@
                     </div>
 
                     <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
+                        <div class="col-md-6 offset-md-3">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-arrow-circle-up"></i>
                                 <span>Update</span>

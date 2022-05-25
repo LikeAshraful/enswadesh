@@ -44,18 +44,18 @@
                         @method('PUT')
                         @endif
                         <div class="form-group">
-                        <label for="shop_type_name">Name</label>
-                        <input type="text" id="shop_type_name" name="shop_type_name" class="form-control @error('shop_type_name') is-invalid @enderror" value="{{ isset($shoptype) ? $shoptype->shop_type_name : '' }}"  placeholder="Name">
-                        @error('shop_type_name')
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ isset($shoptype) ? $shoptype->name : '' }}"  placeholder="Name">
+                        @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                         </div>
                         <div class="form-group">
-                        <label for="shop_type_description">Description</label>
-                        <input type="text" id="shop_type_description" name="shop_type_description" class="form-control @error('shop_type_description') is-invalid @enderror" value="{{ isset($shoptype) ? $shoptype->shop_type_description : '' }}"  placeholder="Description">
-                        @error('shop_type_description')
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" class="form-control @error('description') is-invalid @enderror" value="{{ isset($shoptype) ? $shoptype->description : '' }}"  placeholder="Description">
+                        @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

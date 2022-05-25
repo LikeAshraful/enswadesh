@@ -1,57 +1,72 @@
 <?php
 
-namespace App\Repositories\Role;
+namespace Repository\Role;
+
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Module;
-use Illuminate\Support\Str;
-use App\Repositories\Interface\Role\RoleInterface;
+use Repository\BaseRepository;
 
-class RoleRepository implements RoleInterface {
-    
-    public function all()
+class RoleRepository extends BaseRepository {
+
+    public function model()
     {
-        //Return Role Model
-        return Role::get();
-    }
-    public function allModules()
-    {
-        //Return Module
-        return Module::get();
-    }
-    public function get($id)
-    {
-        //Return User Model
-        return Role::find($id);
+        return Role::class;
     }
 
-    public function store(array $data)
+    public function getAllVendors()
     {
-        $slug = Str::slug($data['name'], '_');
-        //Return Role Model
-        return Role::create([
-            'name'      => $data['name'],
-            'slug'      => $slug
-        ])->permissions()->sync($data['permissions']);
+        $roles = Role::where('slug', '=', 'vendor')->first();
+        return User::where('role_id', $roles->id)->get();
     }
 
-    public function update($id, array $data)
+    public function getAllRoleForAdmin()
     {
-        $role = Role::find($id);
-        
-        $role = Str::slug($role['name'], '_');
-
-        //Return Role Model
-        return Role::updateOrCreate([
-            'name'      => $data['name'],
-            'slug'      => $role     
-        ])->permissions()->sync($data['permissions']);
+        return $this->model()::where('slug', '!=', 'super_admin')->get();
+    }
+    public function getAllRoleForSuperAdmin()
+    {
+        return $this->model()::where('slug', '=', 'super_admin')->first();
     }
 
-    public function delete($id)
+    public function getRoleForAdmin()
     {
-        //Return User Model
-        $role = Role::find($id);
-        return $role->delete();
+        return $this->model()::where('slug', '=', 'admin')->first();
+    }
+
+    public function getRoleForManager()
+    {
+        return $this->model()::where('slug', '=', 'manager')->first();
+    }
+
+    public function getRoleForVendor()
+    {
+        return $this->model()::where('slug', '=', 'vendor')->first();
+    }
+
+    public function getRoleForStaff()
+    {
+        return $this->model()::where('slug', '=', 'staff')->first();
+    }
+
+    public function getRoleForCustomer()
+    {
+        return $this->model()::where('slug', '=', 'customer')->first();
+    }
+
+    public function getRoleForShopMember()
+    {
+        return $this->model()::where('slug', '=', 'staff')->first();
+    }
+
+    public function updateByID($id, array $modelData)
+    {
+        $model = $this->findOrFailByID($id);
+        return $model->updateOrCreate($modelData);
+    }
+
+    public function deleteRole($id)
+    {
+        $role = $this->findByID($id);
+        $role->delete();
     }
 }

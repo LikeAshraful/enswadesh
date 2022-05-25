@@ -2,111 +2,65 @@
 
 namespace App\Http\Controllers\Backend\Shop;
 
-use Image;
-use Storage;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\Shop\ShopType;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Gate;
+use Repository\Shop\ShopTypeRepository;
+use App\Http\Requests\Shop\StoreShopTypeRequest;
+use App\Http\Requests\Shop\UpdateShopTypeRequest;
 
 class ShopTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    public $shopTypeRepo;
+
+    public function __construct(ShopTypeRepository $shopTypeRepository)
+    {
+        $this->shopTypeRepo = $shopTypeRepository;
+    }
+
     public function index()
     {
-        $shoptypes  = ShopType::all();
+        Gate::authorize('backend.shoptypes.index');
+        $shoptypes  = $this->shopTypeRepo->getAll();
         return view('backend.shop.shoptype.index',  compact('shoptypes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
+        Gate::authorize('backend.shoptypes.create');
         return view('backend.shop.shoptype.form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function store(StoreShopTypeRequest $request)
     {
-        $request->validate([
-            'shop_type_name' => 'required'
-        ]);
-        $slug = Str::of($request->shop_type_name)->slug('_');
-        ShopType::create($request->except('shop_type_slug') +
-            [
-                'shop_type_slug' => $slug
-            ]);
-
+        $this->shopTypeRepo->create($request->all());
         notify()->success('Shop type Successfully Added.', 'Added');
         return redirect()->route('backend.shoptypes.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        $shoptype= ShopType::find($id);
+        Gate::authorize('backend.shoptypes.edit');
+        $shoptype = $this->shopTypeRepo->findByID($id);
         return view('backend.shop.shoptype.form', compact('shoptype'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateShopTypeRequest $request, $id)
     {
-        $data = ShopType::find($id);
-        if (!empty($request->shop_type_name)) {
-            $slug = Str::of($request->shop_type_name)->slug('_');
-        } else {
-            $slug = $data->shop_type_slug;
-        }
-
-
-        // shop info update
-        $data = $data->update($request->except('shop_type_slug') +
-            [
-                'shop_type_slug' => $slug
-            ]);
-
+        $this->shopTypeRepo->updateByID($id, $request->all());
         notify()->success('Shop type Successfully Updated.', 'Updated');
         return redirect()->route('backend.shoptypes.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
-        $data = ShopType::find($id);
-        $data->delete();
+        Gate::authorize('backend.shoptypes.destroy');
+        $this->shopTypeRepo->deletedByID($id);
+        notify()->warning('Floor Successfully Deleted.', 'Deleted');
         return redirect()->route('backend.shoptypes.index');
     }
 }

@@ -22,8 +22,7 @@ class UserSeeder extends Seeder
             'role_id'       => $adminRole->id,
             'name'          => 'Super Admin',
             'email'         => 'super@gmail.com',
-            'image'         => 'user.png',
-            'password'      => Hash::make('12345678'),
+            'password'      => '12345678',
             'phone_number'  => '01744101010',
             'status'        => true,
             'suspend'       => false
@@ -35,8 +34,7 @@ class UserSeeder extends Seeder
             'role_id'       => $adminRole->id,
             'name'          => 'Admin',
             'email'         => 'admin@gmail.com',
-            'image'         => 'user.png',
-            'password'      => Hash::make('12345678'),
+            'password'      => '12345678',
             'phone_number'  => '01744101011',
             'status'        => true,
             'suspend'       => false
@@ -47,8 +45,7 @@ class UserSeeder extends Seeder
             'role_id'       => $adminRole->id,
             'name'          => 'Manager',
             'email'         => 'manager@gmail.com',
-            'image'         => 'user.png',
-            'password'      => Hash::make('12345678'),
+            'password'      => '12345678',
             'phone_number'  => '01744101012',
             'status'        => true,
             'suspend'       => false
@@ -60,8 +57,7 @@ class UserSeeder extends Seeder
             'role_id'       => $shopOwnerRole->id,
             'name'          => 'Vendor',
             'email'         => 'vendor@gmail.com',
-            'image'         => 'user.png',
-            'password'      => Hash::make('12345678'),
+            'password'      => '12345678',
             'phone_number'  => '01744101013',
             'status'        => true,
             'suspend'       => false
@@ -73,8 +69,7 @@ class UserSeeder extends Seeder
             'role_id'       => $shopOwnerRole->id,
             'name'          => 'Staff',
             'email'         => 'staff@gmail.com',
-            'image'         => 'user.png',
-            'password'      => Hash::make('12345678'),
+            'password'      => '12345678',
             'phone_number'  => '01744101014',
             'status'        => true,
             'suspend'       => false
@@ -86,8 +81,7 @@ class UserSeeder extends Seeder
             'role_id'       => $customerRole->id,
             'name'          => 'Jone Doe',
             'email'         => 'user@gmail.com',
-            'image'         =>'user.png',
-            'password'      => Hash::make('12345678'),
+            'password'      => '12345678',
             'phone_number'  => '01744101015',
             'status'        => true,
             'suspend'       => false

@@ -4,191 +4,178 @@ namespace App\Http\Controllers\Backend\Shop;
 
 use Image;
 use Storage;
+use App\Models\User;
 use App\Models\Shop\Shop;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Location\Area;
-use App\Models\Location\City;
 use App\Models\Shop\ShopType;
-use App\Models\Location\Floor;
-use App\Models\Location\Thana;
-use App\Models\Location\Market;
+use Repository\Shop\ShopRepository;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Repository\Location\AreaRepository;
+use Repository\Location\CityRepository;
+use Repository\Shop\ShopTypeRepository;
+use Repository\Shop\ShopMediaRepository;
+use Repository\Location\MarketRepository;
+use App\Http\Controllers\JsonResponseTrait;
+use App\Http\Requests\Shop\StoreShopRequest;
+use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\Shop\UpdateShopRequest;
+use App\Notifications\ShopVerifyNotification;
 
 class ShopController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    use JsonResponseTrait;
+
+    public $cityRepo;
+    public $areaRepo;
+    public $marketRepo;
+    public $shopTypeRepo;
+    public $shopRepo;
+    public $shopMediaRepo;
+
+    public function __construct(
+        CityRepository $cityRepository,
+        AreaRepository $areaRepository,
+        MarketRepository $marketRepository,
+        ShopTypeRepository $shopTypeRepository,
+        ShopRepository $shopRepository,
+        ShopMediaRepository $shopMediaRepository
+    ) {
+        $this->cityRepo     = $cityRepository;
+        $this->areaRepo     = $areaRepository;
+        $this->marketRepo   = $marketRepository;
+        $this->shopTypeRepo = $shopTypeRepository;
+        $this->shopRepo     = $shopRepository;
+        $this->shopMediaRepo = $shopMediaRepository;
+    }
+
     public function index()
     {
-        $shops = Shop::all();
+        Gate::authorize('backend.shops.index');
+        $shops = $this->shopRepo->getAll();
         return view('backend.shop.shop.index',  compact('shops'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
-        $cities = City::all();
-        $areas = Area::all();
-        $thanas = Thana::all();
-        $markets = Market::all();
-        $floors = Floor::all();
+        Gate::authorize('backend.shops.create');
+        $cities = $this->cityRepo->getAll();
+        $areas = $this->areaRepo->getAll();
+        $markets = $this->marketRepo->getAll();
         $shoptypes = ShopType::all();
-        return view('backend.shop.shop.form', compact('cities','areas','thanas','markets','floors', 'shoptypes'));
+        return view('backend.shop.shop.form', compact('cities', 'areas', 'markets', 'shoptypes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function store(StoreShopRequest $request)
     {
-        //dd($request->all());
-        $request->validate([
-            'shop_name'           => 'required',
-            'shop_description'    => 'required',
-            'shop_logo'           => 'required|mimes:jpeg,jpg,png|max:500',
-            'shop_cover_image'    => 'required|mimes:jpeg,jpg,png|max:500',
-            'meta_og_image_shop'  => 'required|mimes:jpeg,jpg,png|max:500',
-        ]);
+        $logo = $request->hasFile('logo') ? $this->shopRepo->storeFile($request->file('logo')) : null;
+        $cover_image = $request->hasFile('cover_image') ? $this->shopRepo->storeFile($request->file('cover_image')) : null;
+        $meta_og_image = $request->hasFile('meta_og_image') ? $this->shopRepo->storeFile($request->file('meta_og_image')) : null;
 
-        // for shop logo
-        if ($shop_logo = $request->file('shop_logo')) {
-            $shopLogo = rand(10, 100) . time() . '.' . $shop_logo->getClientOriginalExtension();
-            $locationLogo = public_path('/uploads/shopproperty/shop/' . $shopLogo);
-            Image::make($shop_logo)->resize(600, 400)->save($locationLogo);
-        }
-        // for shop cover image
-        if ($shop_cover_image = $request->file('shop_cover_image')) {
-            $coverImage = rand(10, 100) . time() . '.' . $shop_cover_image->getClientOriginalExtension();
-            $locationCoverImage = public_path('/uploads/shopproperty/shop/' . $coverImage);
-            Image::make($shop_cover_image)->resize(600, 400)->save($locationCoverImage);
-        }
-        // for shop  meta image
-        if ($meta_og_image_shop = $request->file('meta_og_image_shop')) {
-            $metaImage = rand(10, 100) . time() . '.' . $meta_og_image_shop->getClientOriginalExtension();
-            $locationMetaImage = public_path('/uploads/shopproperty/shop/' . $metaImage);
-            Image::make($meta_og_image_shop)->resize(600, 400)->save($locationMetaImage);
-        }
-
-        $slug = Str::of($request->shop_name)->slug('_');
-        Shop::create($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_slug') +
+        $shop = $this->shopRepo->create($request->except('logo', 'cover_image', 'meta_og_image', 'shop_owner_id') +
             [
-                'shop_logo'           => $shopLogo,
-                'shop_cover_image'    => $coverImage,
-                'meta_og_image_shop'  => $metaImage,
-                'shop_slug'           => $slug
+                'shop_owner_id'    => Auth::id(),
+                'logo'             => $logo,
+                'cover_image'      => $cover_image,
+                'meta_og_image'    => $meta_og_image
             ]);
 
+        $this->shopMediaRepo->shopGallery($request->hasFile('image') ? $request->file('image') : null, $shop->id);
         notify()->success('shop Successfully Added.', 'Added');
         return redirect()->route('backend.shops.index');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
         return view('show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        $cities = City::all();
-        $areas = Area::all();
-        $thanas = Thana::all();
-        $markets = Market::all();
-        $floors = Floor::all();
-        $shoptypes = ShopType::all();
-        $shop = Shop::find($id);
-        return view('backend.shop.shop.form', compact('cities','areas','thanas','markets','floors', 'shoptypes', 'shop'));
+        Gate::authorize('backend.shops.edit');
+        $cities     = $this->cityRepo->getAll();
+        $areas      = $this->areaRepo->getAll();
+        $markets    = $this->marketRepo->getAll();
+        $shoptypes  = ShopType::all();
+        $shop       = Shop::find($id);
+        return view('backend.shop.shop.form', compact('cities', 'areas', 'markets', 'shoptypes', 'shop'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateShopRequest $request, $id)
     {
-        $data = Shop::find($id);
-        $shop_logo          = $data->shop_logo;
-        $shop_cover_image   = $data->shop_cover_image;
-        $meta_og_image_shop = $data->meta_og_image_shop;
-
-        if (!empty($request->shop_name)) {
-            $slug = Str::of($request->shop_name)->slug('_');
-        } else {
-            $slug = $data->shop_slug;
+        $shop = $this->shopRepo->updateByShopOwner($id);
+        if ($shop == null) {
+            return $this->bad(
+                'You are unauthorized to update this shop!',
+                403
+            );
         }
+        $shopLogo       = $request->hasFile('logo');
+        $shopCoverImage = $request->hasFile('cover_image');
+        $metaImageShop  = $request->hasFile('meta_og_image');
 
-        if ($shopLogo = $request->file('shop_logo')) {
-            $shop_logo = rand(10, 100) . time() . '.' . $shopLogo->getClientOriginalExtension();
-            $locationLogo = public_path('/uploads/shopproperty/shop/' . $shop_logo);
-            Image::make($shopLogo)->resize(600, 400)->save($locationLogo);
-            $oldFileLogo = $data->shop_logo;
-            $data->shop_logo = $shop_logo;
-            Storage::delete('/uploads/shopproperty/shop/' . $oldFileLogo);
+        $logo = $shopLogo ? $this->shopRepo->storeFile($request->file('logo')) : $shop->logo;
+        $cover_image = $shopCoverImage ? $this->shopRepo->storeFile($request->file('cover_image')) : $shop->cover_image;
+        $meta_og_image = $metaImageShop ? $this->shopRepo->storeFile($request->file('meta_og_image')) : $shop->meta_og_image;
+
+        if ($shopLogo) {
+            $this->shopRepo->updateShopsLogo($id);
         }
-
-        if ($coverImage = $request->file('shop_cover_image')) {
-            $shop_cover_image = rand(10, 100) . time() . '.' . $coverImage->getClientOriginalExtension();
-            $locationCoverImage = public_path('/uploads/shopproperty/shop/' . $shop_cover_image);
-            Image::make($coverImage)->resize(600, 400)->save($locationCoverImage);
-            $oldFileCoverImage = $data->shop_cover_image;
-            $data->shop_cover_image = $shop_cover_image;
-            Storage::delete('/uploads/shopproperty/shop/' . $oldFileCoverImage);
+        if ($shopCoverImage) {
+            $this->shopRepo->updateShopsImage($id);
         }
-
-        if ($metaImage = $request->file('meta_og_image_shop')) {
-            $meta_og_image_shop = rand(10, 100) . time() . '.' . $metaImage->getClientOriginalExtension();
-            $locationMetaImage = public_path('/uploads/shopproperty/shop/' . $meta_og_image_shop);
-            Image::make($metaImage)->resize(600, 400)->save($locationMetaImage);
-            $oldFileMetaImage = $data->meta_og_image_shop;
-            $data->meta_og_image_shop = $meta_og_image_shop;
-            Storage::delete('/uploads/shopproperty/shop/' . $oldFileMetaImage);
+        if ($metaImageShop) {
+            $this->shopRepo->updateShopsOgImage($id);
         }
-
-        // shop info update
-        $data = $data->update($request->except('shop_logo', 'shop_cover_image', 'meta_og_image_shop', 'shop_slug') +
+        $this->shopRepo->updateByID($id, $request->except('logo', 'cover_image', 'meta_og_image') +
             [
-                'shop_logo'           => $shop_logo,
-                'shop_cover_image'    => $shop_cover_image,
-                'meta_og_image_shop'  => $meta_og_image_shop,
-                'shop_slug'           => $slug
+                'logo' => $logo,
+                'cover_image' => $cover_image,
+                'meta_og_image' => $meta_og_image
             ]);
+        $this->shopMediaRepo->shopGalleryUpdate($request->hasFile('image') ? $request->file('image') : $shop->shopMedia, $id);
 
         notify()->success('Shop Successfully Updated.', 'Updated');
         return redirect()->route('backend.shops.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
-        $data = Shop::find($id);
-        $oldFilename = $data->shop_icon;
-        Storage::delete('/uploads/shopproperty/shop/' . $oldFilename);
-        $data->delete();
-        return redirect()->route('backend.shop.shops.index');
+        Gate::authorize('backend.shops.destroy');
+        $this->shopRepo->deleteShops($id);
+        notify()->success('Shop Successfully Deleted.', 'Deleted');
+        return redirect()->route('backend.shops.index');
     }
 
+    public function statusUpdate(Request $request, $id)
+    {
+        $this->shopRepo->updateByID($id, $request->all());
+
+        $shop = $this->shopRepo->findOrFailByID($id);
+
+        $userSchema = User::find($shop->shop_owner_id);
+        $verifyData = [
+            'title' => 'Your Shop ' . $shop->name . ' is Verified By Swadesh Team',
+            'body' => 'Your shop is verified by our team. you can now setup the shop and upload the products',
+            'thanks' => 'Thank you',
+            'action_button' => 'Setup Shop',
+            'action_url' => '/shop/setup/' . $shop->id,
+            'shop_id' => $id
+        ];
+
+        //sent notification while shop approved
+        if($shop->status == 'Approved')
+            Notification::send($userSchema, new ShopVerifyNotification($verifyData));
+
+        notify()->success('Status Successfully Updated.', 'Updated');
+    }
+
+    public function removeShopMedia($id)
+    {
+        $this->shopMediaRepo->deletedByID($id);
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
+    }
 }

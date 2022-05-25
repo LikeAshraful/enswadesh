@@ -6,11 +6,21 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-
+                        @php
+                            $url = url()->full();
+                            $url_components = parse_url($url);
+                            if(empty($url_components['query']))
+                            {
+                                $value = '';
+                            }else{
+                                parse_str($url_components['query'], $params);
+                                $value = $params['ref'];
+                            }
+                        @endphp
+                        <input id="token" type="hidden" name="token" value="{{$value}}">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

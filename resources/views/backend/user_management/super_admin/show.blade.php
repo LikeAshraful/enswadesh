@@ -10,20 +10,20 @@
                     <i class="pe-7s-users icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ __('User Details') }}</div>
+                <div>{{ __('Super Admin Details') }}</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    @canany('backend.super_admin.create')
-                        <a href="{{ route('backend.super_admin.edit',$user->id) }}" class="btn-shadow btn btn-info">
+                    @canany('backend.super-admin.create')
+                        <a href="{{ route('backend.super-admin.edit',$user->id) }}" class="btn-shadow btn btn-info">
                             <span class="btn-icon-wrapper pr-2 opacity-7">
                                 <i class="fas fa-edit fa-w-20"></i>
                             </span>
                             {{ __('Edit') }}
                         </a>
                     @endcanany
-                    @canany('backend.super_admin.index')
-                        <a href="{{ route('backend.super_admin.index') }}" class="btn-shadow btn btn-danger">
+                    @canany('backend.super-admin.index')
+                        <a href="{{ route('backend.super-admin.index') }}" class="btn-shadow btn btn-danger">
                             <span class="btn-icon-wrapper pr-2 opacity-7">
                                 <i class="fas fa-arrow-circle-left fa-w-20"></i>
                             </span>
@@ -39,7 +39,7 @@
         <div class="col-md-2">
             <div class="main-card mb-3 card">
                 <div class="card-body">
-                    <img src="{{ asset('uploads/users/'.$user->image) }}" class="img-fluid img-thumbnail" alt="avatar">
+                    <img class="img-fluid img-thumbnail" src="{{ $user->profile && $user->profile->image ? asset('storage/'.$user->profile->image) : asset('default-images/user.png') }}" alt="{{ $user->name}}">
                 </div>
                 <!-- /.card-body -->
             </div>

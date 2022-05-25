@@ -49,11 +49,11 @@
                             @foreach($cities as $key => $city)
                             <tr>
                                 <th scope="row">{{ ++$key }}</th>
-                                <td>{{ $city->city_name }}</td>
-                                <td>{{ $city->city_slug }}</td>
-                                <td>{{ $city->city_description }}</td>
+                                <td>{{ $city->name }}</td>
+                                <td>{{ $city->slug }}</td>
+                                <td>{{ $city->description }}</td>
                                 <td>
-                                    <img class="img-fluid img-thumbnail" src="{{asset('/uploads/shopproperty/city/' . $city->city_icon)}}" width="50" height="50" alt="">
+                                    <img class="img-fluid img-thumbnail" src="{{ $city->icon ? asset('storage/'. $city->icon) : asset('default-images/img_default_division_or_city.png')}}" width="50" height="50" alt="{{ $city->name }}">
                                 </td>
                                 <td>
                                     @canany('backend.cities.edit')

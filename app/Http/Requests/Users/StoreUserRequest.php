@@ -7,22 +7,6 @@ use Illuminate\Support\Facades\Gate;
 
 class StoreUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        Gate::authorize('backend.users.create');
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -30,7 +14,6 @@ class StoreUserRequest extends FormRequest
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
             'role'      => ['required'],
-            'image'     => 'required|mimes:jpeg,jpg,png|max:500',
         ];
     }
 }

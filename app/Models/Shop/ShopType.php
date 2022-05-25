@@ -2,11 +2,18 @@
 
 namespace App\Models\Shop;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ShopType extends Model
 {
     use HasFactory;
-    protected $fillable = ['shop_type_name', 'shop_type_description', 'shop_type_slug'];
+    protected $fillable = ['name', 'description', 'slug'];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
 }

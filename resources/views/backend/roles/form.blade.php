@@ -66,7 +66,7 @@
                             <label class="custom-control-label" for="select-all">Select All</label>
                         </div>
                     </div>
-                    @forelse($modules->chunk(2) as $key => $chunks)
+                    @forelse($modules->chunk(3) as $key => $chunks)
                     <div class="form-row">
                         @foreach($chunks as $key=>$module)
                         <div class="col">
@@ -76,11 +76,12 @@
                                 <div class="custom-control custom-checkbox mb-2">
                                     <input type="checkbox" class="custom-control-input"
                                         id="permission-{{ $permission->id }}" value="{{ $permission->id }}"
-                                        name="permissions[]" @if(isset($role)) @foreach($role->permissions as
-                                    $rPermission)
-                                    {{ $permission->id == $rPermission->id ? 'checked' : '' }}
-                                    @endforeach
-                                    @endif
+                                        name="permissions[]"
+                                        @if(isset($role))
+                                            @foreach($role->permissions as $rPermission)
+                                                {{ $permission->id == $rPermission->id ? 'checked' : '' }}
+                                            @endforeach
+                                        @endif
                                     >
                                     <label class="custom-control-label"
                                         for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
